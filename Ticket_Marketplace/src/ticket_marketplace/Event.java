@@ -4,6 +4,7 @@
  */
 package ticket_marketplace;
 import java.time.LocalDate; 
+import java.util.List;
 /**
  *
  * @author Franly
@@ -17,6 +18,7 @@ public class Event {
     private Venue venue;
     private Seller seller_username;
     private Event_category event_category;
+    private List<Event_class> eventClasses; 
 
     public Event(int id, String name, String description, LocalDate dateTime, int maxBuy, Venue venue, Seller seller_username, Event_category event_category) {
         this.id = id;
@@ -38,6 +40,14 @@ public class Event {
         this.venue = null;
         this.seller_username = null;
         this.event_category = null;
+    }
+    
+    public void addEventClass(Event_class eventClass) {
+        eventClasses.add(eventClass);
+    }
+
+    public List<Event_class> getEventClass() {
+        return eventClasses;
     }
 
     public int getId() {

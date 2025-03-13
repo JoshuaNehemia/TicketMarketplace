@@ -5,6 +5,9 @@
 
 package ticket_marketplace;
 import java.time.LocalDate; 
+import java.util.List;
+import java.util.ArrayList;
+
 
 /**
  *
@@ -15,6 +18,7 @@ public class User {
     private String fullname;
     private String email;
     private LocalDate birthdate;
+    private List<Ticket> tickets; 
 
 
     public User(String username, String fullname, String email, LocalDate birthdate) {
@@ -22,6 +26,7 @@ public class User {
         this.fullname = fullname;
         this.email = email;
         this.birthdate = birthdate;
+        this.tickets = new ArrayList<>();
     }
     
     public User() {
@@ -29,6 +34,15 @@ public class User {
         this.fullname = "";
         this.email = "";
         this.birthdate = null; 
+        this.tickets = new ArrayList<>();
+    }
+    
+    public void addTicket(Ticket ticket) {
+        tickets.add(ticket);
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
     }
 
     public String getUsername() {
