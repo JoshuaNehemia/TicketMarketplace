@@ -115,27 +115,3 @@ conn.close();
 4. **Closes all database resources**.
 5. If **connection fails**, prints `"Koneksi gagal!"`.
 
----
-
-### **Example Output**
-If the `users` table contains:
-| id | usernames  |
-|----|-----------|
-| 1  | Alice     |
-| 2  | Bob       |
-| 3  | Charlie   |
-
-The output will be:
-```
-Koneksi berhasil!
-User: Alice
-User: Bob
-User: Charlie
-```
-
----
-
-### **Potential Issues**
-❌ **Table doesn’t exist** → `SQLException: Table 'users' not found`  
-❌ **Column name mismatch** (`usernames` vs. `username`) → `SQLException: Column 'usernames' not found`  
-❌ **Connection issues** (e.g., MySQL not running) → `"Koneksi gagal!"`  
