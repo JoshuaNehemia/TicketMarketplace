@@ -21,10 +21,17 @@ public class TicketMarketplace_Server {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        ConnectToDatabase();
+    }
+    
+    private final static void ConnectToDatabase()
+    {
+        
         Connection conn = Database_Connection.getConnection();
         if (conn != null) {
             System.out.println("Koneksi berhasil!");
             try {
+                // Query Testing
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery("SELECT * FROM users"); 
 

@@ -6,8 +6,18 @@ Welcome to the **Ticket Marketplace** project, a sophisticated platform built wi
 
 This project aims to provide users with a seamless and efficient marketplace for event tickets. The application utilizes distributed programming techniques to ensure scalability, fault tolerance, and high availability, making it capable of handling large volumes of transactions.
 
-## User Interface
+## Client Side
 
+### User Interface
 For detailed information about the user interface, please refer to the [UI Readme](README/UI.md).
 
 ---
+
+## Server Side
+
+### Database
+[Database Connection Readme](README/Database_Connection.md).
+
+### Entities
+
+### Connection to Client
