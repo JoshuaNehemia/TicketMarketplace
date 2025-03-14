@@ -25,6 +25,7 @@ Learn more about the server's main class in the **[Main Class Readme](README/Tic
 
 ### 🗄️ Database
 Find details on database connections in the **[Database Connection Readme](README/Database_Connection.md)**
+
 Find details of entities data access object in the **DAO Readme (Added in future)**.
 
 ### 📌 Entities
