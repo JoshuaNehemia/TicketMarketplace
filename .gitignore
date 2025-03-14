@@ -25,3 +25,5 @@ replay_pid*
 /Ticket_Marketplace/nbproject/private/
 /Ticket_Marketplace/build/
 /Ticket_Marketplace/dist/
+/TicketMarketplace_Server/nbproject/private/
+/TicketMarketplace_Client_GUI/nbproject/private/
