@@ -27,7 +27,7 @@ public class ServerService {
         repo = new RepositoryTemp();
     }
     
-    public void AddUserToDatabase(String username,  String password, String fullname, String email, LocalDate birthdate)
+    public void AddUser(String username,  String password, String fullname, String email, LocalDate birthdate)
     {
         // For temporary database
         RepositoryTemp repo = new RepositoryTemp();
