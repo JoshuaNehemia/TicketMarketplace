@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Utility class for handling client-server communication by formatting and parsing messages.
  */
-public static class Communication {
+public class Communication {
     
     // FUNCTION ----------------------------------------------------------------
     /**

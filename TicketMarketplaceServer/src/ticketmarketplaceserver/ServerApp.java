@@ -4,6 +4,8 @@
  */
 package ticketmarketplaceserver;
 
+import java.util.Scanner;
+
 
 /**
  *
@@ -11,12 +13,28 @@ package ticketmarketplaceserver;
  */
 public class ServerApp {
 
+    public static ServerService service;
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        ServerStartUp();
     }
+    
+    private static void ServerStartUp()
+    {
+        System.out.println("Server is Running");
+        service = new ServerService();
+        
+        //For Debugging
+        while(true)
+        {
+            MenuCLI.StartUpMenuCLI();
+        }
+    }
+    
     
 
     

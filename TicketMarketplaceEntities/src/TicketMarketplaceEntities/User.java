@@ -6,7 +6,8 @@ package TicketMarketplaceEntities;
  */
 
 
-import java.time.LocalDate; 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -17,14 +18,16 @@ import java.util.ArrayList;
  */
 public class User {
     private String username;
+    private String password;
     private String fullname;
     private String email;
     private LocalDate birthdate;
     private List<Ticket> tickets; 
 
 
-    public User(String username, String fullname, String email, LocalDate birthdate) {
+    public User(String username,  String password, String fullname, String email, LocalDate birthdate) {
         this.username = username;
+        this.password = password;
         this.fullname = fullname;
         this.email = email;
         this.birthdate = birthdate;
@@ -55,6 +58,14 @@ public class User {
         this.username = username;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getFullname() {
         return fullname;
     }
@@ -78,4 +89,27 @@ public class User {
     public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
     }
+    
+    // Function ----------------------------------------------------------------
+    
+   public String[] GetUserData()
+   {
+       String[] userData = new String[5];
+       userData[0] = this.getUsername();
+       userData[1] = this.getPassword();
+       userData[2] = this.getFullname();
+       userData[3] = this.getEmail();
+       
+       DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+       userData[4] = this.getBirthdate().format(df);
+       
+       return userData;
+   }
+   
+   public void DebugUserData()
+   {
+       System.out.println(this.getUsername()+", "+this.getPassword()+", "+this.getFullname()+", "+this.getEmail());
+   }
+    
+    
 }

@@ -17,7 +17,8 @@ import TicketMarketplaceEntities.*;
  * @author joshu
  */
 public class RepositoryTemp {
-
+    
+    // Buat sementara, biar bisa kumpul tugas
     public ArrayList<User> ListUser;
     
     public RepositoryTemp() {
