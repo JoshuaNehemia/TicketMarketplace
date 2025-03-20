@@ -38,12 +38,13 @@ public class ServerService {
         //DAO_USer.XXXXXXXXXXXX
     }
 
-    public void UserLogIn(String username, String password) {
+    public boolean UserLogIn(String username, String password) {
         for (User u : repo.ListUser) {
             if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
                 this.currentUser = u;
-                break;
+                return true;
             }
         }
+        return false;
     }
 }

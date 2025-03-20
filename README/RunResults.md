@@ -7,38 +7,34 @@ Welcome to Ticket MarketPlace
 Please select your option (1/2) ?
 2
 Please Sign Up and fIll the required data
-Username : Josh
-Password :123
-Full Name :JoshuaNehemiaS
-Email :josh@email.com
-Birthdate (yyyy-MM-dd) :2005-02-24
-Welcome to Ticket MarketPlace
-1. Log In  	 (CC : LI)
-2. Sign Up 	 (CC : SU)
-Please select your option (1/2) ?
-2
-Please Sign Up and fIll the required data
-Username :Franly
-Password :123
-Full Name :FranlyBudi
-Email :Franly@email.com
-Birthdate (yyyy-MM-dd) :2005-02-24
+Username :
+josh
+Password :
+123
+Full Name :
+joshua
+Email :
+josh
+Birthdate (yyyy-MM-dd) :
+2005-02-02
+1
+josh, 123, joshua, josh
 Welcome to Ticket MarketPlace
 1. Log In  	 (CC : LI)
 2. Sign Up 	 (CC : SU)
 Please select your option (1/2) ?
 1
-Please Log In 
-  Please fill your username and password!
+Please Log In! 
+Please fill your username and password! 
 Username : 
-Josh
+josh
 Password :
 123
 Hello user!
- Username : 
-Full Name : 
-Email : 
-Birthdate : null
+Username : josh
+Full Name : joshua
+Email : josh
+Birthdate : 2005-02-02
 Welcome to Ticket MarketPlace
 1. Log In  	 (CC : LI)
 2. Sign Up 	 (CC : SU)

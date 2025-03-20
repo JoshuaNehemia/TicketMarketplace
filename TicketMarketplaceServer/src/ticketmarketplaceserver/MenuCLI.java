@@ -46,11 +46,12 @@ public class MenuCLI {
         System.out.println(content);
         String password = myScan.nextLine();
 
-        ServerApp.service.UserLogIn(username, password);
-        if ("".equals(ServerApp.service.currentUser.getUsername())) {
-            System.out.println("Wrong Username or Password");
-        } else {
+        boolean loggedIn = ServerApp.service.UserLogIn(username, password);
+        
+        if (loggedIn) {
             MainMenuCLI();
+        } else {
+            System.out.println("Wrong Username or Password");
         }
     }
 
