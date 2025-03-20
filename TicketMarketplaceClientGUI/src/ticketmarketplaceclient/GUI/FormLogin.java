@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ticketmarketplaceclient.GUI;
+import TicketMarketplaceClient.Service.ClientService;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,9 +15,15 @@ public class FormLogin extends javax.swing.JFrame {
     /**
      * Creates new form FormLogin
      */
+    ClientService clientService = new ClientService();
+    public String username="";
+    
     public FormLogin() {
         initComponents();
     }
+    
+    
+ 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,10 +53,20 @@ public class FormLogin extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("LOG IN");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Lupa Password");
 
         jLabel3.setText("Register");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,6 +110,31 @@ public class FormLogin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    public void showRegistrationSuccess() {
+        System.out.println("Registrasi berhasil di FormRegister");
+    }
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String usernameOrEmail = jTextFieldLoginEmail.getText(); 
+        String password = jTextField2.getText();
+        
+        boolean res =clientService.UserLogIn(usernameOrEmail, password);
+        if(res){
+//            ...set current user in server.
+
+            FormListofTicketScroll login = new FormListofTicketScroll();
+            login.setVisible(true);
+            
+            this.dispose();
+         }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        FormRegister regisForm = new FormRegister(this);
+        regisForm.setVisible(true);
+        this.setVisible(false); 
+    }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
      * @param args the command line arguments

@@ -5,6 +5,7 @@
 package Communication;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -41,11 +42,14 @@ public class Communication {
     public static final String TranslateToCommunication(String task, String[] data, String dividers)
     {
         String communication =("" + dividers + task + dividers + "DATASTART" + dividers);
-        for( String d : data)
-        {
-            communication += (d + dividers);
-        }
-        communication += "DATAEND";
+//        for( String d : data)
+//        {
+//            communication += (d + dividers);
+//        }
+//        communication += "DATAEND";
+        communication += String.join(dividers, data);
+    
+        communication += dividers + "DATAEND";
         return communication;
     }
    
@@ -93,5 +97,9 @@ public class Communication {
         result = buffer.toArray(result);
         
         return result;
+    }
+
+    public static String TranslateToCommunication(String task, List<String> data, String dividers) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
