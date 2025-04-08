@@ -22,14 +22,16 @@ public class TCPManager {
     Socket clientSocket;
 
     public TCPManager(String address, int port) {
-            this.setAddress(address);
-            this.setPort(port);
-            this.ConnectToServer();
+        this.setAddress(address);
+        this.setPort(port);
+        this.ConnectToServer();
     }
 
     public final void ConnectToServer() {
         try {
-            clientSocket = new Socket(this.getAddress(), this.getPort());
+            if (clientSocket == null || clientSocket.isClosed()) {
+                clientSocket = new Socket(this.getAddress(), this.getPort());
+            }
         } catch (Exception ex) {
             System.out.println("Warning :" + ex.getMessage());
         }

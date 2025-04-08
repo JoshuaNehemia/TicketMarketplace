@@ -26,7 +26,7 @@ public class ServerApp {
     
     private static void ServerStartUp()
     {
-        System.out.println("Server is Running");
+        System.out.println("Server is starting up");
         service = new ServerService();
         TCPManager tcp = new TCPManager(6000);
         while(true)
