@@ -19,6 +19,7 @@ public class FormRegister extends javax.swing.JFrame {
     public FormRegister(FormLogin loginForm) {
         initComponents();
         parentForm = loginForm;
+        clientService.ClientStartUp();
     }
 
     /**
@@ -159,8 +160,8 @@ public class FormRegister extends javax.swing.JFrame {
         if(res){
             JOptionPane.showMessageDialog(null, "Registrasi berhasil, silakan login!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
             
-            FormLogin login = new FormLogin();
-            login.setVisible(true);
+//            For mLogin login = new FormLogin();
+//            login.setVisible(true);
             
   
             parentForm.username=username;

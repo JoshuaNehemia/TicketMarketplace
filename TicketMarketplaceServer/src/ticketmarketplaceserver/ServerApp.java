@@ -33,9 +33,13 @@ public class ServerApp {
         {
             //Server accepting message from client
             tcp.ReceivedCommunication();
+            System.out.println("server hit");
             String[] command = Communication.TranslateToListOfCommand(tcp.getCommunicationFromClient(), ";");
+            System.out.println(command[0]);
+
             if(command[0].equals("LI"))
             {
+                System.out.println("login hit");
                 service.UserLogIn(command[1], command[2]);
             }
             else if(command[1].equals("SU"))

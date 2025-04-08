@@ -7,7 +7,7 @@ package ticketmarketplaceserver;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-import TicketMarketPlaceEntities.*;
+import TicketMarketplaceEntities.*;
 
 /**
  *
@@ -49,11 +49,11 @@ public class MenuCLI {
 
         User loggedIn = ServerApp.service.UserLogIn(username, password);
         
-        if (loggedIn) {
-            MainMenuCLI();
-        } else {
-            System.out.println("Wrong Username or Password");
-        }
+//        if (loggedIn) {
+//            MainMenuCLI();
+//        } else {
+//            System.out.println("Wrong Username or Password");
+//        }
     }
 
     public static void UserSignUpMenuCLI() {
