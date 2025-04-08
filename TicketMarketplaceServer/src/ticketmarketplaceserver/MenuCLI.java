@@ -7,6 +7,7 @@ package ticketmarketplaceserver;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import TicketMarketPlaceEntities.*;
 
 /**
  *
@@ -46,7 +47,7 @@ public class MenuCLI {
         System.out.println(content);
         String password = myScan.nextLine();
 
-        boolean loggedIn = ServerApp.service.UserLogIn(username, password);
+        User loggedIn = ServerApp.service.UserLogIn(username, password);
         
         if (loggedIn) {
             MainMenuCLI();

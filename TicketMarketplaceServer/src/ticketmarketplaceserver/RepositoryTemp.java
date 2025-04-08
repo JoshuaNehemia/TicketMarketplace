@@ -20,9 +20,14 @@ public class RepositoryTemp {
     
     // Buat sementara, biar bisa kumpul tugas
     public ArrayList<User> ListUser;
+    public ArrayList<Seller> ListSeller;
+    public ArrayList<Venue> ListVenue;
+    public ArrayList<Event> ListEvent;
     
     public RepositoryTemp() {
         ListUser = new ArrayList<User>();
+        ListSeller = new ArrayList<Seller>();
+        ListVenue = new ArrayList<Venue>();
     }
     
     

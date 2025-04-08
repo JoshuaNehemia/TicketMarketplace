@@ -29,9 +29,9 @@ public class ServerApp {
         service = new ServerService();
         
         //For Debugging
-        while(true)
+        //while(true)
         {
-            MenuCLI.StartUpMenuCLI();
+            //MenuCLI.StartUpMenuCLI();
         }
     }
     

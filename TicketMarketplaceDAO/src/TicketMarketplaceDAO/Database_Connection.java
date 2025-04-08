@@ -38,7 +38,7 @@ public class Database_Connection {
             System.out.println("Koneksi berhasil!");
             try {
                 // Query Testing
-                Statement stmt = conn.createStatement();
+                Statement stmt = (Statement) conn.createStatement();
                 ResultSet rs = stmt.executeQuery("SELECT * FROM users"); 
 
                 while (rs.next()) {
