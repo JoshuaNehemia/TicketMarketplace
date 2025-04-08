@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import Communication.*;
+import ticketmarketplaceclient.Service.TCPManager;
 
 
 
@@ -25,11 +26,15 @@ public class ClientService {
         data.add(email);
         //data.add(birthdate.toString());
         
-        String task = "REGISTER";
+        String task = "SU";
         String dividers = ";";
         String message = Communication.TranslateToCommunication(task, data.toArray(new String[0]), dividers);
         System.out.println(message);
         
+        tcp.setCommunicationToServer(message);
+        tcp.SendToServer();
+//        res=tcp.ReceivedFromServer();
+        System.out.println("Pesan dari server: " + tcp.getCommunicationFromServer());
         //...send to server
         boolean res=true;
 //        if(res){
@@ -40,16 +45,28 @@ public class ClientService {
         return res;
     }
     
+    TCPManager tcp;
+    public void ClientStartUp(){
+        System.out.println("Client connection is Running");
+        tcp = new TCPManager("localhost",6000);
+    }
+    
+    
   public boolean UserLogIn(String username, String password) {
         List<String> data = new ArrayList<>();
         data.add(username);
         data.add(password);
         
-        String task = "LOGIN";
+        String task = "LI";
         String dividers = ";";
         String message = Communication.TranslateToCommunication(task, data.toArray(new String[0]), dividers);
         System.out.println(message);
         
+        tcp.setCommunicationToServer(message);
+        tcp.SendToServer();
+//        res=tcp.ReceivedFromServer();
+        System.out.println("Pesan dari server: " + tcp.getCommunicationFromServer());
+   
         //...send to server
         boolean res=true;
 //        if(res){

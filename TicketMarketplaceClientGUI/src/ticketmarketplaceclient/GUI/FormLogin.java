@@ -5,6 +5,7 @@
 package ticketmarketplaceclient.GUI;
 import TicketMarketplaceClient.Service.ClientService;
 import javax.swing.JOptionPane;
+import ticketmarketplaceclient.Service.TCPManager;
 
 /**
  *
@@ -20,8 +21,9 @@ public class FormLogin extends javax.swing.JFrame {
     
     public FormLogin() {
         initComponents();
+        clientService.ClientStartUp();
     }
-    
+
     
  
 
