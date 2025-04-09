@@ -1,16 +1,14 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package TicketMarketplaceClient.Service;
+package ticketmarketplaceclient.Service;
 
-import java.time.LocalDate;
+import Communication.Communication;
 import java.util.ArrayList;
 import java.util.List;
-import Communication.*;
-import ticketmarketplaceclient.Service.TCPManager;
-
-
+import java.time.LocalDate;
+import TicketMarketplaceEntities.*;
 
 /**
  *
@@ -18,67 +16,74 @@ import ticketmarketplaceclient.Service.TCPManager;
  */
 public class ClientService {
 
-    public boolean UserSignUp(String username, String password, String fullname, String email ) {
+    TCPManager tcp;
+    private String dividers = ";";
+    private User currentUser;
+
+    public ClientService() {
+        System.out.println("Client connection is Running");
+        tcp = new TCPManager("localhost", 6000);
+        currentUser = new User();
+    }
+
+    public boolean UserSignUp(String username, String password, String fullname, String email, LocalDate birthdate) {
         List<String> data = new ArrayList<>();
         data.add(username);
         data.add(password);
         data.add(fullname);
         data.add(email);
+        data.add(birthdate.toString());
         //data.add(birthdate.toString());
-        
+
         String task = "SU";
-        String dividers = ";";
         String message = Communication.TranslateToCommunication(task, data.toArray(new String[0]), dividers);
         System.out.println(message);
-        
+
         tcp.setCommunicationToServer(message);
         tcp.SendToServer();
 //        res=tcp.ReceivedFromServer();
-        System.out.println("Pesan dari server: " + tcp.getCommunicationFromServer());
+        String reply = tcp.getCommunicationFromServer();
+        System.out.println("Pesan dari server: \n" + reply);
         //...send to server
-        boolean res=true;
-//        if(res){
-//            
-//        }
-        
+        boolean res = false;
+        if (reply.equals("SUCCESS")) {
+            res = true;
+        }
+
 //       successful or unsucessful
         return res;
     }
-    
-    TCPManager tcp;
-    public void ClientStartUp(){
-        System.out.println("Client connection is Running");
-        tcp = new TCPManager("localhost",6000);
-    }
-    
-    
-  public boolean UserLogIn(String username, String password) {
+
+    public boolean UserLogIn(String username, String password) {
         List<String> data = new ArrayList<>();
         data.add(username);
         data.add(password);
-        
+
         String task = "LI";
-        String dividers = ";";
         String message = Communication.TranslateToCommunication(task, data.toArray(new String[0]), dividers);
         System.out.println(message);
-        
+
         tcp.setCommunicationToServer(message);
         tcp.SendToServer();
 //        res=tcp.ReceivedFromServer();
-        System.out.println("Pesan dari server: " + tcp.getCommunicationFromServer());
-   
-        //...send to server
-        boolean res=true;
-//        if(res){
-//            
-//        }
-        
+        tcp.ReceivedFromServer();
+        String reply = tcp.getCommunicationFromServer();
+        String command = Communication.TranslateToListOfCommand(reply, ";")[0];
+        String[] buffer = Communication.GetDataFromCommunication(reply,";");
+        System.out.println("Pesan dari server: \n" + reply);
+        boolean res = false;
+        if(command.equals("SUCCESS"))
+        {
+            this.currentUser = new User(buffer[0],buffer[1],buffer[2],buffer[3],LocalDate.parse(buffer[4]));
+            res = true;
+        }
+        else
+        {
+            res = false;
+        }
+
+                
 //       successful or unsucessful
         return res;
     }
-    
-    public static void main(String[] args) {
-        
-    }
-    
 }

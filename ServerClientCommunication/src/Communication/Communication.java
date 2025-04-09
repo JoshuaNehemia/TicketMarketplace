@@ -41,7 +41,7 @@ public class Communication {
      */
     public static final String TranslateToCommunication(String task, String[] data, String dividers)
     {
-        String communication =("" + dividers + task + dividers + "DATASTART" + dividers);
+        String communication =("" + task + dividers + "DATASTART" + dividers);
 //        for( String d : data)
 //        {
 //            communication += (d + dividers);
@@ -75,24 +75,13 @@ public class Communication {
     {
         String[] result;
         ArrayList<String> buffer = new ArrayList<>();
-        int start = 0;
         int end = (ListOfCommand.length-1);
         
-        int counter =0;
-        for( String d : ListOfCommand)
-        {
-            if("DATASTART".equals(d))
-            {
-                start = counter;
-                break;
-            }
-        }
+        result = new String[end-2];
         
-        result = new String[(start-end-1)];
-        
-        for(int i=0;i<(start-end-1);i++)
+        for(int i=2;i<end;i++)
         {
-            buffer.add(ListOfCommand[start + i]);
+            buffer.add(ListOfCommand[i]);
         }
         result = buffer.toArray(result);
         

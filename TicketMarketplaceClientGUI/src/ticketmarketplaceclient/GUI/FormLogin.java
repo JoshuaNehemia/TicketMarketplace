@@ -3,9 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ticketmarketplaceclient.GUI;
-import TicketMarketplaceClient.Service.ClientService;
 import javax.swing.JOptionPane;
-import ticketmarketplaceclient.Service.TCPManager;
+import ticketmarketplaceclient.Service.ClientService;
 
 /**
  *
@@ -16,12 +15,12 @@ public class FormLogin extends javax.swing.JFrame {
     /**
      * Creates new form FormLogin
      */
-    ClientService clientService = new ClientService();
+    public static ClientService service;
     public String username="";
     
     public FormLogin() {
         initComponents();
-        clientService.ClientStartUp();
+        service = new ClientService();
     }
 
     
@@ -121,7 +120,7 @@ public class FormLogin extends javax.swing.JFrame {
         String usernameOrEmail = jTextFieldLoginEmail.getText(); 
         String password = jTextField2.getText();
         
-        boolean res =clientService.UserLogIn(usernameOrEmail, password);
+        boolean res = service.UserLogIn(usernameOrEmail, password);
         if(res){
 //            ...set current user in server.
 

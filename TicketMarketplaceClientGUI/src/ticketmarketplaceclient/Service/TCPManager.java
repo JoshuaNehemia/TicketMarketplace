@@ -50,8 +50,8 @@ public class TCPManager {
 
     public final void ReceivedFromServer() {
         try {
-            BufferedReader ReceivedFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            communicationFromServer = ReceivedFromServer.readLine();
+            BufferedReader receivedFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            setCommunicationFromServer(receivedFromServer.readLine());
             clientSocket.close();
         } catch (Exception ex) {
             System.out.println("Warning :" + ex.getMessage());

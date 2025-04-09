@@ -29,12 +29,21 @@ public class ServerService {
 
     public void UserSignUp(String username, String password, String fullname, String email, LocalDate birthdate) {
         // Add to temporary database
-        repo.ListUser.add(new User(username, password, fullname, email, birthdate));
-        // DEBUG
-        System.out.println(repo.ListUser.size());
-        for (User u : repo.ListUser) {
-            u.DebugUserData();
+        try
+        {
+            repo.ListUser.add(new User(username, password, fullname, email, birthdate));
         }
+        catch (Exception ex)
+        {
+            
+        }
+
+
+        // DEBUG
+        //System.out.println(repo.ListUser.size());
+        //for (User u : repo.ListUser) {
+        //    u.DebugUserData();
+        //}
         // Add to SQL database
         //DAO_User.XXXXXXXXXXXX
     }
