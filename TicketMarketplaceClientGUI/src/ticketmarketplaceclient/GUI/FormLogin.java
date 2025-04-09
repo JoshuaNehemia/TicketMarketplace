@@ -129,7 +129,7 @@ public class FormLogin extends javax.swing.JFrame {
             
             this.dispose();
          }else{
-            JOptionPane.showMessageDialog(null, "Login gagal, username atau salah!", "Gagal", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Login gagal, username atau password salah!", "Gagal", JOptionPane.INFORMATION_MESSAGE);
 
         }
     }//GEN-LAST:event_jButton1ActionPerformed
