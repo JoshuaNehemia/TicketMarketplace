@@ -157,6 +157,9 @@ public class FormRegister extends javax.swing.JFrame {
         String email = jTextField2.getText();
         String username = jTextField4.getText();
         String password = jTextField3.getText();
+        if(password.length()<8){
+           JOptionPane.showMessageDialog(null, "Registrasi gagal, password minimal 8 karakter!", "Gagal", JOptionPane.INFORMATION_MESSAGE);
+        }
         
         boolean res =clientService.UserSignUp(username, password, fullname, email);
         if(res){
