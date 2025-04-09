@@ -30,31 +30,42 @@ public class TCPManager {
     public final void ConnectToServer() {
         try {
             clientSocket = new Socket(this.getAddress(), this.getPort());
+            System.out.println("Connected to server");
+
         } catch (Exception ex) {
             System.out.println("Warning :" + ex.getMessage());
         }
     }
-
+    
     public final void SendToServer() {
-
-        try {
+    try {
+        // open connection if it not opened yet
+        if (clientSocket == null || clientSocket.isClosed()) {
             this.ConnectToServer();
-            DataOutputStream sendToServer = new DataOutputStream(clientSocket.getOutputStream());
-            sendToServer.writeBytes(communicationToServer + "\n");
-        } catch (Exception ex) {
-            System.out.println("Warning :" + ex.getMessage());
         }
-    }
 
-    public final void ReceivedFromServer() {
-        try {
-            BufferedReader ReceivedFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            communicationFromServer = ReceivedFromServer.readLine();
-            clientSocket.close();
-        } catch (Exception ex) {
-            System.out.println("Warning :" + ex.getMessage());
-        }
+        DataOutputStream sendToServer = new DataOutputStream(clientSocket.getOutputStream());
+        System.out.println("Sending: " + communicationToServer);
+        sendToServer.writeBytes(communicationToServer + "\n");
+        sendToServer.flush();
+    } catch (Exception ex) {
+        System.out.println("Warning (SendToServer): " + ex.getMessage());
     }
+}
+
+public final void ReceivedFromServer() {
+    try {
+        BufferedReader receivedFromServer = new BufferedReader(
+                new InputStreamReader(clientSocket.getInputStream())
+        );
+        communicationFromServer = receivedFromServer.readLine();
+        System.out.println("Received: " + communicationFromServer);
+        clientSocket.close();
+    } catch (Exception ex) {
+        System.out.println("Warning (ReceivedFromServer): " + ex.getMessage());
+    }
+}
+
 
     public String getCommunicationFromServer() {
         return communicationFromServer;

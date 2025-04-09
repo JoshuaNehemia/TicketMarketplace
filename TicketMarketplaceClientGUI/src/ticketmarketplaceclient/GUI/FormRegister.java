@@ -5,6 +5,7 @@
 package ticketmarketplaceclient.GUI;
 import TicketMarketplaceClient.Service.ClientService;
 import javax.swing.JOptionPane;
+import ticketmarketplaceclient.Service.TCPManager;
 
 
 
@@ -13,13 +14,14 @@ import javax.swing.JOptionPane;
  * @author Lenovo
  */
 public class FormRegister extends javax.swing.JFrame {
-    ClientService clientService = new ClientService();
+    ClientService clientService;
     private FormLogin parentForm;
+    
 
-    public FormRegister(FormLogin loginForm) {
+    public FormRegister(FormLogin loginForm, ClientService pclientService) {
         initComponents();
         parentForm = loginForm;
-        clientService.ClientStartUp();
+        clientService=pclientService;
     }
 
     /**
@@ -159,17 +161,14 @@ public class FormRegister extends javax.swing.JFrame {
         boolean res =clientService.UserSignUp(username, password, fullname, email);
         if(res){
             JOptionPane.showMessageDialog(null, "Registrasi berhasil, silakan login!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
-            
-//            For mLogin login = new FormLogin();
-//            login.setVisible(true);
-            
-  
             parentForm.username=username;
             parentForm.showRegistrationSuccess();
             
             this.setVisible(false);
             parentForm.setVisible(true);
-         }
+         }else{
+             JOptionPane.showMessageDialog(null, "Registrasi gagal, username sudah digunakan", "Gagal", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

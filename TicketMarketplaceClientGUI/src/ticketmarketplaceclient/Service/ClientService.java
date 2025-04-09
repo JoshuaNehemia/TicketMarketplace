@@ -19,30 +19,26 @@ import ticketmarketplaceclient.Service.TCPManager;
 public class ClientService {
 
     public boolean UserSignUp(String username, String password, String fullname, String email ) {
+        LocalDate birthdate = LocalDate.now(); //nanti tambahin di form dan kirim sebegai parameter kesini
         List<String> data = new ArrayList<>();
         data.add(username);
         data.add(password);
         data.add(fullname);
         data.add(email);
-        //data.add(birthdate.toString());
+        data.add(birthdate.toString());
         
         String task = "SU";
         String dividers = ";";
         String message = Communication.TranslateToCommunication(task, data.toArray(new String[0]), dividers);
-        System.out.println(message);
-        
+
         tcp.setCommunicationToServer(message);
         tcp.SendToServer();
-//        res=tcp.ReceivedFromServer();
+        tcp.ReceivedFromServer();
+        String res=tcp.getCommunicationFromServer();
         System.out.println("Pesan dari server: " + tcp.getCommunicationFromServer());
-        //...send to server
-        boolean res=true;
-//        if(res){
-//            
-//        }
         
-//       successful or unsucessful
-        return res;
+        //handle server response
+        return res.equals("register ok");
     }
     
     TCPManager tcp;
@@ -64,17 +60,13 @@ public class ClientService {
         
         tcp.setCommunicationToServer(message);
         tcp.SendToServer();
-//        res=tcp.ReceivedFromServer();
+        tcp.ReceivedFromServer();
+        String res=tcp.getCommunicationFromServer();
         System.out.println("Pesan dari server: " + tcp.getCommunicationFromServer());
-   
-        //...send to server
-        boolean res=true;
-//        if(res){
-//            
-//        }
+
         
-//       successful or unsucessful
-        return res;
+        //handle server response
+        return res.equals("login ok");
     }
     
     public static void main(String[] args) {

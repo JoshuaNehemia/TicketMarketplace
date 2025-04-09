@@ -33,18 +33,35 @@ public class ServerApp {
         {
             //Server accepting message from client
             tcp.ReceivedCommunication();
-            System.out.println("server hit");
+            tcp.setCommunicationToClient("");
+//            System.out.println(tcp.getCommunicationFromClient());
             String[] command = Communication.TranslateToListOfCommand(tcp.getCommunicationFromClient(), ";");
-            System.out.println(command[0]);
 
-            if(command[0].equals("LI"))
+
+            if(command[1].equals("LI"))
             {
-                System.out.println("login hit");
-                service.UserLogIn(command[1], command[2]);
+                try{
+                    service.UserLogIn(command[3], command[4]);
+                    tcp.setCommunicationToClient("login ok");
+                }catch(Exception err){
+                    tcp.setCommunicationToClient("login err");
+                }
             }
             else if(command[1].equals("SU"))
             {
-                service.UserSignUp(command[1], command[2],command[3],command[4],LocalDate.parse(command[5]));
+                try {
+                    service.UserSignUp(command[3], command[4], command[5], command[6], LocalDate.parse(command[7]));
+                    tcp.setCommunicationToClient("register ok");
+                } catch (Exception err) {
+                    tcp.setCommunicationToClient("register err: " + err.getMessage());
+                }
+            }
+            tcp.SendCommunication();
+            
+            try {
+              tcp.incomingSocket.close();
+            } catch (Exception e) {
+                System.out.println("Error closing socket: " + e.getMessage());
             }
             //For Debugging
             //MenuCLI.StartUpMenuCLI();

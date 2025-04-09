@@ -4,17 +4,25 @@
  */
 package ticketmarketplaceclient.GUI;
 
+import TicketMarketplaceClient.Service.ClientService;
+
 /**
  *
  * @author Lenovo
  */
 public class FormListofTicketScroll extends javax.swing.JFrame {
-
+    ClientService clientService;
+    private FormLogin parentForm;
+    String username;
     /**
      * Creates new form FormListOfTicket
      */
-    public FormListofTicketScroll() {
+    public FormListofTicketScroll(FormLogin loginForm, ClientService pclientService, String pUsername) {
         initComponents();
+        parentForm = loginForm;
+        clientService=pclientService;
+        username=pUsername;
+        System.out.println(username);
     }
 
     /**
@@ -1057,12 +1065,12 @@ public class FormListofTicketScroll extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormListofTicketScroll().setVisible(true);
-            }
-        });
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FormListofTicketScroll().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

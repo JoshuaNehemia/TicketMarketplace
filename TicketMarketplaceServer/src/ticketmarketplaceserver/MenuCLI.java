@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import TicketMarketplaceEntities.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -47,13 +49,17 @@ public class MenuCLI {
         System.out.println(content);
         String password = myScan.nextLine();
 
-        User loggedIn = ServerApp.service.UserLogIn(username, password);
-        
+        try {
+            User loggedIn = ServerApp.service.UserLogIn(username, password);
+            
 //        if (loggedIn) {
 //            MainMenuCLI();
 //        } else {
 //            System.out.println("Wrong Username or Password");
 //        }
+        } catch (Exception ex) {
+            Logger.getLogger(MenuCLI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public static void UserSignUpMenuCLI() {
@@ -80,7 +86,11 @@ public class MenuCLI {
 
         LocalDate birthDate = LocalDate.parse(birthdate);
 
-        ServerApp.service.UserSignUp(username, password, fullName, email, birthDate);
+        try {
+            ServerApp.service.UserSignUp(username, password, fullName, email, birthDate);
+        } catch (Exception ex) {
+            Logger.getLogger(MenuCLI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public static void MainMenuCLI() {

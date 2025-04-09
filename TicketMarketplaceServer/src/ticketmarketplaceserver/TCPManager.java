@@ -49,14 +49,16 @@ public class TCPManager {
         try{
             DataOutputStream sendToClient = new DataOutputStream (incomingSocket.getOutputStream());
             sendToClient.writeBytes(communicationToClient + "\n");
-            s.close();
+            sendToClient.flush();
+            incomingSocket.close();
         }
         catch (Exception ex)
         {
             System.out.println("Warning : " + ex.getMessage()); 
         }
     }
-        public String getCommunicationFromClient() {
+    
+    public String getCommunicationFromClient() {
         return communicationFromClient;
     }
 

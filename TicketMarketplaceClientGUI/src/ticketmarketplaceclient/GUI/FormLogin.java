@@ -123,17 +123,19 @@ public class FormLogin extends javax.swing.JFrame {
         
         boolean res =clientService.UserLogIn(usernameOrEmail, password);
         if(res){
-//            ...set current user in server.
-
-            FormListofTicketScroll login = new FormListofTicketScroll();
+            username =usernameOrEmail;
+            FormListofTicketScroll login = new FormListofTicketScroll(this,clientService,username);
             login.setVisible(true);
             
             this.dispose();
-         }
+         }else{
+            JOptionPane.showMessageDialog(null, "Login gagal, username atau salah!", "Gagal", JOptionPane.INFORMATION_MESSAGE);
+
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-        FormRegister regisForm = new FormRegister(this);
+        FormRegister regisForm = new FormRegister(this, clientService);
         regisForm.setVisible(true);
         this.setVisible(false); 
     }//GEN-LAST:event_jLabel3MouseClicked

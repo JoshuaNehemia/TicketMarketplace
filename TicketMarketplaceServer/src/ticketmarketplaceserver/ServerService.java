@@ -27,7 +27,12 @@ public class ServerService {
         currentUser = new User();
     }
 
-    public void UserSignUp(String username, String password, String fullname, String email, LocalDate birthdate) {
+    public void UserSignUp(String username, String password, String fullname, String email, LocalDate birthdate) throws Exception {
+        for (User u : repo.ListUser) {
+            if(u.getUsername().equals(username)){
+                throw new Exception("Username already exist");
+            }
+        }
         // Add to temporary database
         repo.ListUser.add(new User(username, password, fullname, email, birthdate));
         // DEBUG
@@ -43,7 +48,7 @@ public class ServerService {
     * @param username 
     * @param password
     */
-    public User UserLogIn(String username, String password) {
+    public User UserLogIn(String username, String password) throws Exception {
         //Using temporary Database
         for (User u : repo.ListUser) {
             if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
@@ -51,7 +56,7 @@ public class ServerService {
                 return u;
             }
         }
-        return new User();
+        throw new Exception("Username already exist");
     }
     
     public void SellerSIgnUp(String username, String password, String companyName, String companyAddress, String phoneNumber, String email){
