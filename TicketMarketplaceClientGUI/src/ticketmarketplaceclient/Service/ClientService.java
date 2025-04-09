@@ -16,8 +16,15 @@ import TicketMarketplaceEntities.*;
  */
 public class ClientService {
 
-    TCPManager tcp;
+    //For TCP
+    private TCPManager tcp;
+    private String commandReceived = "";
+    private String[] dataReceived;
+
+    //Communication
     private String dividers = ";";
+    
+    //Service 
     private User currentUser;
 
     public ClientService() {
@@ -26,6 +33,26 @@ public class ClientService {
         currentUser = new User();
     }
 
+    public void SendToServer(String message)
+    {
+        tcp.setCommunicationToServer(message);
+        tcp.SendToServer();
+        System.out.println("Sent to server");
+    }
+    
+    private void ReceivedFromServer()
+    {   
+        tcp.ReceivedFromServer();
+        String communication = tcp.getCommunicationFromServer();
+        System.out.println("Message received from server: \n" + communication);
+        this.commandReceived= Communication.TranslateToListOfCommand(communication, dividers)[0];
+        System.out.println("Message processed!");
+        this.dataReceived = Communication.GetDataFromCommunication(communication, dividers);
+        System.out.println("Data received!");
+        tcp.CloseClientSocket();
+        tcp.ConnectToServer();
+        
+    }
     public boolean UserSignUp(String username, String password, String fullname, String email, LocalDate birthdate) {
         List<String> data = new ArrayList<>();
         data.add(username);
@@ -38,15 +65,12 @@ public class ClientService {
         String task = "SU";
         String message = Communication.TranslateToCommunication(task, data.toArray(new String[0]), dividers);
         System.out.println(message);
-
-        tcp.setCommunicationToServer(message);
-        tcp.SendToServer();
+        this.SendToServer(message);
 //        res=tcp.ReceivedFromServer();
-        String reply = tcp.getCommunicationFromServer();
-        System.out.println("Pesan dari server: \n" + reply);
+        this.ReceivedFromServer();
         //...send to server
         boolean res = false;
-        if (reply.equals("SUCCESS")) {
+        if (this.commandReceived.equals("SUCCESS")) {
             res = true;
         }
 
@@ -62,19 +86,13 @@ public class ClientService {
         String task = "LI";
         String message = Communication.TranslateToCommunication(task, data.toArray(new String[0]), dividers);
         System.out.println(message);
-
-        tcp.setCommunicationToServer(message);
-        tcp.SendToServer();
-//        res=tcp.ReceivedFromServer();
-        tcp.ReceivedFromServer();
-        String reply = tcp.getCommunicationFromServer();
-        String command = Communication.TranslateToListOfCommand(reply, ";")[0];
-        String[] buffer = Communication.GetDataFromCommunication(reply,";");
-        System.out.println("Pesan dari server: \n" + reply);
+        this.SendToServer(message);
+        
+        this.ReceivedFromServer();
         boolean res = false;
-        if(command.equals("SUCCESS"))
+        if(this.commandReceived.equals("SUCCESS"))
         {
-            this.currentUser = new User(buffer[0],buffer[1],buffer[2],buffer[3],LocalDate.parse(buffer[4]));
+            this.currentUser = new User(this.dataReceived[0],this.dataReceived[1],this.dataReceived[2],this.dataReceived[3],LocalDate.parse(this.dataReceived[4]));
             res = true;
         }
         else

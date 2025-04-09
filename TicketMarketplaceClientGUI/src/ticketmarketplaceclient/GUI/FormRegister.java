@@ -64,6 +64,12 @@ public class FormRegister extends javax.swing.JFrame {
 
         jLabel6.setText("Password");
 
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
+
         jLabel4.setText("Minimal 8 karakter");
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -129,7 +135,6 @@ public class FormRegister extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(52, 52, 52)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
@@ -206,25 +211,40 @@ public class FormRegister extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String fullname = jTextField1.getText();
-        String email = jTextField2.getText();
-        String username = jTextField4.getText();
-        String password = jTextField3.getText();
-        String date = jTextFieldBirthdateYear.getText() + "-" + jTextFieldBirthdateMonth.getText() + "-" + jTextFieldBirthdateDay.getText();
-        LocalDate birthdate = LocalDate.parse(date);
-        boolean res = FormLogin.service.UserSignUp(username, password, fullname, email, birthdate);
-        if (res) {
-            JOptionPane.showMessageDialog(null, "Registrasi berhasil, silakan login!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+        try {
+            String fullname = jTextField1.getText();
+            String email = jTextField2.getText();
+            String username = jTextField4.getText();
+            String password = jTextField3.getText();
+            if(!(password.length()>=8))
+            {
+                throw new Exception("Password must be in minimum of 8 characters");
+            }
+            String date = jTextFieldBirthdateYear.getText() + "-" + jTextFieldBirthdateMonth.getText() + "-" + jTextFieldBirthdateDay.getText();
+            LocalDate birthdate = LocalDate.parse(date);
+            boolean res = FormLogin.service.UserSignUp(username, password, fullname, email, birthdate);
+            if (res) {
+                JOptionPane.showMessageDialog(null, "Registrasi berhasil, silakan login!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
 
 //            For mLogin login = new FormLogin();
 //            login.setVisible(true);
-            parentForm.username = username;
-            parentForm.showRegistrationSuccess();
+                parentForm.username = username;
+                parentForm.showRegistrationSuccess();
 
-            this.setVisible(false);
-            parentForm.setVisible(true);
+                this.setVisible(false);
+                parentForm.setVisible(true);
+            }
         }
+        catch (Exception ex)
+        {
+            JOptionPane.showMessageDialog(null, "Warning!", "Error : " + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
 
     /**
      * @param args the command line arguments

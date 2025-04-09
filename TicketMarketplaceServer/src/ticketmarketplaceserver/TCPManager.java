@@ -1,4 +1,4 @@
-    /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -20,9 +20,8 @@ import Communication.*;
  */
 public class TCPManager {
 
-
-    private String communicationFromClient="";
-    private String communicationToClient="";
+    private String communicationFromClient = "";
+    private String communicationToClient = "";
     Socket incomingSocket;
     ServerSocket s;
 
@@ -47,23 +46,28 @@ public class TCPManager {
             System.out.println("Warning : " + ex.getMessage());
         }
     }
-    
-    public final void SendCommunication()
-    {
-        try{
+
+    public final void SendCommunication() {
+        try {
             System.out.println("Server preparing to send a message: ");
             System.out.println(communicationToClient);
-            DataOutputStream sendToClient = new DataOutputStream (incomingSocket.getOutputStream());
+            DataOutputStream sendToClient = new DataOutputStream(incomingSocket.getOutputStream());
             sendToClient.writeBytes(communicationToClient + "\n");
             System.out.println("Message sent");
-            s.close();
-        }
-        catch (Exception ex)
-        {
-            System.out.println("Warning : " + ex.getMessage()); 
+        } catch (Exception ex) {
+            System.out.println("Warning : " + ex.getMessage());
         }
     }
-        public String getCommunicationFromClient() {
+
+    public final void CloseServerSocket() {
+        try {
+            s.close();
+        } catch (Exception ex) {
+            System.out.println("Warning : " + ex.getMessage());
+        }
+    }
+
+    public String getCommunicationFromClient() {
         return communicationFromClient;
     }
 
@@ -79,5 +83,4 @@ public class TCPManager {
         this.communicationToClient = communicationToClient;
     }
 
-    
 }

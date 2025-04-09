@@ -32,6 +32,11 @@ public class TCPManager {
             if (clientSocket == null || clientSocket.isClosed()) {
                 clientSocket = new Socket(this.getAddress(), this.getPort());
             }
+            else
+            {
+                this.CloseClientSocket();
+                this.ConnectToServer();
+            }
         } catch (Exception ex) {
             System.out.println("Warning :" + ex.getMessage());
         }
@@ -40,7 +45,6 @@ public class TCPManager {
     public final void SendToServer() {
 
         try {
-            this.ConnectToServer();
             DataOutputStream sendToServer = new DataOutputStream(clientSocket.getOutputStream());
             sendToServer.writeBytes(communicationToServer + "\n");
         } catch (Exception ex) {
@@ -52,10 +56,18 @@ public class TCPManager {
         try {
             BufferedReader receivedFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             setCommunicationFromServer(receivedFromServer.readLine());
-            clientSocket.close();
         } catch (Exception ex) {
             System.out.println("Warning :" + ex.getMessage());
         }
+    }
+    
+    public final void CloseClientSocket()
+    {
+       try {
+            clientSocket.close();
+        } catch (Exception ex) {
+            System.out.println("Warning :" + ex.getMessage());
+        } 
     }
 
     public String getCommunicationFromServer() {
