@@ -27,6 +27,14 @@ public class ClientService {
     //Service 
     private User currentUser;
 
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
     public ClientService() {
         System.out.println("Client connection is Running");
         tcp = new TCPManager("localhost", 6000);
@@ -92,7 +100,7 @@ public class ClientService {
         boolean res = false;
         if(this.commandReceived.equals("SUCCESS"))
         {
-            this.currentUser = new User(this.dataReceived[0],this.dataReceived[1],this.dataReceived[2],this.dataReceived[3],LocalDate.parse(this.dataReceived[4]));
+            this.setCurrentUser(new User(this.dataReceived[0],this.dataReceived[1],this.dataReceived[2],this.dataReceived[3],LocalDate.parse(this.dataReceived[4])));
             res = true;
         }
         else
