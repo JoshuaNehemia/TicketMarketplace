@@ -237,7 +237,7 @@ public class FormRegister extends javax.swing.JFrame {
         }
         catch (Exception ex)
         {
-            JOptionPane.showMessageDialog(null, "Warning!", "Error : " + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error : " + ex.getMessage(), "Warning!", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed

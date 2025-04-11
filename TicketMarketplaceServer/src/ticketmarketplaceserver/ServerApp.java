@@ -43,7 +43,7 @@ public class ServerApp {
         }
         System.out.println("Performing task!");
         if (service.GetClientCommand().equals("LI")) {
-            service.UserLogIn(service.GetClientCommandData()[0],service.GetClientCommandData()[0]);
+            service.UserLogIn(service.GetClientCommandData()[0],service.GetClientCommandData()[1]);
         } 
         else if (service.GetClientCommand().equals("SU")) {
             service.UserSignUp(service.GetClientCommandData()[0], service.GetClientCommandData()[1], service.GetClientCommandData()[2], service.GetClientCommandData()[3], LocalDate.parse(service.GetClientCommandData()[4]));

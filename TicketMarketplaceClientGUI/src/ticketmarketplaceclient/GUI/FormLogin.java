@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ticketmarketplaceclient.GUI;
+
 import javax.swing.JOptionPane;
 import ticketmarketplaceclient.Service.ClientService;
 
@@ -16,15 +17,12 @@ public class FormLogin extends javax.swing.JFrame {
      * Creates new form FormLogin
      */
     public static ClientService service;
-    public String username="";
-    
+    public String username = "";
+
     public FormLogin() {
         initComponents();
         service = new ClientService();
     }
-
-    
- 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -115,26 +113,37 @@ public class FormLogin extends javax.swing.JFrame {
     public void showRegistrationSuccess() {
         System.out.println("Registrasi berhasil di FormRegister");
     }
-    
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String usernameOrEmail = jTextFieldLoginEmail.getText(); 
-        String password = jTextField2.getText();
-        
-        boolean res = service.UserLogIn(usernameOrEmail, password);
-        if(res){
+
+        try {
+            String usernameOrEmail = jTextFieldLoginEmail.getText();
+
+            String password = jTextField2.getText();
+
+            boolean res = service.UserLogIn(usernameOrEmail, password);
+            if (res) {
 //            ...set current user in server.
 
-            FormListofTicketScroll login = new FormListofTicketScroll();
-            login.setVisible(true);
-            
-            this.dispose();
-         }
+                FormListofTicketScroll login = new FormListofTicketScroll();
+                login.setVisible(true);
+
+                this.dispose();
+            }
+            else
+            {
+            JOptionPane.showMessageDialog(null, "Wrong username or password", "Attention!", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } 
+        catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error : " + ex.getMessage(), "Warning!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         FormRegister regisForm = new FormRegister(this);
         regisForm.setVisible(true);
-        this.setVisible(false); 
+        this.setVisible(false);
     }//GEN-LAST:event_jLabel3MouseClicked
 
     /**

@@ -30,7 +30,7 @@ public class ServerService {
 
     //Communication
     private String dividers = ";";
-
+    String[] dummy = new String[3];
     
     //Constructor --------------------------------------------------------------
     public ServerService() {
@@ -76,7 +76,6 @@ public class ServerService {
         } catch (Exception ex) {
 
         }
-        String[] dummy = new String[3];
         this.SendToClient(Communication.TranslateToCommunication("SUCCESS",dummy,dividers));
     }
 
@@ -99,7 +98,7 @@ public class ServerService {
         if (!buffer.getUsername().equals("")) {
             communication = Communication.TranslateToCommunication("SUCCESS", buffer.GetUserData(), ";");
         } else {
-            communication = "FAILED";
+            communication = Communication.TranslateToCommunication("FAILED",dummy , ";");
         }
         this.SendToClient(communication);
     }
