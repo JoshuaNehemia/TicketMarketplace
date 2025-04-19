@@ -51,16 +51,17 @@ public class ServerService implements Runnable {
             while (true) {
                 // Receiving client request for connection
                 // Three-Way Handshake 
-                System.out.println("Server is listening - waiting for new client...");
+                System.out.println(InteractiveIO.BlueMessage("Server is listening - waiting for new client..."));
                 Socket incomingClient = serverSocket.accept();
-                System.out.println("Client connected: " + incomingClient);
+                System.out.println(InteractiveIO.GreenMessage("NEW Client connected:"));
+                System.out.println(incomingClient);
 
                 // Add client to SocketHandler
                 // For server to know which client is requesting and can send response to the right client
                 ServerSocketHandler clientHandler = new ServerSocketHandler(incomingClient, this);
                 clientHandler.start();
                 clients.add(clientHandler);
-                System.out.println("Client added");
+                System.out.println(InteractiveIO.GreenMessage("Client added"));
             }
         } catch (Exception ex) {
             Logger.getLogger(ServerService.class.getName()).log(Level.SEVERE, null, ex);
@@ -69,7 +70,7 @@ public class ServerService implements Runnable {
 
     public void start() {
         if (t == null) {
-            t = new Thread (this,"client");
+            t = new Thread(this, "client");
             t.start();
         }
     }
@@ -81,7 +82,7 @@ public class ServerService implements Runnable {
             this.serverSocket = new ServerSocket(port);
             System.out.println("Server is running!");
         } catch (Exception ex) {
-            System.out.println("Warning : " + ex.getMessage());
+            System.out.println(InteractiveIO.RedMessage("Warning : " + ex.getMessage()));
         }
     }
 
@@ -95,7 +96,7 @@ public class ServerService implements Runnable {
 
             System.out.println("Message sent");
         } catch (Exception ex) {
-            System.out.println("Warning : " + ex.getMessage());
+            System.out.println(InteractiveIO.RedMessage("Warning : " + ex.getMessage()));
         }
     }
 
@@ -112,7 +113,7 @@ public class ServerService implements Runnable {
         try {
             this.serverSocket.close();
         } catch (Exception ex) {
-            System.out.println("Warning : " + ex.getMessage());
+            System.out.println(InteractiveIO.RedMessage("Warning : " + ex.getMessage()));
         }
     }
 
@@ -137,7 +138,7 @@ public class ServerService implements Runnable {
         try {
             repo.ListUser.add(new User(username, password, fullname, email, birthdate));
         } catch (Exception ex) {
-
+            System.out.println(InteractiveIO.RedMessage("Warning : " + ex.getMessage()));
         }
 
         this.SendToClient(username, new Communication(username, "SUCCESS", null).getMessage());
@@ -152,18 +153,22 @@ public class ServerService implements Runnable {
         User buffer = new User();
 
         //Using temporary Database
-        for (User u : repo.ListUser) {
-            if (u.getUsername().equals(_username) && u.getPassword().equals(password)) {
-                buffer = u;
+        try {
+            for (User u : repo.ListUser) {
+                if (u.getUsername().equals(_username) && u.getPassword().equals(password)) {
+                    buffer = u;
+                }
             }
+            String communication = "";
+            if (!buffer.getUsername().equals("")) {
+                communication = new Communication(_username, "SUCCESS", buffer.GetUserData()).getMessage();
+            } else {
+                communication = new Communication(_username, "FAILED", null).getMessage();
+            }
+            this.SendToClient(_username, communication);
+        } catch (Exception ex) {
+            System.out.println(InteractiveIO.RedMessage("Warning : " + ex.getMessage()));
         }
-        String communication = "";
-        if (!buffer.getUsername().equals("")) {
-            communication = new Communication(_username, "SUCCESS", buffer.GetUserData()).getMessage();
-        } else {
-            communication = new Communication(_username, "FAILED", null).getMessage();
-        }
-        this.SendToClient(_username, communication);
     }
 
     //Seller -------------------------------------------------------------------

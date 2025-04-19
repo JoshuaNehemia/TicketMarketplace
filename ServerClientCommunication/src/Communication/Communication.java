@@ -92,7 +92,7 @@ public class Communication {
         if (buf.length > 4) {
             this.data = new String[(buf.length - 4) - 0];
             for (int i = 3; i < (buf.length - 1); i++) {
-                data[i - 2] = buf[i];
+                data[i - 3] = buf[i];
             }
         } else {
             this.setData(null);

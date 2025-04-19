@@ -87,7 +87,9 @@ public class ServerSocketHandler extends Thread {
     // Function ----------------------------------------------------------------
     public final void SendMessage(String _message) {
         try {
-            System.out.println("Sending Message...");
+            // Getting client address
+            this.sendToClient = new DataOutputStream(this.clientSocket.getOutputStream());
+            System.out.println("Sending Message to" + this.clientSocket);
             this.sendToClient.writeBytes(_message + "\n");
             System.out.println("Message sent: " + _message);
             server.RemoveClient(this);
@@ -98,25 +100,23 @@ public class ServerSocketHandler extends Thread {
 
     @Override
     public void run() {
-        try {
-            
-            // Getting client address
-            this.sendToClient = new DataOutputStream(this.clientSocket.getOutputStream());
+        while (true) {
+            try {
+                // Getting client message
+                System.out.println("Ready to receive message from client: " + this.clientSocket);
+                this.receivedFromClient = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
+                setMessageFromClient(receivedFromClient.readLine());
+                
 
-            // Getting client message
-            this.receivedFromClient = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
-            setMessageFromClient(receivedFromClient.readLine());
-
-            // Getting username 
-            this.setUsername(new Communication(this.messageFromClient).getUsername());
-            if ((this.messageFromClient = receivedFromClient.readLine()) != null) {
-                System.out.println("Received from client: " + messageFromClient);
+                // Getting username 
+                this.setUsername(new Communication(this.messageFromClient).getUsername());
+                if (this.messageFromClient != null) {
+                    System.out.println("Received from client: " + messageFromClient);
+                }
+            } catch (IOException ex) {
+                System.out.println("Client disconnected or error: " + ex.getMessage());
             }
-        } 
-        catch (IOException ex) {
-            System.out.println("Client disconnected or error: " + ex.getMessage());
         }
     }
-
 
 }
