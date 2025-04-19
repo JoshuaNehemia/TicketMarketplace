@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 import TicketMarketplaceEntities.*;
+import java.io.IOException;
 
 /**
  *
@@ -48,20 +49,19 @@ public class ClientService {
         System.out.println("Sent to server");
     }
     
-    private void ReceivedFromServer()
+    private void ReceivedFromServer() throws IOException
     {   
         tcp.ReceivedFromServer();
-        String communication = tcp.getCommunicationFromServer();
-        System.out.println("Message received from server: \n" + communication);
-        this.commandReceived= Communication.TranslateToListOfCommand(communication, dividers)[0];
+        String message = tcp.getCommunicationFromServer();
+        System.out.println("Message received from server: \n" + message);
+        this.commandReceived=  message;
         System.out.println("Message processed!");
-        this.dataReceived = Communication.GetDataFromCommunication(communication, dividers);
         System.out.println("Data received!");
         tcp.CloseClientSocket();
         tcp.ConnectToServer();
         
     }
-    public boolean UserSignUp(String username, String password, String fullname, String email, LocalDate birthdate) {
+    public boolean UserSignUp(String username, String password, String fullname, String email, LocalDate birthdate) throws IOException {
         List<String> data = new ArrayList<>();
         data.add(username);
         data.add(password);
@@ -71,7 +71,7 @@ public class ClientService {
         //data.add(birthdate.toString());
 
         String task = "SU";
-        String message = Communication.TranslateToCommunication(task, data.toArray(new String[0]), dividers);
+        String message = new Communication(username,task,data.toArray(new String[0])).getMessage();
         System.out.println(message);
         this.SendToServer(message);
 //        res=tcp.ReceivedFromServer();
@@ -86,13 +86,13 @@ public class ClientService {
         return res;
     }
 
-    public boolean UserLogIn(String username, String password) {
+    public boolean UserLogIn(String username, String password) throws IOException {
         List<String> data = new ArrayList<>();
         data.add(username);
         data.add(password);
 
         String task = "LI";
-        String message = Communication.TranslateToCommunication(task, data.toArray(new String[0]), dividers);
+        String message = new Communication(username,task,data.toArray(new String[0])).getMessage();
         System.out.println(message);
         this.SendToServer(message);
         

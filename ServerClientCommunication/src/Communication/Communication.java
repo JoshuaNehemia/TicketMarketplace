@@ -1,94 +1,110 @@
+package Communication;
+
+import java.io.IOException;
+import java.util.List;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Communication;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  *
  * @author joshu
  */
-
-
 /**
- * Utility class for handling client-server communication by formatting and parsing messages.
+ * Utility class for handling client-server communication by formatting and
+ * parsing messages.
  */
 public class Communication {
-    
-    // FUNCTION ----------------------------------------------------------------
-    /**
-     * Splits a received communication string into an array of commands based on the specified divider characters.
-     *
-     * @param communication The received string from communication between client-server architecture.
-     * @param dividers The characters that divide the communication command and data (e.g., ';', '~', '-').
-     * @return An array of commands extracted from the communication string.
-     */
-    public static final String[] TranslateToListOfCommand(String communication,String dividers)
-    {
-        return communication.split(dividers);
-    }
-   
-     /**
-     * Converts a task and its associated data into a formatted communication string.
-     *
-     * @param task The task command to be included in the communication.
-     * @param data The array of data elements related to the task.
-     * @param dividers The characters used to separate different parts of the communication.
-     * @return A formatted communication string containing the task and data.
-     */
-    public static final String TranslateToCommunication(String task, String[] data, String dividers)
-    {
-        String communication =("" + task + dividers + "DATASTART" + dividers);
-//        for( String d : data)
-//        {
-//            communication += (d + dividers);
-//        }
-//        communication += "DATAEND";
-        communication += String.join(dividers, data);
-    
-        communication += dividers + "DATAEND";
-        return communication;
-    }
-   
-     /**
-     * Extracts the data portion from a formatted communication string.
-     *
-     * @param communication The received communication string containing task and data.
-     * @param dividers The characters used to separate different parts of the communication.
-     * @return An array of extracted data elements.
-     */
-    public static final String[] GetDataFromCommunication(String communication, String dividers)
-    {
-        return GetDataFromCommand(TranslateToListOfCommand(communication,dividers));
-    }
-    
-    /**
-     * Extracts the data portion from a list of parsed communication commands.
-     *
-     * @param ListOfCommand The list of commands obtained from communication parsing.
-     * @return An array containing only the extracted data elements.
-     */
-    public static final String[] GetDataFromCommand(String[] ListOfCommand)
-    {
-        String[] result;
-        ArrayList<String> buffer = new ArrayList<>();
-        int end = (ListOfCommand.length-1);
-        
-        result = new String[end-2];
-        
-        for(int i=2;i<end;i++)
-        {
-            buffer.add(ListOfCommand[i]);
-        }
-        result = buffer.toArray(result);
-        
-        return result;
+
+    private String username;
+    private String command;
+    private String[] data;
+    private String divider = ";";
+    private String message;
+
+    public Communication() {
+        this.command = "";
+        this.data = null;
+        this.message = "";
     }
 
-    public static String TranslateToCommunication(String task, List<String> data, String dividers) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Communication(String _message) throws IOException {
+        this.setMessage(_message);
+        this.TranslateMessage();
+    }
+
+    public Communication(String _username, String _command, String[] _data) throws IOException {
+        this.setCommand(_command);
+        this.setUsername(_username);
+        if (_data != null) {
+
+            this.setData(_data);
+        }
+        else
+        {
+            this.data = new String[0];
+        }
+        this.CreateMessage();
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
+    }
+
+    public String[] getData() {
+        return data;
+    }
+
+    public void setData(String[] data) {
+        this.data = data;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String _message) throws IOException {
+        if (!_message.equals("")) {
+            this.message = _message;
+        } else {
+            throw new IOException("Communication message can't be empty");
+        }
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    // FUNCTION ----------------------------------------------------------------
+    private void TranslateMessage() {
+        String[] buf = this.message.split(this.divider);
+        this.setCommand(buf[0]);
+        this.setUsername(buf[1]);
+        if (buf.length > 4) {
+            this.data = new String[(buf.length - 4) - 0];
+            for (int i = 3; i < (buf.length - 1); i++) {
+                data[i - 2] = buf[i];
+            }
+        } else {
+            this.setData(null);
+        }
+    }
+
+    private void CreateMessage() throws IOException {
+        String buf = this.command + this.divider + this.username + this.divider + "DATA-BEGIN" + this.divider;
+        for (String s : this.data) {
+            buf += s + this.divider;
+        }
+        buf += "DATA-END";
+        this.setMessage(buf);
     }
 }

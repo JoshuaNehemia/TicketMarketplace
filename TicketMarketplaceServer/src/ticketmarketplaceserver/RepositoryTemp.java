@@ -30,7 +30,22 @@ public class RepositoryTemp {
         ListVenue = new ArrayList<Venue>();
     }
     
-    
+    private void CreateUser()
+    {
+        //ListUser.add(new User("joshua123"),);
+    }
+    private void CreateSeller()
+    {
+        
+    }
+    private void CreateVenue()
+    {
+        
+    }
+    private void CreateEvent()
+    {
+        
+    }
     
     
 }
