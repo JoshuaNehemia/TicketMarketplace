@@ -98,6 +98,8 @@ public class Communication {
             this.setData(null);
         }
     }
+    
+    
 
     private void CreateMessage() throws IOException {
         String buf = this.command + this.divider + this.username + this.divider + "DATA-BEGIN" + this.divider;

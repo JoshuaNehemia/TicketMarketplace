@@ -5,11 +5,13 @@
 package ticketmarketplaceserver;
 
 import Communication.Communication;
+import ticketmarketplaceserver.ServerService;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.time.LocalDate;
 
 /**
  *
@@ -100,23 +102,37 @@ public class ServerSocketHandler extends Thread {
 
     @Override
     public void run() {
-        while (true) {
-            try {
-                // Getting client message
-                System.out.println("Ready to receive message from client: " + this.clientSocket);
-                this.receivedFromClient = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
-                setMessageFromClient(receivedFromClient.readLine());
-                
+    try {
+        // create once, not on every loop:
+        this.receivedFromClient =
+            new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
 
-                // Getting username 
-                this.setUsername(new Communication(this.messageFromClient).getUsername());
-                if (this.messageFromClient != null) {
-                    System.out.println("Received from client: " + messageFromClient);
-                }
-            } catch (IOException ex) {
-                System.out.println("Client disconnected or error: " + ex.getMessage());
+        String line;
+        while ((line = receivedFromClient.readLine()) != null) {
+            System.out.println("Received from client: " + line);
+
+            this.messageFromClient = line;
+            
+            this.setUsername(new Communication(line).getUsername());
+
+            Communication message = new Communication(line);
+            String cmd  = message.getCommand();
+            String[] data = message.getData();
+
+            if ("SU".equals(cmd)) {
+                LocalDate birthdate = LocalDate.parse(data[4]);
+                server.UserSignUp(
+                    data[0], data[1], data[2], data[3], birthdate
+                );
+            }else if("LI".equals(cmd)){
+                server.UserLogIn(data[0], data[1]);
             }
+            // …handle other commands…
         }
+    } catch (IOException ex) {
+        System.out.println("Client disconnected or error: " + ex.getMessage());
     }
+}
+
 
 }

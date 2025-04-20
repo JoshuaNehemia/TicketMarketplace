@@ -132,7 +132,7 @@ public class FormLogin extends javax.swing.JFrame {
             }
             else
             {
-            JOptionPane.showMessageDialog(null, "Wrong username or password", "Attention!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Wrong username or password", "Attention!", JOptionPane.ERROR_MESSAGE);
             }
         } 
         catch (Exception ex) {
