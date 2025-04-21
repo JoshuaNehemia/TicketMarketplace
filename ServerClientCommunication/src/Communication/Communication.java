@@ -29,20 +29,18 @@ public class Communication {
         this.message = "";
     }
 
-    public Communication(String _message) throws IOException {
+    public Communication(String _message) throws Exception {
         this.setMessage(_message);
         this.TranslateMessage();
     }
 
-    public Communication(String _username, String _command, String[] _data) throws IOException {
+    public Communication(String _username, String _command, String[] _data) throws Exception {
         this.setCommand(_command);
         this.setUsername(_username);
         if (_data != null) {
 
             this.setData(_data);
-        }
-        else
-        {
+        } else {
             this.data = new String[0];
         }
         this.CreateMessage();
@@ -68,11 +66,11 @@ public class Communication {
         return message;
     }
 
-    public void setMessage(String _message) throws IOException {
+    public void setMessage(String _message) throws Exception {
         if (!_message.equals("")) {
             this.message = _message;
         } else {
-            throw new IOException("Communication message can't be empty");
+            throw new Exception("Communication message can't be empty");
         }
     }
 
@@ -80,12 +78,16 @@ public class Communication {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String username) throws Exception {
+        if (username.equals("") || username == null) {
+            throw new Exception("Username can't be empty");
+        } else {
+            this.username = username;
+        }
     }
 
     // FUNCTION ----------------------------------------------------------------
-    private void TranslateMessage() {
+    private void TranslateMessage() throws Exception {
         String[] buf = this.message.split(this.divider);
         this.setCommand(buf[0]);
         this.setUsername(buf[1]);
@@ -98,10 +100,8 @@ public class Communication {
             this.setData(null);
         }
     }
-    
-    
 
-    private void CreateMessage() throws IOException {
+    private void CreateMessage() throws Exception {
         String buf = this.command + this.divider + this.username + this.divider + "DATA-BEGIN" + this.divider;
         for (String s : this.data) {
             buf += s + this.divider;

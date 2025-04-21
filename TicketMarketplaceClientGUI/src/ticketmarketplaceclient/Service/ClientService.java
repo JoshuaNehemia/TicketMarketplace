@@ -24,7 +24,7 @@ public class ClientService {
 
     //Communication
     private String dividers = ";";
-    
+
     //Service 
     private User currentUser;
 
@@ -42,65 +42,75 @@ public class ClientService {
         currentUser = new User();
     }
 
-    public void SendToServer(String message)
-    {
+    public void SendToServer(String message) {
         tcp.setCommunicationToServer(message);
         tcp.SendToServer();
         System.out.println("Sent to server");
     }
-    
-    private void ReceivedFromServer() throws IOException
-    {   
+
+    private void ReceivedFromServer() throws IOException {
         tcp.ReceivedFromServer();
         String message = tcp.getCommunicationFromServer();
         System.out.println("Message received from server: \n" + message);
-        this.commandReceived=  message;
+        this.commandReceived = message;
         System.out.println("Message processed!");
         System.out.println("Data received!");
         tcp.CloseClientSocket();
         tcp.ConnectToServer();
-        
-    }
-    public boolean UserSignUp(String username, String password, String fullname, String email, LocalDate birthdate) throws IOException {
-        List<String> data = new ArrayList<>();
-        data.add(username);
-        data.add(password);
-        data.add(fullname);
-        data.add(email);
-        data.add(birthdate.toString());
 
-        String task = "SU";
-        String message = new Communication(username,task,data.toArray(new String[0])).getMessage();
-        System.out.println(message);
-        this.SendToServer(message);
-        this.ReceivedFromServer();
-        Communication received = new Communication(this.commandReceived);
-        dataReceived=received.getData();
+    }
+
+    public boolean UserSignUp(String username, String password, String fullname, String email, LocalDate birthdate) throws IOException {
+
         boolean res = false;
-        if(received.getCommand().equals("SUCCESS"))res=true;
-        
+        try {
+            List<String> data = new ArrayList<>();
+            data.add(username);
+            data.add(password);
+            data.add(fullname);
+            data.add(email);
+            data.add(birthdate.toString());
+
+            String task = "SU";
+            String message = new Communication(username, task, data.toArray(new String[0])).getMessage();
+            System.out.println(message);
+            this.SendToServer(message);
+
+            this.ReceivedFromServer();
+            Communication received = new Communication(this.commandReceived);
+            dataReceived = received.getData();
+            if (received.getCommand().equals("SUCCESS")) {
+                res = true;
+            }
+        } catch (Exception exception) {
+            System.out.println(exception);
+        }
+
         return res;
     }
 
     public boolean UserLogIn(String username, String password) throws IOException {
-        List<String> data = new ArrayList<>();
-        data.add(username);
-        data.add(password);
-
-        String task = "LI";
-        String message = new Communication(username,task,data.toArray(new String[0])).getMessage();
-        System.out.println(message);
-        this.SendToServer(message);
-        this.ReceivedFromServer();
-        Communication received = new Communication(this.commandReceived);
-        dataReceived=received.getData();
         boolean res = false;
-        if(received.getCommand().equals("SUCCESS"))
-        {
-            res=true;
-            this.setCurrentUser(new User(this.dataReceived[0],this.dataReceived[1],this.dataReceived[2],this.dataReceived[3],LocalDate.parse(this.dataReceived[4])));
+        try {
+            List<String> data = new ArrayList<>();
+            data.add(username);
+            data.add(password);
+
+            String task = "LI";
+            String message = new Communication(username, task, data.toArray(new String[0])).getMessage();
+            System.out.println(message);
+            this.SendToServer(message);
+            this.ReceivedFromServer();
+            Communication received = new Communication(this.commandReceived);
+            dataReceived = received.getData();
+            if (received.getCommand().equals("SUCCESS")) {
+                res = true;
+                this.setCurrentUser(new User(this.dataReceived[0], this.dataReceived[1], this.dataReceived[2], this.dataReceived[3], LocalDate.parse(this.dataReceived[4])));
+            }
+        } catch (Exception exception) {
+            System.out.println(exception);
         }
-        
+
         return res;
     }
 }

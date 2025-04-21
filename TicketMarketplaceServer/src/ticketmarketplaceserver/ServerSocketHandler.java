@@ -112,7 +112,7 @@ public class ServerSocketHandler extends Thread {
                 server.RunCommand(message.getCommand(), message.getData());
                 // …handle other commands…
             }
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
         }
     }

@@ -87,7 +87,7 @@ public class ServerService implements Runnable {
         try {
             ServerSocketHandler _client = this.DetermineClient(_username);
             System.out.println(InteractiveIO.YellowMessage("SERVER PREPARING TO SEND A MESSAGE: ") + _message);
-            
+
             _client.SendMessage(_message);
         } catch (Exception ex) {
             System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
@@ -139,23 +139,32 @@ public class ServerService implements Runnable {
     }
 
     //User ---------------------------------------------------------------------
-    public void UserSignUp(String username, String password, String fullname, String email, LocalDate birthdate) throws IOException {
+    public void UserSignUp(String username, String password, String fullname, String email, LocalDate birthdate) {
         System.out.println(InteractiveIO.YellowMessage("SIGN UP (SU)"));
 
         boolean usernameExists = repo.ListUser.stream().anyMatch(user -> user.getUsername().equalsIgnoreCase(username));
 
-        if (usernameExists) {
-            String errorMsg = "Username '" + username + "' sudah digunakan.";
-            System.out.println(InteractiveIO.RedMessage("WARNING: " + errorMsg));
-            this.SendToClient(username, new Communication(username, "FAILED" + errorMsg, null).getMessage());
-            return;
+        try {
+            if (usernameExists) {
+                String errorMsg = "The username '" + username + "' is already taken";
+                System.out.println(InteractiveIO.RedMessage("WARNING: " + errorMsg));
+                this.SendToClient(username, new Communication(username, "FAILED" + errorMsg, null).getMessage());
+                return;
+            }
+        } catch (Exception ex) {
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
         }
+
         try {
             repo.ListUser.add(new User(username, password, fullname, email, birthdate));
             this.SendToClient(username, new Communication(username, "SUCCESS", null).getMessage());
         } catch (Exception ex) {
             System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
-            this.SendToClient(username, new Communication(username, "FAILED" + ex.getMessage(), null).getMessage());
+            try {
+                this.SendToClient(username, new Communication(username, "FAILED" + ex.getMessage(), null).getMessage());
+            } catch (Exception excep) {
+                System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
+            }
         }
     }
 
@@ -164,20 +173,20 @@ public class ServerService implements Runnable {
     * @param username 
     * @param password
      */
-    public void UserLogIn(String _username, String password) {
+    public void UserLogIn(String _username, String _password) {
         System.out.println(InteractiveIO.YellowMessage("LOG IN (LI)"));
         User buffer = new User();
 
         //Using temporary Database
         try {
             for (User u : repo.ListUser) {
-                if (u.getUsername().equals(_username) && u.getPassword().equals(password)) {
+                if (u.getUsername().equals(_username) && u.getPassword().equals(_password)) {
                     buffer = u;
                 }
             }
             String communication = "";
             if (!buffer.getUsername().equals("")) {
-                communication = new Communication(_username, "SUCCESS", buffer.GetUserData()).getMessage();
+                communication = new Communication(buffer.getUsername(), "SUCCESS", buffer.GetUserData()).getMessage();
             } else {
                 communication = new Communication(_username, "FAILED", null).getMessage();
             }
