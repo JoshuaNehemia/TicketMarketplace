@@ -5,6 +5,7 @@
 package ticketmarketplaceserver;
 
 import Communication.Communication;
+import Communication.InteractiveIO;
 import ticketmarketplaceserver.ServerService;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -24,16 +25,13 @@ public class ServerSocketHandler extends Thread {
     private Socket clientSocket;
     private DataOutputStream sendToClient;
     private BufferedReader receivedFromClient;
-    private String messageFromClient;
-    private String messageToClient;
 
-    public ServerSocketHandler(Socket clientSocket, ServerService server) throws Exception {
-        this.server = server;
-        this.clientSocket = clientSocket;
+    public ServerSocketHandler(Socket clientSocket, ServerService server) {
         try {
-
+            this.server = server;
+            this.clientSocket = clientSocket;
         } catch (Exception ex) {
-            throw new Exception(ex);
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
         }
     }
 
@@ -62,22 +60,6 @@ public class ServerSocketHandler extends Thread {
         this.receivedFromClient = input;
     }
 
-    public String getMessageFromClient() {
-        return messageFromClient;
-    }
-
-    public void setMessageFromClient(String messageFromClient) {
-        this.messageFromClient = messageFromClient;
-    }
-
-    public String getMessageToClient() {
-        return messageToClient;
-    }
-
-    public void setMessageToClient(String messageToClient) {
-        this.messageToClient = messageToClient;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -86,53 +68,53 @@ public class ServerSocketHandler extends Thread {
         this.username = username;
     }
 
-    // Function ----------------------------------------------------------------
+    // METHOD ----------------------------------------------------------------
     public final void SendMessage(String _message) {
         try {
             // Getting client address
             this.sendToClient = new DataOutputStream(this.clientSocket.getOutputStream());
-            System.out.println("Sending Message to" + this.clientSocket);
-            this.sendToClient.writeBytes(_message + "\n");
-            System.out.println("Message sent: " + _message);
+
+            //System IO for receiving Message
+            System.out.println(InteractiveIO.BlueMessage("SENDING MESSAGE:") + InteractiveIO.BlueMessage("\nTO: ") + this.getClientSocket() + InteractiveIO.BlueMessage("\nMESSAGE: ") + _message);
+            this.getSendToClient().writeBytes(_message + "\n");
+
+            //System IO for alerting successful process
+            System.out.println(InteractiveIO.GreenMessage("MESSAGE SENT: ") + _message);
+            this.DisconnectClient();
+        } catch (Exception ex) {
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
+        }
+    }
+
+    public final void DisconnectClient() {
+        try {
             server.RemoveClient(this);
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
         }
     }
 
     @Override
     public void run() {
-    try {
-        // create once, not on every loop:
-        this.receivedFromClient =
-            new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
+        try {
+            // create once, not on every loop:
+            this.setReceivedFromClient(new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream())));
+            Communication message;
+            String buffer ="";
+            while ((buffer = this.getReceivedFromClient().readLine()) != null) {
+                message = new Communication(buffer);
+                
+                //System IO for receiving Message
+                System.out.println(InteractiveIO.BlueMessage("RECEIVING MESSAGE:") + InteractiveIO.BlueMessage("\nFROM: ") + this.getClientSocket() + InteractiveIO.BlueMessage("\nMESSAGE: ") + message.getMessage());
 
-        String line;
-        while ((line = receivedFromClient.readLine()) != null) {
-            System.out.println("Received from client: " + line);
+                this.setUsername(message.getUsername());
 
-            this.messageFromClient = line;
-            
-            this.setUsername(new Communication(line).getUsername());
-
-            Communication message = new Communication(line);
-            String cmd  = message.getCommand();
-            String[] data = message.getData();
-
-            if ("SU".equals(cmd)) {
-                LocalDate birthdate = LocalDate.parse(data[4]);
-                server.UserSignUp(
-                    data[0], data[1], data[2], data[3], birthdate
-                );
-            }else if("LI".equals(cmd)){
-                server.UserLogIn(data[0], data[1]);
+                server.RunCommand(message.getCommand(), message.getData());
+                // …handle other commands…
             }
-            // …handle other commands…
+        } catch (IOException ex) {
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
         }
-    } catch (IOException ex) {
-        System.out.println("Client disconnected or error: " + ex.getMessage());
     }
-}
-
 
 }

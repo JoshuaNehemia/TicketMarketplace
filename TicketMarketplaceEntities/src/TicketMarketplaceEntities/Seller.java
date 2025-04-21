@@ -13,10 +13,10 @@ package TicketMarketplaceEntities;
 public class Seller {
     private String username;
     private String password;
+    private String email;
     private String companyName;
     private String companyAddress;
     private String phoneNumber;
-    private String email;
 
     public Seller(String username, String password, String companyName, String companyAddress, String phoneNumber, String email) {
         this.username = username;

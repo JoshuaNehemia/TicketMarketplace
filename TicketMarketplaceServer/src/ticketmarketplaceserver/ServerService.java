@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  */
 public class ServerService implements Runnable {
 
-    // Variable Declaration for preapartion ====================================        - Var Start -
+    // Variable Declaration for preapartion
     // For Temporary database (buat tugas progress project)
     private RepositoryTemp repo;
 
@@ -33,35 +33,33 @@ public class ServerService implements Runnable {
     //For Multi-Client Connection
     ArrayList<ServerSocketHandler> clients = new ArrayList<ServerSocketHandler>();
 
-    // For Multithreading ------------------------------------------------------
+    // For Multithreading
     Thread t;
 
-    // ==============================||=========================================
-    // Constructor -------------------------------------------------------------        - Var End -
+    // Constructor
     public ServerService(int port) {
         repo = new RepositoryTemp(); //For Temporary Database
         //Starting serverSocket
         this.StartingServerSocket(port);
     }
 
-    // Multithreading ----------------------------------------------------------        - Multithreading Start -
+    // Multithreading 
     @Override
     public void run() {
         try {
             while (true) {
                 // Receiving client request for connection
                 // Three-Way Handshake 
-                System.out.println(InteractiveIO.BlueMessage("Server is listening - waiting for new client..."));
+                System.out.println(InteractiveIO.BlueMessage("SERVER IS LISTENING - WAITING FOR NEW CLIENT..."));
                 Socket incomingClient = serverSocket.accept();
-                System.out.println(InteractiveIO.GreenMessage("NEW Client connected:"));
-                System.out.println(incomingClient);
+                System.out.println(InteractiveIO.GreenMessage("NEW CLIENT CONNECTED: ") + incomingClient);
 
                 // Add client to SocketHandler
                 // For server to know which client is requesting and can send response to the right client
                 ServerSocketHandler clientHandler = new ServerSocketHandler(incomingClient, this);
                 clientHandler.start();
                 clients.add(clientHandler);
-                System.out.println(InteractiveIO.GreenMessage("Client added"));
+                System.out.println(InteractiveIO.GreenMessage("CLIENT SUCCESFULLY ADDED"));
             }
         } catch (Exception ex) {
             Logger.getLogger(ServerService.class.getName()).log(Level.SEVERE, null, ex);
@@ -70,33 +68,29 @@ public class ServerService implements Runnable {
 
     public void start() {
         if (t == null) {
-            t = new Thread(this, "client");
+            t = new Thread(this, "SERVER");
             t.start();
         }
     }
 
-    // -------------------------------||----------------------------------------        - Multithreading End - 
     //TCPManager ---------------------------------------------------------------
     private void StartingServerSocket(int port) {
         try {
             this.serverSocket = new ServerSocket(port);
-            System.out.println("Server is running!");
+            System.out.println(InteractiveIO.GreenMessage("SERVER IS RUNNING!"));
         } catch (Exception ex) {
-            System.out.println(InteractiveIO.RedMessage("Warning : " + ex.getMessage()));
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
         }
     }
 
     public final void SendToClient(String _username, String _message) {
         try {
             ServerSocketHandler _client = this.DetermineClient(_username);
-            System.out.println("Server preparing to send a message: ");
-            System.out.println(_message);
-
+            System.out.println(InteractiveIO.YellowMessage("SERVER PREPARING TO SEND A MESSAGE: ") + _message);
+            
             _client.SendMessage(_message);
-
-            System.out.println("Message sent");
         } catch (Exception ex) {
-            System.out.println(InteractiveIO.RedMessage("Warning : " + ex.getMessage()));
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
         }
     }
 
@@ -113,13 +107,13 @@ public class ServerService implements Runnable {
         try {
             this.serverSocket.close();
         } catch (Exception ex) {
-            System.out.println(InteractiveIO.RedMessage("Warning : " + ex.getMessage()));
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
         }
     }
 
-    public void broadcast(String _message, ServerSocketHandler sender) throws IOException {
+    public void broadcast(String _message, ServerSocketHandler _sender) throws IOException {
         for (ServerSocketHandler client : clients) {
-            if (client != sender) {
+            if (client != _sender) {
                 client.SendMessage(_message);
             }
         }
@@ -130,36 +124,48 @@ public class ServerService implements Runnable {
     }
 
     // Service Runnable --------------------------------------------------------
+    public void RunCommand(String _command, String[] _data) {
+        try {
+            if (_command.equals("SU")) {
+                this.UserSignUp(_data[0], _data[1], _data[2], _data[3], LocalDate.parse(_data[4]));
+            } else if (_command.equals("LI")) {
+                this.UserLogIn(_data[0], _data[1]);
+            } else {
+
+            }
+        } catch (Exception ex) {
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
+        }
+    }
+
     //User ---------------------------------------------------------------------
     public void UserSignUp(String username, String password, String fullname, String email, LocalDate birthdate) throws IOException {
-    System.out.println("SIGN UP (SU)");
+        System.out.println(InteractiveIO.YellowMessage("SIGN UP (SU)"));
 
-    boolean usernameExists = repo.ListUser.stream()
-        .anyMatch(user -> user.getUsername().equalsIgnoreCase(username));
+        boolean usernameExists = repo.ListUser.stream().anyMatch(user -> user.getUsername().equalsIgnoreCase(username));
 
-    if (usernameExists) {
-        String errorMsg = "Username '" + username + "' sudah digunakan.";
-        System.out.println(InteractiveIO.RedMessage("Warning : " + errorMsg));
-        this.SendToClient(username, new Communication(username, "FAILED;" + errorMsg, null).getMessage());
-        return;
+        if (usernameExists) {
+            String errorMsg = "Username '" + username + "' sudah digunakan.";
+            System.out.println(InteractiveIO.RedMessage("WARNING: " + errorMsg));
+            this.SendToClient(username, new Communication(username, "FAILED" + errorMsg, null).getMessage());
+            return;
+        }
+        try {
+            repo.ListUser.add(new User(username, password, fullname, email, birthdate));
+            this.SendToClient(username, new Communication(username, "SUCCESS", null).getMessage());
+        } catch (Exception ex) {
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
+            this.SendToClient(username, new Communication(username, "FAILED" + ex.getMessage(), null).getMessage());
+        }
     }
-
-    try {
-        repo.ListUser.add(new User(username, password, fullname, email, birthdate));
-        this.SendToClient(username, new Communication(username, "SUCCESS", null).getMessage());
-    } catch (Exception ex) {
-        System.out.println(InteractiveIO.RedMessage("Warning : " + ex.getMessage()));
-        this.SendToClient(username, new Communication(username, "FAILED;" + ex.getMessage(), null).getMessage());
-    }
-}
 
 
     /*
     * @param username 
     * @param password
      */
-    public void UserLogIn(String _username, String password) throws IOException {
-        System.out.println("LOG IN (LI)");
+    public void UserLogIn(String _username, String password) {
+        System.out.println(InteractiveIO.YellowMessage("LOG IN (LI)"));
         User buffer = new User();
 
         //Using temporary Database
@@ -177,7 +183,7 @@ public class ServerService implements Runnable {
             }
             this.SendToClient(_username, communication);
         } catch (Exception ex) {
-            System.out.println(InteractiveIO.RedMessage("Warning : " + ex.getMessage()));
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
         }
     }
 
