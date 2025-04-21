@@ -222,17 +222,18 @@ public class FormRegister extends javax.swing.JFrame {
             }
             String date = jTextFieldBirthdateYear.getText() + "-" + jTextFieldBirthdateMonth.getText() + "-" + jTextFieldBirthdateDay.getText();
             LocalDate birthdate = LocalDate.parse(date);
-            boolean res = FormLogin.service.UserSignUp(username, password, fullname, email, birthdate);
+            boolean res =parentForm.service.UserSignUp(username, password, fullname, email, birthdate);
+            
             if (res) {
                 JOptionPane.showMessageDialog(null, "Registrasi berhasil, silakan login!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
-
-//            For mLogin login = new FormLogin();
-//            login.setVisible(true);
                 parentForm.username = username;
                 parentForm.showRegistrationSuccess();
 
                 this.setVisible(false);
                 parentForm.setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(null, "Registrasi gagal, username sudah digunakan!", "Gagal", JOptionPane.ERROR_MESSAGE);
+
             }
         }
         catch (Exception ex)

@@ -132,17 +132,27 @@ public class ServerService implements Runnable {
     // Service Runnable --------------------------------------------------------
     //User ---------------------------------------------------------------------
     public void UserSignUp(String username, String password, String fullname, String email, LocalDate birthdate) throws IOException {
-        System.out.println("SIGN UP (SU)");
+    System.out.println("SIGN UP (SU)");
 
-        //Using temporary Database
-        try {
-            repo.ListUser.add(new User(username, password, fullname, email, birthdate));
-        } catch (Exception ex) {
-            System.out.println(InteractiveIO.RedMessage("Warning : " + ex.getMessage()));
-        }
+    boolean usernameExists = repo.ListUser.stream()
+        .anyMatch(user -> user.getUsername().equalsIgnoreCase(username));
 
-        this.SendToClient(username, new Communication(username, "SUCCESS", null).getMessage());
+    if (usernameExists) {
+        String errorMsg = "Username '" + username + "' sudah digunakan.";
+        System.out.println(InteractiveIO.RedMessage("Warning : " + errorMsg));
+        this.SendToClient(username, new Communication(username, "FAILED;" + errorMsg, null).getMessage());
+        return;
     }
+
+    try {
+        repo.ListUser.add(new User(username, password, fullname, email, birthdate));
+        this.SendToClient(username, new Communication(username, "SUCCESS", null).getMessage());
+    } catch (Exception ex) {
+        System.out.println(InteractiveIO.RedMessage("Warning : " + ex.getMessage()));
+        this.SendToClient(username, new Communication(username, "FAILED;" + ex.getMessage(), null).getMessage());
+    }
+}
+
 
     /*
     * @param username 

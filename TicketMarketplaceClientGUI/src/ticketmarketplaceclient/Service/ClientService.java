@@ -68,21 +68,17 @@ public class ClientService {
         data.add(fullname);
         data.add(email);
         data.add(birthdate.toString());
-        //data.add(birthdate.toString());
 
         String task = "SU";
         String message = new Communication(username,task,data.toArray(new String[0])).getMessage();
         System.out.println(message);
         this.SendToServer(message);
-//        res=tcp.ReceivedFromServer();
         this.ReceivedFromServer();
-        //...send to server
+        Communication received = new Communication(this.commandReceived);
+        dataReceived=received.getData();
         boolean res = false;
-        if (this.commandReceived.equals("SUCCESS")) {
-            res = true;
-        }
-
-//       successful or unsucessful
+        if(received.getCommand().equals("SUCCESS"))res=true;
+        
         return res;
     }
 
@@ -95,21 +91,16 @@ public class ClientService {
         String message = new Communication(username,task,data.toArray(new String[0])).getMessage();
         System.out.println(message);
         this.SendToServer(message);
-        
         this.ReceivedFromServer();
+        Communication received = new Communication(this.commandReceived);
+        dataReceived=received.getData();
         boolean res = false;
-        if(this.commandReceived.equals("SUCCESS"))
+        if(received.getCommand().equals("SUCCESS"))
         {
+            res=true;
             this.setCurrentUser(new User(this.dataReceived[0],this.dataReceived[1],this.dataReceived[2],this.dataReceived[3],LocalDate.parse(this.dataReceived[4])));
-            res = true;
         }
-        else
-        {
-            res = false;
-        }
-
-                
-//       successful or unsucessful
+        
         return res;
     }
 }
