@@ -72,4 +72,18 @@ public class Event_class {
     public void setDescription(String description) {
         this.description = description;
     }
+    
+    //Function 
+    public String[] GetEventClassData()
+    {
+        String[] data = new String[5];
+        
+        data[0] = String.valueOf(this.getId());
+        data[1] = String.valueOf(this.getEvents_id().getId());
+        data[2] = this.getName();
+        data[3] = String.valueOf(this.getPrice());
+        data[4] = this.getDescription();
+        
+        return data;
+    }
 }

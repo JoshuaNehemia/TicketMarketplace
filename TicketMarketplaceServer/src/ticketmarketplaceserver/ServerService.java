@@ -83,26 +83,6 @@ public class ServerService implements Runnable {
         }
     }
 
-    public final void SendToClient(String _username, String _message) {
-        try {
-            ServerSocketHandler _client = this.DetermineClient(_username);
-            System.out.println(InteractiveIO.YellowMessage("SERVER PREPARING TO SEND A MESSAGE: ") + _message);
-
-            _client.SendMessage(_message);
-        } catch (Exception ex) {
-            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
-        }
-    }
-
-    private ServerSocketHandler DetermineClient(String _username) {
-        for (ServerSocketHandler client : this.clients) {
-            if (client.getUsername().equals(_username)) {
-                return client;
-            }
-        }
-        return null;
-    }
-
     public final void CloseServerSocket() {
         try {
             this.serverSocket.close();
@@ -124,22 +104,31 @@ public class ServerService implements Runnable {
     }
 
     // Service Runnable --------------------------------------------------------
-    public void RunCommand(String _command, String[] _data) {
+    public void RunCommand(String _command, String[] _data, ServerSocketHandler client) {
+        Communication comm = new Communication();
         try {
             if (_command.equals("SU")) {
-                this.UserSignUp(_data[0], _data[1], _data[2], _data[3], LocalDate.parse(_data[4]));
+                comm = this.UserSignUp(_data[0], _data[1], _data[2], _data[3], LocalDate.parse(_data[4]));
             } else if (_command.equals("LI")) {
-                this.UserLogIn(_data[0], _data[1]);
+                comm = this.UserLogIn(_data[0], _data[1]);
             } else {
 
+            }
+
+            if (comm != null) {
+                client.SendMessage(comm.getMessage());
+            } else {
+                String errorMsg = "SYSTEM-FAILED";
+                client.SendMessage(new Communication(client.getUsername(), errorMsg, null).getMessage());
             }
         } catch (Exception ex) {
             System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
         }
+
     }
 
     //User ---------------------------------------------------------------------
-    public void UserSignUp(String username, String password, String fullname, String email, LocalDate birthdate) {
+    public Communication UserSignUp(String username, String password, String fullname, String email, LocalDate birthdate) {
         System.out.println(InteractiveIO.YellowMessage("SIGN UP (SU)"));
 
         boolean usernameExists = repo.ListUser.stream().anyMatch(user -> user.getUsername().equalsIgnoreCase(username));
@@ -148,8 +137,7 @@ public class ServerService implements Runnable {
             if (usernameExists) {
                 String errorMsg = "The username '" + username + "' is already taken";
                 System.out.println(InteractiveIO.RedMessage("WARNING: " + errorMsg));
-                this.SendToClient(username, new Communication(username, "FAILED" + errorMsg, null).getMessage());
-                return;
+                return new Communication(username, "FAILED" + errorMsg, null);
             }
         } catch (Exception ex) {
             System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
@@ -157,13 +145,14 @@ public class ServerService implements Runnable {
 
         try {
             repo.ListUser.add(new User(username, password, fullname, email, birthdate));
-            this.SendToClient(username, new Communication(username, "SUCCESS", null).getMessage());
+            return new Communication(username, "SUCCESS", null);
         } catch (Exception ex) {
             System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
             try {
-                this.SendToClient(username, new Communication(username, "FAILED" + ex.getMessage(), null).getMessage());
+                return new Communication(username, "FAILED" + ex.getMessage(), null);
             } catch (Exception excep) {
                 System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
+                return null;
             }
         }
     }
@@ -173,7 +162,7 @@ public class ServerService implements Runnable {
     * @param username 
     * @param password
      */
-    public void UserLogIn(String _username, String _password) {
+    public Communication UserLogIn(String _username, String _password) {
         System.out.println(InteractiveIO.YellowMessage("LOG IN (LI)"));
         User buffer = new User();
 
@@ -186,21 +175,46 @@ public class ServerService implements Runnable {
             }
             String communication = "";
             if (!buffer.getUsername().equals("")) {
-                communication = new Communication(buffer.getUsername(), "SUCCESS", buffer.GetUserData()).getMessage();
+                return new Communication(buffer.getUsername(), "SUCCESS", buffer.GetUserData());
             } else {
-                communication = new Communication(_username, "FAILED", null).getMessage();
+                return new Communication(_username, "FAILED", null);
             }
-            this.SendToClient(_username, communication);
         } catch (Exception ex) {
             System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
+            return null;
         }
     }
 
     //Seller -------------------------------------------------------------------
-    public void SellerSignUp(String username, String password, String companyName, String companyAddress, String phoneNumber, String email) {
+    public Communication SellerSignUp(String username, String password, String companyName, String companyAddress, String phoneNumber, String email) {
+        //Seller Sign Up SSU
 
-        // Add to temporary database
-        repo.ListSeller.add(new Seller(username, password, companyName, companyAddress, phoneNumber, email));
+        System.out.println(InteractiveIO.YellowMessage("SELLER SIGN UP (SSU)"));
+
+        boolean usernameExists = repo.ListSeller.stream().anyMatch(seller -> seller.getUsername().equalsIgnoreCase(username));
+
+        try {
+            if (usernameExists) {
+                String errorMsg = "The username '" + username + "' is already taken";
+                System.out.println(InteractiveIO.RedMessage("WARNING: " + errorMsg));
+                return new Communication(username, "FAILED" + errorMsg, null);
+            }
+        } catch (Exception ex) {
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
+        }
+
+        try {
+            repo.ListSeller.add(new Seller(username, password, companyName, companyAddress, phoneNumber, email));
+            return new Communication(username, "SUCCESS", null);
+        } catch (Exception ex) {
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
+            try {
+                return new Communication(username, "FAILED" + ex.getMessage(), null);
+            } catch (Exception excep) {
+                System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
+                return null;
+            }
+        }
 
     }
 
@@ -208,19 +222,36 @@ public class ServerService implements Runnable {
     * @param username 
     * @param password
      */
-    public Seller SellerLogIn(String username, String password) {
+    public Communication SellerLogIn(String username, String password) {
+
+        System.out.println(InteractiveIO.YellowMessage("SELLER LOG IN (SLI)"));
+        Seller buffer = new Seller();
+
         //Using temporary Database
-        for (Seller s : repo.ListSeller) {
-            if (s.getUsername().equals(username) && s.getPassword().equals(password)) {
-                return s;
+        try {
+            for (Seller sel : repo.ListSeller) {
+                if (sel.getUsername().equals(username) && sel.getPassword().equals(password)) {
+                    buffer = sel;
+                }
             }
+            String communication = "";
+            if (!buffer.getUsername().equals("")) {
+                return new Communication(buffer.getUsername(), "SUCCESS", buffer.GetSellerData());
+            } else {
+                return new Communication(username, "FAILED", null);
+            }
+        } catch (Exception ex) {
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
+            return null;
         }
-        return new Seller();
     }
 
     // Venue -------------------------------------------------------------------
     public void InsertNewVenue(String name, String address, int maxCapacity, int area, City cityId) {
         int newId = 1;
+        if (repo.ListVenue.size() != 0) {
+            newId = repo.ListVenue.get(repo.ListVenue.size() - 1).getId() + 1;
+        }
         int listVenueSize = repo.ListVenue.size();
         if (listVenueSize > 1) {
             newId = repo.ListVenue.get(listVenueSize - 1).getId() + 1;
@@ -240,9 +271,8 @@ public class ServerService implements Runnable {
 
     public void InsertEvent(int id, String name, String description, LocalDate dateTime, int maxBuy, Venue venue, Seller seller_username, Event_category event_category) {
         int newId = 1;
-        int listEventSize = repo.ListEvent.size();
-        if (listEventSize > 1) {
-            newId = repo.ListEvent.get(listEventSize - 1).getId() + 1;
+        if (repo.ListEvent.size() != 0) {
+            newId = repo.ListEvent.get(repo.ListEvent.size() - 1).getId() + 1;
         }
         repo.ListEvent.add(new Event(newId, name, description, dateTime, maxBuy, venue, seller_username, event_category));
     }

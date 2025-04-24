@@ -82,5 +82,22 @@ public class Seller {
     public void setEmail(String email) {
         this.email = email;
     }
+    
+    //Function
+    
+    public String[] GetSellerData()
+    {
+        String[] data = new String[6];
+        
+        data[0] = this.getUsername();
+        data[1] = this.getPassword();
+        data[2] = this.getCompanyName();
+        data[3] = this.getCompanyAddress();
+        data[4] = this.getPhoneNumber();
+        data[5] = this.getEmail();
+        
+        return data;
+    }
+    
 }
 

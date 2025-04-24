@@ -4,13 +4,12 @@ package TicketMarketplaceEntities;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
-
 /**
  *
  * @author Franly
  */
 public class Seat {
+
     private int id;
     private Event_class event_class;
     private String rows;
@@ -22,7 +21,7 @@ public class Seat {
         this.rows = rows;
         this.column = column;
     }
-    
+
     public Seat() {
         this.id = 0;
         this.event_class = null;
@@ -61,4 +60,15 @@ public class Seat {
     public void setColumn(int column) {
         this.column = column;
     }
+
+    //Function
+    public void GetSeatData() {
+        String[] data = new String[4];
+
+        data[0] = String.valueOf(this.getId());
+        data[1] = String.valueOf(this.getEvent_class().getId());
+        data[2] = String.valueOf(this.getRows());
+        data[3] = String.valueOf(this.getColumn());
+    }
+
 }

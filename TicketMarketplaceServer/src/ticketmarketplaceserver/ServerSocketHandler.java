@@ -109,7 +109,7 @@ public class ServerSocketHandler extends Thread {
 
                 this.setUsername(message.getUsername());
 
-                server.RunCommand(message.getCommand(), message.getData());
+                server.RunCommand(message.getCommand(), message.getData(), this);
                 // …handle other commands…
             }
         } catch (Exception ex) {

@@ -83,4 +83,20 @@ public class Venue {
     public void setCitiesId(City cityId) {
         this.cityId = cityId;
     }
+    
+    //Function
+    
+    public String[] GetVenueData()
+    {
+        String[] data = new String[6];
+        
+        data[0] = String.valueOf(this.getId());
+        data[1] = this.getName();
+        data[2] = this.getAddress();
+        data[3] = String.valueOf(this.getMaxCapacity());
+        data[4] = String.valueOf(this.getArea());
+        data[5] = this.getCitiesId().toString();
+        
+        return data;
+    }
 }

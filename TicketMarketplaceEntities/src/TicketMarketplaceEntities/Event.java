@@ -4,14 +4,16 @@ package TicketMarketplaceEntities;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
-import java.time.LocalDate; 
-import java.util.List;
 /**
  *
  * @author Franly
  */
 public class Event {
+
     private int id;
     private String name;
     private String description;
@@ -20,7 +22,7 @@ public class Event {
     private Venue venue;
     private Seller seller_username;
     private Event_category event_category;
-    private List<Event_class> eventClasses; 
+    private ArrayList<Event_class> eventClasses;
 
     public Event(int id, String name, String description, LocalDate dateTime, int maxBuy, Venue venue, Seller seller_username, Event_category event_category) {
         this.id = id;
@@ -31,8 +33,9 @@ public class Event {
         this.venue = venue;
         this.seller_username = seller_username;
         this.event_category = event_category;
+        this.eventClasses = new ArrayList<Event_class>();
     }
-    
+
     public Event() {
         this.id = 0;
         this.name = "";
@@ -43,12 +46,16 @@ public class Event {
         this.seller_username = null;
         this.event_category = null;
     }
-    
+
     public void addEventClass(Event_class eventClass) {
         eventClasses.add(eventClass);
     }
 
-    public List<Event_class> getEventClass() {
+    public void setEventClass(ArrayList<Event_class> _eventClasses) {
+        eventClasses = _eventClasses;
+    }
+
+    public ArrayList<Event_class> getEventClass() {
         return eventClasses;
     }
 
@@ -112,7 +119,39 @@ public class Event {
         return event_category;
     }
 
-    public void setEvent_categories(Event_category event_category ) {
+    public void setEvent_categories(Event_category event_category) {
         this.event_category = event_category;
+    }
+
+    //Function
+    public String[] GetEventData() {
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // EventClasses size also inputted for communication
+        ArrayList<String> data = new ArrayList<String>();
+
+        data.add(String.valueOf(this.getId()));
+        data.add(this.getName());
+        data.add(this.getDescription());
+        data.add(this.getDateTime().format(df));
+        data.add(String.valueOf(this.getMaxBuy()));
+        data.add(this.getVenue().toString());
+        data.add(this.getSeller_username().getUsername());
+        data.add(this.getEvent_categories().toString());
+        data.add(String.valueOf(this.getEventClass().size())); //Size of event class
+        
+        for (int i = 0; i < this.getEventClass().size(); i++) {
+            String[] buf = this.getEventClass().get(i).GetEventClassData();
+            data.add(buf[0]);
+            data.add(buf[1]);
+            data.add(buf[2]);
+            data.add(buf[3]);
+            data.add(buf[4]);
+        }
+        
+        
+        String[] array = data.toArray(new String[0]);
+        
+        return array;
     }
 }

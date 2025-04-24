@@ -39,4 +39,11 @@ public class Province {
         this.name = name;
     }
     
+    //Function
+    
+    @Override
+    public String toString()
+    {
+        return this.getName();
+    }
 }
