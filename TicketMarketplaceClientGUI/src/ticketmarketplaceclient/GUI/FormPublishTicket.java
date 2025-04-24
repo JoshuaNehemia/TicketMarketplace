@@ -39,9 +39,9 @@ public class FormPublishTicket extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
+        menuHome = new javax.swing.JMenu();
+        menuPublishTicket = new javax.swing.JMenu();
+        menuProfile = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -74,19 +74,19 @@ public class FormPublishTicket extends javax.swing.JFrame {
 
         jMenuBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jMenu1.setText("Home");
-        jMenuBar1.add(jMenu1);
+        menuHome.setText("Home");
+        jMenuBar1.add(menuHome);
 
-        jMenu2.setText("Publish Ticket");
-        jMenuBar1.add(jMenu2);
+        menuPublishTicket.setText("Publish Ticket");
+        jMenuBar1.add(menuPublishTicket);
 
-        jMenu3.setText("jMenu3");
-        jMenu3.addActionListener(new java.awt.event.ActionListener() {
+        menuProfile.setText("Profile");
+        menuProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu3ActionPerformed(evt);
+                menuProfileActionPerformed(evt);
             }
         });
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(menuProfile);
 
         jMenu4.setText("jMenu4");
         jMenuBar1.add(jMenu4);
@@ -158,9 +158,9 @@ public class FormPublishTicket extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
+    private void menuProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuProfileActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenu3ActionPerformed
+    }//GEN-LAST:event_menuProfileActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
@@ -210,9 +210,6 @@ public class FormPublishTicket extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JSpinner jSpinner1;
@@ -220,5 +217,8 @@ public class FormPublishTicket extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
+    private javax.swing.JMenu menuHome;
+    private javax.swing.JMenu menuProfile;
+    private javax.swing.JMenu menuPublishTicket;
     // End of variables declaration//GEN-END:variables
 }
