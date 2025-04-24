@@ -50,4 +50,11 @@ public class City {
         this.province = province;
     }
     
+    //Function 
+    
+    @Override
+    public String toString()
+    {
+        return this.getName();
+    }
 }

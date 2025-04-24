@@ -260,13 +260,19 @@ public class ServerService implements Runnable {
 
     }
 
-    public Venue SelectVenue(String venueName) {
-        for (Venue v : repo.ListVenue) {
-            if (v.getName().equals(venueName)) {
-                return v;
+    public Communication SelectVenue(String venueName) {
+        try {
+            for (Venue v : repo.ListVenue) {
+                if (v.getName().equals(venueName)) {
+                    return new Communication("dummy", "SUCCESS", v.GetVenueData());
+                }
             }
+            return new Communication("dummy", "FAILED", null);
+        } catch (Exception ex) {
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
+            return null;
         }
-        return new Venue();
+
     }
 
     public void InsertEvent(int id, String name, String description, LocalDate dateTime, int maxBuy, Venue venue, Seller seller_username, Event_category event_category) {
@@ -276,5 +282,23 @@ public class ServerService implements Runnable {
         }
         repo.ListEvent.add(new Event(newId, name, description, dateTime, maxBuy, venue, seller_username, event_category));
     }
+
+    public Communication SelectEvent(String eventName) {
+        try {
+            for (Event v : repo.ListEvent) {
+                if (v.getName().equals(eventName)) {
+                    return new Communication("dummy", "SUCCESS", v.GetEventData());
+                }
+            }
+            return new Communication("dummy", "FAILED", null);
+        } catch (Exception ex) {
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
+            return null;
+        }
+
+    }
+    
+    
+
 
 }
