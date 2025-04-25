@@ -270,7 +270,9 @@ public class ServerService implements Runnable {
             )
             .findFirst();
         Seat seat = optSeat.get();
-        seat.setQuantity(seat.getQuantity() - 1);
+        Event_class eventClass = seat.getEvent_class();
+        eventClass.setStock(eventClass.getStock() - 1);
+        
         
 
         // generate next TicketID
