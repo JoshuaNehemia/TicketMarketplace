@@ -18,6 +18,7 @@ public class FormRegister extends javax.swing.JFrame {
     public FormRegister(FormLogin loginForm) {
         initComponents();
         parentForm = loginForm;
+        buttonUser.setSelected(true); // radio button User aktif
     }
 
     /**
@@ -240,7 +241,7 @@ public class FormRegister extends javax.swing.JFrame {
             String email = jTextField2.getText();
             String username = jTextField4.getText();
             String password = jTextField3.getText();
-            buttonUser.setSelected(true); // radio button User aktif
+            
             if(!(password.length()>=8))
             {
                 throw new Exception("Password must be in minimum of 8 characters");
@@ -254,7 +255,7 @@ public class FormRegister extends javax.swing.JFrame {
                 parentForm.username = username;
                 parentForm.showRegistrationSuccess();
 
-                this.setVisible(false);
+                this.dispose();
                 parentForm.setVisible(true);
             }else{
                 JOptionPane.showMessageDialog(null, "Registrasi gagal, username sudah digunakan!", "Gagal", JOptionPane.ERROR_MESSAGE);
@@ -269,7 +270,7 @@ public class FormRegister extends javax.swing.JFrame {
 
     private void buttonSellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSellerActionPerformed
         // Buka form register untuk Seller
-        FormRegisterSeller sellerForm = new FormRegisterSeller();
+        FormRegisterSeller sellerForm = new FormRegisterSeller(parentForm);
         sellerForm.setVisible(true);
 
         // Tutup form saat ini jika perlu

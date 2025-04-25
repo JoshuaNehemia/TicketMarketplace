@@ -18,7 +18,7 @@ public class FormLogin extends javax.swing.JFrame {
      */
     public static ClientService service;
     public String username = "";
-
+    public boolean isSeller=false;
     public FormLogin() {
         initComponents();
         service = new ClientService();
@@ -39,6 +39,8 @@ public class FormLogin extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        buttonSeller = new javax.swing.JRadioButton();
+        buttonSeller1 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,6 +69,15 @@ public class FormLogin extends javax.swing.JFrame {
             }
         });
 
+        buttonSeller.setText("Seller");
+
+        buttonSeller1.setText("Login sebagai seller");
+        buttonSeller1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSeller1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -79,15 +90,21 @@ public class FormLogin extends javax.swing.JFrame {
                         .addGap(312, 312, 312))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(151, 151, 151)
                                 .addComponent(jLabel3))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jTextField2)
-                                .addComponent(jTextFieldLoginEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jTextFieldLoginEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel2)
+                            .addComponent(buttonSeller1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(180, 180, 180))))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(buttonSeller)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,7 +121,14 @@ public class FormLogin extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(buttonSeller1)
+                .addContainerGap(39, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(buttonSeller)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
@@ -117,6 +141,7 @@ public class FormLogin extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         try {
+            if(!isSeller){
             String usernameOrEmail = jTextFieldLoginEmail.getText();
 
             String password = jTextField2.getText();
@@ -125,7 +150,7 @@ public class FormLogin extends javax.swing.JFrame {
             if (res) {
 //            ...set current user in server.
 
-                FormListofTicketScroll login = new FormListofTicketScroll();
+                FormListofTicketScroll login = new FormListofTicketScroll(service , isSeller);
                 login.setVisible(true);
 
                 this.dispose();
@@ -133,6 +158,25 @@ public class FormLogin extends javax.swing.JFrame {
             else
             {
             JOptionPane.showMessageDialog(null, "Wrong username or password", "Attention!", JOptionPane.ERROR_MESSAGE);
+            }
+            }else{
+                String usernameOrEmail = jTextFieldLoginEmail.getText();
+
+                String password = jTextField2.getText();
+
+                boolean res = service.SellerLogIn(usernameOrEmail, password);
+                if (res) {
+    //            ...set current user in server.
+
+                    FormListofTicketScroll login = new FormListofTicketScroll(service , isSeller);
+                    login.setVisible(true);
+
+                    this.dispose();
+                }
+                else
+                {
+                JOptionPane.showMessageDialog(null, "Wrong username or password", "Attention!", JOptionPane.ERROR_MESSAGE);
+                }
             }
         } 
         catch (Exception ex) {
@@ -145,6 +189,12 @@ public class FormLogin extends javax.swing.JFrame {
         regisForm.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void buttonSeller1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSeller1ActionPerformed
+        // TODO add your handling code here:
+        isSeller=!isSeller;
+        System.out.println(isSeller);
+    }//GEN-LAST:event_buttonSeller1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -183,6 +233,8 @@ public class FormLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton buttonSeller;
+    private javax.swing.JRadioButton buttonSeller1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

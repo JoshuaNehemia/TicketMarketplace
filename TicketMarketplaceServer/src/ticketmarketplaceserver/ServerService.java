@@ -111,8 +111,10 @@ public class ServerService implements Runnable {
                 comm = this.UserSignUp(_data[0], _data[1], _data[2], _data[3], LocalDate.parse(_data[4]));
             } else if (_command.equals("LI")) {
                 comm = this.UserLogIn(_data[0], _data[1]);
-            } else {
-
+            } else if(_command.equals("SU-SELLER")){
+                comm = this.SellerSignUp(_data[0], _data[1], _data[4], _data[5], _data[3], _data[2]);
+            }else if(_command.equals("LI-SELLER")){
+                comm = this.SellerLogIn(_data[0], _data[1]);
             }
 
             if (comm != null) {

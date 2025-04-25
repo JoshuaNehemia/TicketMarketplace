@@ -113,4 +113,59 @@ public class ClientService {
 
         return res;
     }
+    
+    public boolean SellerSignUp(String username, String password,  String email, String noTlp, String vendor, String alamat) throws IOException {
+
+        boolean res = false;
+        try {
+            List<String> data = new ArrayList<>();
+            data.add(username);
+            data.add(password);
+            data.add(email);
+            data.add(noTlp);
+            data.add(vendor);
+            data.add(alamat); 
+
+            String task = "SU-SELLER";
+            String message = new Communication(username, task, data.toArray(new String[0])).getMessage();
+            System.out.println(message);
+            this.SendToServer(message);
+
+            this.ReceivedFromServer();
+            Communication received = new Communication(this.commandReceived);
+            dataReceived = received.getData();
+            if (received.getCommand().equals("SUCCESS")) {
+                res = true;
+            }
+        } catch (Exception exception) {
+            System.out.println(exception);
+        }
+
+        return res;
+    }
+    
+    public boolean SellerLogIn(String username, String password) throws IOException {
+        boolean res = false;
+        try {
+            List<String> data = new ArrayList<>();
+            data.add(username);
+            data.add(password);
+
+            String task = "LI-SELLER";
+            String message = new Communication(username, task, data.toArray(new String[0])).getMessage();
+            System.out.println(message);
+            this.SendToServer(message);
+            this.ReceivedFromServer();
+            Communication received = new Communication(this.commandReceived);
+            dataReceived = received.getData();
+            if (received.getCommand().equals("SUCCESS")) {
+                res = true;
+                this.setCurrentUser(new User(this.dataReceived[0], this.dataReceived[1], this.dataReceived[2], this.dataReceived[3], LocalDate.parse(this.dataReceived[4])));
+            }
+        } catch (Exception exception) {
+            System.out.println(exception);
+        }
+
+        return res;
+    }
 }

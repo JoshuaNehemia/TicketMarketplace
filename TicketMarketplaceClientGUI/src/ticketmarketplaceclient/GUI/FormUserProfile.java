@@ -21,11 +21,13 @@ public class FormUserProfile extends javax.swing.JFrame {
     private FormListofTicketScroll parentForm;
     public FormUserProfile(FormListofTicketScroll parentForm) {
         initComponents();
+        
         this.parentForm = parentForm;
-        this.jTextFieldFullname.setText(FormLogin.service.getCurrentUser().getFullname());
-        this.jTextFieldUsername.setText(FormLogin.service.getCurrentUser().getUsername());
-        this.jTextFieldEmail.setText(FormLogin.service.getCurrentUser().getEmail());
-        this.jTextFieldBirthdate.setText(FormLogin.service.getCurrentUser().getBirthdateString());
+        this.jTextFieldFullname.setText(parentForm.service.getCurrentUser().getFullname());
+        this.jTextFieldUsername.setText(parentForm.service.getCurrentUser().getUsername());
+        this.jTextFieldEmail.setText(parentForm.service.getCurrentUser().getEmail());
+        if(!parentForm.isSeller)this.jTextFieldBirthdate.setText(parentForm.service.getCurrentUser().getBirthdateString());
+
     }
 
     private FormUserProfile() {

@@ -4,17 +4,23 @@
  */
 package ticketmarketplaceclient.GUI;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Evan
  */
+
 public class FormRegisterSeller extends javax.swing.JFrame {
 
     /**
      * Creates new form FormRegisterSeller
      */
-    public FormRegisterSeller() {
+    private FormLogin parentForm;
+    public FormRegisterSeller(FormLogin loginForm) {
         initComponents();
+        parentForm = loginForm;
+        buttonSeller.setSelected(true); // radio button Seller aktif
     }
 
     /**
@@ -124,6 +130,11 @@ public class FormRegisterSeller extends javax.swing.JFrame {
         jLabel11.setText("Email");
 
         jButton1.setText("REGISTER");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel12.setText("Password");
 
@@ -237,7 +248,7 @@ public class FormRegisterSeller extends javax.swing.JFrame {
 
     private void buttonSellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSellerActionPerformed
         // Buka form register untuk Seller
-        FormRegisterSeller sellerForm = new FormRegisterSeller();
+        FormRegisterSeller sellerForm = new FormRegisterSeller(parentForm);
         sellerForm.setVisible(true);
 
         // Tutup form saat ini jika perlu
@@ -251,6 +262,39 @@ public class FormRegisterSeller extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:\
+        try{
+            String username = jTextField5.getText();
+            String  noTlp = jTextField8.getText();
+            String vendor = jTextField6.getText();
+            String alamat = jTextField7.getText();
+            String  email = jTextField9.getText();
+            String password = jTextField3.getText();
+            
+            if(!(password.length()>=8))
+            {
+                throw new Exception("Password must be in minimum of 8 characters");
+            }
+            boolean res =parentForm.service.SellerSignUp(username, password, email, noTlp, vendor, alamat);
+            
+            if (res) {
+                JOptionPane.showMessageDialog(null, "Registrasi berhasil, silakan login!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                parentForm.username = username;
+                parentForm.showRegistrationSuccess();
+
+                this.dispose();
+                parentForm.setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(null, "Registrasi gagal, username sudah digunakan!", "Gagal", JOptionPane.ERROR_MESSAGE);
+
+            }       
+        }catch(Exception ex){
+          JOptionPane.showMessageDialog(null, "Error : " + ex.getMessage(), "Warning!", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -281,11 +325,11 @@ public class FormRegisterSeller extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormRegisterSeller().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FormRegisterSeller().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
