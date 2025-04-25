@@ -15,6 +15,8 @@ public class Seat {
     private String rows;
     private int column;
     private int isBooked;
+    private int quantity;
+
     public Seat(int id, Event_class event_class, String rows, int column) {
         this.id = id;
         this.event_class = event_class;
@@ -77,6 +79,14 @@ public class Seat {
 
     public void setIsBooked(int isBooked) {
         this.isBooked = isBooked;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
 }
