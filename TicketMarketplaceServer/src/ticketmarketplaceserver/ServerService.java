@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -115,6 +116,9 @@ public class ServerService implements Runnable {
                 comm = this.SellerSignUp(_data[0], _data[1], _data[4], _data[5], _data[3], _data[2]);
             }else if(_command.equals("LI-SELLER")){
                 comm = this.SellerLogIn(_data[0], _data[1]);
+            }else if(_command.equals("BUY")){
+//                comm = this.BuyTicket(_data[0], _data[1],_data[2],_data[2],_data[3], data[4]);
+                //username namaEvent classKursi rowKursi colKursi paymentMethod
             }
 
             if (comm != null) {
@@ -240,8 +244,63 @@ public class ServerService implements Runnable {
             if (!buffer.getUsername().equals("")) {
                 return new Communication(buffer.getUsername(), "SUCCESS", buffer.GetSellerData());
             } else {
-                return new Communication(username, "FAILED", null);
+                String errorMsg = "Seat already booked";
+                return new Communication(username, "FAILED" + errorMsg, null);
             }
+        } catch (Exception ex) {
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
+            return null;
+        }
+    }
+    
+    // Ticket ------------------------------------------------------------------
+    public Communication BuyTicket(String username, String namaEvent, String classKursi, String rowKursi, String colKursi, String paymentMethod) {
+
+        System.out.println(InteractiveIO.YellowMessage("BUY TICKET"));
+
+        //Using temporary Database
+        try {
+            //find seat
+            Optional<Seat> optSeat = repo.listSeat.stream()
+            .filter(s -> 
+                s.getEvent_class().getEvents_id().getName().equalsIgnoreCase(namaEvent) &&
+                s.getEvent_class().getName().equalsIgnoreCase(classKursi) &&
+                s.getRows().equalsIgnoreCase(rowKursi) &&
+                s.getColumn() == Integer.parseInt(colKursi)
+            )
+            .findFirst();
+        Seat seat = optSeat.get();
+        
+
+        // generate next TicketID
+        int nextId = repo.ListTicket.stream()
+                         .mapToInt(Ticket::getId)
+                         .max()
+                         .orElse(0) + 1;
+        
+        // find payment method
+        Optional<Payment_method> optPm = repo.listPaymentMethod.stream()
+            .filter(pm -> pm.getNama().equalsIgnoreCase(paymentMethod))
+            .findFirst();
+        Payment_method pm = optPm.get();
+        
+        //find user
+        Optional<User> optUser = repo.ListUser.stream()
+            .filter(u -> u.getUsername().equals(username))
+            .findFirst();
+
+        User user = optUser.get();
+        
+         Ticket newTicket = new Ticket(
+            user,
+            seat,
+            nextId,
+            LocalDate.now(),
+            pm
+        );
+        repo.ListTicket.add(newTicket);
+        return new Communication(username, "SUCCESS", null);
+        
         } catch (Exception ex) {
             System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
             return null;

@@ -15,12 +15,9 @@ public class FormListofTicketScroll extends javax.swing.JFrame {
      * Creates new form FormListOfTicket
      */
     public static ClientService service;
-    public boolean isSeller;
-    public FormListofTicketScroll(ClientService pservice, boolean pisSeller) {
+    public FormListofTicketScroll(ClientService pservice) {
         initComponents();
         service=pservice;
-        isSeller=pisSeller;
-        System.out.println(isSeller);
     }
 
     /**

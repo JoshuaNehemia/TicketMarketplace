@@ -6,6 +6,7 @@ package ticketmarketplaceclient.GUI;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import ticketmarketplaceclient.Service.ClientService;
 
 /**
  *
@@ -16,9 +17,10 @@ public class FormListOfTicketSeller extends javax.swing.JFrame {
     ImageIcon icon = new ImageIcon("Background Profile.png");
     Image image = icon.getImage();
     
-    
-    public FormListOfTicketSeller() {
+    ClientService service;
+    public FormListOfTicketSeller(ClientService service) {
         initComponents();
+        service=service;
     }
 
     /**
@@ -150,7 +152,9 @@ public class FormListOfTicketSeller extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuProfileActionPerformed
-        // TODO add your handling code here:
+        FormSellerProfile sellerForm = new FormSellerProfile(this);
+        sellerForm.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_menuProfileActionPerformed
 
     /**
@@ -181,11 +185,11 @@ public class FormListOfTicketSeller extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormListOfTicketSeller().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FormListOfTicketSeller().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

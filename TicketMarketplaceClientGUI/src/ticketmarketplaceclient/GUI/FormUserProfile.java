@@ -26,8 +26,6 @@ public class FormUserProfile extends javax.swing.JFrame {
         this.jTextFieldFullname.setText(parentForm.service.getCurrentUser().getFullname());
         this.jTextFieldUsername.setText(parentForm.service.getCurrentUser().getUsername());
         this.jTextFieldEmail.setText(parentForm.service.getCurrentUser().getEmail());
-        if(!parentForm.isSeller)this.jTextFieldBirthdate.setText(parentForm.service.getCurrentUser().getBirthdateString());
-
     }
 
     private FormUserProfile() {

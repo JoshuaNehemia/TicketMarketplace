@@ -150,7 +150,7 @@ public class FormLogin extends javax.swing.JFrame {
             if (res) {
 //            ...set current user in server.
 
-                FormListofTicketScroll login = new FormListofTicketScroll(service , isSeller);
+                FormListofTicketScroll login = new FormListofTicketScroll(service);
                 login.setVisible(true);
 
                 this.dispose();
@@ -168,7 +168,7 @@ public class FormLogin extends javax.swing.JFrame {
                 if (res) {
     //            ...set current user in server.
 
-                    FormListofTicketScroll login = new FormListofTicketScroll(service , isSeller);
+                    FormListOfTicketSeller login = new FormListOfTicketSeller(service);
                     login.setVisible(true);
 
                     this.dispose();
