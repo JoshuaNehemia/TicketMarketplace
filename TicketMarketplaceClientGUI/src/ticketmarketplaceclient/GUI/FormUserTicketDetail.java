@@ -4,6 +4,12 @@
  */
 package ticketmarketplaceclient.GUI;
 
+import TicketMarketplaceEntities.Event;
+import TicketMarketplaceEntities.Event_class;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
 /**
  *
  * @author Evan
@@ -13,9 +19,39 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
     /**
      * Creates new form FormTicketDetail
      */
-    public FormUserTicketDetail() {
+    FormListOfTicket1 parentForm;
+    Event selected;
+    public FormUserTicketDetail(FormListOfTicket1 pparentForm, Event pselected) {
         initComponents();
+        parentForm=pparentForm;
+        selected=pselected;
+        
+        jLabel1.setText(selected.getName());
+       for (Event_class ec :selected.getEventClasses()) {
+            String eventClassName = ec.getName();
+            jComboBox1.addItem(eventClassName);
+        }
+       priceCategory1.setText(String.valueOf(selected.getEventClasses().get(0).getPrice()));
+       priceCategory2.setText(String.valueOf(selected.getEventClasses().get(1).getPrice()));
+       lblTicketAmmounLeft1.setText("Jumlah : " + selected.getEventClasses().get(0).getStock());
+       lblTicketAmmounLeft2.setText("Jumlah : " + selected.getEventClasses().get(1).getStock());
+       lblSellerUsername.setText(selected.getSeller().getCompanyName());
+       
+       LocalDate date =selected.getStartDateTime();
+       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("id", "ID"));
+       String start = date.format(formatter);
+       //kalau udah ada endDateTime
+       //LocalDate date =selected.getStartDateTime(); 
+       //String end = date.format(formatter);
+       jLabel9.setText(start);
+       jLabel11.setText(start);
+       jLabel6.setText("Rp. " +selected.getEventClasses().get(0).getPrice());
     }
+    
+
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -154,6 +190,11 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 21)); // NOI18N
         jLabel6.setText("Rp.1.000.000,00");
         jLabel6.setOpaque(true);
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel6MousePressed(evt);
+            }
+        });
 
         jLabel17.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel17.setText("Event Category :");
@@ -206,7 +247,7 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel7)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,10 +280,14 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
         jLabel3.setText("venue");
         jLabel3.setOpaque(true);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "VIP 1", "Regular" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
+            }
+        });
+        jComboBox1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jComboBox1PropertyChange(evt);
             }
         });
 
@@ -406,12 +451,28 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        int selectedEventClass =jComboBox1.getSelectedIndex();
+        FormUserCheckout checkout = new FormUserCheckout(this, selected, selectedEventClass);
+        checkout.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
+        int selectedIndex = jComboBox1.getSelectedIndex();
+        double selectedPrice = selected.getEventClasses().get(selectedIndex).getPrice();
+        jLabel6.setText("IDR " + selectedPrice);
+       
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel6MousePressed
+
+    private void jComboBox1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jComboBox1PropertyChange
+      
+    }//GEN-LAST:event_jComboBox1PropertyChange
+
+    
     /**
      * @param args the command line arguments
      */
@@ -471,11 +532,11 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormUserTicketDetail().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FormUserTicketDetail().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

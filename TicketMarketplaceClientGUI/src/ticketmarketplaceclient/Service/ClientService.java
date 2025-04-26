@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import TicketMarketplaceEntities.*;
 import java.io.IOException;
 import java.util.Arrays;
+import static ticketmarketplaceclient.GUI.FormLogin.service;
 
 /**
  *
@@ -334,6 +335,27 @@ public class ClientService {
         
     }
     
+    public void UserSelectEvent(int eventId) //Select event and EVent class by event ID
+    {
+        try {
+            String[] data = new String[1];
+            data[0] = String.valueOf(eventId);
+            String message = new Communication(this.currentUser.getUsername(), "SEI",data ).getMessage();
+            System.out.println(message);
+            this.SendToServer(message);
+            this.ReceivedFromServer();
+            Communication received = new Communication(this.messageReceived);
+            String[] dataReply = received.getData();
+            Event e = new Event(Integer.parseInt(dataReply[0]), dataReply[1], dataReply[2], LocalDate.parse(dataReply[3]),this.SelectVenue(dataReply[4]), this.currentSeller);
+            ArrayList<Event_class> ec = UserSelectEventClass(0);    
+            e.setEventClasses(ec);
+            service.repo.ListEvent.add(e);            
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        
+    }
+    
     
     
     public Event_class SelectEventClass(int eventId, int eventClassId)
@@ -353,6 +375,127 @@ public class ClientService {
             System.out.println(ex);
             return null;
         }
+    }
+    
+//     public List<Event_class> UserSelectEventClass(int eventId)
+//    {
+//        try {
+//            String[] data = new String[2];
+//            data[0] = String.valueOf(eventId);
+//            String message = new Communication(this.currentUser.getUsername(), "SEC",data ).getMessage();
+//            System.out.println(message);
+//            this.SendToServer(message);
+//            this.ReceivedFromServer();
+//            Communication received = new Communication(this.messageReceived);
+//            String[] dataReply = received.getData();
+//            return new Event_class(Integer.parseInt(dataReply[0]), dataReply[1], Double.parseDouble(dataReply[2]),dataReply[3],Integer.parseInt(dataReply[4]),Integer.parseInt(dataReply[5]), Integer.parseInt(dataReply[6]));
+//        } catch (Exception ex) {
+//            System.out.println(ex);
+//            return null;
+//        }
+//    }
+       public ArrayList<Event_class> UserSelectEventClass(int eventId) {
+    ArrayList<Event_class> eventClasses = new ArrayList<>();
+    try {
+        String[] data = new String[1];
+        data[0] = String.valueOf(eventId);
+        String message = new Communication(this.currentUser.getUsername(), "SEC", data).getMessage();
+        System.out.println(message);
+        this.SendToServer(message);
+        this.ReceivedFromServer();
+        Communication received = new Communication(this.messageReceived);
+        String[] dataReply = received.getData();
         
+        for (int i = 0; i < dataReply.length; i += 7) {
+            Event_class ec = new Event_class(
+                Integer.parseInt(dataReply[i]), 
+                dataReply[i + 1], 
+                Double.parseDouble(dataReply[i + 2]), 
+                dataReply[i + 3], 
+                Integer.parseInt(dataReply[i + 4]), 
+                Integer.parseInt(dataReply[i + 5]), 
+                Integer.parseInt(dataReply[i + 6])
+            );
+            eventClasses.add(ec);
+        }
+        
+    } catch (Exception ex) {
+        System.out.println(ex);
+    }
+    return eventClasses;
+}
+       
+   public double CalculatePrice(int eventId, int eventClassId){
+    try {
+        String[] data = new String[2];
+        data[0] = String.valueOf(eventId);
+        data[1] = String.valueOf(eventClassId);
+
+        String message = new Communication(this.currentUser.getUsername(), "CP", data).getMessage();
+        System.out.println(message);
+
+        this.SendToServer(message);
+        this.ReceivedFromServer();
+
+        Communication received = new Communication(this.messageReceived);
+        String[] dataReply = received.getData();
+
+        return Double.parseDouble(dataReply[0]);
+    } catch (Exception ex) {
+        System.out.println("Error: " + ex.getMessage());
+        return -1;
+    }
+}
+   
+   public ArrayList<String> SelectTicket(String username) {
+    ArrayList<String> res = new ArrayList<>();
+    try {
+        String[] data = new String[1];
+        data[0] = username;
+
+        String message = new Communication(this.currentUser.getUsername(), "ST", data).getMessage();
+        System.out.println(message);
+        this.SendToServer(message);
+        this.ReceivedFromServer();
+        
+        Communication received = new Communication(this.messageReceived);
+        String[] dataReply = received.getData(); 
+
+        if (dataReply != null) {
+            for (String ticketInfo : dataReply) {
+                res.add(ticketInfo); 
+            }
+        }
+
+    } catch (Exception ex) {
+        System.out.println(ex);
+    }
+    return res;
+}
+
+   
+    public boolean BuyTicket(String buyerUsername, int eventId, int eventClassId) //Select event and EVent class by event ID
+    {
+        boolean res=false;
+        try {
+            String[] data = new String[6];
+            data[0] = String.valueOf(buyerUsername);
+            data[1] = String.valueOf(eventId);
+            data[2] = String.valueOf(eventClassId);
+            data[3] = "OVO";
+
+            String message = new Communication(this.currentUser.getUsername(), "BT",data ).getMessage();
+            System.out.println(message);
+            this.SendToServer(message);
+            this.ReceivedFromServer();
+            Communication received = new Communication(this.messageReceived);
+            
+            if (received.getCommand().equals("SUCCESS")) {
+                res = true;
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return res;
     }
 }
