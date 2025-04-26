@@ -13,11 +13,15 @@ public class FormSellerProfile extends javax.swing.JFrame {
     /**
      * Creates new form FormSellerProfile
      */
-    FormListOfTicketSeller parentForm;
-    public FormSellerProfile(FormListOfTicketSeller pparentForm) {
+    FormSellerPublishTicket parentForm;
+    public FormSellerProfile(FormSellerPublishTicket parentForm) {
         initComponents();
-        parentForm=pparentForm;
-        
+        this.parentForm=parentForm;
+        this.txtEmail.setText(FormLogin.service.getCurrentSeller().getCompanyName());
+        this.txtEmail2.setText(FormLogin.service.getCurrentSeller().getUsername());
+        this.txtEmail3.setText(FormLogin.service.getCurrentSeller().getCompanyAddress());
+        this.txtEmail4.setText(FormLogin.service.getCurrentSeller().getPhoneNumber());
+        this.txtEmail5.setText(FormLogin.service.getCurrentSeller().getEmail());
 //        this.jTextFieldVendorNeme.setText(parentForm.service.getCurrentUser().getCompanyName());
 //        this.jTextFieldEmail.setText(parentForm.service.getCurrentUser().getEmail());
     }
@@ -126,6 +130,11 @@ public class FormSellerProfile extends javax.swing.JFrame {
         jMenuBar1.add(menuHome);
 
         menuPublishTicket.setText("Publish Ticket");
+        menuPublishTicket.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuPublishTicketMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(menuPublishTicket);
 
         menuProfile.setText("Profile");
@@ -224,6 +233,13 @@ public class FormSellerProfile extends javax.swing.JFrame {
     private void menuProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuProfileActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_menuProfileActionPerformed
+
+    private void menuPublishTicketMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPublishTicketMouseClicked
+        // TODO add your handling code here:
+        FormSellerPublishTicket publish = new FormSellerPublishTicket(FormLogin.service);
+        publish.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_menuPublishTicketMouseClicked
 
     /**
      * @param args the command line arguments

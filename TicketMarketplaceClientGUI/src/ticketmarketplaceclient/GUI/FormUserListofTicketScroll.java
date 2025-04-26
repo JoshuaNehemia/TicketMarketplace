@@ -9,13 +9,13 @@ import ticketmarketplaceclient.Service.ClientService;
  *
  * @author Lenovo
  */
-public class FormListofTicketScroll extends javax.swing.JFrame {
+public class FormUserListofTicketScroll extends javax.swing.JFrame {
 
     /**
      * Creates new form FormListOfTicket
      */
     public static ClientService service;
-    public FormListofTicketScroll(ClientService pservice) {
+    public FormUserListofTicketScroll(ClientService pservice) {
         initComponents();
         service=pservice;
     }
@@ -1067,14 +1067,29 @@ public class FormListofTicketScroll extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormListofTicketScroll.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormUserListofTicketScroll.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormListofTicketScroll.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormUserListofTicketScroll.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormListofTicketScroll.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormUserListofTicketScroll.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormListofTicketScroll.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormUserListofTicketScroll.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FormListofTicketScroll().setVisible(true);
+//            }
+//        });
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>

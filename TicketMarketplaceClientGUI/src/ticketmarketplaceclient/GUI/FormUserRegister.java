@@ -11,11 +11,11 @@ import java.time.LocalDate;
  *
  * @author Lenovo
  */
-public class FormRegister extends javax.swing.JFrame {
+public class FormUserRegister extends javax.swing.JFrame {
 
     private FormLogin parentForm;
 
-    public FormRegister(FormLogin loginForm) {
+    public FormUserRegister(FormLogin loginForm) {
         initComponents();
         parentForm = loginForm;
         buttonUser.setSelected(true); // radio button User aktif
@@ -270,7 +270,7 @@ public class FormRegister extends javax.swing.JFrame {
 
     private void buttonSellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSellerActionPerformed
         // Buka form register untuk Seller
-        FormRegisterSeller sellerForm = new FormRegisterSeller(parentForm);
+        FormSellerRegister sellerForm = new FormSellerRegister(parentForm);
         sellerForm.setVisible(true);
 
         // Tutup form saat ini jika perlu
@@ -294,14 +294,23 @@ public class FormRegister extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormUserRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormUserRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormUserRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormUserRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FormRegister().setVisible(true);
+//            }
+//        });
         //</editor-fold>
         //</editor-fold>
 

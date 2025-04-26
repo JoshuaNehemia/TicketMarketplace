@@ -1,5 +1,7 @@
 package TicketMarketplaceEntities;
 
+import java.util.ArrayList;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -17,6 +19,7 @@ public class Seller {
     private String companyName;
     private String companyAddress;
     private String phoneNumber;
+    private ArrayList<Event> events;
 
     public Seller(String username, String password, String companyName, String companyAddress, String phoneNumber, String email) {
         this.username = username;
@@ -25,6 +28,7 @@ public class Seller {
         this.companyAddress = companyAddress;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.events = new ArrayList<Event>();
     }
     public Seller() {
         this.username = "";
@@ -33,6 +37,7 @@ public class Seller {
         this.companyAddress = "";
         this.phoneNumber = "";
         this.email = "";
+        this.events = new ArrayList<Event>();
     }
 
     public String getUsername() {
@@ -81,6 +86,21 @@ public class Seller {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+    public void setEvents(ArrayList<Event> events)
+    {
+        this.events = events;
+    }
+    
+    public ArrayList<Event> getEvents()
+    {
+        return this.events;
+    }
+    
+    public void addEvents(Event event)
+    {
+        this.events.add(event);
     }
     
     //Function

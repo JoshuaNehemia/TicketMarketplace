@@ -11,13 +11,12 @@ import javax.swing.ImageIcon;
  *
  * @author Lenovo
  */
-public class FormListOfTicketSeller2 extends javax.swing.JFrame {
+public class FormSellerListTicket extends javax.swing.JFrame {
 
     ImageIcon icon = new ImageIcon("Background Profile.png");
     Image image = icon.getImage();
-    
-    
-    public FormListOfTicketSeller2() {
+
+    public FormSellerListTicket() {
         initComponents();
     }
 
@@ -100,7 +99,7 @@ public class FormListOfTicketSeller2 extends javax.swing.JFrame {
 
         page.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         page.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        page.setText("2");
+        page.setText("1");
 
         btnNext.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         btnNext.setText("Next");
@@ -168,6 +167,11 @@ public class FormListOfTicketSeller2 extends javax.swing.JFrame {
         jMenuBar1.add(menuHome);
 
         menuPublishTicket.setText("Publish Ticket");
+        menuPublishTicket.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuPublishTicketMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(menuPublishTicket);
 
         menuProfile.setText("Profile");
@@ -237,7 +241,7 @@ public class FormListOfTicketSeller2 extends javax.swing.JFrame {
                 .addComponent(btnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(page)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(257, 257, 257))
         );
@@ -302,6 +306,13 @@ public class FormListOfTicketSeller2 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_menuProfileActionPerformed
 
+    private void menuPublishTicketMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPublishTicketMouseClicked
+        // TODO add your handling code here:
+        FormSellerPublishTicket login = new FormSellerPublishTicket(FormLogin.service);
+        login.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_menuPublishTicketMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -319,18 +330,14 @@ public class FormListOfTicketSeller2 extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormListOfTicketSeller2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSellerListTicket.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormListOfTicketSeller2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSellerListTicket.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormListOfTicketSeller2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSellerListTicket.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormListOfTicketSeller2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSellerListTicket.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -339,7 +346,7 @@ public class FormListOfTicketSeller2 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormListOfTicketSeller2().setVisible(true);
+                new FormSellerListTicket().setVisible(true);
             }
         });
     }

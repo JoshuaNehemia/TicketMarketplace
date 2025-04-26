@@ -8,12 +8,12 @@ package ticketmarketplaceclient.GUI;
  *
  * @author Evan
  */
-public class FormCheckout extends javax.swing.JFrame {
+public class FormUserCheckout extends javax.swing.JFrame {
 
     /**
      * Creates new form FormCheckout
      */
-    public FormCheckout() {
+    public FormUserCheckout() {
         initComponents();
     }
 
@@ -88,8 +88,6 @@ public class FormCheckout extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Juicy Luicy Concert");
-
-        jPanel3.setForeground(new java.awt.Color(204, 204, 204));
 
         jLabel2.setText("VIP 3");
 
@@ -266,7 +264,6 @@ public class FormCheckout extends javax.swing.JFrame {
         jLabel12.setText("Detail Pemesanan");
 
         jPanel8.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel8.setForeground(new java.awt.Color(204, 204, 204));
 
         jRadioButton1.setText("Tuan");
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -298,6 +295,11 @@ public class FormCheckout extends javax.swing.JFrame {
         });
 
         textField4.setText("No KTP");
+        textField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textField4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -498,6 +500,10 @@ public class FormCheckout extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void textField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textField4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -515,21 +521,23 @@ public class FormCheckout extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormCheckout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormUserCheckout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormCheckout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormUserCheckout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormCheckout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormUserCheckout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormCheckout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormUserCheckout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormCheckout().setVisible(true);
+                new FormUserCheckout().setVisible(true);
             }
         });
     }

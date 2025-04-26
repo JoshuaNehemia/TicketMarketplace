@@ -95,8 +95,9 @@ public class Venue {
         data[2] = this.getAddress();
         data[3] = String.valueOf(this.getMaxCapacity());
         data[4] = String.valueOf(this.getArea());
-        data[5] = this.getCitiesId().toString();
+        data[5] = String.valueOf(this.getCitiesId().getName());
         
         return data;
     }
+    
 }

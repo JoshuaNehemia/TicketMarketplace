@@ -30,16 +30,20 @@ public class RepositoryTemp {
     public ArrayList<Ticket> ListTicket;
     public ArrayList<Seat> listSeat;
     public ArrayList<Payment_method> listPaymentMethod;
+
     public RepositoryTemp() {
         ListProvince = new ArrayList<Province>();
         ListCity = new ArrayList<City>();
         ListUser = new ArrayList<User>();
         ListSeller = new ArrayList<Seller>();
         ListVenue = new ArrayList<Venue>();
+        ListEvent = new ArrayList<Event>();
         
         this.CreateProvince();
         this.CreateCity();
         this.CreateUser();
+        this.CreateSeller();
+        this.CreateVenue();
     }
     
     private void CreateUser()
@@ -53,11 +57,14 @@ public class RepositoryTemp {
     }
     private void CreateSeller()
     {
-        
+        ListSeller.add(new Seller("GacorCorp777", "GACOR777", "GacorCorp", "Jl. Gacor 777", "7777777777", "gacor@gacor.corp.id"));
+        ListSeller.add(new Seller("22Cinema", "Dingin", "DuaDuaSinema", "Jl. Sinema 22", "22222222", "duadua@sinema.corp.id"));
     }
+    
     private void CreateVenue()
     {
-        
+        ListVenue.add(new Venue(1,"Gelora Bung Karno","Jl. Pintu Satu Senayan",78000,7140,ListCity.get(0)));
+        ListVenue.add(new Venue(2,"Jakarta International Expo","Jl. Benyamin Suep",100000,8295,ListCity.get(2)));
     }
     private void CreateEvent()
     {
@@ -69,7 +76,7 @@ public class RepositoryTemp {
         this.ListEventCategory.add(new Event_category(1,"CONCERT"));
         this.ListEventCategory.add(new Event_category(2,"RELIGIOUS EVENT"));
         this.ListEventCategory.add(new Event_category(3,"ORCHESTRA"));
-        this.ListEventCategory.add(new Event_category(4,"CLASS"));
+        this.ListEventCategory.add(new Event_category(4,"MOVIE"));
     }
     
     private void CreateCity()

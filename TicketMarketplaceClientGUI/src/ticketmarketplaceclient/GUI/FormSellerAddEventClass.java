@@ -4,17 +4,24 @@
  */
 package ticketmarketplaceclient.GUI;
 
+import TicketMarketplaceEntities.Event_class;
 /**
  *
  * @author Evan
  */
-public class FormAddEventClass extends javax.swing.JFrame {
-
+public class FormSellerAddEventClass extends javax.swing.JFrame {
+    
+    FormSellerCreateEvent parent;
+    Event_class baru = new Event_class();
     /**
      * Creates new form FormPublishTicket2
      */
-    public FormAddEventClass() {
+    public FormSellerAddEventClass() {
         initComponents();
+    }
+    public FormSellerAddEventClass(FormSellerCreateEvent parent) {
+        initComponents();
+        this.parent = parent;
     }
 
     /**
@@ -30,13 +37,13 @@ public class FormAddEventClass extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
+        txtRows = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
+        txtColumns = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txtClassType = new javax.swing.JTextField();
+        txtClassName = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField12 = new javax.swing.JTextField();
+        txtPrice = new javax.swing.JTextField();
         btnAddEventClassDetails = new javax.swing.JButton();
 
         jLabel14.setText("Category");
@@ -52,7 +59,7 @@ public class FormAddEventClass extends javax.swing.JFrame {
 
         jLabel2.setText("Number of Row");
 
-        jLabel4.setText("Number of Coloum");
+        jLabel4.setText("Number of Column");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel5.setText("Class Type Name :");
@@ -62,6 +69,11 @@ public class FormAddEventClass extends javax.swing.JFrame {
 
         btnAddEventClassDetails.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         btnAddEventClassDetails.setText("Add");
+        btnAddEventClassDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddEventClassDetailsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -75,17 +87,17 @@ public class FormAddEventClass extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAddEventClassDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtClassType)
-                    .addComponent(jTextField12)
+                    .addComponent(txtClassName)
+                    .addComponent(txtPrice)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel4))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField11, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
-                            .addComponent(jTextField10))))
-                .addContainerGap(181, Short.MAX_VALUE))
+                            .addComponent(txtColumns, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+                            .addComponent(txtRows))))
+                .addContainerGap(182, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,19 +109,19 @@ public class FormAddEventClass extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtRows, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtColumns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtClassType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtClassName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAddEventClassDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(52, Short.MAX_VALUE))
@@ -117,6 +129,18 @@ public class FormAddEventClass extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAddEventClassDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEventClassDetailsActionPerformed
+        // TODO add your handling code here:
+        String name = txtClassName.getText();
+        int numRows = Integer.parseInt(txtRows.getText());
+        int numColumns = Integer.parseInt(txtColumns.getText());
+        Double price = Double.parseDouble(txtPrice.getText());
+        baru = new Event_class(parent.GetEventClassId(),name,price,"no desc",numRows,numColumns);
+        System.out.println(baru.GetEventClassData());
+        parent.AddEventClass(baru);
+        this.dispose();
+    }//GEN-LAST:event_btnAddEventClassDetailsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -135,14 +159,22 @@ public class FormAddEventClass extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormAddEventClass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSellerAddEventClass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormAddEventClass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSellerAddEventClass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormAddEventClass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSellerAddEventClass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormAddEventClass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSellerAddEventClass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -155,7 +187,7 @@ public class FormAddEventClass extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormAddEventClass().setVisible(true);
+                new FormSellerAddEventClass().setVisible(true);
             }
         });
     }
@@ -169,9 +201,9 @@ public class FormAddEventClass extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField txtClassType;
+    private javax.swing.JTextField txtClassName;
+    private javax.swing.JTextField txtColumns;
+    private javax.swing.JTextField txtPrice;
+    private javax.swing.JTextField txtRows;
     // End of variables declaration//GEN-END:variables
 }

@@ -12,13 +12,13 @@ import ticketmarketplaceclient.Service.ClientService;
  *
  * @author Lenovo
  */
-public class FormListOfTicketSeller extends javax.swing.JFrame {
+public class FormSellerPublishTicket extends javax.swing.JFrame {
 
     ImageIcon icon = new ImageIcon("Background Profile.png");
     Image image = icon.getImage();
     
     ClientService service;
-    public FormListOfTicketSeller(ClientService service) {
+    public FormSellerPublishTicket(ClientService service) {
         initComponents();
         service=service;
     }
@@ -41,8 +41,8 @@ public class FormListOfTicketSeller extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         menuHome = new javax.swing.JMenu();
         menuPublishTicket = new javax.swing.JMenu();
-        menuProfile = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
+        menuProfile = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 102, 102));
@@ -97,6 +97,11 @@ public class FormListOfTicketSeller extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         jButton1.setText("Publish Your Event");
         jButton1.setBorder(new javax.swing.border.MatteBorder(null));
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         jMenuBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -104,18 +109,38 @@ public class FormListOfTicketSeller extends javax.swing.JFrame {
         jMenuBar1.add(menuHome);
 
         menuPublishTicket.setText("Publish Ticket");
+        menuPublishTicket.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuPublishTicketMouseClicked(evt);
+            }
+        });
+        menuPublishTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuPublishTicketActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(menuPublishTicket);
 
+        jMenu4.setText("List of Ticket");
+        jMenu4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu4ActionPerformed(evt);
+            }
+        });
+        jMenuBar1.add(jMenu4);
+
         menuProfile.setText("Profile");
+        menuProfile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuProfileMouseClicked(evt);
+            }
+        });
         menuProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuProfileActionPerformed(evt);
             }
         });
         jMenuBar1.add(menuProfile);
-
-        jMenu4.setText("jMenu4");
-        jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
 
@@ -157,6 +182,33 @@ public class FormListOfTicketSeller extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_menuProfileActionPerformed
 
+    private void menuPublishTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPublishTicketActionPerformed
+        // TODO add your handling code here:        
+    }//GEN-LAST:event_menuPublishTicketActionPerformed
+
+    private void menuPublishTicketMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPublishTicketMouseClicked
+        // TODO add your handling code here:   
+    }//GEN-LAST:event_menuPublishTicketMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:                          
+        FormSellerCreateEvent createTicket = new FormSellerCreateEvent(this);
+        createTicket.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void menuProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuProfileMouseClicked
+        // TODO add your handling code here:
+        FormSellerProfile sellerProfile = new FormSellerProfile(this);
+        sellerProfile.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_menuProfileMouseClicked
+
+    private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jMenu4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -174,14 +226,38 @@ public class FormListOfTicketSeller extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormListOfTicketSeller.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSellerPublishTicket.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormListOfTicketSeller.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSellerPublishTicket.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormListOfTicketSeller.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSellerPublishTicket.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormListOfTicketSeller.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSellerPublishTicket.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FormListOfTicketSeller().setVisible(true);
+//            }
+//        });
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FormListOfTicketSeller().setVisible(true);
+//            }
+//        });
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FormListOfTicketSeller().setVisible(true);
+//            }
+//        });
         //</editor-fold>
 
         /* Create and display the form */

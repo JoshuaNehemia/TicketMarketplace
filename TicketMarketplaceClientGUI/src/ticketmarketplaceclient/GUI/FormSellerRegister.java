@@ -11,13 +11,13 @@ import javax.swing.JOptionPane;
  * @author Evan
  */
 
-public class FormRegisterSeller extends javax.swing.JFrame {
+public class FormSellerRegister extends javax.swing.JFrame {
 
     /**
      * Creates new form FormRegisterSeller
      */
     private FormLogin parentForm;
-    public FormRegisterSeller(FormLogin loginForm) {
+    public FormSellerRegister(FormLogin loginForm) {
         initComponents();
         parentForm = loginForm;
         buttonSeller.setSelected(true); // radio button Seller aktif
@@ -248,7 +248,7 @@ public class FormRegisterSeller extends javax.swing.JFrame {
 
     private void buttonSellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSellerActionPerformed
         // Buka form register untuk Seller
-        FormRegisterSeller sellerForm = new FormRegisterSeller(parentForm);
+        FormSellerRegister sellerForm = new FormSellerRegister(parentForm);
         sellerForm.setVisible(true);
 
         // Tutup form saat ini jika perlu
@@ -313,14 +313,23 @@ public class FormRegisterSeller extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormRegisterSeller.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSellerRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormRegisterSeller.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSellerRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormRegisterSeller.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSellerRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormRegisterSeller.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSellerRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FormRegisterSeller().setVisible(true);
+//            }
+//        });
         //</editor-fold>
         //</editor-fold>
 

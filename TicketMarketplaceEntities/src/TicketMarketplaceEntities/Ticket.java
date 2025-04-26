@@ -4,55 +4,59 @@ package TicketMarketplaceEntities;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
-import java.time.LocalDate; 
 /**
  *
  * @author Franly
  */
 public class Ticket {
-    private User user;
-    private Seat seat;
-    private int id;
+
+    private String id;
+    private Event event;
+    private int eventClassId;
     private LocalDate paidDate;
-    private Payment_method payment_method;
-    
-    public User getUser() {
-        return user;
-    }
+    private Double price;
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Ticket(User user, Seat seat, int id, LocalDate paidDate, Payment_method payment_method) {
-        this.user = user;
-        this.seat = seat;
+    public Ticket(String id, Event event, int eventClassId, LocalDate paidDate, Double price) {
         this.id = id;
+        this.event = event;
+        this.eventClassId = eventClassId;
         this.paidDate = paidDate;
-        this.payment_method = payment_method;
+        this.price = price;
     }
+
+    public Ticket(Event event, int eventClassId, LocalDate paidDate, Double price) {
+        this.id = "";
+        this.event = event;
+        this.eventClassId = eventClassId;
+        this.paidDate = paidDate;
+        this.price = price;
+    }
+
     public Ticket() {
-        this.user = null;
-        this.seat = null;
-        this.id = 0;
+        this.eventClassId = 0;
+        this.price = 0.0;
+        this.event = null;
+        this.id = "";
         this.paidDate = null;
-        this.payment_method = null;
     }
 
-    public Seat getSeats() {
-        return seat;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setSeats(Seat seat) {
-        this.seat = seat;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -64,11 +68,44 @@ public class Ticket {
         this.paidDate = paidDate;
     }
 
-    public Payment_method getPayment_method() {
-        return payment_method;
+    public Event getEvent() {
+        return event;
     }
 
-    public void setPayment_method(Payment_method payment_method) {
-        this.payment_method = payment_method;
+    public void setEvent(Event event) {
+        this.event = event;
     }
+
+    public int getEventClassId() {
+        return eventClassId;
+    }
+
+    public void setEventClassId(int eventClassId) {
+        this.eventClassId = eventClassId;
+    }
+
+    public String GetTicketID(String username) {
+        String newId = username + '-' + String.valueOf(LocalDate.now()) + '-' + this.getEvent().getName() + '-' + this.getEvent().getEventClasses().get(this.eventClassId - 1);
+        return newId;
+    }
+
+    public String[] GetTicketData() {
+        ArrayList<String> list = new ArrayList<String>();
+        
+        list.add(this.getId());
+        list.add(this.getEvent().getName());
+        list.add(String.valueOf(this.getEventClassId()));
+        list.add(String.valueOf(this.getPaidDate()));
+        list.add(String.valueOf(this.getPrice()));
+        
+        String[] array = list.toArray(new String[0]);
+        
+        return array;
+    }
+
+    @Override
+    public String toString() {
+        return "";
+    }
+
 }

@@ -11,22 +11,22 @@ package TicketMarketplaceEntities;
 public class Seat {
 
     private int id;
-    private Event_class event_class;
     private String rows;
     private int column;
+    private boolean isTaken;
 
-    public Seat(int id, Event_class event_class, String rows, int column) {
+    public Seat(int id, String rows, int column, boolean isTaken) {
         this.id = id;
-        this.event_class = event_class;
         this.rows = rows;
         this.column = column;
+        this.isTaken = isTaken;
     }
 
     public Seat() {
         this.id = 0;
-        this.event_class = null;
         this.rows = "";
         this.column = 0;
+        this.isTaken = false;
     }
 
     public int getId() {
@@ -35,14 +35,6 @@ public class Seat {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Event_class getEvent_class() {
-        return event_class;
-    }
-
-    public void setEvent_class(Event_class event_class) {
-        this.event_class = event_class;
     }
 
     public String getRows() {
@@ -61,14 +53,24 @@ public class Seat {
         this.column = column;
     }
 
+    public boolean getIsTaken() {
+        return isTaken;
+    }
+
+    public void setIsTaken(boolean isTaken) {
+        this.isTaken = isTaken;
+    }
+    
     //Function
-    public void GetSeatData() {
+    public String[] GetSeatData() {
         String[] data = new String[4];
 
         data[0] = String.valueOf(this.getId());
-        data[1] = String.valueOf(this.getEvent_class().getId());
-        data[2] = String.valueOf(this.getRows());
-        data[3] = String.valueOf(this.getColumn());
+        data[1] = String.valueOf(this.getRows());
+        data[2] = String.valueOf(this.getColumn());
+        data[3] = String.valueOf(this.getIsTaken());
+        
+        return data;
     }
 
 }

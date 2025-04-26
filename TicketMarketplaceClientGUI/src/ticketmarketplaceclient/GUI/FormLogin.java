@@ -150,7 +150,7 @@ public class FormLogin extends javax.swing.JFrame {
             if (res) {
 //            ...set current user in server.
 
-                FormListofTicketScroll login = new FormListofTicketScroll(service);
+                FormUserListofTicketScroll login = new FormUserListofTicketScroll(service);
                 login.setVisible(true);
 
                 this.dispose();
@@ -168,7 +168,7 @@ public class FormLogin extends javax.swing.JFrame {
                 if (res) {
     //            ...set current user in server.
 
-                    FormListOfTicketSeller login = new FormListOfTicketSeller(service);
+                    FormSellerPublishTicket login = new FormSellerPublishTicket(service);
                     login.setVisible(true);
 
                     this.dispose();
@@ -185,7 +185,7 @@ public class FormLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-        FormRegister regisForm = new FormRegister(this);
+        FormUserRegister regisForm = new FormUserRegister(this);
         regisForm.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jLabel3MouseClicked

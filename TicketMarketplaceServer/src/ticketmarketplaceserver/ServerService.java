@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -112,13 +113,31 @@ public class ServerService implements Runnable {
                 comm = this.UserSignUp(_data[0], _data[1], _data[2], _data[3], LocalDate.parse(_data[4]));
             } else if (_command.equals("LI")) {
                 comm = this.UserLogIn(_data[0], _data[1]);
-            } else if(_command.equals("SU-SELLER")){
+            } else if (_command.equals("SU-SELLER")) {
                 comm = this.SellerSignUp(_data[0], _data[1], _data[4], _data[5], _data[3], _data[2]);
-            }else if(_command.equals("LI-SELLER")){
+            } else if (_command.equals("LI-SELLER")) {
                 comm = this.SellerLogIn(_data[0], _data[1]);
-            }else if(_command.equals("BUY")){
+            } else if (_command.equals("BT")) {
 //                comm = this.BuyTicket(_data[0], _data[1],_data[2],_data[2],_data[3], data[4]);
                 //username namaEvent classKursi rowKursi colKursi paymentMethod
+            } else if (_command.equals("SLV")) {
+                comm = this.SelectListVenue();
+            } else if (_command.equals("SV")) {
+                comm = this.SelectVenue(_data[0]);
+            } else if (_command.equals("SP")) {
+                comm = this.SelectProvince(_data[0]);
+            } else if (_command.equals("SC")) {
+                comm = this.SelectCity(_data[0]);
+            } else if (_command.equals("INE")) {
+                comm = this.InsertNewEvent(_data[1], _data[2], LocalDate.parse(_data[3]), this.SelectVenueByName(_data[4]), this.SelectSellerByUsername(_data[5]));
+            } else if (_command.equals("INEC")) {
+                comm = this.InsertNewEventClass(Integer.parseInt(_data[0]), Integer.parseInt(_data[1]), _data[2], Double.parseDouble(_data[3]), _data[4], Integer.parseInt(_data[5]), Integer.parseInt(_data[6]));
+            }else if (_command.equals("SEI")) {
+                //comm = this.InsertNewEventClass(Integer.parseInt(_data[0]), Integer.parseInt(_data[1]), _data[2], Double.parseDouble(_data[3]), _data[4], Integer.parseInt(_data[5]), Integer.parseInt(_data[6]));
+            }else if (_command.equals("SSE")) {
+                //comm = this.InsertNewEventClass(Integer.parseInt(_data[0]), Integer.parseInt(_data[1]), _data[2], Double.parseDouble(_data[3]), _data[4], Integer.parseInt(_data[5]), Integer.parseInt(_data[6]));
+            }else if (_command.equals("SEC")) {
+                //comm = this.InsertNewEventClass(Integer.parseInt(_data[0]), Integer.parseInt(_data[1]), _data[2], Double.parseDouble(_data[3]), _data[4], Integer.parseInt(_data[5]), Integer.parseInt(_data[6]));
             }
 
             if (comm != null) {
@@ -244,7 +263,7 @@ public class ServerService implements Runnable {
             if (!buffer.getUsername().equals("")) {
                 return new Communication(buffer.getUsername(), "SUCCESS", buffer.GetSellerData());
             } else {
-                String errorMsg = "Seat already booked";
+                String errorMsg = "Wrong Username or Password";
                 return new Communication(username, "FAILED" + errorMsg, null);
             }
         } catch (Exception ex) {
@@ -252,18 +271,18 @@ public class ServerService implements Runnable {
             return null;
         }
     }
-    
+
     // Ticket ------------------------------------------------------------------
-    public Communication BuyTicket(String username, String namaEvent, String classKursi, String rowKursi, String colKursi, String paymentMethod) {
+    public Communication BuyTicket(String username, String classKursi, String rowKursi, String colKursi, String paymentMethod) {
 
-        System.out.println(InteractiveIO.YellowMessage("BUY TICKET"));
-
+        System.out.println(InteractiveIO.YellowMessage("BUY TICKET (BT)"));
+        /*
         //Using temporary Database
         try {
             //find seat
             Optional<Seat> optSeat = repo.listSeat.stream()
             .filter(s -> 
-                s.getEvent_class().getEvents_id().getName().equalsIgnoreCase(namaEvent) &&
+                //s.getEvent_class().getEvent().getName().equalsIgnoreCase(namaEvent) &&
                 s.getEvent_class().getName().equalsIgnoreCase(classKursi) &&
                 s.getRows().equalsIgnoreCase(rowKursi) &&
                 s.getColumn() == Integer.parseInt(colKursi)
@@ -307,7 +326,36 @@ public class ServerService implements Runnable {
         } catch (Exception ex) {
             System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
             return null;
+        }*/
+        return null; //for temporary NANTI DIHAPUS
+    }
+
+    //Private
+    private Venue SelectVenueByName(String venueName) {
+        for (Venue v : this.repo.ListVenue) {
+            if (v.getName().equals(venueName)) {
+                return v;
+            }
         }
+        return null;
+    }
+
+    private Seller SelectSellerByUsername(String sellerUsername) {
+        for (Seller v : this.repo.ListSeller) {
+            if (v.getUsername().equals(sellerUsername)) {
+                return v;
+            }
+        }
+        return null;
+    }
+
+    private int SelectEventById(int eventId) {
+        for (int i = 0; i < this.repo.ListEvent.size(); i++) {
+            if (this.repo.ListEvent.get(i).getId() == eventId) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     // Venue -------------------------------------------------------------------
@@ -321,17 +369,61 @@ public class ServerService implements Runnable {
             newId = repo.ListVenue.get(listVenueSize - 1).getId() + 1;
         }
         repo.ListVenue.add(new Venue(newId, name, address, maxCapacity, area, cityId));
+    }
 
+    public Communication SelectListVenue() {
+        System.out.println(InteractiveIO.YellowMessage("SELECT LIST VENUE (SLV)"));
+        try {
+            String[] data = new String[this.repo.ListVenue.size() + 1];
+            data[0] = String.valueOf(this.repo.ListVenue.size());
+            for (int i = 0; i < this.repo.ListVenue.size(); i++) {
+                data[1 + i] = repo.ListVenue.get(i).getName();
+            }
+            return new Communication("SLV", "SUCCESS", data);
+        } catch (Exception ex) {
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
+            return null;
+        }
+
+    }
+
+    public Communication SelectProvince(String provinceName) {
+        System.out.println(InteractiveIO.YellowMessage("SELECT PROVINCE (SP)"));
+        try {
+            for (Province p : this.repo.ListProvince) {
+                if (p.getName().equals(provinceName)) {
+                    return new Communication("SP", "SUCCESS", p.GetProvinceData());
+                }
+            }
+            return new Communication("SP", "FAILED", null);
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public Communication SelectCity(String cityName) {
+        System.out.println(InteractiveIO.YellowMessage("SELECT CITY (SC)"));
+        try {
+            for (City c : this.repo.ListCity) {
+                if (c.getName().equals(cityName)) {
+                    return new Communication("dummy", "SUCCESS", c.GetCityData());
+                }
+            }
+            return new Communication("SC", "FAILED", null);
+        } catch (Exception ex) {
+            return null;
+        }
     }
 
     public Communication SelectVenue(String venueName) {
+        System.out.println(InteractiveIO.YellowMessage("SELECT VENUE (SV)"));
         try {
-            for (Venue v : repo.ListVenue) {
+            for (Venue v : this.repo.ListVenue) {
                 if (v.getName().equals(venueName)) {
-                    return new Communication("dummy", "SUCCESS", v.GetVenueData());
+                    return new Communication("SV", "SUCCESS", v.GetVenueData());
                 }
             }
-            return new Communication("dummy", "FAILED", null);
+            return new Communication("SV", "FAILED", null);
         } catch (Exception ex) {
             System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
             return null;
@@ -339,30 +431,86 @@ public class ServerService implements Runnable {
 
     }
 
-    public void InsertEvent(int id, String name, String description, LocalDate dateTime, int maxBuy, Venue venue, Seller seller_username, Event_category event_category) {
-        int newId = 1;
-        if (repo.ListEvent.size() != 0) {
-            newId = repo.ListEvent.get(repo.ListEvent.size() - 1).getId() + 1;
-        }
-        repo.ListEvent.add(new Event(newId, name, description, dateTime, maxBuy, venue, seller_username, event_category));
-    }
-
-    public Communication SelectEvent(String eventName) {
+    public Communication InsertNewEvent(String name, String description, LocalDate startDateTime, Venue venue, Seller seller) {
         try {
+            System.out.println(InteractiveIO.YellowMessage("INSERT NEW EVENT (INE)"));
+            int newId = 1;
+            if (repo.ListEvent.size() != 0) {
+                newId = repo.ListEvent.get(repo.ListEvent.size() - 1).getId() + 1;
+            }
+            this.repo.ListEvent.add(new Event(newId, name, description, startDateTime, venue, seller));
+            String[] data = new String[1];
+            data[0] = String.valueOf(newId);
+            return new Communication(seller.getUsername(), "SUCCESS", data);
+        } catch (Exception ex) {
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
+            return null;
+        }
+    }
+
+    public Communication InsertNewEventClass(int eventId, int ecId, String name, double price, String description, int numRows, int numCols) {
+        try {
+            System.out.println(InteractiveIO.YellowMessage("INSERT NEW EVENT CLASS (INEC)"));
+            int index = this.SelectEventById(eventId);
+            this.repo.ListEvent.get(index).addEventClasses(new Event_class(ecId, name, price, description, numRows, numCols));
+            return new Communication("dummy", "SUCCESS", null);
+        } catch (Exception ex) {
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex);
+            return null;
+        }
+    }
+
+    public Communication SelectEvent(int eventId) { 
+        try {
+            System.out.println(InteractiveIO.YellowMessage("SELECT EVENT ID (SEI)"));
             for (Event v : repo.ListEvent) {
-                if (v.getName().equals(eventName)) {
-                    return new Communication("dummy", "SUCCESS", v.GetEventData());
+                if (v.getId() == (eventId)) {
+                    return new Communication("SEI", "SUCCESS", v.GetEventData());
                 }
             }
-            return new Communication("dummy", "FAILED", null);
+            return new Communication("SEI", "FAILED", null);
         } catch (Exception ex) {
             System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
             return null;
         }
 
     }
-    
-    
 
+    public Communication SellerSelectEvent(String username) { 
+        try {
+            System.out.println(InteractiveIO.YellowMessage("SELLER SELECT EVENT (SE)"));
+            ArrayList<String> list = new ArrayList<String>();
+            for (Event v : repo.ListEvent) {
+                if (v.getSeller().getUsername().equals(username)) {
+                    list.add(String.valueOf(v.getId()));
+                }
+            }
+            if (list.size() > 0) {
+                return new Communication("SSE", "SUCCESS", list.toArray(new String[0]));
+            } else {
+                return new Communication("SSE", "FAILED", null);
 
+            }
+        } catch (Exception ex) {
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
+            return null;
+        }
+
+    }
+
+    public Communication SelectEventClass(int eventId, int eventClassId) {
+        try {
+            System.out.println(InteractiveIO.YellowMessage("SELECT EVENT CLASS (SEC)"));
+            int index = this.SelectEventById(eventId);
+            for (Event_class ec : this.repo.ListEvent.get(index).getEventClasses()) {
+                if (ec.getId() == eventClassId) {
+                    return new Communication("SEC", "SUCCESS", ec.GetEventClassData());
+                }
+            }
+            return new Communication("SEC", "FAILED", null);
+        } catch (Exception ex) {
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
+            return null;
+        }
+    }
 }

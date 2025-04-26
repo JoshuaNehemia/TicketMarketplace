@@ -57,4 +57,15 @@ public class City {
     {
         return this.getName();
     }
+    
+        public String[] GetCityData()
+    {
+        String[] data = new String[3];
+        
+        data[0] = String.valueOf(this.getId());
+        data[1] = (this.getName());
+        data[2] = this.getProvince().getName();
+        
+        return data;
+    }
 }
