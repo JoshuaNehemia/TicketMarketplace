@@ -27,7 +27,9 @@ public class RepositoryTemp {
     public ArrayList<City> ListCity;
     public ArrayList<Province> ListProvince;
     public ArrayList<Event_category> ListEventCategory;
-    
+    public ArrayList<Ticket> ListTicket;
+    public ArrayList<Seat> listSeat;
+    public ArrayList<Payment_method> listPaymentMethod;
     public RepositoryTemp() {
         ListProvince = new ArrayList<Province>();
         ListCity = new ArrayList<City>();

@@ -16,7 +16,6 @@ public class Ticket {
     private int id;
     private LocalDate paidDate;
     private Payment_method payment_method;
-    private String status;
     
     public User getUser() {
         return user;
@@ -26,13 +25,12 @@ public class Ticket {
         this.user = user;
     }
 
-    public Ticket(User user, Seat seat, int id, LocalDate paidDate, Payment_method payment_method, String status) {
+    public Ticket(User user, Seat seat, int id, LocalDate paidDate, Payment_method payment_method) {
         this.user = user;
         this.seat = seat;
         this.id = id;
         this.paidDate = paidDate;
         this.payment_method = payment_method;
-        this.status = status;
     }
     public Ticket() {
         this.user = null;
@@ -40,7 +38,6 @@ public class Ticket {
         this.id = 0;
         this.paidDate = null;
         this.payment_method = null;
-        this.status = "";
     }
 
     public Seat getSeats() {
@@ -73,13 +70,5 @@ public class Ticket {
 
     public void setPayment_method(Payment_method payment_method) {
         this.payment_method = payment_method;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 }

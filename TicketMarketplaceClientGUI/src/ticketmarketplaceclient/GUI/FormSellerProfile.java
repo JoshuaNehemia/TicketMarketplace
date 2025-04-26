@@ -13,8 +13,13 @@ public class FormSellerProfile extends javax.swing.JFrame {
     /**
      * Creates new form FormSellerProfile
      */
-    public FormSellerProfile() {
+    FormListOfTicketSeller parentForm;
+    public FormSellerProfile(FormListOfTicketSeller pparentForm) {
         initComponents();
+        parentForm=pparentForm;
+        
+//        this.jTextFieldVendorNeme.setText(parentForm.service.getCurrentUser().getCompanyName());
+//        this.jTextFieldEmail.setText(parentForm.service.getCurrentUser().getEmail());
     }
 
     /**
@@ -70,11 +75,11 @@ public class FormSellerProfile extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormSellerProfile().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FormSellerProfile().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

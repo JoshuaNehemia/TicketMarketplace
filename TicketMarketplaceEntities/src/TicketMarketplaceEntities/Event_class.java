@@ -16,6 +16,7 @@ public class Event_class {
     private String name;
     private double price;
     private String description;
+    private int stock;
 
     public Event_class(int id, Event event, String name, double price, String description) {
         this.id = id;
@@ -85,5 +86,13 @@ public class Event_class {
         data[4] = this.getDescription();
         
         return data;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 }
