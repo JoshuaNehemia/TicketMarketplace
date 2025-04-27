@@ -4,6 +4,17 @@
  */
 package ticketmarketplaceclient.GUI;
 
+import TicketMarketplaceEntities.Event;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import static ticketmarketplaceclient.GUI.FormLogin.service;
+import ticketmarketplaceclient.Service.ClientService;
+import ticketmarketplaceclient.Service.RepoTemp;
+// … import lain …
+
+
+
 /**
  *
  * @author Lenovo
@@ -13,8 +24,45 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
     /**
      * Creates new form FormListOfTicket1
      */
-    public FormListOfTicket1() {
+    
+    ClientService service;
+    public FormListOfTicket1(ClientService pservice) {
         initComponents();
+        service=pservice;
+        
+//        Event e = ;
+//        service.UserSelectEvent(0);
+//        jLabel1.setText(service.repo.ListEvent.getFirst().getName());
+//        double price = service.repo.ListEvent.getFirst().getEventClasses().getFirst().getPrice();
+//        if (price > service.repo.ListEvent.getFirst().getEventClasses().getLast().getPrice()) price=service.repo.ListEvent.getFirst().getEventClasses().getLast().getPrice();
+//        jLabel4.setText("IDR "+price);
+//        LocalDate date = service.repo.ListEvent.getFirst().getStartDateTime();
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("id", "ID"));
+//        String hasil = date.format(formatter);
+//        jLabel2.setText(hasil);
+
+        service.UserSelectEvent(0);
+
+        Event firstEvent = service.repo.ListEvent.getFirst();
+        if (firstEvent.getSeller() == null) {
+           jLabel1.setText("Tidak ada event");
+           jLabel4.setText("IDR -");
+           jLabel2.setText("-");
+           return;
+        }
+
+       jLabel1.setText(firstEvent.getName());
+
+        double price = firstEvent.getEventClasses().getFirst().getPrice();
+        if (price > firstEvent.getEventClasses().getLast().getPrice()) {
+            price = firstEvent.getEventClasses().getLast().getPrice();
+        }
+        jLabel4.setText("IDR " + price);
+        
+        LocalDate date = firstEvent.getStartDateTime();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("id", "ID"));
+        String hasil = date.format(formatter);
+        jLabel2.setText(hasil);
     }
 
     /**
@@ -63,6 +111,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
+        jButton10 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuHome = new javax.swing.JMenu();
         menuInventory = new javax.swing.JMenu();
@@ -132,6 +181,11 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         jButton7.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
         jButton7.setText("Details");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PanelDetailTicket1Layout = new javax.swing.GroupLayout(PanelDetailTicket1);
         PanelDetailTicket1.setLayout(PanelDetailTicket1Layout);
@@ -369,6 +423,13 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
+        jButton10.setText("Tiket dibeli");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
         jMenuBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         menuHome.setText("Home");
@@ -378,6 +439,11 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         jMenuBar1.add(menuInventory);
 
         menuProfile.setText("Profile");
+        menuProfile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuProfileMouseClicked(evt);
+            }
+        });
         menuProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuProfileActionPerformed(evt);
@@ -412,9 +478,13 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(PanelDetailTicket1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(PanelDetailTicket1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addComponent(jButton10)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -460,11 +530,16 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(PanelDetailTicket3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel21)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(14, 14, 14))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel21)
+                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(14, 14, 14))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton10)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -477,6 +552,31 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
     private void menuProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuProfileActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_menuProfileActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        
+        Event selected = service.repo.ListEvent.getFirst();
+        FormUserTicketDetail login = new FormUserTicketDetail(this, selected);
+        login.setVisible(true);
+
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+        FormUserTicket form = new FormUserTicket(this);
+        form.setVisible(true);
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void menuProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuProfileMouseClicked
+        // TODO add your handling code here:
+        FormUserProfile userForm = new FormUserProfile(this);
+        userForm.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_menuProfileMouseClicked
 
     /**
      * @param args the command line arguments
@@ -507,11 +607,11 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormListOfTicket1().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FormListOfTicket1().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -519,6 +619,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
     private javax.swing.JPanel PanelDetailTicket2;
     private javax.swing.JPanel PanelDetailTicket3;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

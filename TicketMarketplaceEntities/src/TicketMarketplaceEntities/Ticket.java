@@ -19,21 +19,15 @@ public class Ticket {
     private int eventClassId;
     private LocalDate paidDate;
     private Double price;
+    private String BuyerUsername;
 
-    public Ticket(String id, Event event, int eventClassId, LocalDate paidDate, Double price) {
+    public Ticket(String id, String BuyerUsername, Event event, int eventClassId, LocalDate paidDate, Double price) {
         this.id = id;
         this.event = event;
         this.eventClassId = eventClassId;
         this.paidDate = paidDate;
         this.price = price;
-    }
-
-    public Ticket(Event event, int eventClassId, LocalDate paidDate, Double price) {
-        this.id = "";
-        this.event = event;
-        this.eventClassId = eventClassId;
-        this.paidDate = paidDate;
-        this.price = price;
+        this.BuyerUsername = BuyerUsername;
     }
 
     public Ticket() {
@@ -42,6 +36,7 @@ public class Ticket {
         this.event = null;
         this.id = "";
         this.paidDate = null;
+        this.BuyerUsername = null;
     }
 
     public Double getPrice() {
@@ -106,6 +101,14 @@ public class Ticket {
     @Override
     public String toString() {
         return "";
+    }
+
+    public String getBuyerUsername() {
+        return BuyerUsername;
+    }
+
+    public void setBuyerUsername(String BuyerId) {
+        this.BuyerUsername = BuyerId;
     }
 
 }

@@ -4,6 +4,15 @@
  */
 package ticketmarketplaceclient.GUI;
 
+import TicketMarketplaceEntities.Event;
+import TicketMarketplaceEntities.Event_class;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import static ticketmarketplaceclient.GUI.FormLogin.service;
+
 /**
  *
  * @author Evan
@@ -13,8 +22,22 @@ public class FormUserCheckout extends javax.swing.JFrame {
     /**
      * Creates new form FormCheckout
      */
-    public FormUserCheckout() {
+    FormUserTicketDetail parentForm;
+    Event selectedEvent;
+    int selectedEventClassId;
+    public FormUserCheckout(FormUserTicketDetail pparentForm, Event event, int eventClassId) {
         initComponents();
+        parentForm=pparentForm;
+        selectedEvent=event;
+        selectedEventClassId=eventClassId;
+        System.out.println(event.getId()+" | "+eventClassId);
+        double finalPrice = parentForm.parentForm.service.CalculatePrice(event.getId(), eventClassId+1);
+        jLabel11.setText(String.valueOf(finalPrice));
+        
+         LocalDate date = event.getStartDateTime();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("id", "ID"));
+        String hasil = date.format(formatter);
+        jLabel6.setText(hasil);
     }
 
     /**
@@ -498,6 +521,17 @@ public class FormUserCheckout extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String namaLengkap = textField1.getText();
+        String noTlp = textField2.getText();
+        String alamt = textField3.getText();
+        String noKTP = textField4.getText();
+        
+        boolean res = parentForm.parentForm.service.BuyTicket(parentForm.parentForm.service.getCurrentUser().getUsername(), selectedEvent.getId(), selectedEventClassId+1 );
+        if(res){
+            System.out.println("Beli berhasil");
+        }else{
+            JOptionPane.showMessageDialog(null, "Gagal", "Attention!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void textField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField4ActionPerformed
@@ -535,11 +569,11 @@ public class FormUserCheckout extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormUserCheckout().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FormUserCheckout().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

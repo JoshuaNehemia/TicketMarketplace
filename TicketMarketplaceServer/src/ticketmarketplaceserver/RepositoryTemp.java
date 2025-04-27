@@ -38,6 +38,7 @@ public class RepositoryTemp {
         ListSeller = new ArrayList<Seller>();
         ListVenue = new ArrayList<Venue>();
         ListEvent = new ArrayList<Event>();
+        ListTicket = new ArrayList<Ticket>();
         
         this.CreateProvince();
         this.CreateCity();
