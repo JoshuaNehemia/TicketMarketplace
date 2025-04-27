@@ -24,6 +24,7 @@
             <Property name="text" type="java.lang.String" value="Profile"/>
           </Properties>
           <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuProfileMouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuProfileActionPerformed"/>
           </Events>
         </Menu>
@@ -741,7 +742,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="jButton10">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Dibeli"/>
+        <Property name="text" type="java.lang.String" value="Tiket dibeli"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton10ActionPerformed"/>

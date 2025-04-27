@@ -346,6 +346,11 @@ public class ClientService {
             this.ReceivedFromServer();
             Communication received = new Communication(this.messageReceived);
             String[] dataReply = received.getData();
+            if (dataReply == null) {
+                Event emptyEvent = new Event(0, "Event Tidak Ditemukan", "", LocalDate.now(), null, null);
+                service.repo.ListEvent.add(emptyEvent);
+                return;
+            }
             Event e = new Event(Integer.parseInt(dataReply[0]), dataReply[1], dataReply[2], LocalDate.parse(dataReply[3]),this.SelectVenue(dataReply[4]), this.currentSeller);
             ArrayList<Event_class> ec = UserSelectEventClass(0);    
             e.setEventClasses(ec);
@@ -376,6 +381,29 @@ public class ClientService {
             return null;
         }
     }
+    
+    public String[] UserEventClassById(int eventId, int eventClassId)
+    {
+        try {
+            String[] data = new String[2];
+            data[0] = String.valueOf(eventId);
+            data[1] = String.valueOf(eventClassId);
+            String message = new Communication(this.currentUser.getUsername(), "SECBYID",data ).getMessage();
+            System.out.println(message);
+            this.SendToServer(message);
+            this.ReceivedFromServer();
+            Communication received = new Communication(this.messageReceived);
+            String[] dataReply = received.getData();
+                        System.out.println("data ec"+Arrays.toString(dataReply));
+
+            return dataReply;
+        } catch (Exception ex) {
+            System.out.println(ex);
+            return null;
+        }
+    }
+    
+    
     
 //     public List<Event_class> UserSelectEventClass(int eventId)
 //    {
@@ -447,7 +475,7 @@ public class ClientService {
     }
 }
    
-   public ArrayList<String> SelectTicket(String username) {
+   public void SelectTicket(String username) {
     ArrayList<String> res = new ArrayList<>();
     try {
         String[] data = new String[1];
@@ -462,15 +490,41 @@ public class ClientService {
         String[] dataReply = received.getData(); 
 
         if (dataReply != null) {
-            for (String ticketInfo : dataReply) {
-                res.add(ticketInfo); 
-            }
+                System.out.println("ticketInfoPrice: " +  Arrays.toString(dataReply));
+                for(int i = 0; i < dataReply.length; i += 6){
+                    int ticketId = Integer.parseInt(dataReply[0+i]);
+                    Event event = new Event();
+                    int eventId =Integer.parseInt(dataReply[5+i]);
+                    String eventName = dataReply[1+i];
+                    event.setName(eventName);
+                    event.setId(eventId);
+                    int eventClassId = Integer.parseInt(dataReply[2+i]);
+                    LocalDate paidDate = LocalDate.parse(dataReply[3+i]);
+                    double price = Double.parseDouble(dataReply[4+i]);
+                    
+                    Ticket ticket = new Ticket();
+                    ticket.setId(String.valueOf(ticketId));
+                    ticket.setEventClassId(eventClassId);
+                    ticket.setPaidDate(paidDate);
+                    ticket.setPrice(price);
+                    ticket.setBuyerUsername(username);
+                    ticket.setEvent(event);
+
+                    System.out.println("Push ke repo OK");
+
+                    service.repo.ListTicket.add(ticket);
+                }
+               
+                System.out.println("Push ke repo DONE");
+        }else{
+            System.out.println("dataReply selectTicket is null");
         }
+        
 
     } catch (Exception ex) {
         System.out.println(ex);
     }
-    return res;
+//    return res;
 }
 
    

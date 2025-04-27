@@ -18,8 +18,8 @@ public class FormUserProfile extends javax.swing.JFrame {
     Image image = icon.getImage();
     Image imageProfile = profile.getImage();
     
-    private FormUserListofTicketScroll parentForm;
-    public FormUserProfile(FormUserListofTicketScroll parentForm) {
+    private FormListOfTicket1 parentForm;
+    public FormUserProfile(FormListOfTicket1 parentForm) {
         initComponents();
         
         this.parentForm = parentForm;

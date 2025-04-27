@@ -4,6 +4,8 @@
  */
 package ticketmarketplaceclient.GUI;
 
+import TicketMarketplaceEntities.Event_class;
+import TicketMarketplaceEntities.Ticket;
 import java.util.ArrayList;
 
 /**
@@ -19,17 +21,28 @@ public class FormUserTicket extends javax.swing.JFrame {
     public FormUserTicket(FormListOfTicket1 pparentForm) {
         initComponents();
         parentForm=pparentForm;
+        parentForm.service.repo.ListTicket.clear();
+        parentForm.service.SelectTicket(parentForm.service.getCurrentUser().getUsername());
+        jTextArea1.setText("");
+        System.out.println("SHOWING TICKET");
+        if (parentForm.service.repo.ListTicket != null && !parentForm.service.repo.ListTicket.isEmpty()) {
+         StringBuilder sb = new StringBuilder();
+        for (Ticket ticket : parentForm.service.repo.ListTicket) {
+             int eventId = ticket.getEvent().getId(); 
+            int eventClassId = ticket.getEventClassId(); 
+
+            String[] eventClass = parentForm.service.UserEventClassById(eventId, eventClassId);
+            int iForEventClassName=1;
+            if(eventClassId>1)iForEventClassName+=7*(eventClassId-1);
+            System.out.println("classid= "+eventClassId);
+            String ticketData = "Event name : "+ticket.getEvent().getName() + " | " +
+                                "Event class : "+eventClass[iForEventClassName] + " | " +
+                                "Paid date : "+ticket.getPaidDate() + " | " +
+                                "Price : "+ticket.getPrice();
+            sb.append(ticketData).append("\n");
+        }
         
-        ArrayList<String> res = parentForm.service.SelectTicket(parentForm.service.getCurrentUser().getUsername());
-    
-        if (!res.isEmpty()) {
-            StringBuilder allTickets = new StringBuilder();
-            for (String s : res) {
-                allTickets.append(s).append("\n"); 
-            }
-    jTextField2.setText(allTickets.toString());
-        } else {
-            jTextField2.setText("Tidak ada tiket ditemukan");
+        jTextArea1.setText(sb.toString());
         }
     }
 
@@ -42,29 +55,37 @@ public class FormUserTicket extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField2 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jLabel1.setText("Tiket dibeli");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(51, 51, 51)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(52, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(49, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -106,6 +127,8 @@ public class FormUserTicket extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

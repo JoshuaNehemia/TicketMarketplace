@@ -13,11 +13,14 @@ import java.util.ArrayList;
 public class RepoTemp {
     public ArrayList<String> ListDisplay;
     public ArrayList<Event> ListEvent;
+    public ArrayList<Ticket> ListTicket;
+
     
     
     public RepoTemp()
     {
         ListDisplay = new ArrayList<String>();
         ListEvent = new ArrayList<Event>();
+        ListTicket = new ArrayList<Ticket>();
     }
 }

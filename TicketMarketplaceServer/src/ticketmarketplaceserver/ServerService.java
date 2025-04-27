@@ -139,9 +139,10 @@ public class ServerService implements Runnable {
 //                //comm = this.InsertNewEventClass(Integer.parseInt(_data[0]), Integer.parseInt(_data[1]), _data[2], Double.parseDouble(_data[3]), _data[4], Integer.parseInt(_data[5]), Integer.parseInt(_data[6]));
 //            }else if (_command.equals("SSE")) {
 //                //comm = this.InsertNewEventClass(Integer.parseInt(_data[0]), Integer.parseInt(_data[1]), _data[2], Double.parseDouble(_data[3]), _data[4], Integer.parseInt(_data[5]), Integer.parseInt(_data[6]));
-//            }else if (_command.equals("SEC")) {
-//                //comm = this.InsertNewEventClass(Integer.parseInt(_data[0]), Integer.parseInt(_data[1]), _data[2], Double.parseDouble(_data[3]), _data[4], Integer.parseInt(_data[5]), Integer.parseInt(_data[6]));
 //            }
+            else if (_command.equals("SECBYID")) {
+                comm = this.SelectEventClassById(Integer.parseInt(_data[0]),Integer.parseInt(_data[1]));
+            }
             else if (_command.equals("SEI")) {
                 //code  
 //                for(Event e : repo.ListEvent){
@@ -352,7 +353,7 @@ public class ServerService implements Runnable {
             String[] data = new String[userTickets.size()];
             for (int i = 0; i < userTickets.size(); i++) {
                 Ticket t = userTickets.get(i);
-                data[i] = t.getId() + ";" + t.getEvent().getName() + ";" + t.getEventClassId() + ";" + t.getPaidDate()+ ";" + t.getPrice();
+                data[i] = t.getId() + ";" + t.getEvent().getName() + ";" + t.getEventClassId() + ";" + t.getPaidDate()+ ";" + t.getPrice()+";"+t.getEvent().getId();
             }
 
             return new Communication("ST", "SUCCESS", data);
@@ -646,6 +647,26 @@ public class ServerService implements Runnable {
     public Communication SelectEventClasses(int eventId) throws Exception {
     try {
         System.out.println(InteractiveIO.YellowMessage("SELECT EVENT CLASSES (SEC)"));
+        int index = this.SelectEventById(eventId);
+        List<Event_class> eventClasses = this.repo.ListEvent.get(index).getEventClasses();
+
+        List<String> dataList = new ArrayList<>();
+        for (Event_class e : eventClasses) {
+            String[] fields = e.GetEventClassData(); 
+            dataList.addAll(Arrays.asList(fields)); 
+        }
+
+        return new Communication("SEC", "SUCCESS", dataList.toArray(new String[0]));
+
+    } catch (Exception ex) {
+        System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
+        return new Communication("SEC", "FAILED", null);
+    }
+}
+    
+    public Communication SelectEventClassById(int eventId, int eventClassId) throws Exception {
+    try {
+        System.out.println(InteractiveIO.YellowMessage("SELECT EVENT CLASSES BY ID (SECBYID)"));
         int index = this.SelectEventById(eventId);
         List<Event_class> eventClasses = this.repo.ListEvent.get(index).getEventClasses();
 

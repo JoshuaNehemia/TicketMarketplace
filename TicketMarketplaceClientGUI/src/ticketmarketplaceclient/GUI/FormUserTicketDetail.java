@@ -32,9 +32,11 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
             jComboBox1.addItem(eventClassName);
         }
        priceCategory1.setText(String.valueOf(selected.getEventClasses().get(0).getPrice()));
-       priceCategory2.setText(String.valueOf(selected.getEventClasses().get(1).getPrice()));
+       if (selected.getEventClasses().size() > 1 && selected.getEventClasses().get(1) != null) {
+            priceCategory2.setText(String.valueOf(selected.getEventClasses().get(1).getPrice()));
+            lblTicketAmmounLeft2.setText("Jumlah : " + selected.getEventClasses().get(1).getStock());
+       }
        lblTicketAmmounLeft1.setText("Jumlah : " + selected.getEventClasses().get(0).getStock());
-       lblTicketAmmounLeft2.setText("Jumlah : " + selected.getEventClasses().get(1).getStock());
        lblSellerUsername.setText(selected.getSeller().getCompanyName());
        
        LocalDate date =selected.getStartDateTime();

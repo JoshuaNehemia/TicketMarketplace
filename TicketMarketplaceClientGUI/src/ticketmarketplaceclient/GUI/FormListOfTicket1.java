@@ -31,12 +31,35 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         service=pservice;
         
 //        Event e = ;
+//        service.UserSelectEvent(0);
+//        jLabel1.setText(service.repo.ListEvent.getFirst().getName());
+//        double price = service.repo.ListEvent.getFirst().getEventClasses().getFirst().getPrice();
+//        if (price > service.repo.ListEvent.getFirst().getEventClasses().getLast().getPrice()) price=service.repo.ListEvent.getFirst().getEventClasses().getLast().getPrice();
+//        jLabel4.setText("IDR "+price);
+//        LocalDate date = service.repo.ListEvent.getFirst().getStartDateTime();
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("id", "ID"));
+//        String hasil = date.format(formatter);
+//        jLabel2.setText(hasil);
+
         service.UserSelectEvent(0);
-        jLabel1.setText(service.repo.ListEvent.getFirst().getName());
-        double price = service.repo.ListEvent.getFirst().getEventClasses().getFirst().getPrice();
-        if (price > service.repo.ListEvent.getFirst().getEventClasses().getLast().getPrice()) price=service.repo.ListEvent.getFirst().getEventClasses().getLast().getPrice();
-        jLabel4.setText("IDR "+price);
-        LocalDate date = service.repo.ListEvent.getFirst().getStartDateTime();
+
+        Event firstEvent = service.repo.ListEvent.getFirst();
+        if (firstEvent.getSeller() == null) {
+           jLabel1.setText("Tidak ada event");
+           jLabel4.setText("IDR -");
+           jLabel2.setText("-");
+           return;
+        }
+
+       jLabel1.setText(firstEvent.getName());
+
+        double price = firstEvent.getEventClasses().getFirst().getPrice();
+        if (price > firstEvent.getEventClasses().getLast().getPrice()) {
+            price = firstEvent.getEventClasses().getLast().getPrice();
+        }
+        jLabel4.setText("IDR " + price);
+        
+        LocalDate date = firstEvent.getStartDateTime();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("id", "ID"));
         String hasil = date.format(formatter);
         jLabel2.setText(hasil);
@@ -400,7 +423,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jButton10.setText("Dibeli");
+        jButton10.setText("Tiket dibeli");
         jButton10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton10ActionPerformed(evt);
@@ -416,6 +439,11 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         jMenuBar1.add(menuInventory);
 
         menuProfile.setText("Profile");
+        menuProfile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuProfileMouseClicked(evt);
+            }
+        });
         menuProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuProfileActionPerformed(evt);
@@ -542,6 +570,13 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         
         this.setVisible(false);
     }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void menuProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuProfileMouseClicked
+        // TODO add your handling code here:
+        FormUserProfile userForm = new FormUserProfile(this);
+        userForm.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_menuProfileMouseClicked
 
     /**
      * @param args the command line arguments
