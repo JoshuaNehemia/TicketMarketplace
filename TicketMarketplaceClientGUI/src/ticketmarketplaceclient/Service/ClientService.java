@@ -352,9 +352,10 @@ public class ClientService {
                 return;
             }
             Event e = new Event(Integer.parseInt(dataReply[0]), dataReply[1], dataReply[2], LocalDate.parse(dataReply[3]),this.SelectVenue(dataReply[4]), this.currentSeller);
-            ArrayList<Event_class> ec = UserSelectEventClass(0);    
+            ArrayList<Event_class> ec = UserSelectEventClass(eventId);    
             e.setEventClasses(ec);
-            service.repo.ListEvent.add(e);            
+            service.repo.ListEvent.add(e);     
+            
         } catch (Exception ex) {
             System.out.println(ex);
         }

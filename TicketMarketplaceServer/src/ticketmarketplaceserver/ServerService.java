@@ -150,7 +150,7 @@ public class ServerService implements Runnable {
 //                    client.SendMessage(new Communication(client.getUsername(), "", null).getMessage());
 //
 //                }
-                comm = this.SelectEvent(0);
+                comm = this.SelectEvent(Integer.parseInt(_data[0]));
             }else if (_command.equals("SEC")) {
                 comm = this.SelectEventClasses(Integer.parseInt(_data[0]));
             } else if (_command.equals("CP")) {
@@ -563,11 +563,10 @@ public class ServerService implements Runnable {
     public Communication InsertNewEvent(String name, String description, LocalDate startDateTime, Venue venue, Seller seller) {
         try {
             System.out.println(InteractiveIO.YellowMessage("INSERT NEW EVENT (INE)"));
-            int newId = 1;
+            int newId = 0;
             if (repo.ListEvent.size() != 0) {
                 newId = repo.ListEvent.get(repo.ListEvent.size() - 1).getId() + 1;
             }
-            newId=0;//buat kumpul
             this.repo.ListEvent.add(new Event(newId, name, description, startDateTime, venue, seller));
             String[] data = new String[1];
             data[0] = String.valueOf(newId);
