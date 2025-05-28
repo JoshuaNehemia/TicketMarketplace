@@ -20,6 +20,14 @@ public class City {
         this.name = name;
         this.province = province;
     }
+    
+    
+    public City(int id,String name) {
+        this.id = id;
+        this.name = name;
+        this.province = null;
+    }
+    
     public City() {
         this.id = 0;
         this.name = "";

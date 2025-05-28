@@ -16,15 +16,24 @@ public class Venue {
     private String address;
     private int maxCapacity;
     private int area;
-    private City cityId; 
+    private City city; 
 
-    public Venue(int id, String name, String address, int maxCapacity, int area, City cityId) {
+    public Venue(int id, String name, String address, int maxCapacity, int area, City city) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.maxCapacity = maxCapacity;
         this.area = area;
-        this.cityId = cityId;
+        this.city = city;
+    }
+
+    public Venue(int id, String name, String address, int maxCapacity, int area, int cityId) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.maxCapacity = maxCapacity;
+        this.area = area;
+        this.city = null;
     }
     
     public Venue() {
@@ -33,7 +42,7 @@ public class Venue {
         this.address = "";
         this.maxCapacity = 0;
         this.area = 0;
-        this.cityId = null;
+        this.city = null;
     }
 
     public int getId() {
@@ -76,12 +85,12 @@ public class Venue {
         this.area = area;
     }
 
-    public City getCitiesId() {
-        return cityId;
+    public City getCity() {
+        return city;
     }
 
-    public void setCitiesId(City cityId) {
-        this.cityId = cityId;
+    public void setCity(City _city) {
+        this.city = _city;
     }
     
     //Function
@@ -95,7 +104,7 @@ public class Venue {
         data[2] = this.getAddress();
         data[3] = String.valueOf(this.getMaxCapacity());
         data[4] = String.valueOf(this.getArea());
-        data[5] = String.valueOf(this.getCitiesId().getName());
+        data[5] = String.valueOf(this.getCity().getName());
         
         return data;
     }

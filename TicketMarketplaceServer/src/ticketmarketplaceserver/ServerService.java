@@ -159,6 +159,7 @@ public class ServerService implements Runnable {
                 comm = this.SelectTicket(_data[0]);
             }
             
+            //If no command found
             if (comm != null) {
                 client.SendMessage(comm.getMessage());
             } else {

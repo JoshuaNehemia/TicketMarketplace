@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * @author joshu
  */
 public class TemporaryRepository {
+    //Buat Tugas
     public ArrayList<User> ListUser;
     public ArrayList<Seller> ListSeller;
     public ArrayList<Venue> ListVenue;
