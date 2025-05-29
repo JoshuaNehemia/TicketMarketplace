@@ -32,7 +32,7 @@ public class Event {
         this.eventClasses = eventClasses;
     }
     
-    public Event( String name, String description, LocalDate startDateTime, Venue venue, Seller seller) {
+    public Event(String name, String description, LocalDate startDateTime, Venue venue, Seller seller) {
         this.id = 0;
         this.name = name;
         this.description = description;

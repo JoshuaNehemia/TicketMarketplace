@@ -36,15 +36,13 @@ public class DAO_Venue extends DatabaseConnection {
         System.out.println(InteractiveIO.GreenMessage("DAO_VENUE IS CONNECTED"));
     }
 
-    public ArrayList<Venue> Select_Venue_By_Seller(String seller_username) throws Exception {
+    public ArrayList<Venue> Select_Venue(String seller_username) throws Exception {
         ArrayList<Venue> venues = new ArrayList<Venue>();
 
-        String SQLQuery = "SELECT v.id AS id, v.name AS name, v.address AS address, v.maxCapacity AS maxCapacity, v.area AS area, c.id AS city_id, c.name as city_name FROM venue v INNER JOIN city c ON v.city_id = c.id WHERE v.seller_username=?";
-        PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
-        prst.setString(1, seller_username);
+        String SQLQuery = "SELECT v.id AS id, v.name AS name, v.address AS address, v.maxCapacity AS maxCapacity, v.area AS area, c.id AS city_id, c.name as city_name FROM venue v INNER JOIN city c ON v.city_id = c.id;";
 
-        System.out.println("SQL QUERY: \n" + prst);
-        this.setResult(this.Read(String.valueOf(prst)));
+        System.out.println("SQL QUERY: \n" + SQLQuery);
+        this.setResult(this.Read(SQLQuery));
 
         Venue buffer;
         while (this.getResult().next()) {
@@ -130,7 +128,7 @@ public class DAO_Venue extends DatabaseConnection {
     }
 
     public void Insert_Venue(Venue _venue) throws Exception {
-        String SQLQuery = "INSERT INTO venue ('name','address','maxCapacity','area','city_id') VALUES(?,?,?,?,?)";
+        String SQLQuery = "INSERT INTO venues ('name','address','maxCapacity','area','city_id') VALUES(?,?,?,?,?)";
         PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
         prst.setString(1, _venue.getName());
         prst.setString(2, _venue.getAddress());
@@ -142,15 +140,23 @@ public class DAO_Venue extends DatabaseConnection {
     }
 
     public void Update_Venue(Venue _venue) throws Exception {
-        String SQLQuery = "INSERT INTO venue ('name','address','maxCapacity','area','city_id') VALUES(?,?,?,?,?)";
+        String SQLQuery = "UPDATE venues SET name=?, address=?, maxCapacity=?, area=?, city_id=? WHERE id=?";
         PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
         prst.setString(1, _venue.getName());
         prst.setString(2, _venue.getAddress());
         prst.setString(3, String.valueOf(_venue.getMaxCapacity()));
         prst.setString(4, String.valueOf(_venue.getArea()));
         prst.setString(5, String.valueOf(_venue.getCity().getId()));
+        prst.setString(6, String.valueOf(_venue.getId()));
 
-        this.Create(String.valueOf(prst));
+        this.Update(String.valueOf(prst));
+    }    
+    public void Delete_Venue(int id) throws Exception {
+        String SQLQuery = "DELETE FROM venues WHERE id=?";
+        PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
+        prst.setString(1, String.valueOf(id));
+
+        this.Delete(String.valueOf(prst));
     }
 
 

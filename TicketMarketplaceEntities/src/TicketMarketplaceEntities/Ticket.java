@@ -20,6 +20,7 @@ public class Ticket {
     private LocalDate paidDate;
     private Double price;
     private String BuyerUsername;
+    private boolean isClaimed;
 
     public Ticket(String id, String BuyerUsername, Event event, int eventClassId, LocalDate paidDate, Double price) {
         this.id = id;
@@ -28,6 +29,17 @@ public class Ticket {
         this.paidDate = paidDate;
         this.price = price;
         this.BuyerUsername = BuyerUsername;
+        this.isClaimed = false;
+    }    
+    
+    public Ticket(String id, String BuyerUsername, Event event, int eventClassId, LocalDate paidDate, Double price,boolean isClaimed) {
+        this.id = id;
+        this.event = event;
+        this.eventClassId = eventClassId;
+        this.paidDate = paidDate;
+        this.price = price;
+        this.BuyerUsername = BuyerUsername;
+        this.isClaimed = isClaimed;
     }
 
     public Ticket() {
@@ -37,6 +49,7 @@ public class Ticket {
         this.id = "";
         this.paidDate = null;
         this.BuyerUsername = null;
+        this.isClaimed = false;
     }
 
     public Double getPrice() {
@@ -84,6 +97,22 @@ public class Ticket {
         return newId;
     }
 
+    public boolean isIsClaimed() {
+        return isClaimed;
+    }
+
+    public void setIsClaimed(boolean isClaimed) {
+        this.isClaimed = isClaimed;
+    }
+
+    public String getBuyerUsername() {
+        return BuyerUsername;
+    }
+
+    public void setBuyerUsername(String BuyerId) {
+        this.BuyerUsername = BuyerId;
+    }
+
     public String[] GetTicketData() {
         ArrayList<String> list = new ArrayList<String>();
         
@@ -101,14 +130,6 @@ public class Ticket {
     @Override
     public String toString() {
         return "";
-    }
-
-    public String getBuyerUsername() {
-        return BuyerUsername;
-    }
-
-    public void setBuyerUsername(String BuyerId) {
-        this.BuyerUsername = BuyerId;
     }
 
 }
