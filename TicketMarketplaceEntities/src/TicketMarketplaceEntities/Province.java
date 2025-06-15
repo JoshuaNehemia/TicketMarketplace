@@ -46,4 +46,14 @@ public class Province {
     {
         return this.getName();
     }
+    
+    public String[] GetProvinceData()
+    {
+        String[] data = new String[2];
+        
+        data[0] = String.valueOf(this.getId());
+        data[1] = (this.getName());
+        
+        return data;
+    }
 }
