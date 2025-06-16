@@ -18,7 +18,7 @@ import java.util.HashSet;
  *
  * @author Franly
  */
-public abstract class DatabaseConnection {
+public class DatabaseConnection {
 
     private final String URL = "jdbc:mysql://localhost:3306/TicketMarketplace";
     private final String USER = "root";
@@ -30,7 +30,7 @@ public abstract class DatabaseConnection {
     protected static Connection conn;
 
     public DatabaseConnection() throws Exception {
-        this.conn = this._getConnection();
+        this.conn = this.ConnectToDatabase();
         this.setStatement(null);
         this.setResult(null);
 
@@ -66,7 +66,7 @@ public abstract class DatabaseConnection {
     }
 
     // Function
-    public Connection _getConnection() throws Exception {
+    private Connection ConnectToDatabase() throws Exception {
         if (DatabaseConnection.conn == null) {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             System.out.println(InteractiveIO.GreenMessage("SUCCESFULLY CONNECTED TO DATABASE"));
@@ -81,6 +81,7 @@ public abstract class DatabaseConnection {
         PreparedStatement sql = (PreparedStatement) DatabaseConnection.getConnection().prepareStatement(sqlQuery);
         sql.executeUpdate();
         System.out.println(InteractiveIO.GreenMessage("SUCCESFUL TO CREATE DATA IN DATABASE:\n") + sqlQuery);
+        sql.close();
     }
 
     public ResultSet Read(String sqlQuery) throws Exception {
@@ -94,12 +95,13 @@ public abstract class DatabaseConnection {
         PreparedStatement sql = (PreparedStatement) DatabaseConnection.getConnection().prepareStatement(sqlQuery);
         sql.executeUpdate();
         System.out.println(InteractiveIO.GreenMessage("SUCCESFUL TO UPDATE DATA IN DATABASE:\n") + sqlQuery);
-
+        sql.close();
     }
 
     public void Delete(String sqlQuery) throws Exception {
         PreparedStatement sql = (PreparedStatement) DatabaseConnection.getConnection().prepareStatement(sqlQuery);
         sql.executeUpdate();
         System.out.println(InteractiveIO.GreenMessage("SUCCESFUL TO DELETE DATA IN DATABASE:\n") + sqlQuery);
+        sql.close();
     }
 }

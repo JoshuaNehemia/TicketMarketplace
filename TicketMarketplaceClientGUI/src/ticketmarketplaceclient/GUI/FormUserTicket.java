@@ -29,7 +29,7 @@ public class FormUserTicket extends javax.swing.JFrame {
          StringBuilder sb = new StringBuilder();
         for (Ticket ticket : parentForm.service.repo.ListTicket) {
              int eventId = ticket.getEvent().getId(); 
-            int eventClassId = ticket.getEventClassId(); 
+            int eventClassId = ticket.getSeats().getId(); 
 
             String[] eventClass = parentForm.service.UserEventClassById(eventId, eventClassId);
             int iForEventClassName=1;

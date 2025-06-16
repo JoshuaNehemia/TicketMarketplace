@@ -5,6 +5,7 @@ package TicketMarketplaceEntities;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -16,40 +17,43 @@ public class Ticket {
 
     private String id;
     private Event event;
-    private int eventClassId;
+    private Seat seats;
     private LocalDate paidDate;
     private Double price;
-    private String BuyerUsername;
+    private User buyer;
+    private String status; //Paid, Canceled, Refunded
     private boolean isClaimed;
 
-    public Ticket(String id, String BuyerUsername, Event event, int eventClassId, LocalDate paidDate, Double price) {
+    public Ticket(String id, User BuyerUsername, Event event, Seat eventClassId, LocalDate paidDate, Double price) {
         this.id = id;
         this.event = event;
-        this.eventClassId = eventClassId;
+        this.seats = eventClassId;
         this.paidDate = paidDate;
         this.price = price;
-        this.BuyerUsername = BuyerUsername;
+        this.buyer = BuyerUsername;
         this.isClaimed = false;
+        this.status ="";
     }    
     
-    public Ticket(String id, String BuyerUsername, Event event, int eventClassId, LocalDate paidDate, Double price,boolean isClaimed) {
+    public Ticket(String id, User BuyerUsername, Event event, Seat eventClassId, LocalDate paidDate, Double price,boolean isClaimed, String status) {
         this.id = id;
         this.event = event;
-        this.eventClassId = eventClassId;
+        this.seats = eventClassId;
         this.paidDate = paidDate;
         this.price = price;
-        this.BuyerUsername = BuyerUsername;
+        this.buyer = BuyerUsername;
         this.isClaimed = isClaimed;
     }
 
     public Ticket() {
-        this.eventClassId = 0;
+        this.seats = null;
         this.price = 0.0;
         this.event = null;
         this.id = "";
         this.paidDate = null;
-        this.BuyerUsername = null;
+        this.buyer = null;
         this.isClaimed = false;
+        this.status="";
     }
 
     public Double getPrice() {
@@ -84,17 +88,12 @@ public class Ticket {
         this.event = event;
     }
 
-    public int getEventClassId() {
-        return eventClassId;
+    public Seat getSeats() {
+        return seats;
     }
 
-    public void setEventClassId(int eventClassId) {
-        this.eventClassId = eventClassId;
-    }
-
-    public String GetTicketID(String username) {
-        String newId = username + '-' + String.valueOf(LocalDate.now()) + '-' + this.getEvent().getName() + '-' + this.getEvent().getEventClasses().get(this.eventClassId - 1);
-        return newId;
+    public void setSeats(Seat seats) {
+        this.seats = seats;
     }
 
     public boolean isIsClaimed() {
@@ -105,20 +104,34 @@ public class Ticket {
         this.isClaimed = isClaimed;
     }
 
-    public String getBuyerUsername() {
-        return BuyerUsername;
+    public User getBuyer() {
+        return buyer;
     }
 
-    public void setBuyerUsername(String BuyerId) {
-        this.BuyerUsername = BuyerId;
+    public void setBuyer(User buyer) {
+        this.buyer = buyer;
+    }
+    
+
+    public String getStatus() {
+        return status;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+
+    public String CreateTicketID() {
+        return ""+this.getBuyer().getUsername() + "-" + String.valueOf(LocalDateTime.now()) + "-" + this.getEvent().getName() + "-" + this.getSeats().toString() + "-" + this.getSeats().getId();
+    }
+    
     public String[] GetTicketData() {
         ArrayList<String> list = new ArrayList<String>();
         
         list.add(this.getId());
         list.add(this.getEvent().getName());
-        list.add(String.valueOf(this.getEventClassId()));
+        list.add(String.valueOf(this.getSeats()));
         list.add(String.valueOf(this.getPaidDate()));
         list.add(String.valueOf(this.getPrice()));
         

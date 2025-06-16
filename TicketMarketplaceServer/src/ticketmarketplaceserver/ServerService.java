@@ -40,6 +40,32 @@ public class ServerService implements Runnable {
     // For Multithreading
     Thread t;
 
+    //Database
+    DatabaseConnection db;
+    DAO_User daoUser;
+    DAO_Province daoProvince;
+    DAO_City daoCity;
+    DAO_Event daoEvent;
+    DAO_Event_Class daoEventClass;
+    DAO_Seat daoSeat;
+    DAO_Seller daoSeller;
+    DAO_Venue daoVenue;
+    DAO_Ticket daoTicket;
+
+    private void ConnectToDatabase() throws Exception {
+        db = new DatabaseConnection();
+        daoUser = new DAO_User();
+        daoProvince = new DAO_Province();
+        daoCity = new DAO_City();
+        daoEvent = new DAO_Event();
+        daoEventClass = new DAO_Event_Class();
+        daoSeat = new DAO_Seat();
+        daoSeller = new DAO_Seller();
+        daoVenue = new DAO_Venue();
+        daoTicket = new DAO_Ticket();
+
+    }
+
     // Constructor
     public ServerService(int port) {
         repo = new RepositoryTemp(); //For Temporary Database
@@ -120,7 +146,7 @@ public class ServerService implements Runnable {
             } else if (_command.equals("LI-SELLER")) {
                 comm = this.SellerLogIn(_data[0], _data[1]);
             } else if (_command.equals("BT")) {
-                comm = this.BuyTicket(_data[0], _data[1],_data[2],_data[3]);
+                comm = this.BuyTicket(_data[0], _data[1], _data[2], _data[3], Integer.parseInt(_data[4]));
 //                username namaEvent classKursi rowKursi colKursi paymentMethod
             } else if (_command.equals("SLV")) {
                 comm = this.SelectListVenue();
@@ -134,16 +160,14 @@ public class ServerService implements Runnable {
                 comm = this.InsertNewEvent(_data[1], _data[2], LocalDate.parse(_data[3]), this.SelectVenueByName(_data[4]), this.SelectSellerByUsername(_data[5]));
             } else if (_command.equals("INEC")) {
                 comm = this.InsertNewEventClass(Integer.parseInt(_data[0]), Integer.parseInt(_data[1]), _data[2], Double.parseDouble(_data[3]), _data[4], Integer.parseInt(_data[5]), Integer.parseInt(_data[6]));
-            }
-//            else if (_command.equals("SEI")) {
-//                //comm = this.InsertNewEventClass(Integer.parseInt(_data[0]), Integer.parseInt(_data[1]), _data[2], Double.parseDouble(_data[3]), _data[4], Integer.parseInt(_data[5]), Integer.parseInt(_data[6]));
-//            }else if (_command.equals("SSE")) {
-//                //comm = this.InsertNewEventClass(Integer.parseInt(_data[0]), Integer.parseInt(_data[1]), _data[2], Double.parseDouble(_data[3]), _data[4], Integer.parseInt(_data[5]), Integer.parseInt(_data[6]));
-//            }
+            } //            else if (_command.equals("SEI")) {
+            //                //comm = this.InsertNewEventClass(Integer.parseInt(_data[0]), Integer.parseInt(_data[1]), _data[2], Double.parseDouble(_data[3]), _data[4], Integer.parseInt(_data[5]), Integer.parseInt(_data[6]));
+            //            }else if (_command.equals("SSE")) {
+            //                //comm = this.InsertNewEventClass(Integer.parseInt(_data[0]), Integer.parseInt(_data[1]), _data[2], Double.parseDouble(_data[3]), _data[4], Integer.parseInt(_data[5]), Integer.parseInt(_data[6]));
+            //            }
             else if (_command.equals("SECBYID")) {
-                comm = this.SelectEventClassById(Integer.parseInt(_data[0]),Integer.parseInt(_data[1]));
-            }
-            else if (_command.equals("SEI")) {
+                comm = this.SelectEventClassById(Integer.parseInt(_data[0]), Integer.parseInt(_data[1]));
+            } else if (_command.equals("SEI")) {
                 //code  
 //                for(Event e : repo.ListEvent){
 //                    comm = this.GetEvent(e.getName());
@@ -151,14 +175,14 @@ public class ServerService implements Runnable {
 //
 //                }
                 comm = this.SelectEvent(Integer.parseInt(_data[0]));
-            }else if (_command.equals("SEC")) {
+            } else if (_command.equals("SEC")) {
                 comm = this.SelectEventClasses(Integer.parseInt(_data[0]));
             } else if (_command.equals("CP")) {
-                comm = this.CalculatePrice(Integer.parseInt(_data[0]),Integer.parseInt(_data[1]));
+                comm = this.CalculatePrice(Integer.parseInt(_data[0]), Integer.parseInt(_data[1]));
             } else if (_command.equals("ST")) {
                 comm = this.SelectTicket(_data[0]);
             }
-            
+
             //If no command found
             if (comm != null) {
                 client.SendMessage(comm.getMessage());
@@ -175,21 +199,9 @@ public class ServerService implements Runnable {
     //User ---------------------------------------------------------------------
     public Communication UserSignUp(String username, String password, String fullname, String email, LocalDate birthdate) {
         System.out.println(InteractiveIO.YellowMessage("SIGN UP (SU)"));
-
-        boolean usernameExists = repo.ListUser.stream().anyMatch(user -> user.getUsername().equalsIgnoreCase(username));
-
         try {
-            if (usernameExists) {
-                String errorMsg = "The username '" + username + "' is already taken";
-                System.out.println(InteractiveIO.RedMessage("WARNING: " + errorMsg));
-                return new Communication(username, "FAILED" + errorMsg, null);
-            }
-        } catch (Exception ex) {
-            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
-        }
-
-        try {
-            repo.ListUser.add(new User(username, password, fullname, email, birthdate));
+            User nu = new User(username, password, fullname, email, birthdate);
+            daoUser.Insert_User(nu);
             return new Communication(username, "SUCCESS", null);
         } catch (Exception ex) {
             System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
@@ -213,14 +225,15 @@ public class ServerService implements Runnable {
 
         //Using temporary Database
         try {
-            for (User u : repo.ListUser) {
-                if (u.getUsername().equals(_username) && u.getPassword().equals(_password)) {
-                    buffer = u;
-                }
-            }
+            buffer = daoUser.Select_User(_username);
             String communication = "";
             if (!buffer.getUsername().equals("")) {
-                return new Communication(buffer.getUsername(), "SUCCESS", buffer.GetUserData());
+                if (buffer.getPassword().equals(_password)) {
+                    return new Communication(buffer.getUsername(), "SUCCESS", buffer.GetUserData());
+                } else {
+                    return new Communication(_username, "FAILED", null);
+                }
+
             } else {
                 return new Communication(_username, "FAILED", null);
             }
@@ -235,21 +248,9 @@ public class ServerService implements Runnable {
         //Seller Sign Up SSU
 
         System.out.println(InteractiveIO.YellowMessage("SELLER SIGN UP (SSU)"));
-
-        boolean usernameExists = repo.ListSeller.stream().anyMatch(seller -> seller.getUsername().equalsIgnoreCase(username));
-
         try {
-            if (usernameExists) {
-                String errorMsg = "The username '" + username + "' is already taken";
-                System.out.println(InteractiveIO.RedMessage("WARNING: " + errorMsg));
-                return new Communication(username, "FAILED" + errorMsg, null);
-            }
-        } catch (Exception ex) {
-            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
-        }
-
-        try {
-            repo.ListSeller.add(new Seller(username, password, companyName, companyAddress, phoneNumber, email));
+            Seller se = new Seller(username, password, companyName, companyAddress, phoneNumber, email);
+            daoSeller.Insert_Seller(se);
             return new Communication(username, "SUCCESS", null);
         } catch (Exception ex) {
             System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
@@ -274,14 +275,15 @@ public class ServerService implements Runnable {
 
         //Using temporary Database
         try {
-            for (Seller sel : repo.ListSeller) {
-                if (sel.getUsername().equals(username) && sel.getPassword().equals(password)) {
-                    buffer = sel;
-                }
-            }
+            buffer = daoSeller.Select_Seller(username);
+
             String communication = "";
             if (!buffer.getUsername().equals("")) {
-                return new Communication(buffer.getUsername(), "SUCCESS", buffer.GetSellerData());
+                if (buffer.getPassword().equals(password)) {
+                    return new Communication(buffer.getUsername(), "SUCCESS", buffer.GetSellerData());
+                } else {
+                    return new Communication(username, "FAILED", null);
+                }
             } else {
                 String errorMsg = "Wrong Username or Password";
                 return new Communication(username, "FAILED" + errorMsg, null);
@@ -335,12 +337,11 @@ public class ServerService implements Runnable {
 //        }
 //        return null; //for temporary NANTI DIHAPUS
 //    }
-    
     public Communication SelectTicket(String username) throws Exception {
 //        return repo.ListTicket.stream()
-//        .filter(t -> t.getBuyerUsername().equalsIgnoreCase(username))
+//        .filter(t -> t.getBuyer().equalsIgnoreCase(username))
 //        .collect(Collectors.toList());
-    try {
+        try {
             System.out.println(InteractiveIO.YellowMessage("SELECT TICKETS (ST)"));
 
             if (repo.ListTicket == null) {
@@ -348,13 +349,13 @@ public class ServerService implements Runnable {
             }
 
             List<Ticket> userTickets = repo.ListTicket.stream()
-                .filter(t -> t.getBuyerUsername().equalsIgnoreCase(username))
-                .collect(Collectors.toList());
+                    .filter(t -> t.getBuyer().getUsername().equalsIgnoreCase(username))
+                    .collect(Collectors.toList());
 
             String[] data = new String[userTickets.size()];
             for (int i = 0; i < userTickets.size(); i++) {
                 Ticket t = userTickets.get(i);
-                data[i] = t.getId() + ";" + t.getEvent().getName() + ";" + t.getEventClassId() + ";" + t.getPaidDate()+ ";" + t.getPrice()+";"+t.getEvent().getId();
+                data[i] = t.getId() + ";" + t.getEvent().getName() + ";" + t.getSeats() + ";" + t.getPaidDate() + ";" + t.getPrice() + ";" + t.getEvent().getId();
             }
 
             return new Communication("ST", "SUCCESS", data);
@@ -364,26 +365,25 @@ public class ServerService implements Runnable {
             return new Communication("ST", "FAILED", null);
         }
     }
-    public Communication BuyTicket(String username, String eventId, String eventClassId, String paymentMethod) throws Exception {
-    try {
-        System.out.println(InteractiveIO.YellowMessage("BUY TICKET (BT)"));
-        System.out.println(username+" | "+eventId+" | "+ eventClassId);
-        // generate next TicketID
-        String nextId;
-        if (repo.ListTicket == null || repo.ListTicket.isEmpty()) {
-            nextId = "1";
-        } else {
-            nextId = String.valueOf(
-                repo.ListTicket.stream()
-                    .mapToInt(t -> Integer.parseInt(t.getId()))
-                    .max()
-                    .orElse(0) + 1
-            );
-        }
 
+    public Communication BuyTicket(String username, String eventId, String eventClassId, String paymentMethod, int seats_id) throws Exception {
+        try {
+            System.out.println(InteractiveIO.YellowMessage("BUY TICKET (BT)"));
+            System.out.println(username + " | " + eventId + " | " + eventClassId);
+            // generate next TicketID
+            String nextId;
+            if (repo.ListTicket == null || repo.ListTicket.isEmpty()) {
+                nextId = "1";
+            } else {
+                nextId = String.valueOf(
+                        repo.ListTicket.stream()
+                                .mapToInt(t -> Integer.parseInt(t.getId()))
+                                .max()
+                                .orElse(0) + 1
+                );
+            }
 
-
-        // find payment method
+            // find payment method
 //        Optional<Payment_method> optPm = repo.listPaymentMethod.stream()
 //            .filter(pm -> pm.getNama().equalsIgnoreCase(paymentMethod))
 //            .findFirst();
@@ -391,76 +391,67 @@ public class ServerService implements Runnable {
 //            throw new Exception("Payment method not found");
 //        }
 //        Payment_method pm = optPm.get();
+            // find user
+            Optional<User> optUser = repo.ListUser.stream()
+                    .filter(u -> u.getUsername().equals(username))
+                    .findFirst();
+            if (optUser.isEmpty()) {
+                throw new Exception("User not found");
+            }
+            User user = optUser.get();
 
-        // find user
-        Optional<User> optUser = repo.ListUser.stream()
-            .filter(u -> u.getUsername().equals(username))
-            .findFirst();
-        if (optUser.isEmpty()) {
-            throw new Exception("User not found");
+            // find event
+            Optional<Event> optEvent = repo.ListEvent.stream()
+                    .filter(e -> e.getId() == Integer.parseInt(eventId))
+                    .findFirst();
+            if (optEvent.isEmpty()) {
+                throw new Exception("Event not found");
+            }
+            Event event = optEvent.get();
+
+            // find event class
+            Optional<Event_class> optEventClass = event.getEventClasses().stream()
+                    .filter(ec -> ec.getId() == Integer.parseInt(eventClassId))
+                    .findFirst();
+            if (optEventClass.isEmpty()) {
+                throw new Exception("Event class not found");
+            }
+            Event_class eventClass = optEventClass.get();
+
+            // calculate price
+            String finalPrice = forServerCalculatePrice(event.getId(), Integer.parseInt(eventClassId));
+
+            User us = new User();
+            us.setUsername(username);
+            Seat se = new Seat();
+            se.setId(seats_id);
+            // create ticket
+            Ticket newTicket = new Ticket(
+                    nextId,
+                    us,
+                    event,
+                    se,
+                    LocalDate.now(),
+                    Double.parseDouble(finalPrice)
+            //            pm // jangan lupa save juga payment method!
+            );
+            repo.ListTicket.add(newTicket);
+
+            return new Communication(username, "SUCCESS", null);
+
+        } catch (Exception ex) {
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
+            return new Communication(username, "FAILED", null);
         }
-        User user = optUser.get();
-
-        // find event
-        Optional<Event> optEvent = repo.ListEvent.stream()
-            .filter(e -> e.getId() == Integer.parseInt(eventId))
-            .findFirst();
-        if (optEvent.isEmpty()) {
-            throw new Exception("Event not found");
-        }
-        Event event = optEvent.get();
-
-        // find event class
-        Optional<Event_class> optEventClass = event.getEventClasses().stream()
-            .filter(ec -> ec.getId() == Integer.parseInt(eventClassId))
-            .findFirst();
-        if (optEventClass.isEmpty()) {
-            throw new Exception("Event class not found");
-        }
-        Event_class eventClass = optEventClass.get();
-
-        // calculate price
-        String finalPrice = forServerCalculatePrice(event.getId(),Integer.parseInt(eventClassId));
-
-        // create ticket
-        Ticket newTicket = new Ticket(
-            nextId,
-            username,
-            event,
-            Integer.parseInt(eventClassId),
-            LocalDate.now(),
-            Double.parseDouble(finalPrice)
-//            pm // jangan lupa save juga payment method!
-        );
-
-        repo.ListTicket.add(newTicket);
-
-        return new Communication(username, "SUCCESS", null);
-
-    } catch (Exception ex) {
-        System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
-        return new Communication(username, "FAILED", null);
     }
-}
-
 
     //Private
-    private Venue SelectVenueByName(String venueName) {
-        for (Venue v : this.repo.ListVenue) {
-            if (v.getName().equals(venueName)) {
-                return v;
-            }
-        }
-        return null;
+    private Venue SelectVenueByName(String venueName)throws Exception{
+        return daoVenue.Select_Venue_By_Name(venueName).get(0);
     }
 
-    private Seller SelectSellerByUsername(String sellerUsername) {
-        for (Seller v : this.repo.ListSeller) {
-            if (v.getUsername().equals(sellerUsername)) {
-                return v;
-            }
-        }
-        return null;
+    private Seller SelectSellerByUsername(String sellerUsername) throws Exception{
+        return daoSeller.Select_Seller(sellerUsername);
     }
 
     private int SelectEventById(int eventId) {
@@ -486,8 +477,8 @@ public class ServerService implements Runnable {
             return null;
         }
     }
-    
-    public void InsertNewVenue(String name, String address, int maxCapacity, int area, City cityId) {
+
+    public void InsertNewVenue(String name, String address, int maxCapacity, int area, City cityId) throws Exception{
         int newId = 1;
         if (repo.ListVenue.size() != 0) {
             newId = repo.ListVenue.get(repo.ListVenue.size() - 1).getId() + 1;
@@ -496,10 +487,10 @@ public class ServerService implements Runnable {
         if (listVenueSize > 1) {
             newId = repo.ListVenue.get(listVenueSize - 1).getId() + 1;
         }
-        repo.ListVenue.add(new Venue(newId, name, address, maxCapacity, area, cityId));
+        daoVenue.Insert_Venue(new Venue(newId, name, address, maxCapacity, area, cityId));
     }
 
-    public Communication SelectListVenue() {
+    public Communication SelectListVenue() throws Exception{
         System.out.println(InteractiveIO.YellowMessage("SELECT LIST VENUE (SLV)"));
         try {
             String[] data = new String[this.repo.ListVenue.size() + 1];
@@ -528,21 +519,21 @@ public class ServerService implements Runnable {
             return null;
         }
     }
-    
+
     public Communication GetEvent(String eventName) throws Exception {
         System.out.println(InteractiveIO.YellowMessage("GET EVENT (GE)"));
         try {
-        List<Event> events = repo.ListEvent;
-        for (Event event : events) {
-            if (event.getName().equalsIgnoreCase(eventName)) {
-                return new Communication("dummy", "SUCCESS", event.GetEventData());
+            List<Event> events = repo.ListEvent;
+            for (Event event : events) {
+                if (event.getName().equalsIgnoreCase(eventName)) {
+                    return new Communication("dummy", "SUCCESS", event.GetEventData());
+                }
             }
+            // Kalau tidak ketemu
+            return new Communication("SE", "FAILED", null);
+        } catch (Exception ex) {
+            return new Communication("SE", "FAILED", null);
         }
-        // Kalau tidak ketemu
-        return new Communication("SE", "FAILED", null);
-    } catch (Exception ex) {
-        return new Communication("SE", "FAILED", null);
-    }
     }
 
     public Communication SelectVenue(String venueName) {
@@ -590,7 +581,7 @@ public class ServerService implements Runnable {
         }
     }
 
-    public Communication SelectEvent(int eventId) { 
+    public Communication SelectEvent(int eventId) {
         try {
             System.out.println(InteractiveIO.YellowMessage("SELECT EVENT ID (SEI)"));
             for (Event v : repo.ListEvent) {
@@ -606,7 +597,7 @@ public class ServerService implements Runnable {
 
     }
 
-    public Communication SellerSelectEvent(String username) { 
+    public Communication SellerSelectEvent(String username) {
         try {
             System.out.println(InteractiveIO.YellowMessage("SELLER SELECT EVENT (SE)"));
             ArrayList<String> list = new ArrayList<String>();
@@ -643,106 +634,105 @@ public class ServerService implements Runnable {
             return null;
         }
     }
-    
+
     public Communication SelectEventClasses(int eventId) throws Exception {
-    try {
-        System.out.println(InteractiveIO.YellowMessage("SELECT EVENT CLASSES (SEC)"));
-        int index = this.SelectEventById(eventId);
-        List<Event_class> eventClasses = this.repo.ListEvent.get(index).getEventClasses();
+        try {
+            System.out.println(InteractiveIO.YellowMessage("SELECT EVENT CLASSES (SEC)"));
+            int index = this.SelectEventById(eventId);
+            List<Event_class> eventClasses = this.repo.ListEvent.get(index).getEventClasses();
 
-        List<String> dataList = new ArrayList<>();
-        for (Event_class e : eventClasses) {
-            String[] fields = e.GetEventClassData(); 
-            dataList.addAll(Arrays.asList(fields)); 
+            List<String> dataList = new ArrayList<>();
+            for (Event_class e : eventClasses) {
+                String[] fields = e.GetEventClassData();
+                dataList.addAll(Arrays.asList(fields));
+            }
+
+            return new Communication("SEC", "SUCCESS", dataList.toArray(new String[0]));
+
+        } catch (Exception ex) {
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
+            return new Communication("SEC", "FAILED", null);
         }
-
-        return new Communication("SEC", "SUCCESS", dataList.toArray(new String[0]));
-
-    } catch (Exception ex) {
-        System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
-        return new Communication("SEC", "FAILED", null);
     }
-}
-    
+
     public Communication SelectEventClassById(int eventId, int eventClassId) throws Exception {
-    try {
-        System.out.println(InteractiveIO.YellowMessage("SELECT EVENT CLASSES BY ID (SECBYID)"));
-        int index = this.SelectEventById(eventId);
-        List<Event_class> eventClasses = this.repo.ListEvent.get(index).getEventClasses();
+        try {
+            System.out.println(InteractiveIO.YellowMessage("SELECT EVENT CLASSES BY ID (SECBYID)"));
+            int index = this.SelectEventById(eventId);
+            List<Event_class> eventClasses = this.repo.ListEvent.get(index).getEventClasses();
 
-        List<String> dataList = new ArrayList<>();
-        for (Event_class e : eventClasses) {
-            String[] fields = e.GetEventClassData(); 
-            dataList.addAll(Arrays.asList(fields)); 
+            List<String> dataList = new ArrayList<>();
+            for (Event_class e : eventClasses) {
+                String[] fields = e.GetEventClassData();
+                dataList.addAll(Arrays.asList(fields));
+            }
+
+            return new Communication("SEC", "SUCCESS", dataList.toArray(new String[0]));
+
+        } catch (Exception ex) {
+            System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
+            return new Communication("SEC", "FAILED", null);
         }
-
-        return new Communication("SEC", "SUCCESS", dataList.toArray(new String[0]));
-
-    } catch (Exception ex) {
-        System.out.println(InteractiveIO.RedMessage("WARNING - EXCEPTION THROWN: ") + ex.getMessage());
-        return new Communication("SEC", "FAILED", null);
     }
-}
 
     private Communication CalculatePrice(int eventId, int eventClassId) throws Exception {
-    try {
-        System.out.println(InteractiveIO.YellowMessage("CALCULATE PRICE (CP)"));
-        Event selectedEvent = null;
-        for (Event e : repo.ListEvent) {
-            if (e.getId() == eventId) {
-                selectedEvent = e;
-                break;
+        try {
+            System.out.println(InteractiveIO.YellowMessage("CALCULATE PRICE (CP)"));
+            Event selectedEvent = null;
+            for (Event e : repo.ListEvent) {
+                if (e.getId() == eventId) {
+                    selectedEvent = e;
+                    break;
+                }
             }
-        }
 
-        Event_class selectedEventClass = null;
-        for (Event_class ec : selectedEvent.getEventClasses()) {
-            if (ec.getId() == eventClassId) {
-                selectedEventClass = ec;
-                break;
+            Event_class selectedEventClass = null;
+            for (Event_class ec : selectedEvent.getEventClasses()) {
+                if (ec.getId() == eventClassId) {
+                    selectedEventClass = ec;
+                    break;
+                }
             }
-        }
-        double price = selectedEventClass.getPrice();
-        price*=1.07;
-        String[] data = new String[1];
-        data[0] = String.valueOf(price);
-        return new Communication("CP", "SUCCESS", data);
+            double price = selectedEventClass.getPrice();
+            price *= 1.07;
+            String[] data = new String[1];
+            data[0] = String.valueOf(price);
+            return new Communication("CP", "SUCCESS", data);
 
-    } catch (Exception ex) {
-        System.out.println("Error: " + ex.getMessage());
-        return new Communication("CP", "FAILED", null);
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+            return new Communication("CP", "FAILED", null);
+        }
     }
-}
 
     private String forServerCalculatePrice(int eventId, int eventClassId) throws Exception {
-    try {
-        System.out.println(InteractiveIO.YellowMessage("CALCULATE PRICE (CP)"));
-        Event selectedEvent = null;
-        for (Event e : repo.ListEvent) {
-            if (e.getId() == eventId) {
-                selectedEvent = e;
-                break;
+        try {
+            System.out.println(InteractiveIO.YellowMessage("CALCULATE PRICE (CP)"));
+            Event selectedEvent = null;
+            for (Event e : repo.ListEvent) {
+                if (e.getId() == eventId) {
+                    selectedEvent = e;
+                    break;
+                }
             }
-        }
 
-        Event_class selectedEventClass = null;
-        for (Event_class ec : selectedEvent.getEventClasses()) {
-            if (ec.getId() == eventClassId) {
-                selectedEventClass = ec;
-                break;
+            Event_class selectedEventClass = null;
+            for (Event_class ec : selectedEvent.getEventClasses()) {
+                if (ec.getId() == eventClassId) {
+                    selectedEventClass = ec;
+                    break;
+                }
             }
-        }
-        double price = selectedEventClass.getPrice();
-        price*=1.07;
-        String[] data = new String[1];
-        data[0] = String.valueOf(price);
-        return data[0];
+            double price = selectedEventClass.getPrice();
+            price *= 1.07;
+            String[] data = new String[1];
+            data[0] = String.valueOf(price);
+            return data[0];
 
-    } catch (Exception ex) {
-        System.out.println("Error: " + ex.getMessage());
-        return "-1";
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+            return "-1";
+        }
     }
-}
 
-    
 }

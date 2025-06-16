@@ -21,7 +21,6 @@ public class Event_class {
     private int numRows;
     private int numCols;
     private int stock;
-    private ArrayList<Seat> seats;
 
     public Event_class(int id,String name, double price, String description,int numRows, int numCols) {
         this.id = id;
@@ -31,17 +30,6 @@ public class Event_class {
         this.numCols = numCols;
         this.numRows = numRows;
         this.stock = numCols*numRows;
-        this.seats = new ArrayList<Seat>();
-        int counter =0;
-        for(int i=0;i<numCols;i++)
-        {
-            char ch = (char)(17+'0'+i);
-            for (int j=0;j<numCols;j++)
-            {
-                seats.add(new Seat(counter,String.valueOf(ch),j,false));
-                counter++;
-            }
-        }
     }    
     
 
@@ -53,17 +41,6 @@ public class Event_class {
         this.numCols = numCols;
         this.numRows = numRows;
         this.stock = numCols*numRows;
-        this.seats = new ArrayList<Seat>();
-        int counter =0;
-        for(int i=0;i<numCols;i++)
-        {
-            char ch = (char)(17+'0'+i);
-            for (int j=0;j<numCols;j++)
-            {
-                seats.add(new Seat(counter,String.valueOf(ch),j,false));
-                counter++;
-            }
-        }
     }    
     
     public Event_class(int id, String name, double price, String description,int numRows, int numCols, int stock,ArrayList<Seat>seats) {
@@ -84,7 +61,6 @@ public class Event_class {
         this.numCols = numCols;
         this.numRows = numRows;
         this.stock = stock;
-        this.seats = new ArrayList<Seat>();
     }
     
     
@@ -96,7 +72,6 @@ public class Event_class {
         this.numRows = 0;
         this.numCols =0;
         this.description = "";
-        this.seats = new ArrayList<Seat>();
     }
     
     public int getId() {

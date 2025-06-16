@@ -52,3 +52,9 @@ replay_pid*
 /ServerClientCommunication/nbproject/private/
 /ServerClientCommunication/build/
 /ServerClientCommunication/dist/
+/CLIENT/TicketMarketplaceAdmin/nbproject/private/
+/CLIENT/TicketMarketplaceBuyer/nbproject/private/
+/CLIENT/TicketMarketplaceDatabaseServer/nbproject/private/
+/CLIENT/TicketMarketplaceSeller/nbproject/private/
+/SERVER/TicketMarketplaceServer/nbproject/private/
+/LIBRARY/TicketMarketplaceProtocol/nbproject/private/

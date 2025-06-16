@@ -11,13 +11,15 @@ package TicketMarketplaceEntities;
 public class Seat {
 
     private int id;
+    private Event_class event_class;
     private String rows;
     private int column;
     private boolean isTaken;
 
-    public Seat(int id, String rows, int column, boolean isTaken) {
+    public Seat(int id, String rows, Event_class event_class,int column, boolean isTaken) {
         this.id = id;
         this.rows = rows;
+        this.event_class = event_class;
         this.column = column;
         this.isTaken = isTaken;
     }
@@ -60,6 +62,14 @@ public class Seat {
     public void setIsTaken(boolean isTaken) {
         this.isTaken = isTaken;
     }
+
+    public Event_class getEvent_class() {
+        return event_class;
+    }
+
+    public void setEvent_class(Event_class event_class) {
+        this.event_class = event_class;
+    }
     
     //Function
     public String[] GetSeatData() {
@@ -71,6 +81,12 @@ public class Seat {
         data[3] = String.valueOf(this.getIsTaken());
         
         return data;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return this.getRows()+this.getColumn();
     }
 
 }

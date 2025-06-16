@@ -26,9 +26,15 @@ public class ServerApp {
     }
 
     private static void ServerStartUp() {
-        System.out.println("Server is starting up");
-        service = new ServerService(6000);
-        service.start();
+        try {
+            System.out.println("Server is starting up");
+            service = new ServerService(6000);
+            service.start();
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Server failed to start: " + ex);
+        }
     }
 
     private static void ServerOption() {
