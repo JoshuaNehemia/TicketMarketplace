@@ -17,7 +17,7 @@ public class Seller extends Account {
     private String companyAddress;
 
     //CONSTRUCTOR
-    public Seller(String username, String password, String companyName, String phoneNumber, String email, String companyAddress) throws Exception {
+    public Seller(String username, String password, String companyName, String email, String phoneNumber, String companyAddress) throws Exception {
         super(username, password, companyName, email, phoneNumber);
         this.setCompanyAddress(companyAddress);
     }

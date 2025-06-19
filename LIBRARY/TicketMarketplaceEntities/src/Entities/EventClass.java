@@ -19,31 +19,28 @@ public class EventClass {
     private String name;
     private double price;
     private String description;
-    private int numRows;
-    private int numCols;
-    private int stock;
+    private int stock; //Origin
+    private int availableStock;
 
     
     //CONSTRUCTOR
-    public EventClass(int id,String name, double price, String description,int numRows, int numCols,int stock) {
+    public EventClass(int id,String name, double price, String description,int stock,int availableStock) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
-        this.numCols = numCols;
-        this.numRows = numRows;
         this.stock = stock;
+        this.availableStock = availableStock;
     }    
     
 
-    public EventClass(String name, double price, String description,int numRows, int numCols,int stock) {
+    public EventClass(String name, double price, String description,int stock) {
         this.id = 0;
         this.name = name;
         this.price = price;
         this.description = description;
-        this.numCols = numCols;
-        this.numRows = numRows;
         this.stock = stock;
+        this.availableStock = stock;
     }    
     
     
@@ -51,10 +48,9 @@ public class EventClass {
         this.id = 0;
         this.name = "";
         this.price = 0;
-        this.stock = 0;
-        this.numRows = 0;
-        this.numCols =0;
         this.description = "";
+        this.stock = 0;
+        this.availableStock =0;
     }
     
     public int getId() {
@@ -90,22 +86,6 @@ public class EventClass {
         this.description = description;
     }
 
-    public int getNumRows() {
-        return numRows;
-    }
-
-    public void setNumRows(int numRows) {
-        this.numRows = numRows;
-    }
-
-    public int getNumCols() {
-        return numCols;
-    }
-
-    public void setNumCols(int numCols) {
-        this.numCols = numCols;
-    }
-
     public int getStock() {
         return stock;
     }
@@ -114,17 +94,24 @@ public class EventClass {
         this.stock = stock;
     }
     
+    public int getAvailableStock(){
+        return this.availableStock;
+    }
+    
+    public void setAvailableStock(int availableStock){
+        this.availableStock = availableStock;
+    }
+    
     //FUNCTION 
     public String[] GetEventClassData()
     {
-        String[] data = new String[7];
+        String[] data = new String[6];
         data[0] = String.valueOf(this.getId());
         data[1] = this.getName();
         data[2] = String.valueOf(this.getPrice());
         data[3] = this.getDescription();
-        data[4] = String.valueOf(this.getNumRows());
-        data[5] = String.valueOf(this.getNumCols());
-        data[6] = String.valueOf(this.getStock());
+        data[4] = String.valueOf(this.getStock());
+        data[5] = String.valueOf(this.getAvailableStock());
         
         return data;
     }
@@ -132,6 +119,6 @@ public class EventClass {
     @Override 
     public String toString()
     {
-        return this.getName() + "\nStock: " + this.getStock() + "\nDescription:" + this.getDescription() + "\nRows :" + this.getNumRows() + "\nColumns: " +this.getNumCols()+ "\nStocks: " +this.getStock();
+        return this.getName() + "\nStock: " + this.getStock() + "\nDescription:" + this.getDescription() +"\nStocks: " +this.getStock()+"\nAvailable Stocks: " + this.getAvailableStock();
     }
 }

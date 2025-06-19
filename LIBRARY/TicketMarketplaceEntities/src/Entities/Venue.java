@@ -1,5 +1,7 @@
 package Entities;
 
+import Entities.Values.City;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -13,13 +15,13 @@ public class Venue {
     //FIELDS
     private int id;
     private String name;
-    private String city;
+    private City city;
     private String address;
     private int area;
     private int maxCapacity;
 
     //CONSTRUCTOR
-    public Venue(int id, String name, String city, String address, int area, int maxCapacity) throws Exception {
+    public Venue(int id, String name, City city, String address, int area, int maxCapacity) throws Exception {
         this.setId(id);
         this.setName(name);
         this.setCity(city);
@@ -28,7 +30,7 @@ public class Venue {
         this.setMaxCapacity(maxCapacity);
     }
 
-    public Venue(String name, String city, String address, int area, int maxCapacity) throws Exception {
+    public Venue(String name, City city, String address, int area, int maxCapacity) throws Exception {
         this.id = 0;
         this.setName(name);
         this.setCity(city);
@@ -40,7 +42,7 @@ public class Venue {
     public Venue() {
         this.id = 0;
         this.name = "";
-        this.city = "";
+        this.city = null;
         this.address = "";
         this.area = 0;
         this.maxCapacity = 0;
@@ -99,12 +101,12 @@ public class Venue {
         this.area = area;
     }
 
-    public String getCity() {
+    public City getCity() {
         return city;
     }
 
-    public void setCity(String _city) throws Exception{
-        if (_city.equals("") || _city == null) {
+    public void setCity(City _city) throws Exception{
+        if (_city == null) {
             throw new Exception("Venue city can't be empty");
         } else {
             this.city = _city;
@@ -117,7 +119,7 @@ public class Venue {
 
         data[0] = String.valueOf(this.getId());
         data[1] = this.getName();
-        data[2] = this.getCity();
+        data[2] = this.getCity().toString();
         data[3] = this.getAddress();
         data[4] = String.valueOf(this.getArea());
         data[5] = String.valueOf(this.getMaxCapacity());

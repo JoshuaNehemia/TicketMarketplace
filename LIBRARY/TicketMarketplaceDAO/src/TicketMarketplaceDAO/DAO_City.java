@@ -6,8 +6,7 @@ package TicketMarketplaceDAO;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-import TicketMarketplaceEntities.City;
-import TicketMarketplaceEntities.Province;
+import Entities.Values.City;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
@@ -16,27 +15,11 @@ import java.util.ArrayList;
  * @author joshu
  */
 public class DAO_City extends DatabaseConnection{
-    /*
-    public static City Select_City_By_Name(String city_name,ArrayList<City> list)
-    {
-        City selectedCity = new City();
-        
-        for(City ci : list)
-        {
-            if(ci.getName().equals(city_name))
-            {
-                return selectedCity;
-            }
-        }
-        
-        return selectedCity;
-    }
-     */
     
     public DAO_City() throws Exception
     {
         super();
-        System.out.println(InteractiveIO.GreenMessage("DAO_CITY IS CONNECTED"));
+        System.out.println(("DAO_CITY IS CONNECTED"));
     }
     
     public ArrayList<City> Select_City() throws Exception

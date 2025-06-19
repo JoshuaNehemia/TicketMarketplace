@@ -36,4 +36,11 @@ public class PaymentMethod {
         this.name = name;
     }
     
+    //FUNCTION
+    @Override
+    public String toString()
+    {
+        return this.getName();
+    }
+    
 }

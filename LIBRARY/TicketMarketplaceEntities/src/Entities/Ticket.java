@@ -20,27 +20,27 @@ public class Ticket {
     private String id;
     private Event event;
     private EventClass eventClass;
-    private LocalDate paidDate;
+    private LocalDateTime piadTime;
     private Double price;
-    private String status; //Paid, Canceled, Refunded
+    private String status; //ENUM('UNPAID','PAID','REQUEST REFUND','REFUNDED')
     private boolean isClaimed;
 
     //CONSTRUCTOR
-    public Ticket(String id, Event event, EventClass eventClass, LocalDate paidDate, Double price, String status, boolean isClaimed) {
+    public Ticket(String id, Event event, EventClass eventClass, LocalDateTime paidDate, Double price, String status, boolean isClaimed) {
         this.id = id;
         this.event = event;
         this.eventClass = eventClass;
-        this.paidDate = paidDate;
+        this.piadTime = paidDate;
         this.price = price;
         this.status = status;
         this.isClaimed = isClaimed;
     }
     
-    public Ticket(Event event, EventClass eventClass, LocalDate paidDate, Double price, String status, boolean isClaimed) {
+    public Ticket(Event event, EventClass eventClass, Double price, String status, boolean isClaimed) {
         this.id = "";
         this.event = event;
         this.eventClass = eventClass;
-        this.paidDate = paidDate;
+        this.piadTime = null;
         this.price = price;
         this.status = status;
         this.isClaimed = isClaimed;
@@ -71,12 +71,12 @@ public class Ticket {
         this.eventClass = eventClass;
     }
 
-    public LocalDate getPaidDate() {
-        return paidDate;
+    public LocalDateTime getPaidTime() {
+        return piadTime;
     }
 
-    public void setPaidDate(LocalDate paidDate) {
-        this.paidDate = paidDate;
+    public void setPaidTime(LocalDateTime paidTime) {
+        this.piadTime = paidTime;
     }
 
     public Double getPrice() {

@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-/**
+/*
  *
  * @author joshu
  */
@@ -20,8 +20,6 @@ public class DAO_Venue {
         ArrayList<Venue> venues = new ArrayList<Venue>();
 
         String SQLQuery = "SELECT v.id AS id, v.name AS name, v.address AS address, v.maxCapacity AS maxCapacity, v.area AS area, c.id AS city_id, c.name as city_name FROM venue v INNER JOIN city c ON v.city_id = c.id;";
-
-        System.out.println("SQL QUERY: \n" + SQLQuery);
         this.setResult(this.Read(SQLQuery));
 
         Venue buffer;
