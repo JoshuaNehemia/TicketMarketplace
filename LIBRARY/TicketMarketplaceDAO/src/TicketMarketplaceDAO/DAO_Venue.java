@@ -2,6 +2,7 @@ package TicketMarketplaceDAO;
 
 import Entities.Venue;
 import Entities.Values.City;
+import Entities.Values.Province;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
@@ -14,127 +15,109 @@ import java.util.ArrayList;
  *
  * @author joshu
  */
-public class DAO_Venue {
+public class DAO_Venue extends DatabaseConnection {
 
-    public ArrayList<Venue> Select_Venue(String seller_username) throws Exception {
+    public DAO_Venue() throws Exception{
+        super();
+        System.out.println("DAO_VENUE IS CONNECTED");
+    }
+    
+    public ArrayList<Venue> Select_Venue_By_City(City _city) throws Exception {
         ArrayList<Venue> venues = new ArrayList<Venue>();
 
-        String SQLQuery = "SELECT v.id AS id, v.name AS name, v.address AS address, v.maxCapacity AS maxCapacity, v.area AS area, c.id AS city_id, c.name as city_name FROM venue v INNER JOIN city c ON v.city_id = c.id;";
-        this.setResult(this.Read(SQLQuery));
+        String SQLQuery = "SELECT * FROM `venues` WHERE city_id = (SELECT id FROM `cities` WHERE `name` =? LIMIT 1);";
+        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        this.getPreparedStatement().setString(1, city.getName());
 
         Venue buffer;
         while (this.getResult().next()) {
             buffer = new Venue(
                     this.getResult().getInt("id"),
                     this.getResult().getString("name"),
+                    _city,
                     this.getResult().getString("address"),
                     this.getResult().getInt("maxCapacity"),
-                    this.getResult().getInt("area"),
-                    new City(this.getResult().getInt("city_id"), this.getResult().getString("name"))
+                    this.getResult().getInt("area")
             );
             venues.add(buffer);
         }
-        if (venues.size() > 0) {
-
-            return venues;
-        } else {
-            throw new Exception("Failure in receiving venue data from database - no data matches the parameter");
-        }
-
+        return venues;
     }
 
-    public ArrayList<Venue> Select_Venue_By_City(int city_id) throws Exception {
+        public ArrayList<Venue> Select_Venue_By_Province(Province province) throws Exception {
         ArrayList<Venue> venues = new ArrayList<Venue>();
 
-        String SQLQuery = "SELECT v.id AS id, v.name AS name, v.address AS address, v.maxCapacity AS maxCapacity, v.area AS area, c.id AS city_id, c.name as city_name FROM venue v INNER JOIN city c ON v.city_id = c.id WHERE v.city_id=?";
-        PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
-        prst.setString(1, String.valueOf(city_id));
-
-        System.out.println("SQL QUERY: \n" + prst);
-        this.setResult(this.Read(String.valueOf(prst)));
+        String SQLQuery = "SELECT * FROM `venues` WHERE city_id = (SELECT id FROM `cities` WHERE `name` =?);";
+        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        this.getPreparedStatement().setString(1, province.getName());
 
         Venue buffer;
         while (this.getResult().next()) {
             buffer = new Venue(
                     this.getResult().getInt("id"),
                     this.getResult().getString("name"),
+                    new City(this.getResult().getInt("city_id"),this.getResult().getString("city_name")),
                     this.getResult().getString("address"),
                     this.getResult().getInt("maxCapacity"),
-                    this.getResult().getInt("area"),
-                    new City(this.getResult().getInt("city_id"), this.getResult().getString("name"))
+                    this.getResult().getInt("area")
             );
             venues.add(buffer);
         }
-        if (venues.size() > 0) {
-
-            return venues;
-        } else {
-            throw new Exception("Failure in receiving venue data from database - no data matches the parameter");
-        }
-
+        return venues;
     }
-
+        
     public ArrayList<Venue> Select_Venue_By_Name(String name) throws Exception {
         ArrayList<Venue> venues = new ArrayList<Venue>();
 
-        String SQLQuery = "SELECT v.id AS id, v.name AS name, v.address AS address, v.maxCapacity AS maxCapacity, v.area AS area, c.id AS city_id, c.name as city_name FROM venue v INNER JOIN city c ON v.city_id = c.id WHERE v.name=?";
-        PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
-        prst.setString(1, name);
-
-        System.out.println("SQL QUERY: \n" + prst);
-        this.setResult(this.Read(String.valueOf(prst)));
+        String SQLQuery = "SELECT v*,c.id as 'city_id',c.name as 'city_name' FROM `venues` v INNER JOIN `cities` c ON v.city_id = c.id WHERE v.`name` LIKE ?;";
+        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        this.getPreparedStatement().setString(1,"%" + name + "%");
 
         Venue buffer;
         while (this.getResult().next()) {
             buffer = new Venue(
                     this.getResult().getInt("id"),
                     this.getResult().getString("name"),
+                    new City(this.getResult().getInt("city_id"),this.getResult().getString("city_name")),
                     this.getResult().getString("address"),
                     this.getResult().getInt("maxCapacity"),
-                    this.getResult().getInt("area"),
-                    new City(this.getResult().getInt("city_id"), this.getResult().getString("name"))
+                    this.getResult().getInt("area")
             );
             venues.add(buffer);
         }
-        if (venues.size() > 0) {
-
-            return venues;
-        } else {
-            throw new Exception("Failure in receiving venue data from database - no data matches the parameter");
-        }
-
+        return venues;
     }
 
     public void Insert_Venue(Venue _venue) throws Exception {
         String SQLQuery = "INSERT INTO venues ('name','address','maxCapacity','area','city_id') VALUES(?,?,?,?,?)";
-        PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
-        prst.setString(1, _venue.getName());
-        prst.setString(2, _venue.getAddress());
-        prst.setString(3, String.valueOf(_venue.getMaxCapacity()));
-        prst.setString(4, String.valueOf(_venue.getArea()));
-        prst.setString(5, String.valueOf(_venue.getCity().getId()));
+        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        this.getPreparedStatement().setString(1, _venue.getName());
+        this.getPreparedStatement().setString(2, _venue.getAddress());
+        this.getPreparedStatement().setString(3, String.valueOf(_venue.getMaxCapacity()));
+        this.getPreparedStatement().setString(4, String.valueOf(_venue.getArea()));
+        this.getPreparedStatement().setString(5, String.valueOf(_venue.getCity().getId()));
 
-        this.Create(String.valueOf(prst));
+        this.Create();
     }
 
     public void Update_Venue(Venue _venue) throws Exception {
         String SQLQuery = "UPDATE venues SET name=?, address=?, maxCapacity=?, area=?, city_id=? WHERE id=?";
-        PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
-        prst.setString(1, _venue.getName());
-        prst.setString(2, _venue.getAddress());
-        prst.setString(3, String.valueOf(_venue.getMaxCapacity()));
-        prst.setString(4, String.valueOf(_venue.getArea()));
-        prst.setString(5, String.valueOf(_venue.getCity().getId()));
-        prst.setString(6, String.valueOf(_venue.getId()));
+        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        this.getPreparedStatement().setString(1, _venue.getName());
+        this.getPreparedStatement().setString(2, _venue.getAddress());
+        this.getPreparedStatement().setString(3, String.valueOf(_venue.getMaxCapacity()));
+        //this.getPreparedStatement().setString(4, String.valueOf(_venue.getArea()));
+        //this.getPreparedStatement().setString(5, String.valueOf(_venue.getCity().getId()));
+        this.getPreparedStatement().setString(6, String.valueOf(_venue.getId()));
 
-        this.Update(String.valueOf(prst));
+        this.Update();
     }    
     public void Delete_Venue(int id) throws Exception {
         String SQLQuery = "DELETE FROM venues WHERE id=?";
-        PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
-        prst.setString(1, String.valueOf(id));
+        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        this.getPreparedStatement().setString(1, String.valueOf(id));
 
-        this.Delete(String.valueOf(prst));
+        this.Delete();
     }
 
 

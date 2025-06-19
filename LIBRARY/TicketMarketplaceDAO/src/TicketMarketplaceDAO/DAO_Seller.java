@@ -66,25 +66,25 @@ public class DAO_Seller extends DatabaseConnection{
     public void Update_Seller(Seller _user) throws Exception
     {
         String SQLQuery = "UPDATE FROM seller SET password=?,email=?,companyName=?,companyAddress=?,phoneNumber=? WHERE username=? ";
-        PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
-        prst.setString(1, _user.getPassword());
-        prst.setString(2, _user.getEmail());
-        prst.setString(3, _user.getCompanyName());
-        prst.setString(4, _user.getCompanyAddress());
-        prst.setString(5, _user.getPhoneNumber());
-        prst.setString(6, _user.getUsername());
+        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        this.getPreparedStatement().setString(1, _user.getPassword());
+        this.getPreparedStatement().setString(2, _user.getEmail());
+        this.getPreparedStatement().setString(3, _user.getCompanyName());
+        this.getPreparedStatement().setString(4, _user.getCompanyAddress());
+        this.getPreparedStatement().setString(5, _user.getPhoneNumber());
+        this.getPreparedStatement().setString(6, _user.getUsername());
         
-        this.Update(String.valueOf(prst));
+        this.Update();
     }    
     
     public void Delete_Seller(String username, String password) throws Exception
     {
         String SQLQuery = "DELETE FROM seller WHERE username=? and password=?";
-        PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
-        prst.setString(1, username);
-        prst.setString(2, password);
+        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        this.getPreparedStatement().setString(1, username);
+        this.getPreparedStatement().setString(2, password);
         
-        this.Delete(String.valueOf(prst));
+        this.Delete();
     }
 
 }
