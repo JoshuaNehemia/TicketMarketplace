@@ -26,24 +26,18 @@ public class DAO_City extends DatabaseConnection{
     {
         ArrayList<City> cities = new ArrayList<City>();
 
-        String SQLQuery = "SELECT ct.id AS 'id', ct.name AS 'name', pr.id AS 'province_id', pr.name AS 'province_name' FROM city ct INNER JOIN provinces pr ON ct.province_id = pr.id";
-        System.out.println("SQL QUERY: \n" + SQLQuery);
-        this.setResult(this.Read(SQLQuery));
+        String SQLQuery = "SELECT* FROM cities";
+        
+        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
         
         City buffer;
         while (this.getResult().next()) {
             buffer = new City(
                     this.getResult().getInt("id"),
-                    this.getResult().getString("name"),new Province(
-                    this.getResult().getInt("province_id"),
-                    this.getResult().getString("province_name"))
+                    this.getResult().getString("name")
             );
             cities.add(buffer);
         }
-        if(cities.size()>0)
-        {
-            return cities;
-        }
-        else throw new Exception ("Failure in receiving city data from database - no data matches the parameter");
+        return cities;
     }
 }

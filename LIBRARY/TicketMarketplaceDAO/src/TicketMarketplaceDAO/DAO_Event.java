@@ -5,10 +5,10 @@ package TicketMarketplaceDAO;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-import Communication.InteractiveIO;
-import TicketMarketplaceEntities.Event;
-import TicketMarketplaceEntities.Venue;
-import TicketMarketplaceEntities.Seller;
+
+import Entities.Event;
+import Entities.Venue;
+import Entities.Account.Seller;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
@@ -18,114 +18,79 @@ import java.util.ArrayList;
  */
 public class DAO_Event extends DatabaseConnection {
 
-    /*
-    public static ArrayList<Event> Select_Event_By_Seller_Username(String seller_username,ArrayList<Event> list)
-    {
-        ArrayList<Event> seller_list = new ArrayList<Event>();
-        for(Event ev : list)
-        {
-            if(ev.getSeller().equals(seller_username))
-            {
-                seller_list.add(ev);
-            }
-        }
-        return seller_list;
-    }
-    
-    public static ArrayList<Event> Insert_Event(Event event,ArrayList<Event> list)
-    {
-        list.add(event);
-        
-        return list;
-    }
-    
-    public static ArrayList<Event> Update_Event_By_Id(Event event,ArrayList<Event> list)
-    {
-        for(Event ev : list)
-        {
-            if(ev.getId() ==event.getId())
-            {
-                list.remove(ev);
-                list.add(event);
-            }
-        }
-        return list;
-    }
-     */
-
     public DAO_Event() throws Exception {
         super();
-        System.out.println(InteractiveIO.GreenMessage("DAO_EVENT IS CONNECTED"));
+        System.out.println("DAO_EVENT IS CONNECTED");
     }
-
-    public ArrayList<Event> Select_Event_By_Seller(String seller_username) throws Exception {
+    
+    public ArrayList<Event> Select_Event_By_Seller(Seller seller) throws Exception {
         ArrayList<Event> events = new ArrayList<Event>();
 
         String SQLQuery = "SELECT * FROM events WHERE seller_username=?;";
-        PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
-        prst.setString(1, seller_username);
+        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        this.getPreparedStatement().setString(1, seller.getUsername());
 
-        System.out.println("SQL QUERY: \n" + prst);
-        this.setResult(this.Read(String.valueOf(prst)));
+        this.Read();
 
         Event buffer;
         while (this.getResult().next()) {
-            Venue nVenue = new Venue();
-            nVenue.setId(this.getResult().getInt("venue_id"));
-            Seller nSeller = new Seller();
-            nSeller.setUsername(this.getResult().getString("seller_username"));
-            buffer = new Event(
-                    this.getResult().getInt("id"),
-                    this.getResult().getString("name"),
-                    this.getResult().getString("description"),
-                    this.getResult().getTimestamp("startDateTime").toLocalDateTime().toLocalDate(),
-                    nVenue,
-                    nSeller
+            buffer = new Event(this.getResult().getInt("id"),
+            this.getResult().getString("name"),
+            this.getResult().getString("description"),
+            this.getResult().getTimestamp("startTime").toLocalDateTime(),
+            new Venue(),
+            seller
             );
             
             events.add(buffer);
         }
-        if (events.size() > 0) {
-            return events;
-        } else {
-            throw new Exception("Failure in receiving events data from database - no data matches the parameter");
-        }
-
+        return events;
     }
-
-   public ArrayList<Event> Select_Event_By_Name(String name) throws Exception {
+        public ArrayList<Event> Select_Event_By_CompanyName(String CompanyName) throws Exception {
         ArrayList<Event> events = new ArrayList<Event>();
 
-        String SQLQuery = "SELECT * FROM events WHERE name like %?%;";
-        PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
-        prst.setString(1, name);
+        String SQLQuery = "SELECT * FROM events WHERE seller_username=?;";
+        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        this.getPreparedStatement().setString(1, CompanyName);
 
-        System.out.println("SQL QUERY: \n" + prst);
-        this.setResult(this.Read(String.valueOf(prst)));
+        this.Read();
 
         Event buffer;
         while (this.getResult().next()) {
-            Venue nVenue = new Venue();
-            nVenue.setId(this.getResult().getInt("venue_id"));
-            Seller nSeller = new Seller();
-            nSeller.setUsername(this.getResult().getString("seller_username"));
-            buffer = new Event(
-                    this.getResult().getInt("id"),
-                    this.getResult().getString("name"),
-                    this.getResult().getString("description"),
-                    this.getResult().getTimestamp("startDateTime").toLocalDateTime().toLocalDate(),
-                    nVenue,
-                    nSeller
+            buffer = new Event(this.getResult().getInt("id"),
+            this.getResult().getString("name"),
+            this.getResult().getString("description"),
+            this.getResult().getTimestamp("startTime").toLocalDateTime(),
+            new Venue(),
+            new Seller()
             );
             
             events.add(buffer);
         }
-        if (events.size() > 0) {
-            return events;
-        } else {
-            throw new Exception("Failure in receiving events data from database - no data matches the parameter");
-        }
+        return events;
+    }
+        public ArrayList<Event> Select_Event_By_Name(String name) throws Exception {
+        ArrayList<Event> events = new ArrayList<Event>();
 
+        String SQLQuery = "SELECT * FROM events WHERE seller_username=?;";
+        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        this.getPreparedStatement().setString(1, seller.getUsername());
+
+        this.Read();
+
+        Event buffer;
+        while (this.getResult().next()) {
+            buffer = new Event(this.getResult().getInt("id"),
+            this.getResult().getString("name"),
+            this.getResult().getString("description"),
+            this.getResult().getTimestamp("startTime").toLocalDateTime(),
+            new Venue(),
+            seller
+            );
+            
+            events.add(buffer);
+        }
+        return events;
     }
 
     public void Insert_Events(Event _event) throws Exception {

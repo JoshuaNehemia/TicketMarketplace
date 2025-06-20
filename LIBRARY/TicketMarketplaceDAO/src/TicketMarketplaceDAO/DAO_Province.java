@@ -1,6 +1,6 @@
 package TicketMarketplaceDAO;
 
-import TicketMarketplaceEntities.Province;
+import Entities.Values.Province;
 import java.util.ArrayList;
 
 
@@ -14,21 +14,32 @@ import java.util.ArrayList;
  *
  * @author joshu
  */
-public class DAO_Province {
+public class DAO_Province extends DatabaseConnection{
     
-    
-    public static Province Select_Province_By_Name(String province_name,ArrayList<Province> list)
+    public DAO_Province() throws Exception
     {
-        Province selectedProvince = new Province();
+        super();
+        System.out.println("DAO_PROVINCE IS CONNECTED");
+    }
+    
+    
+    public ArrayList<Province> Select_Province() throws Exception
+    {
+        ArrayList<Province> provinces = new ArrayList<Province>();
+
+        String SQLQuery = "SELECT* FROM provinces";
         
-        for(Province prov : list)
-        {
-            if(prov.getName().equals(province_name))
-            {
-                return selectedProvince;
-            }
+        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        this.Read();
+        
+        Province buffer;
+        while (this.getResult().next()) {
+            buffer = new Province(
+                    this.getResult().getInt("id"),
+                    this.getResult().getString("name")
+            );
+            provinces.add(buffer);
         }
-        
-        return selectedProvince;
+        return provinces;
     }
 }

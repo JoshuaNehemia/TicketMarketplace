@@ -38,6 +38,8 @@ public class Venue {
         this.setArea(area);
         this.setMaxCapacity(maxCapacity);
     }
+    
+    
 
     public Venue() {
         this.id = 0;

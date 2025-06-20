@@ -53,7 +53,7 @@ public class Event {
         this.startTime = startDateTime;
         this.venue = venue;
         this.seller = seller;
-        this.eventClasses = new ArrayList<EventClass>();
+        this.eventClasses = new ArrayList<>();
     }
 
     public Event() {
@@ -63,7 +63,7 @@ public class Event {
         this.startTime = null;
         this.venue = null;
         this.seller = null;
-        this.eventClasses = new ArrayList<EventClass>();
+        this.eventClasses = new ArrayList<>();
     }
 
     //GETTER AND SETTER
