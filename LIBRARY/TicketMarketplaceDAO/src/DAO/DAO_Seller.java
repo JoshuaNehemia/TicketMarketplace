@@ -1,5 +1,6 @@
-package TicketMarketplaceDAO;
+package DAO;
 
+import DAO.Connection.DatabaseConnection;
 import Entities.Account.Seller;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;

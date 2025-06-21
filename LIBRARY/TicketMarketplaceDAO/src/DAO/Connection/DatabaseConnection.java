@@ -1,4 +1,4 @@
-package TicketMarketplaceDAO;
+package DAO.Connection;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license

@@ -4,11 +4,8 @@ package Entities;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-import Entities.Account.User;
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 /**
  *
@@ -19,14 +16,14 @@ public class Ticket {
     //FIELD
     private String id;
     private Event event;
-    private EventClass eventClass;
+    private String eventClass;
     private LocalDateTime piadTime;
     private Double price;
     private String status; //ENUM('UNPAID','PAID','REQUEST REFUND','REFUNDED')
     private boolean isClaimed;
 
     //CONSTRUCTOR
-    public Ticket(String id, Event event, EventClass eventClass, LocalDateTime paidDate, Double price, String status, boolean isClaimed) {
+    public Ticket(String id, Event event, String eventClass, LocalDateTime paidDate, Double price, String status, boolean isClaimed) {
         this.id = id;
         this.event = event;
         this.eventClass = eventClass;
@@ -36,7 +33,7 @@ public class Ticket {
         this.isClaimed = isClaimed;
     }
     
-    public Ticket(Event event, EventClass eventClass, Double price, String status, boolean isClaimed) {
+    public Ticket(Event event, String eventClass, Double price, String status, boolean isClaimed) {
         this.id = "";
         this.event = event;
         this.eventClass = eventClass;
@@ -44,6 +41,18 @@ public class Ticket {
         this.price = price;
         this.status = status;
         this.isClaimed = isClaimed;
+    }
+    
+    
+    
+    public Ticket() {
+        this.id = "";
+        this.event = null;
+        this.eventClass = null;
+        this.piadTime = null;
+        this.price = 0.0;
+        this.status = "";
+        this.isClaimed = false;
     }
     
     //GETTER AND SETTER
@@ -63,11 +72,11 @@ public class Ticket {
         this.event = event;
     }
 
-    public EventClass getEventClass() {
+    public String getEventClass() {
         return eventClass;
     }
 
-    public void setEventClass(EventClass eventClass) {
+    public void setEventClass(String eventClass) {
         this.eventClass = eventClass;
     }
 
@@ -106,6 +115,6 @@ public class Ticket {
     
     //FUNCTION
     public String CreateID(String username){
-        return ""+this.getEvent().getName()+"-"+this.getEventClass().getName()+"-"+username;
+        return ""+this.getEvent().getName()+"-"+this.getEventClass()+"-"+username+"-"+LocalDateTime.now().toString();
     }
 }

@@ -1,5 +1,6 @@
-package TicketMarketplaceDAO;
+package DAO.Values;
 
+import DAO.Connection.DatabaseConnection;
 import Entities.Values.Province;
 import java.util.ArrayList;
 

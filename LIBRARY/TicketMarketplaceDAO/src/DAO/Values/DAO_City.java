@@ -1,4 +1,4 @@
-package TicketMarketplaceDAO;
+package DAO.Values;
 
 
 /*
@@ -6,6 +6,7 @@ package TicketMarketplaceDAO;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+import DAO.Connection.DatabaseConnection;
 import Entities.Values.City;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;

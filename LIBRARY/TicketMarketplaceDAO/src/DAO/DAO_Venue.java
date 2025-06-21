@@ -1,5 +1,6 @@
-package TicketMarketplaceDAO;
+package DAO;
 
+import DAO.Connection.DatabaseConnection;
 import Entities.Venue;
 import Entities.Values.City;
 import Entities.Values.Province;
