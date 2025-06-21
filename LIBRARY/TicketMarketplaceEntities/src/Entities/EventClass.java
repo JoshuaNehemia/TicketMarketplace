@@ -43,6 +43,12 @@ public class EventClass {
         this.availableStock = stock;
     }    
     
+    ////FOR DISPLAY
+    public EventClass(int id,String name)
+    {
+        this.id = id;
+        this.name = name;
+    }
     
     public EventClass() {
         this.id = 0;

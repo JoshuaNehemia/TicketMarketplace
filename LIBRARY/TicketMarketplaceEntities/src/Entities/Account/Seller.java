@@ -1,6 +1,5 @@
 package Entities.Account;
 
-import Entities.Account.Account;
 import java.util.ArrayList;
 
 /*
@@ -21,7 +20,10 @@ public class Seller extends Account {
         super(username, password, companyName, email, phoneNumber);
         this.setCompanyAddress(companyAddress);
     }
-
+    ////FOR DISPLAY
+    public Seller(String username, String companyName,String email,String phoneNumber) throws Exception{
+        super(username,companyName,email,phoneNumber);
+    }
     public Seller() {
         super();
         this.companyAddress = "";

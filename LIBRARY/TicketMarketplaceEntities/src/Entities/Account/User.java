@@ -4,11 +4,8 @@ package Entities.Account;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-import Entities.Account.Account;
+
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.ArrayList;
 
 /**
  *
@@ -38,8 +35,7 @@ public class User extends Account{
     }
 
     public String getBirthdateString() {
-        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return this.getBirthdate().format(df);
+        return this.getBirthdate().toString();
     }
 
     public void setBirthdate(LocalDate birthdate) {

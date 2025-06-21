@@ -5,6 +5,11 @@
         <group>
             <file>file:/C:/Users/joshu/Downloads/TicketMarketplace/LIBRARY/TicketMarketplaceEntities/src/Entities/Event.java</file>
             <file>file:/C:/Users/joshu/Downloads/TicketMarketplace/LIBRARY/TicketMarketplaceEntities/src/Entities/Venue.java</file>
+            <file>file:/C:/Users/joshu/Downloads/TicketMarketplace/LIBRARY/TicketMarketplaceEntities/src/Entities/Account/Seller.java</file>
+            <file>file:/C:/Users/joshu/Downloads/TicketMarketplace/LIBRARY/TicketMarketplaceEntities/src/Entities/Account/Account.java</file>
+            <file>file:/C:/Users/joshu/Downloads/TicketMarketplace/LIBRARY/TicketMarketplaceEntities/src/Entities/Ticket.java</file>
+            <file>file:/C:/Users/joshu/Downloads/TicketMarketplace/LIBRARY/TicketMarketplaceEntities/src/Entities/Account/User.java</file>
+            <file>file:/C:/Users/joshu/Downloads/TicketMarketplace/LIBRARY/TicketMarketplaceEntities/src/Entities/EventClass.java</file>
         </group>
     </open-files>
 </project-private>

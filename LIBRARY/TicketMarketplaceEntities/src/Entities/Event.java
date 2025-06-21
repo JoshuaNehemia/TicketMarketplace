@@ -55,6 +55,12 @@ public class Event {
         this.seller = seller;
         this.eventClasses = new ArrayList<>();
     }
+    ////FOR DISPLAY
+    public Event(int id,String name)
+    {
+        this.id = id;
+        this.name = name;
+    }
 
     public Event() {
         this.id = 0;

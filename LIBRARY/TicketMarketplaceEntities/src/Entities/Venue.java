@@ -39,7 +39,13 @@ public class Venue {
         this.setMaxCapacity(maxCapacity);
     }
     
-    
+    //// FOR DISPLAY
+    public Venue(int id, String name,City city, String address) throws Exception{
+        this.setId(id);
+        this.setName(name);
+        this.setCity(city);
+        this.setAddress(address);
+    }
 
     public Venue() {
         this.id = 0;

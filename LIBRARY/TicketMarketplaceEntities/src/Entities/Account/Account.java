@@ -27,6 +27,14 @@ public class Account {
         this.setEmail(email);
     }
     
+    ////FOR DISPLAY
+    public Account(String username, String fullname, String email, String phoneNumber) throws Exception{
+        this.setUsername(username);
+        this.setFullName(fullname);
+        this.setEmail(email);
+    }
+    
+    
     public Account()
     {
         this.username="";
