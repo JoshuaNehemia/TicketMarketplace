@@ -4,7 +4,6 @@
  */
 package Multithreading;
 
-import Logic.Service;
 import Protocol.Comm.Communication;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

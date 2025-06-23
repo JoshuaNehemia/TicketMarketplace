@@ -4,7 +4,6 @@ import DAO.Connection.DatabaseConnection;
 import Entities.Venue;
 import Entities.Values.City;
 import Entities.Values.Province;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 

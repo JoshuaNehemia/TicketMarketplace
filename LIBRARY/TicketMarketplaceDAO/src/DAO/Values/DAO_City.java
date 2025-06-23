@@ -9,6 +9,7 @@ package DAO.Values;
 import DAO.Connection.DatabaseConnection;
 import Entities.Values.City;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 /**
@@ -26,19 +27,23 @@ public class DAO_City extends DatabaseConnection{
     public ArrayList<City> Select_City() throws Exception
     {
         ArrayList<City> cities = new ArrayList<City>();
+        City buffer;
 
         String SQLQuery = "SELECT* FROM cities";
         
-        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        ResultSet rslt = prst.executeQuery();
         
-        City buffer;
-        while (this.getResult().next()) {
+        while (rslt.next()) {
             buffer = new City(
-                    this.getResult().getInt("id"),
-                    this.getResult().getString("name")
+                    rslt.getInt("id"),
+                    rslt.getString("name")
             );
             cities.add(buffer);
         }
+        prst.clearBatch();
+        prst.close();
+        rslt.close();
         return cities;
     }
 }

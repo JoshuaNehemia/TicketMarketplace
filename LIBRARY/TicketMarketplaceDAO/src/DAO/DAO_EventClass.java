@@ -2,7 +2,6 @@ package DAO;
 
 import DAO.Connection.DatabaseConnection;
 import Entities.EventClass;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 /*

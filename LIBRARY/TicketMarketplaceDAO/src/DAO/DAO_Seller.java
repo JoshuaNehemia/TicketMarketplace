@@ -2,8 +2,6 @@ package DAO;
 
 import DAO.Connection.DatabaseConnection;
 import Entities.Account.Seller;
-import java.sql.PreparedStatement;
-import java.util.ArrayList;
 
 
 /*
@@ -46,7 +44,7 @@ public class DAO_Seller extends DatabaseConnection {
 
     }
 
-    public void Insert_Seller(Seller _user) throws Exception {
+    public int Insert_Seller(Seller _user) throws Exception {
         String SQLQuery = "INSERT INTO seller ('username','password','email','companyName','companyAddress','phoneNumber') VALUES(?,?,?,?,?)";
         this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
         this.getPreparedStatement().setString(1, _user.getUsername());
@@ -56,10 +54,10 @@ public class DAO_Seller extends DatabaseConnection {
         this.getPreparedStatement().setString(5, _user.getCompanyAddress());
         this.getPreparedStatement().setString(6, _user.getPhoneNumber());
 
-        this.Create();
+        return this.Create();
     }
 
-    public void Update_Seller(Seller _user) throws Exception {
+    public int Update_Seller(Seller _user) throws Exception {
         String SQLQuery = "UPDATE FROM seller SET password=?,email=?,companyName=?,companyAddress=?,phoneNumber=? WHERE username=? ";
         this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
         this.getPreparedStatement().setString(1, _user.getPassword());
@@ -69,16 +67,16 @@ public class DAO_Seller extends DatabaseConnection {
         this.getPreparedStatement().setString(5, _user.getPhoneNumber());
         this.getPreparedStatement().setString(6, _user.getUsername());
 
-        this.Update();
+        return this.Update();
     }
 
-    public void Delete_Seller(String username, String password) throws Exception {
+    public int Delete_Seller(String username, String password) throws Exception {
         String SQLQuery = "DELETE FROM seller WHERE username=? and password=?";
         this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
         this.getPreparedStatement().setString(1, username);
         this.getPreparedStatement().setString(2, password);
 
-        this.Delete();
+        return this.Delete();
     }
 
 }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
  *
  * @author joshu
  */
-public class MultithreadedSocket implements Runnable {
+public class MultithreadedSocket extends Thread {
 
     //FIELDS
     private Service parent;

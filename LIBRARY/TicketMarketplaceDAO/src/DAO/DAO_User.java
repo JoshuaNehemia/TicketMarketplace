@@ -7,9 +7,8 @@ package DAO;
  */
 import DAO.Connection.DatabaseConnection;
 import Entities.Account.User;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  *
@@ -28,27 +27,28 @@ public class DAO_User extends DatabaseConnection {
         User selectedUser = new User();
 
         String SQLQuery = "SELECT * FROM user WHERE username=?";
-        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
-        this.getPreparedStatement().setString(1, username);
+        PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
+        prst.setString(1, username);
+        ResultSet rslt = prst.executeQuery();
+        prst.clearBatch();
+        prst.close();
         
-        this.Read();
-        
-        if (this.getResult().next()) {
+        if (rslt.next()) {
             selectedUser = new User(
-                    this.getResult().getString("username"),
-                    this.getResult().getString("password"),
-                    this.getResult().getString("fullname"),
-                    this.getResult().getString("email"),
-                    this.getResult().getString("phoneNumber"),
-                    this.getResult().getTimestamp("birthdate").toLocalDateTime().toLocalDate()
+                    rslt.getString("username"),
+                    rslt.getString("password"),
+                    rslt.getString("fullname"),
+                    rslt.getString("email"),
+                    rslt.getString("phoneNumber"),
+                    rslt.getTimestamp("birthdate").toLocalDateTime().toLocalDate()
             );
         }
-
+        rslt.close();
         return selectedUser;
 
     }
 
-    public void Insert_User(User _user) throws Exception {
+    public int Insert_User(User _user) throws Exception {
         String SQLQuery = "INSERT INTO user ('username','password','fullname','phoneNumber',email','birthdate') VALUES(?,?,?,?,?)";
         this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
         this.getPreparedStatement().setString(1, _user.getUsername());
@@ -58,10 +58,10 @@ public class DAO_User extends DatabaseConnection {
         this.getPreparedStatement().setString(5, _user.getPhoneNumber());
         this.getPreparedStatement().setString(6, _user.getBirthdate().toString());
 
-        this.Create();
+        return this.Create();
     }
 
-    public void Update_User(User _user) throws Exception {
+    public int Update_User(User _user) throws Exception {
         String SQLQuery = "UPDATE FROM user SET password=?,fullname=?,email=?,,phoneNumber=?,birthdate=? WHERE username=?";
         this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
         this.getPreparedStatement().setString(1, _user.getPassword());
@@ -71,16 +71,16 @@ public class DAO_User extends DatabaseConnection {
         this.getPreparedStatement().setString(5, _user.getBirthdate().toString());
         this.getPreparedStatement().setString(6, _user.getUsername());
 
-        this.Update();
+        return this.Update();
     }
 
-    public void Delete_User(String username, String password) throws Exception {
+    public int Delete_User(String username, String password) throws Exception {
         String SQLQuery = "DELETE FROM user WHERE username=? AND password=?";
         this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
         this.getPreparedStatement().setString(1, username);
         this.getPreparedStatement().setString(2, password);
 
-        this.Delete();
+        return this.Delete();
     }
 
 }

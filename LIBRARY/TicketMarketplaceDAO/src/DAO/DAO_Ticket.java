@@ -25,28 +25,7 @@ public class DAO_Ticket extends DatabaseConnection {
     public Ticket Select_Ticket_By_Id(String id) throws Exception {
         Ticket selectedTicket = new Ticket();
 
-        String SQLQuery = """
-                          SELECT 
-                          ti.*,
-                          ec.`name` AS 'eventclass_name',
-                          ev.`name` AS 'event_name',
-                          pm.`name` AS 'paymentmethod_name'
-                          FROM 
-                          `tickets` AS ti
-                          INNER JOIN 
-                          `eventclasses` AS ec
-                          ON 
-                          ti.`eventClass_id` = ec.`id`
-                          INNER JOIN
-                          `events` AS ev
-                          ON
-                          ev.`id` = ec.`event_id`
-                          INNER JOIN
-                          `paymentmethods` AS pm
-                          ON
-                          ti.`paymentMethod_id` = pm.id
-                          WHERE 
-                          ti.`id` = ?;""";
+        String SQLQuery = "SELECT\n" + "ti.*,\n" + "ec.`name` AS 'eventclass_name',\n" + "ev.`name` AS 'event_name',\n" + "pm.`name` AS 'paymentmethod_name'\n" + "FROM\n" + "`tickets` AS ti\n" + "INNER JOIN\n" + "`eventclasses` AS ec\n" + "ON\n" + "ti.`eventClass_id` = ec.`id`\n" + "INNER JOIN\n" + "`events` AS ev\n" + "ON\n" + "ev.`id` = ec.`event_id`\n" + "INNER JOIN\n" + "`paymentmethods` AS pm\n" + "ON\n" + "ti.`paymentMethod_id` = pm.id\n" + "WHERE\n" + "ti.`id` = ?;";
         this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
         this.getPreparedStatement().setString(1, id);
 
@@ -73,28 +52,7 @@ public class DAO_Ticket extends DatabaseConnection {
     public Ticket Select_Ticket_By_User(String user) throws Exception {
         Ticket selectedTicket = new Ticket();
 
-        String SQLQuery = """
-                          SELECT 
-                          ti.*,
-                          ec.`name` AS 'eventclass_name',
-                          ev.`name` AS 'event_name',
-                          pm.`name` AS 'paymentmethod_name'
-                          FROM 
-                          `tickets` AS ti
-                          INNER JOIN 
-                          `eventclasses` AS ec
-                          ON 
-                          ti.`eventClass_id` = ec.`id`
-                          INNER JOIN
-                          `events` AS ev
-                          ON
-                          ev.`id` = ec.`event_id`
-                          INNER JOIN
-                          `paymentmethods` AS pm
-                          ON
-                          ti.`paymentMethod_id` = pm.id
-                          WHERE 
-                          ti.`user` = ?;""";
+        String SQLQuery = "SELECT\n" + "ti.*,\n" + "ec.`name` AS 'eventclass_name',\n" + "ev.`name` AS 'event_name',\n" + "pm.`name` AS 'paymentmethod_name'\n" + "FROM\n" + "`tickets` AS ti\n" + "INNER JOIN\n" + "`eventclasses` AS ec\n" + "ON\n" + "ti.`eventClass_id` = ec.`id`\n" + "INNER JOIN\n" + "`events` AS ev\n" + "ON\n" + "ev.`id` = ec.`event_id`\n" + "INNER JOIN\n" + "`paymentmethods` AS pm\n" + "ON\n" + "ti.`paymentMethod_id` = pm.id\n" + "WHERE\n" + "ti.`user` = ?;";
         this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
         this.getPreparedStatement().setString(1, user);
 

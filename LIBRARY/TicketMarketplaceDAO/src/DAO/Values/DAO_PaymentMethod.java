@@ -2,42 +2,38 @@ package DAO.Values;
 
 import DAO.Connection.DatabaseConnection;
 import Entities.Values.PaymentMethod;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
-
 /**
  *
  * @author joshu
  */
-public class DAO_PaymentMethod extends DatabaseConnection{
-    
-    public DAO_PaymentMethod() throws Exception
-    {
-        super();
-        System.out.println(("DAO_PaymentMethod IS CONNECTED"));
-    }
-    
-    public ArrayList<PaymentMethod> Select_PaymentMethods() throws Exception
-    {
+public class DAO_PaymentMethod {
+
+    public static ArrayList<PaymentMethod> Select_PaymentMethods() throws Exception {
         ArrayList<PaymentMethod> paymentMethods = new ArrayList<>();
+        PaymentMethod buffer;
 
         String SQLQuery = "SELECT* FROM paymentmethods";
-        
-        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
-        
-        PaymentMethod buffer;
-        while (this.getResult().next()) {
+
+        PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
+        ResultSet rslt = prst.executeQuery();
+        while (rslt.next()) {
             buffer = new PaymentMethod(
-                    this.getResult().getInt("id"),
-                    this.getResult().getString("name")
+                    rslt.getInt("id"),
+                    rslt.getString("name")
             );
             paymentMethods.add(buffer);
         }
+        prst.clearBatch();
+        prst.close();
+        rslt.close();
         return paymentMethods;
     }
 }

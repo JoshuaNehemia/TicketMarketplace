@@ -11,7 +11,6 @@ import Entities.Venue;
 import Entities.Account.Seller;
 import Entities.Format.Default;
 import Entities.Values.City;
-import java.sql.PreparedStatement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -29,32 +28,7 @@ public class DAO_Event extends DatabaseConnection {
     public ArrayList<Event> Select_Event_By_Seller(String seller_username) throws Exception {
         ArrayList<Event> events = new ArrayList<Event>();
 
-        String SQLQuery = """
-                          SELECT 
-                            eve.*,
-                            ven.`name` AS 'venue_name',
-                            cit.`name` AS 'city_name',
-                            ven.`address` AS 'venue_address',
-                            sel.`companyName` AS 'seller_companyName',
-                            sel.`email` AS 'seller_email',
-                            sel.`phoneNumber` AS 'seller_phoneNumber'
-                          FROM
-                            `events` AS eve
-                          INNER JOIN
-                            `venues` AS ven
-                          ON 
-                            eve.`venue_id` = ven.`id`
-                          INNER JOIN
-                            `sellers` AS sel
-                          ON 
-                            eve.`seller` = sel.`username`
-                          INNER JOIN
-                            `cities` AS cit
-                          ON 
-                            ven.`city_id` = cit.`id`
-                          WHERE
-                          sel.`seller_usename` = ?;
-                          """;
+        String SQLQuery = "SELECT\n" + "  eve.*,\n" + "  ven.`name` AS 'venue_name',\n" + "  cit.`name` AS 'city_name',\n" + "  ven.`address` AS 'venue_address',\n" + "  sel.`companyName` AS 'seller_companyName',\n" + "  sel.`email` AS 'seller_email',\n" + "  sel.`phoneNumber` AS 'seller_phoneNumber'\n" + "FROM\n" + "  `events` AS eve\n" + "INNER JOIN\n" + "  `venues` AS ven\n" + "ON\n" + "  eve.`venue_id` = ven.`id`\n" + "INNER JOIN\n" + "  `sellers` AS sel\n" + "ON\n" + "  eve.`seller` = sel.`username`\n" + "INNER JOIN\n" + "  `cities` AS cit\n" + "ON\n" + "  ven.`city_id` = cit.`id`\n" + "WHERE\n" + "sel.`seller_usename` = ?;\n";
         this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
         this.getPreparedStatement().setString(1, seller_username);
 
@@ -91,32 +65,7 @@ public class DAO_Event extends DatabaseConnection {
     public ArrayList<Event> Select_Event_By_Name(String name) throws Exception {
         ArrayList<Event> events = new ArrayList<Event>();
 
-        String SQLQuery = """
-                          SELECT 
-                            eve.*,
-                            ven.`name` AS 'venue_name',
-                            cit.`name` AS 'city_name',
-                            ven.`address` AS 'venue_address',
-                            sel.`companyName` AS 'seller_companyName',
-                            sel.`email` AS 'seller_email',
-                            sel.`phoneNumber` AS 'seller_phoneNumber'
-                          FROM
-                            `events` AS eve
-                          INNER JOIN
-                            `venues` AS ven
-                          ON 
-                            eve.`venue_id` = ven.`id`
-                          INNER JOIN
-                            `sellers` AS sel
-                          ON 
-                            eve.`seller` = sel.`username`
-                          INNER JOIN
-                            `cities` AS cit
-                          ON 
-                            ven.`city_id` = cit.`id`
-                          WHERE
-                          eve.`name` LIKE ?;
-                          """;
+        String SQLQuery = "SELECT\n" + "  eve.*,\n" + "  ven.`name` AS 'venue_name',\n" + "  cit.`name` AS 'city_name',\n" + "  ven.`address` AS 'venue_address',\n" + "  sel.`companyName` AS 'seller_companyName',\n" + "  sel.`email` AS 'seller_email',\n" + "  sel.`phoneNumber` AS 'seller_phoneNumber'\n" + "FROM\n" + "  `events` AS eve\n" + "INNER JOIN\n" + "  `venues` AS ven\n" + "ON\n" + "  eve.`venue_id` = ven.`id`\n" + "INNER JOIN\n" + "  `sellers` AS sel\n" + "ON\n" + "  eve.`seller` = sel.`username`\n" + "INNER JOIN\n" + "  `cities` AS cit\n" + "ON\n" + "  ven.`city_id` = cit.`id`\n" + "WHERE\n" + "eve.`name` LIKE ?;\n";
         this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
         this.getPreparedStatement().setString(1,"%"+ name + "%");
 
@@ -152,32 +101,7 @@ public class DAO_Event extends DatabaseConnection {
     public ArrayList<Event> Select_Event_By_CompanyName(String name) throws Exception {
         ArrayList<Event> events = new ArrayList<Event>();
 
-        String SQLQuery = """
-                          SELECT 
-                            eve.*,
-                            ven.`name` AS 'venue_name',
-                            cit.`name` AS 'city_name',
-                            ven.`address` AS 'venue_address',
-                            sel.`companyName` AS 'seller_companyName',
-                            sel.`email` AS 'seller_email',
-                            sel.`phoneNumber` AS 'seller_phoneNumber'
-                          FROM
-                            `events` AS eve
-                          INNER JOIN
-                            `venues` AS ven
-                          ON 
-                            eve.`venue_id` = ven.`id`
-                          INNER JOIN
-                            `sellers` AS sel
-                          ON 
-                            eve.`seller` = sel.`username`
-                          INNER JOIN
-                            `cities` AS cit
-                          ON 
-                            ven.`city_id` = cit.`id`
-                          WHERE
-                          sel.`companyName` LIKE ?;
-                          """;
+        String SQLQuery = "SELECT\n" + "  eve.*,\n" + "  ven.`name` AS 'venue_name',\n" + "  cit.`name` AS 'city_name',\n" + "  ven.`address` AS 'venue_address',\n" + "  sel.`companyName` AS 'seller_companyName',\n" + "  sel.`email` AS 'seller_email',\n" + "  sel.`phoneNumber` AS 'seller_phoneNumber'\n" + "FROM\n" + "  `events` AS eve\n" + "INNER JOIN\n" + "  `venues` AS ven\n" + "ON\n" + "  eve.`venue_id` = ven.`id`\n" + "INNER JOIN\n" + "  `sellers` AS sel\n" + "ON\n" + "  eve.`seller` = sel.`username`\n" + "INNER JOIN\n" + "  `cities` AS cit\n" + "ON\n" + "  ven.`city_id` = cit.`id`\n" + "WHERE\n" + "sel.`companyName` LIKE ?;\n";
         this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
         this.getPreparedStatement().setString(1,"%"+ name + "%");
 
