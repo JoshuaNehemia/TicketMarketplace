@@ -26,7 +26,7 @@ public class DAO_PaymentMethod extends DatabaseConnection{
     {
         ArrayList<PaymentMethod> paymentMethods = new ArrayList<>();
 
-        String SQLQuery = "SELECT* FROM cities";
+        String SQLQuery = "SELECT* FROM paymentmethods";
         
         this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
         
