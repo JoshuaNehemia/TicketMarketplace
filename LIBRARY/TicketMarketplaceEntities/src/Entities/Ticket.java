@@ -4,7 +4,7 @@ package Entities;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
+import Entities.Values.PaymentMethod;
 import java.time.LocalDateTime;
 
 /**
@@ -18,43 +18,39 @@ public class Ticket {
     private Event event;
     private String eventClass;
     private LocalDateTime piadTime;
-    private Double price;
     private String status; //ENUM('UNPAID','PAID','REQUEST REFUND','REFUNDED')
     private boolean isClaimed;
 
     //CONSTRUCTOR
-    public Ticket(String id, Event event, String eventClass, LocalDateTime paidDate, Double price, String status, boolean isClaimed) {
+    public Ticket(String id, Event event, String eventClass, PaymentMethod paymentMethod, LocalDateTime paidDate, String status, boolean isClaimed) {
         this.id = id;
         this.event = event;
         this.eventClass = eventClass;
+        this.paymentMethod = paymentMethod;
         this.piadTime = paidDate;
-        this.price = price;
         this.status = status;
         this.isClaimed = isClaimed;
     }
-    
-    public Ticket(Event event, String eventClass, Double price, String status, boolean isClaimed) {
+
+    public Ticket(Event event, String eventClass, PaymentMethod paymentMethod, String status, boolean isClaimed) {
         this.id = "";
         this.event = event;
         this.eventClass = eventClass;
+        this.paymentMethod = paymentMethod;
         this.piadTime = null;
-        this.price = price;
         this.status = status;
         this.isClaimed = isClaimed;
     }
-    
-    
-    
+
     public Ticket() {
         this.id = "";
         this.event = null;
         this.eventClass = null;
         this.piadTime = null;
-        this.price = 0.0;
         this.status = "";
         this.isClaimed = false;
     }
-    
+
     //GETTER AND SETTER
     public String getId() {
         return id;
@@ -80,20 +76,21 @@ public class Ticket {
         this.eventClass = eventClass;
     }
 
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+    private PaymentMethod paymentMethod;
+
     public LocalDateTime getPaidTime() {
         return piadTime;
     }
 
     public void setPaidTime(LocalDateTime paidTime) {
         this.piadTime = paidTime;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
     }
 
     public String getStatus() {
@@ -112,9 +109,8 @@ public class Ticket {
         this.isClaimed = isClaimed;
     }
 
-    
     //FUNCTION
-    public String CreateID(String username){
-        return ""+this.getEvent().getName()+"-"+this.getEventClass()+"-"+username+"-"+LocalDateTime.now().toString();
+    public String CreateID(String username) {
+        return "" + this.getEvent().getName() + "-" + this.getEventClass() + "-" + username + "-" + LocalDateTime.now().toString();
     }
 }

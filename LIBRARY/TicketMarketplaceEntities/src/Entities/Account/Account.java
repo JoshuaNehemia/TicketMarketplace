@@ -25,6 +25,7 @@ public class Account {
         this.setPassword(password);
         this.setFullName(fullname);
         this.setEmail(email);
+        this.setPhoneNumber(phoneNumber);
     }
     
     ////FOR DISPLAY
@@ -32,6 +33,7 @@ public class Account {
         this.setUsername(username);
         this.setFullName(fullname);
         this.setEmail(email);
+        this.setPhoneNumber(phoneNumber);
     }
     
     
@@ -50,7 +52,7 @@ public class Account {
     }
 
     public void setUsername(String username) throws Exception {
-        if(this.isText(username)){
+        if(!this.isText(username)){
             throw new Exception("Account's username can't be empty and contain illegal expressions");
         }
         else
@@ -64,7 +66,7 @@ public class Account {
     }
 
     public void setPassword(String password) throws Exception {
-        if(this.isText(password)){
+        if(!this.isPassword(password)){
             throw new Exception("Account's password can't be empty and contain illegal expressions");
         }
         else
@@ -78,7 +80,7 @@ public class Account {
     }
 
     public void setFullName(String fullname) throws Exception {
-        if(fullName.equals("") || fullName == null)
+        if(fullname.equals(""))
         {
             throw new Exception("Account's full name can't be empty.");
         }
@@ -121,6 +123,16 @@ public class Account {
         }
     }
     private boolean isText(String input) {
+        String TEXT_REGEX = "^[a-zA-Z0-9";
+        Pattern textPattern = Pattern.compile(TEXT_REGEX);
+        if (input == null || input.equals("")) {
+            return false;
+        } else {
+            return textPattern.matcher(input).matches();
+        }
+    }
+    
+    private boolean isPassword(String input){
         String TEXT_REGEX = "^[a-zA-Z0-9@$!%*?&]+$";
         Pattern textPattern = Pattern.compile(TEXT_REGEX);
         if (input == null || input.equals("")) {

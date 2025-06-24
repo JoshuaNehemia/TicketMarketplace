@@ -31,9 +31,8 @@ public class DAO_PaymentMethod {
             );
             paymentMethods.add(buffer);
         }
-        prst.clearBatch();
+       
         prst.close();
-        rslt.close();
         return paymentMethods;
     }
 }

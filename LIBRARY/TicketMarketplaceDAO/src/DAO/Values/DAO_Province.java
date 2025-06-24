@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class DAO_Province {
     
-    public ArrayList<Province> Select_Province() throws Exception {
+    public static ArrayList<Province> Select_Province() throws Exception {
         ArrayList<Province> provinces = new ArrayList<Province>();
 
         String SQLQuery = "SELECT* FROM provinces";

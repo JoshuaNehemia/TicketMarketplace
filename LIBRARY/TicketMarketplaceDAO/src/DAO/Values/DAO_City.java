@@ -16,15 +16,9 @@ import java.util.ArrayList;
  *
  * @author joshu
  */
-public class DAO_City extends DatabaseConnection{
+public class DAO_City {
     
-    public DAO_City() throws Exception
-    {
-        super();
-        System.out.println(("DAO_CITY IS CONNECTED"));
-    }
-    
-    public ArrayList<City> Select_City() throws Exception
+    public static ArrayList<City> Select_City() throws Exception
     {
         ArrayList<City> cities = new ArrayList<City>();
         City buffer;
@@ -41,9 +35,31 @@ public class DAO_City extends DatabaseConnection{
             );
             cities.add(buffer);
         }
-        prst.clearBatch();
+        
         prst.close();
-        rslt.close();
         return cities;
+    }
+    
+    public static City Select_City(String name) throws Exception
+    {
+        City buffer = new City(0,"");
+
+        String SQLQuery = "SELECT* FROM cities WHERE name LIKE ?;";
+        
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(1,"%" + name + "%");
+        
+        ResultSet rslt = prst.executeQuery();
+        
+        if (rslt.next()) {
+            buffer = new City(
+                    rslt.getInt("id"),
+                    rslt.getString("name")
+            );
+        }
+        
+        prst.close();
+       
+        return buffer;
     }
 }

@@ -5,6 +5,9 @@ import Entities.Event;
 import Entities.EventClass;
 import Entities.Format.Default;
 import Entities.Ticket;
+import Entities.Values.PaymentMethod;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDateTime;
 
 /*
@@ -15,65 +18,113 @@ import java.time.LocalDateTime;
  *
  * @author joshu
  */
-public class DAO_Ticket extends DatabaseConnection {
+public class DAO_Ticket {
 
-    public DAO_Ticket() throws Exception {
-        super();
-        System.out.println("DAO_TICKET IS CONNECTED ");
-    }
-
-    public Ticket Select_Ticket_By_Id(String id) throws Exception {
+    public static Ticket Select_Ticket_By_Id(String id) throws Exception {
         Ticket selectedTicket = new Ticket();
 
         String SQLQuery = "SELECT\n" + "ti.*,\n" + "ec.`name` AS 'eventclass_name',\n" + "ev.`name` AS 'event_name',\n" + "pm.`name` AS 'paymentmethod_name'\n" + "FROM\n" + "`tickets` AS ti\n" + "INNER JOIN\n" + "`eventclasses` AS ec\n" + "ON\n" + "ti.`eventClass_id` = ec.`id`\n" + "INNER JOIN\n" + "`events` AS ev\n" + "ON\n" + "ev.`id` = ec.`event_id`\n" + "INNER JOIN\n" + "`paymentmethods` AS pm\n" + "ON\n" + "ti.`paymentMethod_id` = pm.id\n" + "WHERE\n" + "ti.`id` = ?;";
-        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
-        this.getPreparedStatement().setString(1, id);
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(1, id);
 
-        this.Read();
+        ResultSet rslt = prst.executeQuery();
 
-        if (this.getResult().next()) {
+        if (rslt.next()) {
 
-            Event buff = new Event(this.getResult().getInt("event_id"), this.getResult().getString("event_name"));
-            buff.addEventClasses(new EventClass(this.getResult().getInt("eventclass_id"),this.getResult().getString("eventclass_name")));
+            Event buff = new Event(rslt.getInt("event_id"), rslt.getString("event_name"));
+            buff.addEventClasses(new EventClass(rslt.getInt("eventclass_id"), rslt.getString("eventclass_name")));
             selectedTicket = new Ticket(
-                    this.getResult().getString("id"),
+                    rslt.getString("id"),
                     buff,
-                    this.getResult().getString("eventclass_name"),
-                    LocalDateTime.parse(this.getResult().getString("paidTime"),Default.getDateTimeFormatter()),
-                    this.getResult().getDouble("price"),
-                    this.getResult().getString("status"),
-                    this.getResult().getBoolean("isClaimed")
+                    rslt.getString("eventclass_name"),
+                    new PaymentMethod(rslt.getInt("paymentmethod_id"),rslt.getString("paymentmethod_name")),
+                    LocalDateTime.parse(rslt.getString("paidTime"), Default.getDateTimeFormatter()),
+                    rslt.getString("status"),
+                    rslt.getBoolean("isClaimed")
             );
         }
 
+        prst.close();
+
         return selectedTicket;
     }
-    
-    public Ticket Select_Ticket_By_User(String user) throws Exception {
+
+    public static Ticket Select_Ticket_By_User(String user) throws Exception {
         Ticket selectedTicket = new Ticket();
 
         String SQLQuery = "SELECT\n" + "ti.*,\n" + "ec.`name` AS 'eventclass_name',\n" + "ev.`name` AS 'event_name',\n" + "pm.`name` AS 'paymentmethod_name'\n" + "FROM\n" + "`tickets` AS ti\n" + "INNER JOIN\n" + "`eventclasses` AS ec\n" + "ON\n" + "ti.`eventClass_id` = ec.`id`\n" + "INNER JOIN\n" + "`events` AS ev\n" + "ON\n" + "ev.`id` = ec.`event_id`\n" + "INNER JOIN\n" + "`paymentmethods` AS pm\n" + "ON\n" + "ti.`paymentMethod_id` = pm.id\n" + "WHERE\n" + "ti.`user` = ?;";
-        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
-        this.getPreparedStatement().setString(1, user);
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(1, user);
 
-        this.Read();
+        ResultSet rslt = prst.executeQuery();
 
-        if (this.getResult().next()) {
+        if (rslt.next()) {
 
-            Event buff = new Event(this.getResult().getInt("event_id"), this.getResult().getString("event_name"));
-            buff.addEventClasses(new EventClass(this.getResult().getInt("eventclass_id"),this.getResult().getString("eventclass_name")));
+            Event buff = new Event(rslt.getInt("event_id"), rslt.getString("event_name"));
+            buff.addEventClasses(new EventClass(rslt.getInt("eventclass_id"), rslt.getString("eventclass_name")));
             selectedTicket = new Ticket(
-                    this.getResult().getString("id"),
+                    rslt.getString("id"),
                     buff,
-                    this.getResult().getString("eventclass_name"),
-                    LocalDateTime.parse(this.getResult().getString("paidTime"),Default.getDateTimeFormatter()),
-                    this.getResult().getDouble("price"),
-                    this.getResult().getString("status"),
-                    this.getResult().getBoolean("isClaimed")
+                    rslt.getString("eventclass_name"),
+                    new PaymentMethod(rslt.getInt("paymentmethod_id"),rslt.getString("paymentmethod_name")),
+                    LocalDateTime.parse(rslt.getString("paidTime"), Default.getDateTimeFormatter()),
+                    rslt.getString("status"),
+                    rslt.getBoolean("isClaimed")
             );
         }
+
+        prst.close();
 
         return selectedTicket;
     }
 
+    public static int Insert_Ticket(Ticket ticket, String buyer_username,int eventclass_id) throws Exception{
+        String SQLQuery = "INSERT INTO `ticketmarketplace`.`tickets` (`id`, `user`, `eventClass_id`, `paymentMethod_id`, `paymentStatus`, `isClaimed`) VALUES (?, ?, ?, ?, ?, ?);";
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(1, ticket.getId());
+        prst.setString(2, buyer_username);
+        prst.setString(3, String.valueOf(eventclass_id));
+        prst.setString(4, String.valueOf(ticket.getPaymentMethod().getId()));
+        prst.setString(5, "UNPAID");
+        prst.setString(6, String.valueOf(0));
+
+        int num = prst.executeUpdate();
+        prst.close();
+
+        return num;
+    }
+    
+    public static int Update_Ticket_Status(String ticket_id,String status) throws Exception {
+        String SQLQuery = "UPDATE `ticketmarketplace`.`tickets` SET `status` = ? WHERE id = ?;";
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(1, ticket_id);
+        prst.setString(2, status);
+        
+
+        int num = prst.executeUpdate();
+        prst.close();
+
+        return num;
+    }
+    public static int Update_Ticket_Paid(String ticket_id, LocalDateTime paidDate) throws Exception {
+        String SQLQuery = "UPDATE `ticketmarketplace`.`tickets` SET `paidDate` = ?, `status` = 'PAID' WHERE `id`= ?;";
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(1, paidDate.toString());
+        prst.setString(2, ticket_id);
+        int num = prst.executeUpdate();
+        prst.close();
+
+        return num;
+    }
+    
+    
+    public static int Update_Ticket_isClaimed(String ticket_id) throws Exception {
+        String SQLQuery = "UPDATE `ticketmarketplace`.`tickets` SET `isClaimed` = 1 WHERE `id`= ?;";
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(1, ticket_id);
+        int num = prst.executeUpdate();
+        prst.close();
+
+        return num;
+    }
 }

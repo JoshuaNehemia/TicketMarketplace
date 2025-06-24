@@ -2,6 +2,8 @@ package DAO;
 
 import DAO.Connection.DatabaseConnection;
 import Entities.Account.Seller;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 
 /*
@@ -12,31 +14,25 @@ import Entities.Account.Seller;
  *
  * @author joshu
  */
-public class DAO_Seller extends DatabaseConnection {
+public class DAO_Seller {
 
-    //Database
-    public DAO_Seller() throws Exception {
-        super();
-        System.out.println("DAO_SELLER IS CONNECTED");
-    }
-
-    public Seller Select_Seller(String username) throws Exception {
+    public static Seller Select_Seller(String username) throws Exception {
         Seller selectedSeller = new Seller();
 
-        String SQLQuery = "SELECT * FROM seller WHERE username=?";
-        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
-        this.getPreparedStatement().setString(1, username);
+        String SQLQuery = "SELECT * FROM sellers WHERE username=?";
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(1, username);
 
-        this.Read();
+        ResultSet rslt = prst.executeQuery();
 
-        if (this.getResult().next()) {
+        if (rslt.next()) {
             selectedSeller = new Seller(
-                    this.getResult().getString("username"),
-                    this.getResult().getString("password"),
-                    this.getResult().getString("companyName"),
-                    this.getResult().getString("email"),
-                    this.getResult().getString("phoneNumber"),
-                    this.getResult().getString("companyAddress")
+                    rslt.getString("username"),
+                    rslt.getString("password"),
+                    rslt.getString("companyName"),
+                    rslt.getString("email"),
+                    rslt.getString("phoneNumber"),
+                    rslt.getString("companyAddress")
             );
         }
 
@@ -44,39 +40,51 @@ public class DAO_Seller extends DatabaseConnection {
 
     }
 
-    public int Insert_Seller(Seller _user) throws Exception {
-        String SQLQuery = "INSERT INTO seller ('username','password','email','companyName','companyAddress','phoneNumber') VALUES(?,?,?,?,?)";
-        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
-        this.getPreparedStatement().setString(1, _user.getUsername());
-        this.getPreparedStatement().setString(2, _user.getPassword());
-        this.getPreparedStatement().setString(3, _user.getEmail());
-        this.getPreparedStatement().setString(4, _user.getCompanyName());
-        this.getPreparedStatement().setString(5, _user.getCompanyAddress());
-        this.getPreparedStatement().setString(6, _user.getPhoneNumber());
+    public static int Insert_Seller(Seller _user) throws Exception {
+        String SQLQuery = "INSERT INTO sellers ('username','password','email','companyName','companyAddress','phoneNumber') VALUES(?,?,?,?,?)";
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(1, _user.getUsername());
+        prst.setString(2, _user.getPassword());
+        prst.setString(3, _user.getEmail());
+        prst.setString(4, _user.getCompanyName());
+        prst.setString(5, _user.getCompanyAddress());
+        prst.setString(6, _user.getPhoneNumber());
 
-        return this.Create();
+        int num = prst.executeUpdate();
+        prst.clearBatch();
+        prst.close();
+
+        return num;
     }
 
-    public int Update_Seller(Seller _user) throws Exception {
-        String SQLQuery = "UPDATE FROM seller SET password=?,email=?,companyName=?,companyAddress=?,phoneNumber=? WHERE username=? ";
-        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
-        this.getPreparedStatement().setString(1, _user.getPassword());
-        this.getPreparedStatement().setString(2, _user.getEmail());
-        this.getPreparedStatement().setString(3, _user.getCompanyName());
-        this.getPreparedStatement().setString(4, _user.getCompanyAddress());
-        this.getPreparedStatement().setString(5, _user.getPhoneNumber());
-        this.getPreparedStatement().setString(6, _user.getUsername());
+    public static int Update_Seller(Seller _user) throws Exception {
+        String SQLQuery = "UPDATE FROM sellers SET password=?,email=?,companyName=?,companyAddress=?,phoneNumber=? WHERE username=? ";
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(6, _user.getUsername());
+        prst.setString(1, _user.getPassword());
+        prst.setString(2, _user.getEmail());
+        prst.setString(3, _user.getCompanyName());
+        prst.setString(4, _user.getCompanyAddress());
+        prst.setString(5, _user.getPhoneNumber());
 
-        return this.Update();
+        int num = prst.executeUpdate();
+        prst.clearBatch();
+        prst.close();
+
+        return num;
     }
 
     public int Delete_Seller(String username, String password) throws Exception {
-        String SQLQuery = "DELETE FROM seller WHERE username=? and password=?";
-        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
-        this.getPreparedStatement().setString(1, username);
-        this.getPreparedStatement().setString(2, password);
+        String SQLQuery = "DELETE FROM sellers WHERE username=? and password=?";        
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(1, username);
+        prst.setString(2, password);
 
-        return this.Delete();
+        int num = prst.executeUpdate();
+        prst.clearBatch();
+        prst.close();
+
+        return num;
     }
 
 }

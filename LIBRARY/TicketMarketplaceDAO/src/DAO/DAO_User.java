@@ -23,16 +23,15 @@ public class DAO_User extends DatabaseConnection {
     }
 
     //FUNCTION
-    public User Select_User(String username) throws Exception {
+    public static User Select_User(String username) throws Exception {
         User selectedUser = new User();
 
-        String SQLQuery = "SELECT * FROM user WHERE username=?";
+        String SQLQuery = "SELECT * FROM users WHERE username=?";
         PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
         prst.setString(1, username);
+
         ResultSet rslt = prst.executeQuery();
-        prst.clearBatch();
-        prst.close();
-        
+
         if (rslt.next()) {
             selectedUser = new User(
                     rslt.getString("username"),
@@ -43,44 +42,59 @@ public class DAO_User extends DatabaseConnection {
                     rslt.getTimestamp("birthdate").toLocalDateTime().toLocalDate()
             );
         }
-        rslt.close();
+
+        prst.close();
+
         return selectedUser;
 
     }
 
-    public int Insert_User(User _user) throws Exception {
-        String SQLQuery = "INSERT INTO user ('username','password','fullname','phoneNumber',email','birthdate') VALUES(?,?,?,?,?)";
-        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
-        this.getPreparedStatement().setString(1, _user.getUsername());
-        this.getPreparedStatement().setString(2, _user.getPassword());
-        this.getPreparedStatement().setString(3, _user.getFullName());
-        this.getPreparedStatement().setString(4, _user.getEmail());
-        this.getPreparedStatement().setString(5, _user.getPhoneNumber());
-        this.getPreparedStatement().setString(6, _user.getBirthdate().toString());
+    public static int Insert_User(User _user) throws Exception {
+        String SQLQuery = "INSERT INTO users ('username','password','fullname','phoneNumber',email','birthdate') VALUES(?,?,?,?,?)";
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(1, _user.getUsername());
+        prst.setString(2, _user.getPassword());
+        prst.setString(3, _user.getFullName());
+        prst.setString(4, _user.getEmail());
+        prst.setString(5, _user.getPhoneNumber());
+        prst.setString(6, _user.getBirthdate().toString());
 
-        return this.Create();
+        int num = prst.executeUpdate();
+
+        prst.clearBatch();
+        prst.close();
+
+        return num;
     }
 
-    public int Update_User(User _user) throws Exception {
-        String SQLQuery = "UPDATE FROM user SET password=?,fullname=?,email=?,,phoneNumber=?,birthdate=? WHERE username=?";
-        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
-        this.getPreparedStatement().setString(1, _user.getPassword());
-        this.getPreparedStatement().setString(2, _user.getFullName());
-        this.getPreparedStatement().setString(3, _user.getEmail());
-        this.getPreparedStatement().setString(4, _user.getPhoneNumber());
-        this.getPreparedStatement().setString(5, _user.getBirthdate().toString());
-        this.getPreparedStatement().setString(6, _user.getUsername());
+    public static int Update_User(User _user) throws Exception {
+        String SQLQuery = "UPDATE FROM users SET password=?,fullname=?,email=?,,phoneNumber=?,birthdate=? WHERE username=?";
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(6, _user.getUsername());
+        prst.setString(1, _user.getPassword());
+        prst.setString(2, _user.getFullName());
+        prst.setString(3, _user.getEmail());
+        prst.setString(4, _user.getPhoneNumber());
+        prst.setString(5, _user.getBirthdate().toString());
 
-        return this.Update();
+        int num = prst.executeUpdate();
+        prst.clearBatch();
+        prst.close();
+
+        return num;
     }
 
-    public int Delete_User(String username, String password) throws Exception {
-        String SQLQuery = "DELETE FROM user WHERE username=? AND password=?";
-        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
-        this.getPreparedStatement().setString(1, username);
-        this.getPreparedStatement().setString(2, password);
+    public static int Delete_User(String username, String password) throws Exception {
+        String SQLQuery = "DELETE FROM users WHERE username=? AND password=?";
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(1, username);
+        prst.setString(2, password);
 
-        return this.Delete();
+        int num = prst.executeUpdate();
+        prst.clearBatch();
+        prst.close();
+
+        return num;
     }
 
 }

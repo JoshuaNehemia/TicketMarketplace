@@ -6,6 +6,7 @@ package tester;
 
 import DAO.Connection.DatabaseConnection;
 import DAO.*;
+import Entities.Account.Seller;
 import Entities.Account.User;
 
 /**
@@ -20,14 +21,20 @@ public class Tester {
     public static void main(String[] args) {
         // TODO code application logic here
         try {
-            DatabaseConnection db = new DatabaseConnection();
-            User us = ((DAO_User)db).Select_User("jypent");
-            System.out.println("Username: " + us.getUsername());
+            Tester.testuserdb();
         }
         catch(Exception ex){
             System.out.println("ERROR: "+ex);
         }
-
+        
     }
+    
+    
+        public static void testuserdb()throws Exception{
+            
+            DatabaseConnection db = new DatabaseConnection();
+            User us = DAO_User.Select_User("user123");
+            System.out.println("Username: " + us.getUsername());
+        }
 
 }

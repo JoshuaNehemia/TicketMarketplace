@@ -2,6 +2,8 @@ package DAO;
 
 import DAO.Connection.DatabaseConnection;
 import Entities.EventClass;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 /*
@@ -12,106 +14,153 @@ import java.util.ArrayList;
  *
  * @author joshu
  */
-public class DAO_EventClass extends DatabaseConnection {
+public class DAO_EventClass {
 
-    public DAO_EventClass() throws Exception {
-        super();
-        System.out.println("DAO_EVENT_CLASS IS CONNECTED");
-    }
-
-    public ArrayList<EventClass> Select_EventClass_By_Event_Id(int event_id) throws Exception {
+    public static ArrayList<EventClass> Select_EventClass_By_Event_Id(int event_id) throws Exception {
         ArrayList<EventClass> events = new ArrayList<>();
 
         String SQLQuery = "SELECT * FROM `eventclassess` WHERE `event_id` = ?;";
-        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
-        this.getPreparedStatement().setString(1, String.valueOf(event_id));
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(1, String.valueOf(event_id));
 
-        this.Read();
+        ResultSet rslt = prst.executeQuery();
 
         EventClass buffer;
-        while (this.getResult().next()) {
+        while (rslt.next()) {
             buffer = new EventClass(
-                    this.getResult().getInt("id"),
-                    this.getResult().getString("name"),
-                    this.getResult().getDouble("price"),
-                    this.getResult().getString("description"),
-                    this.getResult().getInt("stock"),
-                    this.getResult().getInt("availableStock")
+                    rslt.getInt("id"),
+                    rslt.getString("name"),
+                    rslt.getDouble("price"),
+                    rslt.getString("description"),
+                    rslt.getInt("stock"),
+                    rslt.getInt("availableStock")
             );
 
             events.add(buffer);
         }
 
+        prst.close();
+
         return events;
     }
 
-        public EventClass Select_EventClass_By_Id(int id) throws Exception {
+    public static EventClass Select_EventClass_By_Id(int id) throws Exception {
         ArrayList<EventClass> events = new ArrayList<>();
 
         String SQLQuery = "SELECT * FROM `eventclassess` WHERE `id` = ?;";
-        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
-        this.getPreparedStatement().setString(1, String.valueOf(id));
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(1, String.valueOf(id));
 
-        this.Read();
+        ResultSet rslt = prst.executeQuery();
 
         EventClass buffer = new EventClass();
-        if (this.getResult().next()) {
+        if (rslt.next()) {
             buffer = new EventClass(
-                    this.getResult().getInt("id"),
-                    this.getResult().getString("name"),
-                    this.getResult().getDouble("price"),
-                    this.getResult().getString("description"),
-                    this.getResult().getInt("stock"),
-                    this.getResult().getInt("availableStock")
+                    rslt.getInt("id"),
+                    rslt.getString("name"),
+                    rslt.getDouble("price"),
+                    rslt.getString("description"),
+                    rslt.getInt("stock"),
+                    rslt.getInt("availableStock")
             );
         }
 
+        prst.close();
+
         return buffer;
     }
-    
-    public void Insert_EventClass(int event_id, EventClass _ec) throws Exception {
+
+    public static int Select_EventClass_Stock(int id) throws Exception {
+        ArrayList<EventClass> events = new ArrayList<>();
+
+        String SQLQuery = "SELECT stockAvailable FROM `eventclassess` WHERE `id` = ?;";
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(1, String.valueOf(id));
+
+        ResultSet rslt = prst.executeQuery();
+
+        int stock = 0;
+        if (rslt.next()) {
+            stock = rslt.getInt("stockAvailable");
+        }
+
+        prst.close();
+
+        return stock;
+    }
+
+    public static int Insert_EventClass(int event_id, EventClass _ec) throws Exception {
         String SQLQuery = "INSERT INTO `ticketmarketplace`.`eventClasses` (`event_id`, `name`, `price`, `description`, `stock`, `availableStock`) VALUES(?,?,?,?,?,?);";
-        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
 
-        this.getPreparedStatement().setString(1, String.valueOf(event_id));
-        this.getPreparedStatement().setString(2, _ec.getName());
-        this.getPreparedStatement().setDouble(3, _ec.getPrice());
-        this.getPreparedStatement().setString(4, _ec.getDescription());
-        this.getPreparedStatement().setString(5, String.valueOf(_ec.getStock()));
-        this.getPreparedStatement().setString(6, String.valueOf(_ec.getAvailableStock()));
+        prst.setString(1, String.valueOf(event_id));
+        prst.setString(2, _ec.getName());
+        prst.setDouble(3, _ec.getPrice());
+        prst.setString(4, _ec.getDescription());
+        prst.setString(5, String.valueOf(_ec.getStock()));
+        prst.setString(6, String.valueOf(_ec.getAvailableStock()));
 
-        this.Create();
+        int num = prst.executeUpdate();
+        prst.clearBatch();
+        prst.close();
+
+        return num;
     }
 
-    public void Update_EventClass(EventClass _ec) throws Exception {
+    public static int Update_EventClass(EventClass _ec) throws Exception {
         String SQLQuery = "UPDATE `ticketmarketplace`.`eventClasses` SET `name`=?, `price`=?, `description`=?, `stock`=?, `availableStock`=? WHERE `id`=?;";
-        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
 
-        this.getPreparedStatement().setString(1, _ec.getName());
-        this.getPreparedStatement().setDouble(2, _ec.getPrice());
-        this.getPreparedStatement().setString(3, _ec.getDescription());
-        this.getPreparedStatement().setString(4, String.valueOf(_ec.getStock()));
-        this.getPreparedStatement().setString(5, String.valueOf(_ec.getAvailableStock()));
-        this.getPreparedStatement().setString(6, String.valueOf(_ec.getId()));
+        prst.setString(1, _ec.getName());
+        prst.setDouble(2, _ec.getPrice());
+        prst.setString(3, _ec.getDescription());
+        prst.setString(4, String.valueOf(_ec.getStock()));
+        prst.setString(5, String.valueOf(_ec.getAvailableStock()));
+        prst.setString(6, String.valueOf(_ec.getId()));
 
-        this.Create();
-    }
-    
-    public void Update_EventClass_Stock(int id) throws Exception
-    {   
-        String SQLQuery = "UPDATE `ticketmarketplace`.`eventClasses` SET `availableStock` = `availableStock` - 1 WHERE `id`=?;";
-        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        int num = prst.executeUpdate();
+        prst.clearBatch();
+        prst.close();
 
-        this.getPreparedStatement().setString(1, String.valueOf(id));
-
-        this.Create();
+        return num;
     }
 
-    public void Delete_Event_Class(int eventClassId) throws Exception {
+    public static int Update_EventClass_Stock(int id) throws Exception {
+        String SQLQuery = "UPDATE `ticketmarketplace`.`eventClasses` SET `availableStock` = `availableStock` - 1 WHERE `id`=? AND `availableStock` > 0;";
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+
+        prst.setString(1, String.valueOf(id));
+
+        int num = prst.executeUpdate();
+        prst.clearBatch();
+        prst.close();
+
+        return num;
+    }
+
+    public static int Update_EventClass_Stock_Add(int id, int amount) throws Exception {
+        String SQLQuery = "UPDATE `ticketmarketplace`.`eventClasses` SET `availableStock` = `availableStock` + ? WHERE `id`=? AND `availableStock` > 0;";
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+
+        prst.setString(1, String.valueOf(amount));
+        prst.setString(2, String.valueOf(id));
+
+        int num = prst.executeUpdate();
+        prst.clearBatch();
+        prst.close();
+
+        return num;
+    }
+
+    public static int Delete_Event_Class(int eventClassId) throws Exception {
         String SQLQuery = "DELETE FROM event_classes WHERE id = ?;";
-        this.setPreparedStatement(DatabaseConnection.getConnection().prepareStatement(SQLQuery));
-        this.getPreparedStatement().setString(1,String.valueOf(eventClassId));
-        
-        this.Delete();
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(1, String.valueOf(eventClassId));
+
+        int num = prst.executeUpdate();
+        prst.clearBatch();
+        prst.close();
+
+        return num;
     }
 }
