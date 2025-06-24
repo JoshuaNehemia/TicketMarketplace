@@ -35,13 +35,13 @@ public class FormListOfTicketSellerCadangan extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         page = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
+        btnNext = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtDeskripsiTicket = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -55,7 +55,7 @@ public class FormListOfTicketSellerCadangan extends javax.swing.JFrame {
         priceCategory3 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jButton7 = new javax.swing.JButton();
+        btnPrev = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuHome = new javax.swing.JMenu();
         menuPublishTicket = new javax.swing.JMenu();
@@ -99,8 +99,8 @@ public class FormListOfTicketSellerCadangan extends javax.swing.JFrame {
         page.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         page.setText("2");
 
-        jButton6.setText("Next");
-        jButton6.setPreferredSize(new java.awt.Dimension(70, 35));
+        btnNext.setText("Next");
+        btnNext.setPreferredSize(new java.awt.Dimension(70, 35));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/poster event.png"))); // NOI18N
 
@@ -113,9 +113,9 @@ public class FormListOfTicketSellerCadangan extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel6.setText("Description");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtDeskripsiTicket.setColumns(20);
+        txtDeskripsiTicket.setRows(5);
+        jScrollPane1.setViewportView(txtDeskripsiTicket);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel7.setText("Event start at :");
@@ -147,8 +147,8 @@ public class FormListOfTicketSellerCadangan extends javax.swing.JFrame {
 
         jLabel17.setText("Jmlh");
 
-        jButton7.setText("Prev");
-        jButton7.setPreferredSize(new java.awt.Dimension(70, 35));
+        btnPrev.setText("Prev");
+        btnPrev.setPreferredSize(new java.awt.Dimension(70, 35));
 
         jMenuBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -198,11 +198,11 @@ public class FormListOfTicketSellerCadangan extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel11))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(page)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(11, 11, 11)))
                                 .addGap(29, 29, 29)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,8 +274,8 @@ public class FormListOfTicketSellerCadangan extends javax.swing.JFrame {
                         .addGap(18, 26, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(page)
-                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addComponent(btnNext, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addGap(10, 10, 10))))
         );
 
@@ -329,8 +329,8 @@ public class FormListOfTicketSellerCadangan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
+    private javax.swing.JButton btnNext;
+    private javax.swing.JButton btnPrev;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -352,7 +352,6 @@ public class FormListOfTicketSellerCadangan extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JMenu menuHome;
     private javax.swing.JMenu menuProfile;
     private javax.swing.JMenu menuPublishTicket;
@@ -360,5 +359,6 @@ public class FormListOfTicketSellerCadangan extends javax.swing.JFrame {
     private javax.swing.JLabel priceCategory1;
     private javax.swing.JLabel priceCategory2;
     private javax.swing.JLabel priceCategory3;
+    private javax.swing.JTextArea txtDeskripsiTicket;
     // End of variables declaration//GEN-END:variables
 }

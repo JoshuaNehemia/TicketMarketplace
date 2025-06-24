@@ -34,12 +34,11 @@
                       <Component id="jLabel2" min="-2" pref="487" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="115" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="btnOkeWaitingKonfirmasi" min="-2" pref="91" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="57" pref="569" max="32767" attributes="0"/>
-              <Component id="btnAccept" min="-2" pref="91" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -51,7 +50,7 @@
               <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
               <Component id="jLabel2" min="-2" pref="97" max="-2" attributes="0"/>
               <EmptySpace pref="83" max="32767" attributes="0"/>
-              <Component id="btnAccept" min="-2" pref="39" max="-2" attributes="0"/>
+              <Component id="btnOkeWaitingKonfirmasi" min="-2" pref="39" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -71,7 +70,7 @@
         <Property name="text" type="java.lang.String" value="\ud83c\udf9f&#xfe0f; Kamu telah melakukan pembelian, tapi admin belum mengonfirmasi" containsInvalidXMLChars="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btnAccept">
+    <Component class="javax.swing.JButton" name="btnOkeWaitingKonfirmasi">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="33" green="ff" red="33" type="rgb"/>

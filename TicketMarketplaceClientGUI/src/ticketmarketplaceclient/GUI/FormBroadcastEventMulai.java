@@ -28,7 +28,7 @@ public class FormBroadcastEventMulai extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        btnAccept = new javax.swing.JButton();
+        btnOkayEventReminder = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -38,12 +38,11 @@ public class FormBroadcastEventMulai extends javax.swing.JFrame {
 
         jLabel2.setText("Pastikan kamu sudah siap untuk menghadiri Teater Musikal Nusantara besok pukul 19.00 WIB. ");
 
-        btnAccept.setBackground(new java.awt.Color(51, 255, 51));
-        btnAccept.setForeground(new java.awt.Color(0, 0, 0));
-        btnAccept.setText("OKAY");
-        btnAccept.addActionListener(new java.awt.event.ActionListener() {
+        btnOkayEventReminder.setBackground(new java.awt.Color(51, 255, 51));
+        btnOkayEventReminder.setText("OKAY");
+        btnOkayEventReminder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAcceptActionPerformed(evt);
+                btnOkayEventReminderActionPerformed(evt);
             }
         });
 
@@ -61,7 +60,7 @@ public class FormBroadcastEventMulai extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(296, 296, 296))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnAccept, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnOkayEventReminder, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(60, 60, 60))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -82,16 +81,16 @@ public class FormBroadcastEventMulai extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
-                .addComponent(btnAccept, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnOkayEventReminder, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(84, 84, 84))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptActionPerformed
+    private void btnOkayEventReminderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkayEventReminderActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAcceptActionPerformed
+    }//GEN-LAST:event_btnOkayEventReminderActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,7 +191,7 @@ public class FormBroadcastEventMulai extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAccept;
+    private javax.swing.JButton btnOkayEventReminder;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

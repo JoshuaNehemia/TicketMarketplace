@@ -23,7 +23,7 @@ public class FormUserTicket extends javax.swing.JFrame {
         parentForm=pparentForm;
         parentForm.service.repo.ListTicket.clear();
         parentForm.service.SelectTicket(parentForm.service.getCurrentUser().getUsername());
-        jTextArea1.setText("");
+        txtListTicketDibeli.setText("");
         System.out.println("SHOWING TICKET");
         if (parentForm.service.repo.ListTicket != null && !parentForm.service.repo.ListTicket.isEmpty()) {
          StringBuilder sb = new StringBuilder();
@@ -42,7 +42,7 @@ public class FormUserTicket extends javax.swing.JFrame {
             sb.append(ticketData).append("\n");
         }
         
-        jTextArea1.setText(sb.toString());
+        txtListTicketDibeli.setText(sb.toString());
         }
     }
 
@@ -56,14 +56,14 @@ public class FormUserTicket extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtListTicketDibeli = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtListTicketDibeli.setColumns(20);
+        txtListTicketDibeli.setRows(5);
+        jScrollPane1.setViewportView(txtListTicketDibeli);
 
         jLabel1.setText("Tiket dibeli");
 
@@ -129,6 +129,6 @@ public class FormUserTicket extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea txtListTicketDibeli;
     // End of variables declaration//GEN-END:variables
 }

@@ -34,13 +34,12 @@ public class FormLogin extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextFieldLoginEmail = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        txtUsername = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JTextField();
+        btnLogin = new javax.swing.JButton();
+        btnRegister = new javax.swing.JLabel();
         buttonSeller = new javax.swing.JRadioButton();
-        buttonSeller1 = new javax.swing.JRadioButton();
+        btnLoginSeller = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,33 +47,31 @@ public class FormLogin extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("LOGIN");
 
-        jTextFieldLoginEmail.setText("Email/Username");
+        txtUsername.setText("Email/Username");
 
-        jTextField2.setText("Password");
+        txtPassword.setText("Password");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setText("LOG IN");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnLogin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnLogin.setText("LOG IN");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnLoginActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Lupa Password");
-
-        jLabel3.setText("Register");
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnRegister.setText("Register");
+        btnRegister.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel3MouseClicked(evt);
+                btnRegisterMouseClicked(evt);
             }
         });
 
         buttonSeller.setText("Seller");
 
-        buttonSeller1.setText("Login sebagai seller");
-        buttonSeller1.addActionListener(new java.awt.event.ActionListener() {
+        btnLoginSeller.setText("Login sebagai seller");
+        btnLoginSeller.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonSeller1ActionPerformed(evt);
+                btnLoginSellerActionPerformed(evt);
             }
         });
 
@@ -92,13 +89,12 @@ public class FormLogin extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(151, 151, 151)
-                                .addComponent(jLabel3))
+                                .addComponent(btnRegister))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextField2)
-                                .addComponent(jTextFieldLoginEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel2)
-                            .addComponent(buttonSeller1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtPassword)
+                                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnLoginSeller, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(180, 180, 180))))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -112,17 +108,15 @@ public class FormLogin extends javax.swing.JFrame {
                 .addGap(69, 69, 69)
                 .addComponent(jLabel1)
                 .addGap(27, 27, 27)
-                .addComponent(jTextFieldLoginEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
+                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(btnRegister)
                 .addGap(18, 18, 18)
-                .addComponent(buttonSeller1)
+                .addComponent(btnLoginSeller)
                 .addContainerGap(39, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -138,13 +132,13 @@ public class FormLogin extends javax.swing.JFrame {
         System.out.println("Registrasi berhasil di FormRegister");
     }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
 
         try {
             if(!isSeller){
-            String usernameOrEmail = jTextFieldLoginEmail.getText();
+            String usernameOrEmail = txtUsername.getText();
 
-            String password = jTextField2.getText();
+            String password = txtPassword.getText();
 
             boolean res = service.UserLogIn(usernameOrEmail, password);
             if (res) {
@@ -160,9 +154,9 @@ public class FormLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Wrong username or password", "Attention!", JOptionPane.ERROR_MESSAGE);
             }
             }else{
-                String usernameOrEmail = jTextFieldLoginEmail.getText();
+                String usernameOrEmail = txtUsername.getText();
 
-                String password = jTextField2.getText();
+                String password = txtPassword.getText();
 
                 boolean res = service.SellerLogIn(usernameOrEmail, password);
                 if (res) {
@@ -182,19 +176,19 @@ public class FormLogin extends javax.swing.JFrame {
         catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error : " + ex.getMessage(), "Warning!", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+    private void btnRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegisterMouseClicked
         FormUserRegister regisForm = new FormUserRegister(this);
         regisForm.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jLabel3MouseClicked
+    }//GEN-LAST:event_btnRegisterMouseClicked
 
-    private void buttonSeller1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSeller1ActionPerformed
+    private void btnLoginSellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginSellerActionPerformed
         // TODO add your handling code here:
         isSeller=!isSeller;
         System.out.println(isSeller);
-    }//GEN-LAST:event_buttonSeller1ActionPerformed
+    }//GEN-LAST:event_btnLoginSellerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -233,13 +227,12 @@ public class FormLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLogin;
+    private javax.swing.JRadioButton btnLoginSeller;
+    private javax.swing.JLabel btnRegister;
     private javax.swing.JRadioButton buttonSeller;
-    private javax.swing.JRadioButton buttonSeller1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextFieldLoginEmail;
+    private javax.swing.JTextField txtPassword;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }
