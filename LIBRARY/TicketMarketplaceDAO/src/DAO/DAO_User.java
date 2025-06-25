@@ -7,8 +7,10 @@ package DAO;
  */
 import DAO.Connection.DatabaseConnection;
 import Entities.Account.User;
+import Entities.Format.Default;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 
 /**
  *
@@ -39,7 +41,7 @@ public class DAO_User extends DatabaseConnection {
                     rslt.getString("fullname"),
                     rslt.getString("email"),
                     rslt.getString("phoneNumber"),
-                    rslt.getTimestamp("birthdate").toLocalDateTime().toLocalDate()
+                    LocalDate.parse(rslt.getString("birthdate"),Default.getDateFormatter())
             );
         }
 

@@ -20,3 +20,5 @@ ON
 ti.`paymentMethod_id` = pm.id
 WHERE 
 ti.`user` = "";
+
+SELECT * FROM tickets;

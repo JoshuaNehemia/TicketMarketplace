@@ -25,7 +25,7 @@ import javax.jws.WebParam;
  *
  * @author joshu
  */
-@WebService(serviceName = "TicketMarketplaceWebService")
+@WebService(serviceName = "TMWebService")
 public class TMWebService {
 
     //FIELDS
@@ -33,7 +33,7 @@ public class TMWebService {
     DatabaseConnection conn;
 
     @WebMethod(operationName = "ConnectionTest")
-    public String ConnectionTest() throws Exception {
+    public String ConnectionTest() {
         return "CONNECTION SUCCESFULL!";
     }
 
@@ -67,10 +67,10 @@ public class TMWebService {
     //USER (BUYER)
     @WebMethod(operationName = "UserLogIn")
     public User UserLogIn(@WebParam(name = "username") String username, @WebParam(name = "password") String password) {
-        User buff = new User();
+     
         try {
             this.ConnectToDatabase();
-            buff = DAO_User.Select_User(username);
+            User buff = DAO_User.Select_User(username);
             if (buff.getPassword().equals(password)) {
                 return buff;
             } else {
@@ -78,7 +78,7 @@ public class TMWebService {
             }
         } catch (Exception ex) {
             System.out.println("ERROR IN WEBSERVICE: " + ex);
-            return buff;
+            return new User();
         }
     }
 
@@ -355,8 +355,8 @@ public class TMWebService {
         }
         return num;
     }
-    
-    @WebMethod(operationName = "CancelTicketOrder")
+
+    @WebMethod(operationName = "ApproveRefundTicket")
     public int ApproveRefundTicket(@WebParam(name = "ticket") Ticket ticket) {
         int num = 0;
         try {
@@ -368,19 +368,17 @@ public class TMWebService {
         }
         return num;
     }
-    
-    
-    
+
     @WebMethod(operationName = "ClaimTicket")
     public int ClaimTicket(@WebParam(name = "ticket") Ticket ticket) {
         int num = 0;
         try {
             this.ConnectToDatabase();
-            if(!ticket.getStatus().equals("PAID")){
-                return -1; 
+            if (!ticket.getStatus().equals("PAID")) {
+                return -1;
             }
-            if(ticket.isIsClaimed()){
-                return -2; 
+            if (ticket.isIsClaimed()) {
+                return -2;
             }
             num = DAO_Ticket.Update_Ticket_isClaimed(ticket.getId());
         } catch (Exception ex) {

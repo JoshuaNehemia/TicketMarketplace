@@ -123,7 +123,7 @@ public class Account {
         }
     }
     private boolean isText(String input) {
-        String TEXT_REGEX = "^[a-zA-Z0-9";
+        String TEXT_REGEX = "^[a-zA-Z0-9]+$";
         Pattern textPattern = Pattern.compile(TEXT_REGEX);
         if (input == null || input.equals("")) {
             return false;
