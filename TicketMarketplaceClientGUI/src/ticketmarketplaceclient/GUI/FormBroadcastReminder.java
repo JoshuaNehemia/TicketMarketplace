@@ -28,7 +28,7 @@ public class FormBroadcastReminder extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        btnAccept = new javax.swing.JButton();
+        btnOkeMenungguKonfirmasi = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -39,12 +39,11 @@ public class FormBroadcastReminder extends javax.swing.JFrame {
 
         jLabel2.setText("Jangan lewatkan kesempatan untuk menghadiri acara seru ini.  ");
 
-        btnAccept.setBackground(new java.awt.Color(51, 255, 51));
-        btnAccept.setForeground(new java.awt.Color(0, 0, 0));
-        btnAccept.setText("OKAY");
-        btnAccept.addActionListener(new java.awt.event.ActionListener() {
+        btnOkeMenungguKonfirmasi.setBackground(new java.awt.Color(51, 255, 51));
+        btnOkeMenungguKonfirmasi.setText("OKAY");
+        btnOkeMenungguKonfirmasi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAcceptActionPerformed(evt);
+                btnOkeMenungguKonfirmasiActionPerformed(evt);
             }
         });
 
@@ -68,7 +67,7 @@ public class FormBroadcastReminder extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnAccept, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnOkeMenungguKonfirmasi, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(60, 60, 60))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -87,16 +86,16 @@ public class FormBroadcastReminder extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
-                .addComponent(btnAccept, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnOkeMenungguKonfirmasi, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(84, 84, 84))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptActionPerformed
+    private void btnOkeMenungguKonfirmasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkeMenungguKonfirmasiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAcceptActionPerformed
+    }//GEN-LAST:event_btnOkeMenungguKonfirmasiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,7 +148,7 @@ public class FormBroadcastReminder extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAccept;
+    private javax.swing.JButton btnOkeMenungguKonfirmasi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -96,12 +96,12 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnTerdekat = new javax.swing.JButton();
+        btnTerbaru = new javax.swing.JButton();
+        btnHargaTerendah = new javax.swing.JButton();
+        btnHargaTertinggi = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbKategori = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         PanelDetailTicket1 = new javax.swing.JPanel();
@@ -109,7 +109,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton7 = new javax.swing.JButton();
+        btnDetailsTicket1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         PanelDetailTicket2 = new javax.swing.JPanel();
@@ -117,7 +117,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jButton8 = new javax.swing.JButton();
+        btnDetailsTicket2 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         PanelDetailTicket3 = new javax.swing.JPanel();
@@ -125,14 +125,14 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jButton9 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btnDetailsTicket3 = new javax.swing.JButton();
+        btnPrev = new javax.swing.JButton();
+        btnNext = new javax.swing.JButton();
         jLabel21 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        jButton10 = new javax.swing.JButton();
+        btnTiketDibeli = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuHome = new javax.swing.JMenu();
         menuInventory = new javax.swing.JMenu();
@@ -143,20 +143,20 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
 
         jLabel7.setText("Urutkan :");
 
-        jButton1.setText("Terdekat");
+        btnTerdekat.setText("Terdekat");
 
-        jButton2.setText("Terbaru");
+        btnTerbaru.setText("Terbaru");
 
-        jButton3.setText("Harga Terendah");
+        btnHargaTerendah.setText("Harga Terendah");
 
-        jButton4.setText("Harga Tertinggi");
+        btnHargaTertinggi.setText("Harga Tertinggi");
 
         jLabel8.setText("Kategori");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Konser", "Olahraga", "Pameran", "Komedi", "Seminar" }));
-        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+        cbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Konser", "Olahraga", "Pameran", "Komedi", "Seminar" }));
+        cbKategori.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBox1ItemStateChanged(evt);
+                cbKategoriItemStateChanged(evt);
             }
         });
 
@@ -198,13 +198,13 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(51, 153, 0));
         jLabel5.setText("Tersedia sekarang");
 
-        jButton7.setBackground(new java.awt.Color(153, 102, 255));
-        jButton7.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Details");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        btnDetailsTicket1.setBackground(new java.awt.Color(153, 102, 255));
+        btnDetailsTicket1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        btnDetailsTicket1.setForeground(new java.awt.Color(255, 255, 255));
+        btnDetailsTicket1.setText("Details");
+        btnDetailsTicket1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                btnDetailsTicket1ActionPerformed(evt);
             }
         });
 
@@ -218,7 +218,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                     .addGroup(PanelDetailTicket1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton7))
+                        .addComponent(btnDetailsTicket1))
                     .addGroup(PanelDetailTicket1Layout.createSequentialGroup()
                         .addGroup(PanelDetailTicket1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -232,7 +232,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
             .addGroup(PanelDetailTicket1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PanelDetailTicket1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton7)
+                    .addComponent(btnDetailsTicket1)
                     .addGroup(PanelDetailTicket1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -283,13 +283,13 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         jLabel14.setForeground(new java.awt.Color(51, 153, 0));
         jLabel14.setText("Tersedia sekarang");
 
-        jButton8.setBackground(new java.awt.Color(153, 102, 255));
-        jButton8.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("Details");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        btnDetailsTicket2.setBackground(new java.awt.Color(153, 102, 255));
+        btnDetailsTicket2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        btnDetailsTicket2.setForeground(new java.awt.Color(255, 255, 255));
+        btnDetailsTicket2.setText("Details");
+        btnDetailsTicket2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                btnDetailsTicket2ActionPerformed(evt);
             }
         });
 
@@ -303,7 +303,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                     .addGroup(PanelDetailTicket2Layout.createSequentialGroup()
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton8))
+                        .addComponent(btnDetailsTicket2))
                     .addGroup(PanelDetailTicket2Layout.createSequentialGroup()
                         .addGroup(PanelDetailTicket2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
@@ -318,7 +318,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(PanelDetailTicket2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(PanelDetailTicket2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton8)
+                        .addComponent(btnDetailsTicket2)
                         .addComponent(jLabel14))
                     .addGroup(PanelDetailTicket2Layout.createSequentialGroup()
                         .addComponent(jLabel10)
@@ -368,13 +368,13 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         jLabel20.setForeground(new java.awt.Color(51, 153, 0));
         jLabel20.setText("Tersedia sekarang");
 
-        jButton9.setBackground(new java.awt.Color(153, 102, 255));
-        jButton9.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setText("Details");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        btnDetailsTicket3.setBackground(new java.awt.Color(153, 102, 255));
+        btnDetailsTicket3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        btnDetailsTicket3.setForeground(new java.awt.Color(255, 255, 255));
+        btnDetailsTicket3.setText("Details");
+        btnDetailsTicket3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                btnDetailsTicket3ActionPerformed(evt);
             }
         });
 
@@ -388,7 +388,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                     .addGroup(PanelDetailTicket3Layout.createSequentialGroup()
                         .addComponent(jLabel20)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton9))
+                        .addComponent(btnDetailsTicket3))
                     .addGroup(PanelDetailTicket3Layout.createSequentialGroup()
                         .addGroup(PanelDetailTicket3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel16)
@@ -403,7 +403,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(PanelDetailTicket3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(PanelDetailTicket3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton9)
+                        .addComponent(btnDetailsTicket3)
                         .addComponent(jLabel20))
                     .addGroup(PanelDetailTicket3Layout.createSequentialGroup()
                         .addComponent(jLabel16)
@@ -415,19 +415,19 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        jButton5.setText("Prev");
-        jButton5.setPreferredSize(new java.awt.Dimension(70, 35));
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnPrev.setText("Prev");
+        btnPrev.setPreferredSize(new java.awt.Dimension(70, 35));
+        btnPrev.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnPrevActionPerformed(evt);
             }
         });
 
-        jButton6.setText("Next");
-        jButton6.setPreferredSize(new java.awt.Dimension(70, 35));
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnNext.setText("Next");
+        btnNext.setPreferredSize(new java.awt.Dimension(70, 35));
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnNextActionPerformed(evt);
             }
         });
 
@@ -464,10 +464,10 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jButton10.setText("Tiket dibeli");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        btnTiketDibeli.setText("Tiket dibeli");
+        btnTiketDibeli.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                btnTiketDibeliActionPerformed(evt);
             }
         });
 
@@ -507,17 +507,17 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)
+                        .addComponent(btnTerdekat)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
+                        .addComponent(btnTerbaru)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)
+                        .addComponent(btnHargaTerendah)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4)
+                        .addComponent(btnHargaTertinggi)
                         .addGap(62, 62, 62)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -525,15 +525,15 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(19, 19, 19)
-                                .addComponent(jButton10)))
+                                .addComponent(btnTiketDibeli)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(37, 37, 37)
                                 .addComponent(jLabel21)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(PanelDetailTicket2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -550,11 +550,11 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTerdekat)
+                    .addComponent(btnTerbaru)
+                    .addComponent(btnHargaTerendah)
+                    .addComponent(btnHargaTertinggi)
+                    .addComponent(cbKategori, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -574,27 +574,27 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnNext, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel21)
-                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnPrev, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(14, 14, 14))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton10)
+                        .addComponent(btnTiketDibeli)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+    private void cbKategoriItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbKategoriItemStateChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ItemStateChanged
+    }//GEN-LAST:event_cbKategoriItemStateChanged
 
     private void menuProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuProfileActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_menuProfileActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void btnDetailsTicket1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailsTicket1ActionPerformed
         // TODO add your handling code here:
         
         Event selected = service.repo.ListEvent.get(showIndexFrom);
@@ -602,15 +602,15 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         login.setVisible(true);
 
         this.setVisible(false);
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_btnDetailsTicket1ActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+    private void btnTiketDibeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTiketDibeliActionPerformed
         // TODO add your handling code here:
         FormUserTicket form = new FormUserTicket(this);
         form.setVisible(true);
         
         this.setVisible(false);
-    }//GEN-LAST:event_jButton10ActionPerformed
+    }//GEN-LAST:event_btnTiketDibeliActionPerformed
 
     private void menuProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuProfileMouseClicked
         // TODO add your handling code here:
@@ -619,7 +619,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_menuProfileMouseClicked
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
         int currentValue = Integer.parseInt(jLabel21.getText());
         jLabel21.setText(String.valueOf(currentValue + 1));
         
@@ -629,9 +629,9 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         loadEvents(showIndexFrom);
 
         refreshTicketsUI();
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_btnNextActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
         int currentValue = Integer.parseInt(jLabel21.getText());
         if(currentValue==1) return;
         jLabel21.setText(String.valueOf(currentValue - 1));
@@ -642,23 +642,23 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         loadEvents(showIndexFrom);
 
         refreshTicketsUI();
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btnPrevActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void btnDetailsTicket2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailsTicket2ActionPerformed
         Event selected = service.repo.ListEvent.get(showIndexFrom+1);
         FormUserTicketDetail login = new FormUserTicketDetail(this, selected);
         login.setVisible(true);
 
         this.setVisible(false);
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_btnDetailsTicket2ActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+    private void btnDetailsTicket3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailsTicket3ActionPerformed
         Event selected = service.repo.ListEvent.get(showIndexFrom+2);
         FormUserTicketDetail login = new FormUserTicketDetail(this, selected);
         login.setVisible(true);
 
         this.setVisible(false);
-    }//GEN-LAST:event_jButton9ActionPerformed
+    }//GEN-LAST:event_btnDetailsTicket3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -700,17 +700,17 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
     private javax.swing.JPanel PanelDetailTicket1;
     private javax.swing.JPanel PanelDetailTicket2;
     private javax.swing.JPanel PanelDetailTicket3;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnDetailsTicket1;
+    private javax.swing.JButton btnDetailsTicket2;
+    private javax.swing.JButton btnDetailsTicket3;
+    private javax.swing.JButton btnHargaTerendah;
+    private javax.swing.JButton btnHargaTertinggi;
+    private javax.swing.JButton btnNext;
+    private javax.swing.JButton btnPrev;
+    private javax.swing.JButton btnTerbaru;
+    private javax.swing.JButton btnTerdekat;
+    private javax.swing.JButton btnTiketDibeli;
+    private javax.swing.JComboBox<String> cbKategori;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -29,7 +29,7 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
         jLabel1.setText(selected.getName());
        for (Event_class ec :selected.getEventClasses()) {
             String eventClassName = ec.getName();
-            jComboBox1.addItem(eventClassName);
+            cbClassType.addItem(eventClassName);
         }
        priceCategory1.setText(String.valueOf(selected.getEventClasses().get(0).getPrice()));
        if (selected.getEventClasses().size() > 1 && selected.getEventClasses().get(1) != null) {
@@ -45,8 +45,8 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
        //kalau udah ada endDateTime
        //LocalDate date =selected.getStartDateTime(); 
        //String end = date.format(formatter);
-       jLabel9.setText(start);
-       jLabel11.setText(start);
+       lblDateEventStart.setText(start);
+       lblDateEventEnd.setText(start);
        jLabel6.setText("Rp. " +selected.getEventClasses().get(0).getPrice());
     }
     
@@ -67,8 +67,8 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         lblTicketAmmounLeft3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        lblDateEventEnd = new javax.swing.JLabel();
+        lblDateEventStart = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -77,7 +77,7 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnCheckout = new javax.swing.JButton();
         lblCategoryName = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
@@ -94,7 +94,7 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
         panelLogoStock = new javax.swing.JPanel();
         labelStock = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbClassType = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         priceCategory3 = new javax.swing.JLabel();
@@ -113,11 +113,11 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
 
         lblTicketAmmounLeft3.setText("Jumlah");
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel11.setText("dd/mm/Yy, HH:MM");
+        lblDateEventEnd.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblDateEventEnd.setText("dd/mm/Yy, HH:MM");
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel9.setText("dd/mm/Yy, HH:MM");
+        lblDateEventStart.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblDateEventStart.setText("dd/mm/Yy, HH:MM");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel10.setText("Event end at  :");
@@ -135,11 +135,11 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lblDateEventEnd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9)))
+                        .addComponent(lblDateEventStart)))
                 .addContainerGap(233, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -147,11 +147,11 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
+                    .addComponent(lblDateEventStart)
                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
+                    .addComponent(lblDateEventEnd)
                     .addComponent(jLabel10))
                 .addContainerGap(10, Short.MAX_VALUE))
         );
@@ -201,14 +201,14 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel17.setText("Event Category :");
 
-        jButton2.setBackground(new java.awt.Color(153, 102, 255));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("CHECKOUT");
-        jButton2.setOpaque(true);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCheckout.setBackground(new java.awt.Color(153, 102, 255));
+        btnCheckout.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnCheckout.setForeground(new java.awt.Color(255, 255, 255));
+        btnCheckout.setText("CHECKOUT");
+        btnCheckout.setOpaque(true);
+        btnCheckout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnCheckoutActionPerformed(evt);
             }
         });
 
@@ -249,7 +249,7 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel7)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,14 +282,14 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
         jLabel3.setText("venue");
         jLabel3.setOpaque(true);
 
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        cbClassType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                cbClassTypeActionPerformed(evt);
             }
         });
-        jComboBox1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        cbClassType.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jComboBox1PropertyChange(evt);
+                cbClassTypePropertyChange(evt);
             }
         });
 
@@ -347,7 +347,7 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCheckout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -355,7 +355,7 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(cbClassType, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -383,7 +383,8 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel15)
-                                    .addComponent(priceCategory3)))
+                                    .addComponent(priceCategory3)
+                                    .addComponent(lblTicketAmmounLeft3)))
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -412,21 +413,20 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel16)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(lblTicketAmmounLeft1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGap(12, 12, 12)
                                         .addComponent(lblTicketAmmounLeft2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(lblTicketAmmounLeft3))
+                                        .addGap(22, 22, 22))
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(cbClassType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnCheckout, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(19, 19, 19))))))
         );
 
@@ -451,28 +451,28 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnCheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckoutActionPerformed
         // TODO add your handling code here:
-        int selectedEventClass =jComboBox1.getSelectedIndex();
+        int selectedEventClass =cbClassType.getSelectedIndex();
         FormUserCheckout checkout = new FormUserCheckout(this, selected, selectedEventClass);
         checkout.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnCheckoutActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        int selectedIndex = jComboBox1.getSelectedIndex();
+    private void cbClassTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbClassTypeActionPerformed
+        int selectedIndex = cbClassType.getSelectedIndex();
         double selectedPrice = selected.getEventClasses().get(selectedIndex).getPrice();
         jLabel6.setText("IDR " + selectedPrice);
        
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_cbClassTypeActionPerformed
 
     private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel6MousePressed
 
-    private void jComboBox1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jComboBox1PropertyChange
+    private void cbClassTypePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cbClassTypePropertyChange
       
-    }//GEN-LAST:event_jComboBox1PropertyChange
+    }//GEN-LAST:event_cbClassTypePropertyChange
 
     
     /**
@@ -542,11 +542,10 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnCheckout;
+    private javax.swing.JComboBox<String> cbClassType;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -561,7 +560,6 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -573,6 +571,8 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel labelStock;
     private javax.swing.JLabel lblCategoryName;
+    private javax.swing.JLabel lblDateEventEnd;
+    private javax.swing.JLabel lblDateEventStart;
     private javax.swing.JLabel lblSellerUsername;
     private javax.swing.JLabel lblTicketAmmounLeft1;
     private javax.swing.JLabel lblTicketAmmounLeft2;
