@@ -23,9 +23,9 @@ public class FormUserProfile extends javax.swing.JFrame {
         initComponents();
         
         this.parentForm = parentForm;
-        this.txtNama.setText(parentForm.service.getCurrentUser().getFullname());
-        this.txtUsername.setText(parentForm.service.getCurrentUser().getUsername());
-        this.txtEmail.setText(parentForm.service.getCurrentUser().getEmail());
+//        this.txtNama.setText(parentForm.service.getCurrentUser().getFullname());
+//        this.txtUsername.setText(parentForm.service.getCurrentUser().getUsername());
+//        this.txtEmail.setText(parentForm.service.getCurrentUser().getEmail());
     }
 
     private FormUserProfile() {

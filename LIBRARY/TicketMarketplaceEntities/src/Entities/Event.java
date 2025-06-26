@@ -19,14 +19,14 @@ public class Event {
     private int id;
     private String name;
     private String description;
-    private LocalDateTime startTime;
+    private String startTime;
     private Venue venue;
     private Seller seller;
     private ArrayList<EventClass> eventClasses;
 
     //CONSTRUCTOR
     //This constructor likely no use
-    public Event(int id, String name, String description, LocalDateTime startDateTime, Venue venue, Seller seller, ArrayList<EventClass> eventClasses) {
+    public Event(int id, String name, String description, String startDateTime, Venue venue, Seller seller, ArrayList<EventClass> eventClasses) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -36,7 +36,7 @@ public class Event {
         this.eventClasses = eventClasses;
     }
 
-    public Event(String name, String description, LocalDateTime startDateTime, Venue venue, Seller seller) {
+    public Event(String name, String description, String startDateTime, Venue venue, Seller seller) {
         this.id = 0;
         this.name = name;
         this.description = description;
@@ -46,7 +46,7 @@ public class Event {
         this.eventClasses = new ArrayList<>();
     }
 
-    public Event(int id, String name, String description, LocalDateTime startDateTime, Venue venue, Seller seller) throws Exception{
+    public Event(int id, String name, String description, String startDateTime, Venue venue, Seller seller) throws Exception{
         this.id = id;
         this.name = name;
         this.description = description;
@@ -103,11 +103,11 @@ public class Event {
         this.description = description;
     }
 
-    public LocalDateTime getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startDateTime) {
+    public void setStartTime(String startDateTime) {
         this.startTime = startDateTime;
     }
 
@@ -149,7 +149,7 @@ public class Event {
         data.add(String.valueOf(this.getId()));
         data.add(this.getName());
         data.add(this.getDescription());
-        data.add(this.getStartTime().format(df));
+        data.add(this.getStartTime());
         data.add(this.getVenue().getName());
         data.add(this.getSeller().getUsername());
         data.add(String.valueOf(this.getEventClasses().size())); //Size of event class

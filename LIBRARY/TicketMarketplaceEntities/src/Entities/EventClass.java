@@ -122,9 +122,14 @@ public class EventClass {
         return data;
     }
     
-    @Override 
-    public String toString()
-    {
-        return this.getName() + "\nStock: " + this.getStock() + "\nDescription:" + this.getDescription() +"\nStocks: " +this.getStock()+"\nAvailable Stocks: " + this.getAvailableStock();
-    }
+//    @Override 
+//    public String toString()
+//    {
+//        return this.getName() + "\nStock: " + this.getStock() + "\nDescription:" + this.getDescription() +"\nStocks: " +this.getStock()+"\nAvailable Stocks: " + this.getAvailableStock();
+//    }
+    
+    @Override
+public String toString() {
+    return this.name; 
+}
 }

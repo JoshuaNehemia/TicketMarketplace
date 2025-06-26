@@ -4,11 +4,13 @@
  */
 package FormUI;
 
-import TicketMarketplaceEntities.Event;
-import TicketMarketplaceEntities.Event_class;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import tmwebservice.Event;
+import tmwebservice.EventClass;
+import tmwebservice.User;
 
 /**
  *
@@ -20,17 +22,18 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
      * Creates new form FormTicketDetail
      */
     FormListOfTicket1 parentForm;
-    Event selected;
-    public FormUserTicketDetail(FormListOfTicket1 pparentForm, Event pselected) {
+    Event eventSelected;
+    User currentUser;
+    public FormUserTicketDetail(FormListOfTicket1 parentForm,Event selected, User currentUser) {
         initComponents();
-        parentForm=pparentForm;
-        selected=pselected;
-        
+        eventSelected=selected;
+    currentUser=currentUser;
         jLabel1.setText(selected.getName());
-       for (Event_class ec :selected.getEventClasses()) {
-            String eventClassName = ec.getName();
-            cbClassType.addItem(eventClassName);
+        cbClassType.removeAllItems(); // clear dulu kalau perlu
+        for (EventClass ec : selected.getEventClasses()) {
+            cbClassType.addItem(ec.getName());  
         }
+
        priceCategory1.setText(String.valueOf(selected.getEventClasses().get(0).getPrice()));
        if (selected.getEventClasses().size() > 1 && selected.getEventClasses().get(1) != null) {
             priceCategory2.setText(String.valueOf(selected.getEventClasses().get(1).getPrice()));
@@ -39,15 +42,13 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
        lblTicketAmmounLeft1.setText("Jumlah : " + selected.getEventClasses().get(0).getStock());
        lblSellerUsername.setText(selected.getSeller().getCompanyName());
        
-       LocalDate date =selected.getStartDateTime();
-       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("id", "ID"));
-       String start = date.format(formatter);
+       String dateStart =selected.getStartTime();
+       lblDateEventStart.setText(dateStart);
        //kalau udah ada endDateTime
        //LocalDate date =selected.getStartDateTime(); 
        //String end = date.format(formatter);
-       lblDateEventStart.setText(start);
-       lblDateEventEnd.setText(start);
-       jLabel6.setText("Rp. " +selected.getEventClasses().get(0).getPrice());
+//       lblDateEventEnd.setText(start);
+       jLabel6.setText("Rp. " +String.valueOf(selected.getEventClasses().get(0).getPrice()));
     }
     
 
@@ -162,8 +163,6 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Kopi Jawa");
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo.png"))); // NOI18N
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -249,7 +248,7 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel7)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -453,17 +452,18 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
 
     private void btnCheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckoutActionPerformed
         // TODO add your handling code here:
-        int selectedEventClass =cbClassType.getSelectedIndex();
-        FormUserCheckout checkout = new FormUserCheckout(this, selected, selectedEventClass);
+        int selectedIndex = cbClassType.getSelectedIndex();
+        EventClass selectedEventClass = eventSelected.getEventClasses().get(selectedIndex);
+        System.out.println(selectedIndex);
+        FormUserCheckout checkout = new FormUserCheckout(eventSelected, selectedEventClass, currentUser);
         checkout.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnCheckoutActionPerformed
 
     private void cbClassTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbClassTypeActionPerformed
         int selectedIndex = cbClassType.getSelectedIndex();
-        double selectedPrice = selected.getEventClasses().get(selectedIndex).getPrice();
+        String selectedPrice = String.valueOf(eventSelected.getEventClasses().get(selectedIndex).getPrice());
         jLabel6.setText("IDR " + selectedPrice);
-       
     }//GEN-LAST:event_cbClassTypeActionPerformed
 
     private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed

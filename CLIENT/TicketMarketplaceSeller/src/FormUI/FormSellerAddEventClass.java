@@ -4,7 +4,10 @@
  */
 package FormUI;
 
-import TicketMarketplaceEntities.Event_class;
+//import TicketMarketplaceEntities.Event_class;
+
+import tmwebservice.EventClass;
+
 /**
  *
  * @author Evan
@@ -12,7 +15,7 @@ import TicketMarketplaceEntities.Event_class;
 public class FormSellerAddEventClass extends javax.swing.JFrame {
     
     FormSellerCreateEvent parent;
-    Event_class baru = new Event_class();
+//    Event_class baru = new Event_class();
     /**
      * Creates new form FormPublishTicket2
      */
@@ -136,9 +139,14 @@ public class FormSellerAddEventClass extends javax.swing.JFrame {
         int numRows = Integer.parseInt(txtRows.getText());
         int numColumns = Integer.parseInt(txtColumns.getText());
         Double price = Double.parseDouble(txtPrice.getText());
-        baru = new Event_class(parent.GetEventClassId(),name,price,"no desc",numRows,numColumns);
-        System.out.println(baru.GetEventClassData());
-        parent.AddEventClass(baru);
+        EventClass baru = new EventClass();
+        baru.setAvailableStock(numRows*numColumns);
+        baru.setDescription("no desc");
+        baru.setName(name);
+        baru.setPrice(price);
+        baru.setStock(numRows*numColumns);
+        parent.listEventClass.add(baru);
+        parent.EventClassAdded();
         this.dispose();
     }//GEN-LAST:event_btnAddEventClassDetailsActionPerformed
 

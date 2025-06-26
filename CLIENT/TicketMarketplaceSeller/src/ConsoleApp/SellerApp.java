@@ -1,20 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package ConsoleApp;
 
-/**
- *
- * @author joshu
- */
+import FormUI.FormLogin;
+import FormUI.FormSellerRegister;
+
 public class SellerApp {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+        // Jalankan form di Event Dispatch Thread (best practice)
+        java.awt.EventQueue.invokeLater(() -> {
+            new FormLogin().setVisible(true);
+        });
     }
-    
 }

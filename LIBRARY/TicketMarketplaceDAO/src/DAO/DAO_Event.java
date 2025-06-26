@@ -6,26 +6,74 @@ package DAO;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 import DAO.Connection.DatabaseConnection;
+import static DAO.DAO_EventClass.Select_EventClass_By_Event_Id;
 import Entities.Event;
 import Entities.Venue;
 import Entities.Account.Seller;
+import Entities.EventClass;
 import Entities.Format.Default;
 import Entities.Values.City;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author joshu
  */
 public class DAO_Event {
+    
+            public static List<Event> Select_All_Events() throws Exception {
+         ArrayList<Event> events = new ArrayList<>();
+
+         String SQLQuery = "SELECT e.*, s.username AS seller_username, s.companyName " +
+                           "FROM events e " +
+                           "INNER JOIN sellers s ON e.seller = s.username";
+
+         PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
+         ResultSet rslt = prst.executeQuery();
+
+         while (rslt.next()) {
+             Event e = new Event();
+             e.setId(rslt.getInt("id"));
+             e.setName(rslt.getString("name"));
+             e.setStartTime(rslt.getString("startDateTime"));
+
+             Venue v = new Venue();
+             v.setId(rslt.getInt("venue_id"));
+             e.setVenue(v);
+
+             Seller s = new Seller();
+             s.setUsername(rslt.getString("seller_username"));
+             s.setCompanyName(rslt.getString("companyName"));
+             e.setSeller(s);
+
+             e.setDescription(rslt.getString("description"));
+
+             // Ambil event class untuk event ini
+             ArrayList<EventClass> classes = Select_EventClass_By_Event_Id(e.getId());
+             e.setEventClasses(classes);
+
+             events.add(e);
+         }
+         System.out.println("Total events retrieved: " + events.size());
+
+
+         prst.close();
+         return events;
+     }
+
+
+
 
     public static ArrayList<Event> Select_Event_By_Seller(String seller_username) throws Exception {
         ArrayList<Event> events = new ArrayList<Event>();
         Event buffer;
-
+        
         String SQLQuery = "SELECT\n" + "  eve.*,\n" + "  ven.`name` AS 'venue_name',\n" + "  cit.`name` AS 'city_name',\n" + "  ven.`address` AS 'venue_address',\n" + "  sel.`companyName` AS 'seller_companyName',\n" + "  sel.`email` AS 'seller_email',\n" + "  sel.`phoneNumber` AS 'seller_phoneNumber'\n" + "FROM\n" + "  `events` AS eve\n" + "INNER JOIN\n" + "  `venues` AS ven\n" + "ON\n" + "  eve.`venue_id` = ven.`id`\n" + "INNER JOIN\n" + "  `sellers` AS sel\n" + "ON\n" + "  eve.`seller` = sel.`username`\n" + "INNER JOIN\n" + "  `cities` AS cit\n" + "ON\n" + "  ven.`city_id` = cit.`id`\n" + "WHERE\n" + "sel.`seller_usename` = ?;\n";
         PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
         prst.setString(1, seller_username);
@@ -37,7 +85,7 @@ public class DAO_Event {
                     rslt.getInt("id"),
                     rslt.getString("name"),
                     rslt.getString("description"),
-                    LocalDateTime.parse(rslt.getString("startTime"), (Default.getDateTimeFormatter())),
+                    rslt.getString("startDateTime"),
                     new Venue(
                             rslt.getInt("id"),
                             rslt.getString("venue_name"),
@@ -74,7 +122,7 @@ public class DAO_Event {
                     rslt.getInt("id"),
                     rslt.getString("name"),
                     rslt.getString("description"),
-                    LocalDateTime.parse(rslt.getString("startTime"), (Default.getDateTimeFormatter())),
+                    rslt.getString("startDateTime"),
                     new Venue(
                             rslt.getInt("id"),
                             rslt.getString("venue_name"),
@@ -114,7 +162,7 @@ public class DAO_Event {
                     rslt.getInt("id"),
                     rslt.getString("name"),
                     rslt.getString("description"),
-                    LocalDateTime.parse(rslt.getString("startTime"), (Default.getDateTimeFormatter())),
+                    rslt.getString("startDateTime"),
                     new Venue(
                             rslt.getInt("id"),
                             rslt.getString("venue_name"),
@@ -153,7 +201,7 @@ public class DAO_Event {
                     rslt.getInt("id"),
                     rslt.getString("name"),
                     rslt.getString("description"),
-                    LocalDateTime.parse(rslt.getString("startTime"), (Default.getDateTimeFormatter())),
+                    rslt.getString("startDateTime"),
                     new Venue(
                             rslt.getInt("id"),
                             rslt.getString("venue_name"),
@@ -181,20 +229,32 @@ public class DAO_Event {
     }
 
     public static int Insert_Event(Event _event) throws Exception {
-        String SQLQuery = "INSERT INTO Events (name, description, startDateTime, venue_id, seller_id) VALUES (?, ?, ?, ?, ?);";
-        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
-        prst.setString(1, _event.getName());
-        prst.setString(2, _event.getDescription());
-        prst.setString(3, _event.getStartTime().toString());
-        prst.setString(4, String.valueOf(_event.getVenue().getId()));
-        prst.setString(5, String.valueOf(_event.getSeller().getUsername()));
+    String SQLQuery = "INSERT INTO Events (name, description, startDateTime, venue_id, seller) VALUES (?, ?, ?, ?, ?);";
 
-        int num = prst.executeUpdate();
-        prst.clearBatch();
-        prst.close();
+    PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery, Statement.RETURN_GENERATED_KEYS);
+    
+    prst.setString(1, _event.getName());
+    prst.setString(2, _event.getDescription());
+    prst.setString(3, _event.getStartTime());
+    prst.setInt(4, _event.getVenue().getId());
+    prst.setString(5, _event.getSeller().getUsername());
 
-        return num;
+    int affectedRows = prst.executeUpdate();
+
+    // Ambil ID yang baru dibuat dan set ke objek event
+    try (ResultSet generatedKeys = prst.getGeneratedKeys()) {
+        if (generatedKeys.next()) {
+            int newId = generatedKeys.getInt(1);
+            _event.setId(newId);  // supaya bisa dipakai waktu insert eventClass
+        } else {
+            throw new SQLException("Creating event failed, no ID obtained.");
+        }
     }
+
+    prst.close();
+    return affectedRows;
+}
+
 
     public static int Update_Event(Event _event) throws Exception {
         String SQLQuery = "UPDATE Events SET name = ?, description = ?, startDateTime = ?, venue_id = ?, seller_id = ? WHERE id = ?;";

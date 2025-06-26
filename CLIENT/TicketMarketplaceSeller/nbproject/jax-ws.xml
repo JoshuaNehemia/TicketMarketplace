@@ -3,9 +3,9 @@
   <services/>
   <clients>
     <client name="TMWebService">
-      <wsdl-url>http://localhost:8080/TicketMarketplaceWebService/TMWebService?wsdl</wsdl-url>
-      <local-wsdl-file>localhost_8080/TicketMarketplaceWebService/TMWebService.wsdl</local-wsdl-file>
-      <package-name>webservice</package-name>
+      <wsdl-url>http://localhost:8080/WS/TMWebService?wsdl</wsdl-url>
+      <local-wsdl-file>localhost_8080/WS/TMWebService.wsdl</local-wsdl-file>
+      <package-name>tmwebservice</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <wsimport-options>
         <wsimport-option>
@@ -22,7 +22,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://localhost:8080/TicketMarketplaceWebService/TMWebService?wsdl</wsimport-option-value>
+          <wsimport-option-value>http://localhost:8080/WS/TMWebService?wsdl</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>

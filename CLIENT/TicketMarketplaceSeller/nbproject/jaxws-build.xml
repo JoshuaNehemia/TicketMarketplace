@@ -18,8 +18,8 @@
     </target>
     <target name="wsimport-client-TMWebService" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/TMWebService"/>
-        <property name="wsdl-TMWebService" location="xml-resources/web-service-references/TMWebService/wsdl/localhost_8080/TicketMarketplaceWebService/TMWebService.wsdl"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/TMWebService" destdir="${build.generated.dir}/jax-wsCache/TMWebService" wsdl="${wsdl-TMWebService}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/TicketMarketplaceWebService/TMWebService?wsdl" xnocompile="true" xendorsed="true">
+        <property name="wsdl-TMWebService" location="xml-resources/web-service-references/TMWebService/wsdl/localhost_8080/WS/TMWebService.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/TMWebService" destdir="${build.generated.dir}/jax-wsCache/TMWebService" wsdl="${wsdl-TMWebService}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/WS/TMWebService?wsdl" xnocompile="true" xendorsed="true">
             <depends file="${wsdl-TMWebService}"/>
             <produces dir="${build.generated.dir}/jax-wsCache/TMWebService"/>
         </wsimport>
@@ -31,7 +31,7 @@
     </target>
     <target name="wsimport-client-clean-TMWebService" depends="-init-project">
         <delete dir="${build.generated.dir}/jax-wsCache/TMWebService"/>
-        <delete dir="${build.generated.sources.dir}/jax-ws/webservice"/>
+        <delete dir="${build.generated.sources.dir}/jax-ws/tmwebservice"/>
     </target>
     <target name="wsimport-client-generate" depends="wsimport-client-TMWebService"/>
 </project>

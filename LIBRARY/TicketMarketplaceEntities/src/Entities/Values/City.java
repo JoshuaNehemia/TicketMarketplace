@@ -18,6 +18,10 @@ public class City {
         this.id = id;
         this.name = name;
     }
+    public City() {
+        name="";
+        id=0;
+    }
 
     //GETTER AND SETTER
     public int getId() {
@@ -36,10 +40,8 @@ public class City {
         this.name = name;
     }
     
-    //FUNCTION
     @Override
-    public String toString(){
-        return this.getName();
+    public String toString() {
+        return this.name; 
     }
-    
 }

@@ -4,14 +4,16 @@
  */
 package FormUI;
 
-import TicketMarketplaceEntities.Event;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import javax.swing.JLabel;
-import static ticketmarketplaceclient.GUI.FormLogin.service;
-import ticketmarketplaceclient.Service.ClientService;
-import ticketmarketplaceclient.Service.RepoTemp;
+import tmwebservice.Event;
+import tmwebservice.EventClass;
+import tmwebservice.User;
+
 // … import lain …
 
 
@@ -26,65 +28,122 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
      * Creates new form FormListOfTicket1
      */
     
-    ClientService service;
     int showIndexFrom;
-    public FormListOfTicket1(ClientService pservice) {
+    User currentUser;
+    List<Event> listOfEvent;
+    public FormListOfTicket1(User currentUser) {
         initComponents();
-        service = pservice;
-
+        this.currentUser = currentUser;
         int page = Integer.parseInt(jLabel21.getText());
         showIndexFrom = 3 * page - 3;
 
-        loadEvents(showIndexFrom);
-
+        loadEvents();
+        System.out.println(listOfEvent.size());
         refreshTicketsUI();
     }
     
-     private void loadEvents(int startIndex) {
-        for (int offset = 0; offset < 3; offset++) {
-            int idx = startIndex + offset;
-            if (service.repo.ListEvent.size() <= idx || service.repo.ListEvent.get(idx) == null) {
-                service.UserSelectEvent(idx);
-            }
-        }
+     private void loadEvents() {
+        listOfEvent = getAllEvents();
     }
+     private void refreshTicketsUI(){
+                // Card 1
+       if (showIndexFrom < listOfEvent.size()) {
+           Event event1 = listOfEvent.get(showIndexFrom);
+           jLabel1.setText(event1.getName());
+           jLabel2.setText(event1.getStartTime());
+
+           List<EventClass> eventClasses1 = event1.getEventClasses();
+           if (eventClasses1 != null && !eventClasses1.isEmpty()) {
+               EventClass cheapestClass = eventClasses1.get(0);
+               for (EventClass ec : eventClasses1) {
+                   if (ec.getPrice() < cheapestClass.getPrice()) {
+                       cheapestClass = ec;
+                   }
+               }
+               jLabel4.setText("Rp: " + cheapestClass.getPrice());
+           } else {
+               jLabel4.setText("Belum ada kelas tiket");
+           }
+       }
+
+       // Card 2
+       if (showIndexFrom + 1 < listOfEvent.size()) {
+           Event event2 = listOfEvent.get(showIndexFrom + 1);
+           jLabel10.setText(event2.getName());
+           jLabel11.setText(event2.getStartTime());
+
+           List<EventClass> eventClasses2 = event2.getEventClasses();
+           if (eventClasses2 != null && !eventClasses2.isEmpty()) {
+               EventClass cheapestClass = eventClasses2.get(0);
+               for (EventClass ec : eventClasses2) {
+                   if (ec.getPrice() < cheapestClass.getPrice()) {
+                       cheapestClass = ec;
+                   }
+               }
+               jLabel13.setText("Rp: " + cheapestClass.getPrice());
+           } else {
+               jLabel13.setText("Belum ada kelas tiket");
+           }
+       }
+
+       // Card 3
+       if (showIndexFrom + 2 < listOfEvent.size()) {
+           Event event3 = listOfEvent.get(showIndexFrom + 2);
+           jLabel16.setText(event3.getName());
+           jLabel17.setText(event3.getStartTime());
+
+           List<EventClass> eventClasses3 = event3.getEventClasses();
+           if (eventClasses3 != null && !eventClasses3.isEmpty()) {
+               EventClass cheapestClass = eventClasses3.get(0);
+               for (EventClass ec : eventClasses3) {
+                   if (ec.getPrice() < cheapestClass.getPrice()) {
+                       cheapestClass = ec;
+                   }
+               }
+               jLabel19.setText("Rp: " + cheapestClass.getPrice());
+           } else {
+               jLabel19.setText("Belum ada kelas tiket");
+           }
+       }
+
+     }
 
     /**
      * Assign event data to UI labels for three ticket boxes.
      */
-    private void refreshTicketsUI() {
-        JLabel[] nameLabels  = { jLabel1,  jLabel10, jLabel16 };
-        JLabel[] priceLabels = { jLabel4,  jLabel13, jLabel19 };
-        JLabel[] dateLabels  = { jLabel2,  jLabel11, jLabel17 };
-
-        DateTimeFormatter fmt = DateTimeFormatter
-            .ofPattern("dd MMMM yyyy", new Locale("id", "ID"));
-
-        for (int i = 0; i < 3; i++) {
-            int idx = showIndexFrom + i;
-            Event ev = service.repo.ListEvent.get(idx);
-            JLabel lblName  = nameLabels[i];
-            JLabel lblPrice = priceLabels[i];
-            JLabel lblDate  = dateLabels[i];
-
-            if (ev == null || ev.getSeller() == null) {
-                lblName.setText("Tidak ada event");
-                lblPrice.setText("IDR -");
-                lblDate.setText("-");
-            } else {
-                lblName.setText(ev.getName());
-
-                double minPrice = Math.min(
-                    ev.getEventClasses().getFirst().getPrice(),
-                    ev.getEventClasses().getLast().getPrice()
-                );
-                lblPrice.setText("IDR " + minPrice);
-
-                String tanggal = ev.getStartDateTime().format(fmt);
-                lblDate.setText(tanggal);
-            }
-        }
-    }
+//    private void refreshTicketsUI() {
+//        JLabel[] nameLabels  = { jLabel1,  jLabel10, jLabel16 };
+//        JLabel[] priceLabels = { jLabel4,  jLabel13, jLabel19 };
+//        JLabel[] dateLabels  = { jLabel2,  jLabel11, jLabel17 };
+//
+//        DateTimeFormatter fmt = DateTimeFormatter
+//            .ofPattern("dd MMMM yyyy", new Locale("id", "ID"));
+//
+//        for (int i = 0; i < 3; i++) {
+//            int idx = showIndexFrom + i;
+//            Event ev = service.repo.ListEvent.get(idx);
+//            JLabel lblName  = nameLabels[i];
+//            JLabel lblPrice = priceLabels[i];
+//            JLabel lblDate  = dateLabels[i];
+//
+//            if (ev == null || ev.getSeller() == null) {
+//                lblName.setText("Tidak ada event");
+//                lblPrice.setText("IDR -");
+//                lblDate.setText("-");
+//            } else {
+//                lblName.setText(ev.getName());
+//
+//                double minPrice = Math.min(
+//                    ev.getEventClasses().getFirst().getPrice(),
+//                    ev.getEventClasses().getLast().getPrice()
+//                );
+//                lblPrice.setText("IDR " + minPrice);
+//
+//                String tanggal = ev.getStartDateTime().format(fmt);
+//                lblDate.setText(tanggal);
+//            }
+//        }
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -441,8 +500,6 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         jLabel22.setForeground(new java.awt.Color(255, 255, 255));
         jLabel22.setText("Kopi Jawa");
 
-        jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo.png"))); // NOI18N
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -597,19 +654,19 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
     private void btnDetailsTicket1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailsTicket1ActionPerformed
         // TODO add your handling code here:
         
-        Event selected = service.repo.ListEvent.get(showIndexFrom);
-        FormUserTicketDetail login = new FormUserTicketDetail(this, selected);
-        login.setVisible(true);
+         Event selected = listOfEvent.get(showIndexFrom);
+        FormUserTicketDetail detailevent = new FormUserTicketDetail(this, selected,currentUser);
+        detailevent.setVisible(true);
 
         this.setVisible(false);
     }//GEN-LAST:event_btnDetailsTicket1ActionPerformed
 
     private void btnTiketDibeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTiketDibeliActionPerformed
         // TODO add your handling code here:
-        FormUserTicket form = new FormUserTicket(this);
-        form.setVisible(true);
-        
-        this.setVisible(false);
+//        FormUserTicket form = new FormUserTicket(this);
+//        form.setVisible(true);
+//        
+//        this.setVisible(false);
     }//GEN-LAST:event_btnTiketDibeliActionPerformed
 
     private void menuProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuProfileMouseClicked
@@ -620,14 +677,12 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
     }//GEN-LAST:event_menuProfileMouseClicked
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-        int currentValue = Integer.parseInt(jLabel21.getText());
+         int currentValue = Integer.parseInt(jLabel21.getText());
         jLabel21.setText(String.valueOf(currentValue + 1));
         
         int page = Integer.parseInt(jLabel21.getText());
         showIndexFrom = 3 * page - 3;
-
-        loadEvents(showIndexFrom);
-
+        
         refreshTicketsUI();
     }//GEN-LAST:event_btnNextActionPerformed
 
@@ -639,23 +694,25 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         int page = Integer.parseInt(jLabel21.getText());
         showIndexFrom = 3 * page - 3;
 
-        loadEvents(showIndexFrom);
+//        loadEvents(showIndexFrom);
 
         refreshTicketsUI();
     }//GEN-LAST:event_btnPrevActionPerformed
 
     private void btnDetailsTicket2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailsTicket2ActionPerformed
-        Event selected = service.repo.ListEvent.get(showIndexFrom+1);
-        FormUserTicketDetail login = new FormUserTicketDetail(this, selected);
-        login.setVisible(true);
+//        
+         Event selected = listOfEvent.get(showIndexFrom+1);
+        FormUserTicketDetail detailevent = new FormUserTicketDetail(this, selected,currentUser);
+        detailevent.setVisible(true);
 
         this.setVisible(false);
     }//GEN-LAST:event_btnDetailsTicket2ActionPerformed
 
     private void btnDetailsTicket3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailsTicket3ActionPerformed
-        Event selected = service.repo.ListEvent.get(showIndexFrom+2);
-        FormUserTicketDetail login = new FormUserTicketDetail(this, selected);
-        login.setVisible(true);
+//         
+         Event selected = listOfEvent.get(showIndexFrom+2);
+        FormUserTicketDetail detailevent = new FormUserTicketDetail(this, selected,currentUser);
+        detailevent.setVisible(true);
 
         this.setVisible(false);
     }//GEN-LAST:event_btnDetailsTicket3ActionPerformed
@@ -768,4 +825,10 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
     private javax.swing.JMenu menuInventory;
     private javax.swing.JMenu menuProfile;
     // End of variables declaration//GEN-END:variables
+
+    private static java.util.List<tmwebservice.Event> getAllEvents() {
+        tmwebservice.TMWebService_Service service = new tmwebservice.TMWebService_Service();
+        tmwebservice.TMWebService port = service.getTMWebServicePort();
+        return port.getAllEvents();
+    }
 }

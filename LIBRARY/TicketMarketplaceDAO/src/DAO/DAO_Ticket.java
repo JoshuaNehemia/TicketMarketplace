@@ -29,20 +29,32 @@ public class DAO_Ticket {
 
         ResultSet rslt = prst.executeQuery();
 
-        if (rslt.next()) {
+       if (rslt.next()) {
+    Event buff = new Event(
+        rslt.getInt("event_id"),
+        rslt.getString("event_name")
+    );
+    buff.addEventClasses(new EventClass(
+        rslt.getInt("eventclass_id"),
+        rslt.getString("eventclass_name")
+    ));
 
-            Event buff = new Event(rslt.getInt("event_id"), rslt.getString("event_name"));
-            buff.addEventClasses(new EventClass(rslt.getInt("eventclass_id"), rslt.getString("eventclass_name")));
-            selectedTicket = new Ticket(
-                    rslt.getString("id"),
-                    buff,
-                    rslt.getString("eventclass_name"),
-                    new PaymentMethod(rslt.getInt("paymentmethod_id"),rslt.getString("paymentmethod_name")),
-                    LocalDateTime.parse(rslt.getString("paidTime"), Default.getDateTimeFormatter()),
-                    rslt.getString("status"),
-                    rslt.getBoolean("isClaimed")
-            );
-        }
+    PaymentMethod pm = new PaymentMethod(
+        rslt.getInt("paymentMethod_id"),
+        rslt.getString("paymentmethod_name")
+    );
+
+    selectedTicket = new Ticket(
+        rslt.getString("id"),
+        buff,
+        rslt.getString("eventclass_name"),
+        pm.getId(),
+        LocalDateTime.parse(rslt.getString("paidTime"), Default.getDateTimeFormatter()),
+        rslt.getString("status"),
+        rslt.getBoolean("isClaimed")
+    );
+}
+
 
         prst.close();
 
@@ -66,7 +78,7 @@ public class DAO_Ticket {
                     rslt.getString("id"),
                     buff,
                     rslt.getString("eventclass_name"),
-                    new PaymentMethod(rslt.getInt("paymentmethod_id"),rslt.getString("paymentmethod_name")),
+                    rslt.getInt("paymentmethod_id"),
                     LocalDateTime.parse(rslt.getString("paidTime"), Default.getDateTimeFormatter()),
                     rslt.getString("status"),
                     rslt.getBoolean("isClaimed")
@@ -78,21 +90,25 @@ public class DAO_Ticket {
         return selectedTicket;
     }
 
-    public static int Insert_Ticket(Ticket ticket, String buyer_username,int eventclass_id) throws Exception{
-        String SQLQuery = "INSERT INTO `ticketmarketplace`.`tickets` (`id`, `user`, `eventClass_id`, `paymentMethod_id`, `paymentStatus`, `isClaimed`) VALUES (?, ?, ?, ?, ?, ?);";
-        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
-        prst.setString(1, ticket.getId());
-        prst.setString(2, buyer_username);
-        prst.setString(3, String.valueOf(eventclass_id));
-        prst.setString(4, String.valueOf(ticket.getPaymentMethod().getId()));
-        prst.setString(5, "UNPAID");
-        prst.setString(6, String.valueOf(0));
+   public static int Insert_Ticket(Ticket ticket, String buyer_username, int eventclass_id) throws Exception {
+    String SQLQuery = "INSERT INTO `ticketmarketplace`.`tickets` " +
+                      "(`id`, `user`, `eventClass_id`, `paymentMethod_id`, `paymentStatus`, `isClaimed`) " +
+                      "VALUES (?, ?, ?, ?, ?, ?)";
 
-        int num = prst.executeUpdate();
-        prst.close();
+    PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
+    prst.setString(1, ticket.getId());
+    prst.setString(2, buyer_username);
+    prst.setInt(3, eventclass_id); // ganti jadi setInt karena tipenya int
+    prst.setInt(4, ticket.getPaymentMethod());
+    prst.setString(5, "UNPAID");
+    prst.setBoolean(6, ticket.isIsClaimed()); // gunakan boolean langsung
 
-        return num;
-    }
+    int num = prst.executeUpdate();
+    prst.close();
+
+    return num;
+}
+
     
     public static int Update_Ticket_Status(String ticket_id,String status) throws Exception {
         String SQLQuery = "UPDATE `ticketmarketplace`.`tickets` SET `status` = ? WHERE id = ?;";

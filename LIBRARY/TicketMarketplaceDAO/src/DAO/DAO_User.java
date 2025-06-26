@@ -34,32 +34,39 @@ public class DAO_User extends DatabaseConnection {
 
         ResultSet rslt = prst.executeQuery();
 
-        if (rslt.next()) {
-            selectedUser = new User(
-                    rslt.getString("username"),
-                    rslt.getString("password"),
-                    rslt.getString("fullname"),
-                    rslt.getString("email"),
-                    rslt.getString("phoneNumber"),
-                    LocalDate.parse(rslt.getString("birthdate"),Default.getDateFormatter())
-            );
-        }
+                if (rslt.next()) {
+             selectedUser = new User(
+                 rslt.getString("username"),
+                 rslt.getString("password"),
+                 rslt.getString("fullname"),
+                 rslt.getString("email"),
+                 rslt.getString("phoneNumber"),
+                 rslt.getString("birthdate")
+             );
+             prst.close();
+             return selectedUser;
+         } else {
+             prst.close();
+             return null; 
+         }
 
-        prst.close();
 
-        return selectedUser;
+//        prst.close();
+//
+//        return selectedUser;
 
     }
 
     public static int Insert_User(User _user) throws Exception {
-        String SQLQuery = "INSERT INTO users ('username','password','fullname','phoneNumber',email','birthdate') VALUES(?,?,?,?,?)";
+       String SQLQuery = "INSERT INTO users (username, password, fullname, phoneNumber, email, birthdate) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
-        prst.setString(1, _user.getUsername());
-        prst.setString(2, _user.getPassword());
-        prst.setString(3, _user.getFullName());
-        prst.setString(4, _user.getEmail());
-        prst.setString(5, _user.getPhoneNumber());
-        prst.setString(6, _user.getBirthdate().toString());
+
+        prst.setString(1, _user.getUsername());    // ✅ username
+        prst.setString(2, _user.getPassword());    // ✅ password
+        prst.setString(3, _user.getFullName());    // ✅ fullname
+        prst.setString(4, _user.getPhoneNumber()); // ✅ phoneNumber
+        prst.setString(5, _user.getEmail());       // ✅ email
+        prst.setString(6, _user.getBirthdate().toString()); // ✅ birthdate
 
         int num = prst.executeUpdate();
 

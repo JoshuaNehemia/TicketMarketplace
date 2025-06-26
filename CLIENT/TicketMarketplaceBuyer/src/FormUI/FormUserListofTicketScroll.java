@@ -4,7 +4,7 @@
  */
 package FormUI;
 
-import ticketmarketplaceclient.Service.ClientService;
+//import ticketmarketplaceclient.Service.ClientService;
 /**
  *
  * @author Lenovo
@@ -14,10 +14,8 @@ public class FormUserListofTicketScroll extends javax.swing.JFrame {
     /**
      * Creates new form FormListOfTicket
      */
-    public static ClientService service;
-    public FormUserListofTicketScroll(ClientService pservice) {
+    public FormUserListofTicketScroll() {
         initComponents();
-        service=pservice;
     }
 
     /**

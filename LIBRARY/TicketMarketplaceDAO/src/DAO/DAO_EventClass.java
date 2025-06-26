@@ -15,11 +15,31 @@ import java.util.ArrayList;
  * @author joshu
  */
 public class DAO_EventClass {
+    
+        public static double CalculatePrice(int eventId, int eventClassId) throws Exception {
+         double price = 0;
+         String SQLQuery = "SELECT price FROM eventclasses WHERE id = ? AND event_id = ?";
+
+         PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
+         prst.setInt(1, eventClassId);
+         prst.setInt(2, eventId);
+
+         ResultSet rslt = prst.executeQuery();
+
+         if (rslt.next()) {
+             double basePrice = rslt.getDouble("price");
+             price = basePrice + (0.007 * basePrice); 
+         }
+
+         prst.close();
+         return price;
+     }
+
 
     public static ArrayList<EventClass> Select_EventClass_By_Event_Id(int event_id) throws Exception {
         ArrayList<EventClass> events = new ArrayList<>();
 
-        String SQLQuery = "SELECT * FROM `eventclassess` WHERE `event_id` = ?;";
+        String SQLQuery = "SELECT * FROM `eventclasses` WHERE `event_id` = ?;";
         PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
         prst.setString(1, String.valueOf(event_id));
 

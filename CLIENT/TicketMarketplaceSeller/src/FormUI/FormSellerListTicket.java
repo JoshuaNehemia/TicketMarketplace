@@ -308,9 +308,9 @@ public class FormSellerListTicket extends javax.swing.JFrame {
 
     private void menuPublishTicketMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPublishTicketMouseClicked
         // TODO add your handling code here:
-        FormSellerPublishTicket login = new FormSellerPublishTicket(FormLogin.service);
-        login.setVisible(true);
-        this.setVisible(false);
+//        FormSellerPublishTicket login = new FormSellerPublishTicket(FormLogin.service);
+//        login.setVisible(true);
+//        this.setVisible(false);
     }//GEN-LAST:event_menuPublishTicketMouseClicked
 
     /**

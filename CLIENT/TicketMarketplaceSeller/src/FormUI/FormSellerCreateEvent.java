@@ -4,9 +4,16 @@
  */
 package FormUI;
 
-import TicketMarketplaceEntities.*;
-import java.time.LocalDate;
+//import TicketMarketplaceEntities.*;
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JTextField;
+import tmwebservice.City;
+import tmwebservice.Event;
+import tmwebservice.EventClass;
+import tmwebservice.Seller;
+import tmwebservice.Venue;
+import tmwebservice.LocalDateTime;
 
 /**
  *
@@ -14,35 +21,35 @@ import java.util.ArrayList;
  */
 public class FormSellerCreateEvent extends javax.swing.JFrame {
 
-    private FormSellerPublishTicket parent;
-    private Event createEvent;
-    private ArrayList<Event_class> ec = new ArrayList<Event_class>();
-    private Venue venue;
-
-    public int GetEventClassId() {
-        return this.ec.size() + 1;
-    }
-
+     Seller currentUser;
+     List<City> listCity = new ArrayList<>();
+     List<Venue> listVenue = new ArrayList<>();
+     List<EventClass> listEventClass = new ArrayList<>();
     /**
      * Creates new form FormPublishTicket
      */
     public FormSellerCreateEvent() {
         initComponents();
     }
-
-    public FormSellerCreateEvent(FormSellerPublishTicket parent) {
+    
+    public void EventClassAdded(){
+        System.out.println("event class added");
+        System.out.println(listEventClass.size());
+    }
+    public FormSellerCreateEvent(Seller currentUser) {
         initComponents();
-        this.parent = parent;
-        createEvent = new Event();
+        this.currentUser = currentUser;
         comboBoxVenue.removeAllItems();
         try {
-            FormLogin.service.SelectListVenue();
+            listCity = getCities();
         } catch (Exception ex) {
-            System.out.println(ex); //Show message box
+            System.out.println(ex); 
         }
-        for (String s : FormLogin.service.repo.ListDisplay) {
-            comboBoxVenue.addItem(s);
+        for (City c : listCity) {
+            comboBoxCity.addItem(c.getName());
+
         }
+
 
     }
 
@@ -75,6 +82,12 @@ public class FormSellerCreateEvent extends javax.swing.JFrame {
         btnAddEventClass = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
         comboBoxVenue = new javax.swing.JComboBox<>();
+        jLabel15 = new javax.swing.JLabel();
+        comboBoxCity = new javax.swing.JComboBox<>();
+        txtStartMinute = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtStartHour = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuHome = new javax.swing.JMenu();
         menuPublishTicket = new javax.swing.JMenu();
@@ -128,9 +141,20 @@ public class FormSellerCreateEvent extends javax.swing.JFrame {
         });
 
         jLabel14.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        jLabel14.setText("Venue");
+        jLabel14.setText("City");
 
-        comboBoxVenue.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jLabel15.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        jLabel15.setText("Venue");
+
+        comboBoxCity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxCityActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("hh");
+
+        jLabel5.setText("mm");
 
         jMenuBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -161,31 +185,41 @@ public class FormSellerCreateEvent extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(comboBoxVenue, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel13))
+                                .addComponent(comboBoxCity, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel13)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(comboBoxVenue, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(12, 12, 12)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1))
-                                .addGap(18, 18, 18)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel4)
+                                    .addComponent(txtStartHour, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(38, 38, 38)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtStartMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(txtStartYear, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtStartMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel2))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3)
+                                            .addComponent(txtStartYear, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel5)
+                                    .addComponent(txtStartMinute, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(45, 45, 45)
                                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -212,14 +246,22 @@ public class FormSellerCreateEvent extends javax.swing.JFrame {
                         .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel14)
-                            .addComponent(comboBoxVenue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(11, 11, 11)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addComponent(comboBoxCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel14)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(jLabel10))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel15)
+                                    .addComponent(comboBoxVenue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(60, 60, 60)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -231,19 +273,29 @@ public class FormSellerCreateEvent extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtStartMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtStartYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtStartYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtStartHour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtStartMinute, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnAddEventClass)
-                        .addGap(7, 7, 7))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))))
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAddEventClass)
+                        .addGap(7, 7, 7))))
         );
 
         pack();
@@ -254,20 +306,32 @@ public class FormSellerCreateEvent extends javax.swing.JFrame {
     }//GEN-LAST:event_menuProfileActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-        // TODO add your handling code here:
         try {
+            String name = txtName.getText();
+            String description = txtDescription.getText();
+            String Namavenue = (String) comboBoxVenue.getSelectedItem();
+            Venue venue = get1VenueWithName(Namavenue);
+            String year = txtStartYear.getText();
+            String month = txtStartMonth.getText();
+            String date = txtStartDate.getText();
+            String hour = txtStartHour.getText();
+            String minute = txtStartMinute.getText();
 
-            String name = this.txtName.getText();
-            String description = this.txtDescription.getText();
-            String start = this.txtStartYear.getText() + '-' + this.txtStartMonth.getText() + '-' + this.txtStartDate.getText();
-            LocalDate startDate = LocalDate.parse(start);
-            createEvent = new Event(name, description, startDate, FormLogin.service.SelectVenue(String.valueOf(this.comboBoxVenue.getSelectedItem())), FormLogin.service.getCurrentSeller());
-            createEvent.setEventClasses(ec);
+            String startTime = year + "-" + month + "-" + date + "-" + hour + "-" + minute;
 
-            FormLogin.service.InsertNewEvent(createEvent);
+            Event baru = new Event();
+           baru.setEventClasses(listEventClass);
+            baru.setStartTime(startTime);
+            baru.setDescription(description);
+            baru.setName(name);
+            Seller s = new Seller();  
+            s.setUsername(currentUser.getUsername()); 
+            baru.setSeller(s);
+            baru.setVenue(venue);
 
-            FormSellerPublishTicket login = new FormSellerPublishTicket(FormLogin.service);
-            login.setVisible(true);
+            
+            createNewEvent(baru, currentUser.getUsername());
+
             this.dispose();
 
         } catch (Exception ex) {
@@ -276,16 +340,31 @@ public class FormSellerCreateEvent extends javax.swing.JFrame {
 
     }
 
-    public void AddEventClass(Event_class evClass) {
-        this.ec.add(evClass);
-        txtEventClass.append(evClass.toString());
-    }
+//    public void AddEventClass(Event_class evClass) {
+//        this.ec.add(evClass);
+//        txtEventClass.append(evClass.toString());
+//    }
 
     private void btnAddEventClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEventClassActionPerformed
         // TODO add your handling code here:
         FormSellerAddEventClass addEvent = new FormSellerAddEventClass(this);
         addEvent.setVisible(true);
     }//GEN-LAST:event_btnAddEventClassActionPerformed
+
+    private void comboBoxCityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxCityActionPerformed
+        comboBoxVenue.removeAllItems(); 
+    try {
+        String selectedCityName = (String) comboBoxCity.getSelectedItem();
+        if (selectedCityName != null) {
+            listVenue = getVenueWithCityName(selectedCityName); 
+            for (Venue v : listVenue) {
+                comboBoxVenue.addItem(v.getName()); 
+            }
+        }
+    } catch (Exception ex) {
+        System.out.println("Error saat memuat venue: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_comboBoxCityActionPerformed
 
     /**
      * @param args the command line arguments
@@ -356,6 +435,7 @@ public class FormSellerCreateEvent extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddEventClass;
     private javax.swing.JButton btnSubmit;
+    private javax.swing.JComboBox<String> comboBoxCity;
     private javax.swing.JComboBox<String> comboBoxVenue;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -363,8 +443,11 @@ public class FormSellerCreateEvent extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu4;
@@ -377,7 +460,37 @@ public class FormSellerCreateEvent extends javax.swing.JFrame {
     private javax.swing.JTextArea txtEventClass;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtStartDate;
+    private javax.swing.JTextField txtStartHour;
+    private javax.swing.JTextField txtStartMinute;
     private javax.swing.JTextField txtStartMonth;
     private javax.swing.JTextField txtStartYear;
     // End of variables declaration//GEN-END:variables
+
+    private static java.util.List<tmwebservice.City> getCities() {
+        tmwebservice.TMWebService_Service service = new tmwebservice.TMWebService_Service();
+        tmwebservice.TMWebService port = service.getTMWebServicePort();
+        return port.getCities();
+    }
+
+    private static java.util.List<tmwebservice.Venue> getVenueWithCityName(java.lang.String cityName) {
+        tmwebservice.TMWebService_Service service = new tmwebservice.TMWebService_Service();
+        tmwebservice.TMWebService port = service.getTMWebServicePort();
+        return port.getVenueWithCityName(cityName);
+    }
+
+    private static Event createNewEvent(tmwebservice.Event event, java.lang.String sellerUsername) {
+        tmwebservice.TMWebService_Service service = new tmwebservice.TMWebService_Service();
+        tmwebservice.TMWebService port = service.getTMWebServicePort();
+        return port.createNewEvent(event, sellerUsername);
+    }
+
+    private static Venue get1VenueWithName(java.lang.String name) {
+        tmwebservice.TMWebService_Service service = new tmwebservice.TMWebService_Service();
+        tmwebservice.TMWebService port = service.getTMWebServicePort();
+        return port.get1VenueWithName(name);
+    }
+
+    
+
+  
 }

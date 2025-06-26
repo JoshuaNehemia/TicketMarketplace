@@ -4,8 +4,6 @@
  */
 package FormUI;
 
-import TicketMarketplaceEntities.Event_class;
-import TicketMarketplaceEntities.Ticket;
 import java.util.ArrayList;
 
 /**
@@ -18,32 +16,32 @@ public class FormUserTicket extends javax.swing.JFrame {
      * Creates new form FormUserTicket
      */
     FormListOfTicket1 parentForm;
-    public FormUserTicket(FormListOfTicket1 pparentForm) {
+    public FormUserTicket() {
         initComponents();
-        parentForm=pparentForm;
-        parentForm.service.repo.ListTicket.clear();
-        parentForm.service.SelectTicket(parentForm.service.getCurrentUser().getUsername());
+//        parentForm=pparentForm;
+//        parentForm.service.repo.ListTicket.clear();
+//        parentForm.service.SelectTicket(parentForm.service.getCurrentUser().getUsername());
         txtListTicketDibeli.setText("");
         System.out.println("SHOWING TICKET");
-        if (parentForm.service.repo.ListTicket != null && !parentForm.service.repo.ListTicket.isEmpty()) {
-         StringBuilder sb = new StringBuilder();
-        for (Ticket ticket : parentForm.service.repo.ListTicket) {
-             int eventId = ticket.getEvent().getId(); 
-            int eventClassId = ticket.getSeats().getId(); 
-
-            String[] eventClass = parentForm.service.UserEventClassById(eventId, eventClassId);
-            int iForEventClassName=1;
-            if(eventClassId>1)iForEventClassName+=7*(eventClassId-1);
-            System.out.println("classid= "+eventClassId);
-            String ticketData = "Event name : "+ticket.getEvent().getName() + " | " +
-                                "Event class : "+eventClass[iForEventClassName] + " | " +
-                                "Paid date : "+ticket.getPaidDate() + " | " +
-                                "Price : "+ticket.getPrice();
-            sb.append(ticketData).append("\n");
-        }
-        
-        txtListTicketDibeli.setText(sb.toString());
-        }
+//        if (parentForm.service.repo.ListTicket != null && !parentForm.service.repo.ListTicket.isEmpty()) {
+//         StringBuilder sb = new StringBuilder();
+//        for (Ticket ticket : parentForm.service.repo.ListTicket) {
+//             int eventId = ticket.getEvent().getId(); 
+//            int eventClassId = ticket.getSeats().getId(); 
+//
+//            String[] eventClass = parentForm.service.UserEventClassById(eventId, eventClassId);
+//            int iForEventClassName=1;
+//            if(eventClassId>1)iForEventClassName+=7*(eventClassId-1);
+//            System.out.println("classid= "+eventClassId);
+//            String ticketData = "Event name : "+ticket.getEvent().getName() + " | " +
+//                                "Event class : "+eventClass[iForEventClassName] + " | " +
+//                                "Paid date : "+ticket.getPaidDate() + " | " +
+//                                "Price : "+ticket.getPrice();
+//            sb.append(ticketData).append("\n");
+//        }
+//        
+//        txtListTicketDibeli.setText(sb.toString());
+//        }
     }
 
     /**
