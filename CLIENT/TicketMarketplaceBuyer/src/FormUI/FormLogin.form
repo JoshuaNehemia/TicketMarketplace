@@ -41,17 +41,9 @@
                               <Component id="txtPassword" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtUsername" alignment="0" min="-2" pref="342" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="btnLoginSeller" alignment="0" min="-2" pref="144" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="180" max="-2" attributes="0"/>
                   </Group>
-              </Group>
-          </Group>
-          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  <Component id="buttonSeller" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -69,16 +61,7 @@
               <Component id="btnLogin" min="-2" pref="39" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               <Component id="btnRegister" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="btnLoginSeller" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="39" max="32767" attributes="0"/>
-          </Group>
-          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  <Component id="buttonSeller" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              </Group>
+              <EmptySpace pref="78" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -90,7 +73,7 @@
           <Font name="Segoe UI" size="24" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="LOGIN"/>
+        <Property name="text" type="java.lang.String" value="LOGIN BUYER"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtUsername">
@@ -120,19 +103,6 @@
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnRegisterMouseClicked"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JRadioButton" name="buttonSeller">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Seller"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JRadioButton" name="btnLoginSeller">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Login sebagai seller"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLoginSellerActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

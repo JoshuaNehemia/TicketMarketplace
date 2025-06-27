@@ -5,7 +5,8 @@
 package FormUI;
 
 import javax.swing.JOptionPane;
-import ticketmarketplaceclient.Service.ClientService;
+import tmwebservice.Seller;
+import tmwebservice.User;
 
 /**
  *
@@ -16,12 +17,8 @@ public class FormLogin extends javax.swing.JFrame {
     /**
      * Creates new form FormLogin
      */
-    public static ClientService service;
-    public String username = "";
-    public boolean isSeller=false;
     public FormLogin() {
         initComponents();
-        service = new ClientService();
     }
 
     /**
@@ -38,14 +35,12 @@ public class FormLogin extends javax.swing.JFrame {
         txtPassword = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
         btnRegister = new javax.swing.JLabel();
-        buttonSeller = new javax.swing.JRadioButton();
-        btnLoginSeller = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("LOGIN");
+        jLabel1.setText("LOGIN BUYER");
 
         txtUsername.setText("Email/Username");
 
@@ -63,15 +58,6 @@ public class FormLogin extends javax.swing.JFrame {
         btnRegister.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnRegisterMouseClicked(evt);
-            }
-        });
-
-        buttonSeller.setText("Seller");
-
-        btnLoginSeller.setText("Login sebagai seller");
-        btnLoginSeller.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginSellerActionPerformed(evt);
             }
         });
 
@@ -93,14 +79,8 @@ public class FormLogin extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtPassword)
-                                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnLoginSeller, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(180, 180, 180))))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(buttonSeller)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,14 +95,7 @@ public class FormLogin extends javax.swing.JFrame {
                 .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
                 .addComponent(btnRegister)
-                .addGap(18, 18, 18)
-                .addComponent(btnLoginSeller)
-                .addContainerGap(39, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(buttonSeller)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
         pack();
@@ -135,45 +108,23 @@ public class FormLogin extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
 
         try {
-            if(!isSeller){
-            String usernameOrEmail = txtUsername.getText();
-
+            String username = txtUsername.getText();
             String password = txtPassword.getText();
+            
+            System.out.println(username +" : " +password);
 
-            boolean res = service.UserLogIn(usernameOrEmail, password);
-            if (res) {
-//            ...set current user in server.
-
-                FormListOfTicket1 login = new FormListOfTicket1(service);
-                login.setVisible(true);
-
+            User res = userLogIn(username, password);
+            if (res != null && res.getUsername() != null && !res.getUsername().isEmpty()) {
+                System.out.println("Login sebagai: " + res.getUsername());
+                FormListOfTicket1 home = new FormListOfTicket1(res);
+                home.setVisible(true);
                 this.dispose();
-            }
-            else
-            {
-            JOptionPane.showMessageDialog(null, "Wrong username or password", "Attention!", JOptionPane.ERROR_MESSAGE);
-            }
-            }else{
-                String usernameOrEmail = txtUsername.getText();
-
-                String password = txtPassword.getText();
-
-                boolean res = service.SellerLogIn(usernameOrEmail, password);
-                if (res) {
-    //            ...set current user in server.
-
-                    FormSellerPublishTicket login = new FormSellerPublishTicket(service);
-                    login.setVisible(true);
-
-                    this.dispose();
-                }
-                else
-                {
+            } else {
                 JOptionPane.showMessageDialog(null, "Wrong username or password", "Attention!", JOptionPane.ERROR_MESSAGE);
-                }
             }
         } 
         catch (Exception ex) {
+             ex.printStackTrace(); 
             JOptionPane.showMessageDialog(null, "Error : " + ex.getMessage(), "Warning!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnLoginActionPerformed
@@ -183,12 +134,6 @@ public class FormLogin extends javax.swing.JFrame {
         regisForm.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnRegisterMouseClicked
-
-    private void btnLoginSellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginSellerActionPerformed
-        // TODO add your handling code here:
-        isSeller=!isSeller;
-        System.out.println(isSeller);
-    }//GEN-LAST:event_btnLoginSellerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -234,11 +179,15 @@ public class FormLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
-    private javax.swing.JRadioButton btnLoginSeller;
     private javax.swing.JLabel btnRegister;
-    private javax.swing.JRadioButton buttonSeller;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
+
+    private static User userLogIn(java.lang.String username, java.lang.String password) {
+        tmwebservice.TMWebService_Service service = new tmwebservice.TMWebService_Service();
+        tmwebservice.TMWebService port = service.getTMWebServicePort();
+        return port.userLogIn(username, password);
+    }
 }

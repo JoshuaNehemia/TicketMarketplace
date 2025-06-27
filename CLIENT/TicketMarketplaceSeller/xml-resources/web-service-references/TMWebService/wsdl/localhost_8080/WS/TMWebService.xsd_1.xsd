@@ -1,0 +1,539 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.4.2 (UNKNOWN-17d59c9; 2018-09-26T15:16:30-0700) JAXWS-RI/2.3.1 JAXWS-API/2.3.1 JAXB-RI/2.3.1 JAXB-API/2.3.1 svn-revision#unknown. --><xs:schema xmlns:tns="http://TMWebService/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://TMWebService/">
+
+<xs:element name="ApproveRefundTicket" type="tns:ApproveRefundTicket"/>
+
+<xs:element name="ApproveRefundTicketResponse" type="tns:ApproveRefundTicketResponse"/>
+
+<xs:element name="BuyTicket" type="tns:BuyTicket"/>
+
+<xs:element name="BuyTicketResponse" type="tns:BuyTicketResponse"/>
+
+<xs:element name="CancelTicketOrder" type="tns:CancelTicketOrder"/>
+
+<xs:element name="CancelTicketOrderResponse" type="tns:CancelTicketOrderResponse"/>
+
+<xs:element name="ClaimTicket" type="tns:ClaimTicket"/>
+
+<xs:element name="ClaimTicketResponse" type="tns:ClaimTicketResponse"/>
+
+<xs:element name="ConnectionTest" type="tns:ConnectionTest"/>
+
+<xs:element name="ConnectionTestResponse" type="tns:ConnectionTestResponse"/>
+
+<xs:element name="CreateNewEvent" type="tns:CreateNewEvent"/>
+
+<xs:element name="CreateNewEventResponse" type="tns:CreateNewEventResponse"/>
+
+<xs:element name="CreateNewVenue" type="tns:CreateNewVenue"/>
+
+<xs:element name="CreateNewVenueResponse" type="tns:CreateNewVenueResponse"/>
+
+<xs:element name="Get1VenueWithName" type="tns:Get1VenueWithName"/>
+
+<xs:element name="Get1VenueWithNameResponse" type="tns:Get1VenueWithNameResponse"/>
+
+<xs:element name="GetCities" type="tns:GetCities"/>
+
+<xs:element name="GetCitiesResponse" type="tns:GetCitiesResponse"/>
+
+<xs:element name="GetCompanyEvent" type="tns:GetCompanyEvent"/>
+
+<xs:element name="GetCompanyEventResponse" type="tns:GetCompanyEventResponse"/>
+
+<xs:element name="GetEvent" type="tns:GetEvent"/>
+
+<xs:element name="GetEventResponse" type="tns:GetEventResponse"/>
+
+<xs:element name="GetPaymentMethods" type="tns:GetPaymentMethods"/>
+
+<xs:element name="GetPaymentMethodsResponse" type="tns:GetPaymentMethodsResponse"/>
+
+<xs:element name="GetSellerEvent" type="tns:GetSellerEvent"/>
+
+<xs:element name="GetSellerEventResponse" type="tns:GetSellerEventResponse"/>
+
+<xs:element name="GetVenueWithCityName" type="tns:GetVenueWithCityName"/>
+
+<xs:element name="GetVenueWithCityNameResponse" type="tns:GetVenueWithCityNameResponse"/>
+
+<xs:element name="GetVenueWithName" type="tns:GetVenueWithName"/>
+
+<xs:element name="GetVenueWithNameResponse" type="tns:GetVenueWithNameResponse"/>
+
+<xs:element name="GetVenueWithProvince" type="tns:GetVenueWithProvince"/>
+
+<xs:element name="GetVenueWithProvinceResponse" type="tns:GetVenueWithProvinceResponse"/>
+
+<xs:element name="PayTicket" type="tns:PayTicket"/>
+
+<xs:element name="PayTicketResponse" type="tns:PayTicketResponse"/>
+
+<xs:element name="RefundTicket" type="tns:RefundTicket"/>
+
+<xs:element name="RefundTicketResponse" type="tns:RefundTicketResponse"/>
+
+<xs:element name="SellerLogIn" type="tns:SellerLogIn"/>
+
+<xs:element name="SellerLogInResponse" type="tns:SellerLogInResponse"/>
+
+<xs:element name="SellerSignUp" type="tns:SellerSignUp"/>
+
+<xs:element name="SellerSignUpResponse" type="tns:SellerSignUpResponse"/>
+
+<xs:element name="SellerUpdateData" type="tns:SellerUpdateData"/>
+
+<xs:element name="SellerUpdateDataResponse" type="tns:SellerUpdateDataResponse"/>
+
+<xs:element name="UpdateEventData" type="tns:UpdateEventData"/>
+
+<xs:element name="UpdateEventDataResponse" type="tns:UpdateEventDataResponse"/>
+
+<xs:element name="UpdateVenueData" type="tns:UpdateVenueData"/>
+
+<xs:element name="UpdateVenueDataResponse" type="tns:UpdateVenueDataResponse"/>
+
+<xs:element name="UserLogIn" type="tns:UserLogIn"/>
+
+<xs:element name="UserLogInResponse" type="tns:UserLogInResponse"/>
+
+<xs:element name="UserSignUp" type="tns:UserSignUp"/>
+
+<xs:element name="UserSignUpResponse" type="tns:UserSignUpResponse"/>
+
+<xs:element name="UserUpdateData" type="tns:UserUpdateData"/>
+
+<xs:element name="UserUpdateDataResponse" type="tns:UserUpdateDataResponse"/>
+
+<xs:element name="hello" type="tns:hello"/>
+
+<xs:element name="helloResponse" type="tns:helloResponse"/>
+
+<xs:complexType name="ConnectionTest">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="ConnectionTestResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="UserUpdateData">
+<xs:sequence>
+<xs:element name="user" type="tns:user" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="user">
+<xs:complexContent>
+<xs:extension base="tns:account">
+<xs:sequence>
+<xs:element name="birthdate" type="tns:localDate" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="account">
+<xs:sequence>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="fullName" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="phoneNumber" type="xs:string" minOccurs="0"/>
+<xs:element name="username" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="localDate" final="extension restriction">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="UserUpdateDataResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="UpdateVenueData">
+<xs:sequence>
+<xs:element name="name" type="tns:venue" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="venue">
+<xs:sequence>
+<xs:element name="address" type="xs:string" minOccurs="0"/>
+<xs:element name="area" type="xs:int"/>
+<xs:element name="city" type="tns:city" minOccurs="0"/>
+<xs:element name="id" type="xs:int"/>
+<xs:element name="maxCapacity" type="xs:int"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="city">
+<xs:sequence>
+<xs:element name="id" type="xs:int"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="UpdateVenueDataResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="SellerUpdateData">
+<xs:sequence>
+<xs:element name="user" type="tns:seller" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="seller">
+<xs:complexContent>
+<xs:extension base="tns:account">
+<xs:sequence>
+<xs:element name="companyAddress" type="xs:string" minOccurs="0"/>
+<xs:element name="companyName" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="SellerUpdateDataResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetPaymentMethods">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="GetPaymentMethodsResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:paymentMethod" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="paymentMethod">
+<xs:sequence>
+<xs:element name="id" type="xs:int"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="SellerLogIn">
+<xs:sequence>
+<xs:element name="username" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="SellerLogInResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:seller" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="UserSignUp">
+<xs:sequence>
+<xs:element name="user" type="tns:user" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="UserSignUpResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetSellerEvent">
+<xs:sequence>
+<xs:element name="seller" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetSellerEventResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:event" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="event">
+<xs:sequence>
+<xs:element name="description" type="xs:string" minOccurs="0"/>
+<xs:element name="eventClasses" type="tns:eventClass" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="id" type="xs:int"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+<xs:element name="seller" type="tns:seller" minOccurs="0"/>
+<xs:element name="startTime" type="xs:string" minOccurs="0"/>
+<xs:element name="venue" type="tns:venue" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="eventClass">
+<xs:sequence>
+<xs:element name="availableStock" type="xs:int"/>
+<xs:element name="description" type="xs:string" minOccurs="0"/>
+<xs:element name="id" type="xs:int"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+<xs:element name="price" type="xs:double"/>
+<xs:element name="stock" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CancelTicketOrder">
+<xs:sequence>
+<xs:element name="ticket" type="tns:ticket" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ticket">
+<xs:sequence>
+<xs:element name="event" type="tns:event" minOccurs="0"/>
+<xs:element name="eventClass" type="xs:string" minOccurs="0"/>
+<xs:element name="id" type="xs:string" minOccurs="0"/>
+<xs:element name="isClaimed" type="xs:boolean"/>
+<xs:element name="paidTime" type="tns:localDateTime" minOccurs="0"/>
+<xs:element name="paymentMethod" type="tns:paymentMethod" minOccurs="0"/>
+<xs:element name="status" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="localDateTime" final="extension restriction">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="CancelTicketOrderResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetVenueWithName">
+<xs:sequence>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetVenueWithNameResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:venue" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="SellerSignUp">
+<xs:sequence>
+<xs:element name="user" type="tns:seller" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="SellerSignUpResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RefundTicket">
+<xs:sequence>
+<xs:element name="ticket_id" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RefundTicketResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetCities">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="GetCitiesResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:city" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ApproveRefundTicket">
+<xs:sequence>
+<xs:element name="ticket" type="tns:ticket" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ApproveRefundTicketResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetCompanyEvent">
+<xs:sequence>
+<xs:element name="companyName" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetCompanyEventResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:event" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetVenueWithProvince">
+<xs:sequence>
+<xs:element name="province" type="tns:province" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="province">
+<xs:sequence>
+<xs:element name="id" type="xs:int"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetVenueWithProvinceResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:venue" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="PayTicket">
+<xs:sequence>
+<xs:element name="ticket_id" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="PayTicketResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CreateNewVenue">
+<xs:sequence>
+<xs:element name="venue" type="tns:venue" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CreateNewVenueResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ClaimTicket">
+<xs:sequence>
+<xs:element name="ticket" type="tns:ticket" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ClaimTicketResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="BuyTicket">
+<xs:sequence>
+<xs:element name="ticket" type="tns:ticket" minOccurs="0"/>
+<xs:element name="arg1" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="BuyTicketResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:ticket" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="UpdateEventData">
+<xs:sequence>
+<xs:element name="event" type="tns:event" minOccurs="0"/>
+<xs:element name="seller_username" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="UpdateEventDataResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="UserLogIn">
+<xs:sequence>
+<xs:element name="username" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="UserLogInResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:user" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="Get1VenueWithName">
+<xs:sequence>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="Get1VenueWithNameResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:venue" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CreateNewEvent">
+<xs:sequence>
+<xs:element name="event" type="tns:event" minOccurs="0"/>
+<xs:element name="seller_username" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CreateNewEventResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:event" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="hello">
+<xs:sequence>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="helloResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetEvent">
+<xs:sequence>
+<xs:element name="eventName" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetEventResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:event" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetVenueWithCityName">
+<xs:sequence>
+<xs:element name="cityName" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetVenueWithCityNameResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:venue" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

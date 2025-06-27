@@ -4,14 +4,17 @@
  */
 package FormUI;
 
-import TicketMarketplaceEntities.Event;
-import TicketMarketplaceEntities.Event_class;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import static ticketmarketplaceclient.GUI.FormLogin.service;
+import tmwebservice.Event;
+import tmwebservice.EventClass;
+import tmwebservice.PaymentMethod;
+import tmwebservice.Ticket;
+import tmwebservice.User;
 
 /**
  *
@@ -22,22 +25,24 @@ public class FormUserCheckout extends javax.swing.JFrame {
     /**
      * Creates new form FormCheckout
      */
-    FormUserTicketDetail parentForm;
     Event selectedEvent;
-    int selectedEventClassId;
-    public FormUserCheckout(FormUserTicketDetail pparentForm, Event event, int eventClassId) {
+    EventClass selectedEventClass;
+    User currentUser;
+    FormUserTicketDetail parentForm;
+    public FormUserCheckout(Event selectedEvent, EventClass selectedEventClass, User currentUser,FormUserTicketDetail parentForm) {
         initComponents();
-        parentForm=pparentForm;
-        selectedEvent=event;
-        selectedEventClassId=eventClassId;
-        System.out.println(event.getId()+" | "+eventClassId);
-        double finalPrice = parentForm.parentForm.service.CalculatePrice(event.getId(), eventClassId+1);
+        this.currentUser=currentUser;
+        this.selectedEvent=selectedEvent;
+        this.selectedEventClass=selectedEventClass;
+        this.parentForm = parentForm;
+        System.out.println(selectedEventClass.getPrice());
+        double finalPrice =calculatePrice(selectedEvent.getId(),selectedEventClass.getId());
         jLabel11.setText(String.valueOf(finalPrice));
-        
-         LocalDate date = event.getStartDateTime();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("id", "ID"));
-        String hasil = date.format(formatter);
-        jLabel6.setText(hasil);
+        jLabel1.setText(selectedEvent.getName());
+        jLabel2.setText(selectedEventClass.getName());
+        jLabel7.setText(selectedEvent.getStartTime());
+         String date = selectedEvent.getStartTime();
+        jLabel6.setText(date);
     }
 
     /**
@@ -95,6 +100,11 @@ public class FormUserCheckout extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -521,22 +531,49 @@ public class FormUserCheckout extends javax.swing.JFrame {
 
     private void btnKonfirmasiPembayaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKonfirmasiPembayaranActionPerformed
         // TODO add your handling code here:
-        String namaLengkap = txtNama.getText();
-        String noTlp = txtPhoneNumber.getText();
-        String alamt = txtEmail.getText();
-        String noKTP = txtNoKTP.getText();
+        System.out.println("currentUser: " + currentUser);
+        System.out.println("selectedEventClass: " + selectedEventClass);
+
         
-        boolean res = parentForm.parentForm.service.BuyTicket(parentForm.parentForm.service.getCurrentUser().getUsername(), selectedEvent.getId(), selectedEventClassId+1 );
-        if(res){
-            System.out.println("Beli berhasil");
-        }else{
-            JOptionPane.showMessageDialog(null, "Gagal", "Attention!", JOptionPane.ERROR_MESSAGE);
+        String username = currentUser.getUsername();
+        String eventClassId = String.valueOf(selectedEventClass.getId());
+        int paymentMethodId = 2; 
+        String paymentStatus = "UNPAID";
+        boolean isClaimed = false;
+//        String email = txtEmail.getText(); 
+//        String noKTP = txtNoKTP.getText();
+//        String phoneNumber = txtPhoneNumber.getText();
+        
+
+        Ticket newTicket = new Ticket();
+        newTicket.setUsername(username);
+        newTicket.setEventClass(eventClassId);
+        newTicket.setPaymentMethod(paymentMethodId);
+        newTicket.setStatus(paymentStatus);
+        newTicket.setIsClaimed(isClaimed);
+        newTicket.setEvent(selectedEvent);
+        System.out.println(currentUser.getUsername());
+        Ticket insert = buyTicket(newTicket, currentUser.getUsername());
+
+        if (insert.getEvent().getId() == selectedEvent.getId()) {
+            JOptionPane.showMessageDialog(null, "Berhasil membeli tiket!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+            FormListOfTicket1 home = new FormListOfTicket1(currentUser);
+            home.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Proses gagalt", "Gagal", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_btnKonfirmasiPembayaranActionPerformed
 
     private void txtNoKTPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNoKTPActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNoKTPActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        parentForm.setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -655,4 +692,18 @@ public class FormUserCheckout extends javax.swing.JFrame {
     private java.awt.TextField txtNoKTP;
     private java.awt.TextField txtPhoneNumber;
     // End of variables declaration//GEN-END:variables
+
+    private static double calculatePrice(int eventId, int eventClassId) {
+        tmwebservice.TMWebService_Service service = new tmwebservice.TMWebService_Service();
+        tmwebservice.TMWebService port = service.getTMWebServicePort();
+        return port.calculatePrice(eventId, eventClassId);
+    }
+
+    private static Ticket buyTicket(tmwebservice.Ticket ticket, java.lang.String arg1) {
+        tmwebservice.TMWebService_Service service = new tmwebservice.TMWebService_Service();
+        tmwebservice.TMWebService port = service.getTMWebServicePort();
+        return port.buyTicket(ticket, arg1);
+    }
+
+ 
 }

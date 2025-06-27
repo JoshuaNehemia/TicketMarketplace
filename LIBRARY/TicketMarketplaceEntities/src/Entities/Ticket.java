@@ -17,12 +17,14 @@ public class Ticket {
     private String id;
     private Event event;
     private String eventClass;
-    private LocalDateTime piadTime;
+    private String piadTime;
     private String status; //ENUM('UNPAID','PAID','REQUEST REFUND','REFUNDED')
     private boolean isClaimed;
+    private String username;
+    private int paymentMethod;
 
     //CONSTRUCTOR
-    public Ticket(String id, Event event, String eventClass, PaymentMethod paymentMethod, LocalDateTime paidDate, String status, boolean isClaimed) {
+    public Ticket(String id, Event event, String eventClass, int paymentMethod, String paidDate, String status, boolean isClaimed) {
         this.id = id;
         this.event = event;
         this.eventClass = eventClass;
@@ -32,7 +34,7 @@ public class Ticket {
         this.isClaimed = isClaimed;
     }
 
-    public Ticket(Event event, String eventClass, PaymentMethod paymentMethod, String status, boolean isClaimed) {
+    public Ticket(String username, Event event, String eventClass, int paymentMethod, String status, boolean isClaimed) {
         this.id = "";
         this.event = event;
         this.eventClass = eventClass;
@@ -40,6 +42,7 @@ public class Ticket {
         this.piadTime = null;
         this.status = status;
         this.isClaimed = isClaimed;
+        this.username = "";
     }
 
     public Ticket() {
@@ -49,6 +52,7 @@ public class Ticket {
         this.piadTime = null;
         this.status = "";
         this.isClaimed = false;
+        this.username = "";
     }
 
     //GETTER AND SETTER
@@ -76,20 +80,19 @@ public class Ticket {
         this.eventClass = eventClass;
     }
 
-    public PaymentMethod getPaymentMethod() {
+    public int getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(PaymentMethod paymentMethod) {
+    public void setPaymentMethod(int paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
-    private PaymentMethod paymentMethod;
 
-    public LocalDateTime getPaidTime() {
+    public String getPaidTime() {
         return piadTime;
     }
 
-    public void setPaidTime(LocalDateTime paidTime) {
+    public void setPaidTime(String paidTime) {
         this.piadTime = paidTime;
     }
 

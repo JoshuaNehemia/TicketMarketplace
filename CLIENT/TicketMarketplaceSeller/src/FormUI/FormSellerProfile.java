@@ -17,11 +17,11 @@ public class FormSellerProfile extends javax.swing.JFrame {
     public FormSellerProfile(FormSellerPublishTicket parentForm) {
         initComponents();
         this.parentForm=parentForm;
-        this.txtCompanyName.setText(FormLogin.service.getCurrentSeller().getCompanyName());
-        this.txtUsername.setText(FormLogin.service.getCurrentSeller().getUsername());
-        this.txtCompanyAddress.setText(FormLogin.service.getCurrentSeller().getCompanyAddress());
-        this.txtEmail.setText(FormLogin.service.getCurrentSeller().getPhoneNumber());
-        this.txtPhoneNumber.setText(FormLogin.service.getCurrentSeller().getEmail());
+//        this.txtCompanyName.setText(FormLogin.service.getCurrentSeller().getCompanyName());
+//        this.txtUsername.setText(FormLogin.service.getCurrentSeller().getUsername());
+//        this.txtCompanyAddress.setText(FormLogin.service.getCurrentSeller().getCompanyAddress());
+//        this.txtEmail.setText(FormLogin.service.getCurrentSeller().getPhoneNumber());
+//        this.txtPhoneNumber.setText(FormLogin.service.getCurrentSeller().getEmail());
 //        this.jTextFieldVendorNeme.setText(parentForm.service.getCurrentUser().getCompanyName());
 //        this.jTextFieldEmail.setText(parentForm.service.getCurrentUser().getEmail());
     }
@@ -236,9 +236,9 @@ public class FormSellerProfile extends javax.swing.JFrame {
 
     private void menuPublishTicketMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPublishTicketMouseClicked
         // TODO add your handling code here:
-        FormSellerPublishTicket publish = new FormSellerPublishTicket(FormLogin.service);
-        publish.setVisible(true);
-        this.setVisible(false);
+//        FormSellerPublishTicket publish = new FormSellerPublishTicket(FormLogin.service);
+//        publish.setVisible(true);
+//        this.setVisible(false);
     }//GEN-LAST:event_menuPublishTicketMouseClicked
 
     /**

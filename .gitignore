@@ -77,3 +77,8 @@ replay_pid*
 /CLIENT/Tester/build/
 /CLIENT/TicketMarketplaceBuyer/build/
 /CLIENT/TicketMarketplaceAdmin/build/
+/LIBRARY/TicketMarketplaceDAO/nbproject/private/
+/LIBRARY/TicketMarketplaceEntities/nbproject/private/
+/SERVER/TicketMarketplaceDatabaseServer/nbproject/private/
+/SERVER/WS/dist/
+/SERVER/WS/build/

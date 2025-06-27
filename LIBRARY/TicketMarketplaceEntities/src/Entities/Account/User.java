@@ -15,11 +15,11 @@ public class User extends Account{
 
     
     //FIELDS
-    private LocalDate birthdate;
+    private String birthdate;
 
     
     //CONSTRUCTOR
-    public User(String username, String password, String fullName, String email,String phoneNumber, LocalDate birthdate) throws Exception{
+    public User(String username, String password, String fullName, String email,String phoneNumber, String birthdate) throws Exception{
         super(username,password,fullName,email,phoneNumber);
         this.birthdate = birthdate;
     }
@@ -30,7 +30,7 @@ public class User extends Account{
     }
 
     //GETTER AND SETTER
-    public LocalDate getBirthdate() {
+    public String getBirthdate() {
         return birthdate;
     }
 
@@ -38,7 +38,7 @@ public class User extends Account{
         return this.getBirthdate().toString();
     }
 
-    public void setBirthdate(LocalDate birthdate) {
+    public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
 

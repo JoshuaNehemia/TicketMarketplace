@@ -45,6 +45,35 @@ public class DAO_Venue {
         
         return venues;
     }
+    
+    public static ArrayList<Venue> Select_Venue_By_City_Name(String cityName) throws Exception {
+    ArrayList<Venue> venues = new ArrayList<>();
+    Venue buffer;
+
+    String SQLQuery = "SELECT v.*, c.id AS city_id, c.name AS city_name FROM venues v " +
+                      "JOIN cities c ON v.city_id = c.id WHERE c.name = ? LIMIT 50;";
+    PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
+    prst.setString(1, cityName);
+
+    ResultSet rslt = prst.executeQuery();
+
+    while (rslt.next()) {
+        City city = new City(rslt.getInt("city_id"), rslt.getString("city_name"));
+        buffer = new Venue(
+            rslt.getInt("id"),
+            rslt.getString("name"),
+            city,
+            rslt.getString("address"),
+            rslt.getInt("maxCapacity"),
+            rslt.getInt("area")
+        );
+        venues.add(buffer);
+    }
+
+    prst.close();
+    return venues;
+}
+
 
     public static ArrayList<Venue> Select_Venue_By_Province(Province province) throws Exception {
         ArrayList<Venue> venues = new ArrayList<Venue>();
@@ -73,6 +102,34 @@ public class DAO_Venue {
         
         return venues;
     }
+    
+    public static Venue SelectSingleVenueByName(String name) throws Exception {
+    Venue buffer = null;
+
+    String SQLQuery = "SELECT v.*" +
+                      "FROM venues v " +
+                      "WHERE v.name = ? LIMIT 1;";
+    
+    PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
+    prst.setString(1, name);
+
+    ResultSet rslt = prst.executeQuery();
+    if (rslt.next()) {
+        buffer = new Venue(
+            rslt.getInt("id"),
+            rslt.getString("name"),
+            new City(),
+            rslt.getString("address"),
+            rslt.getInt("area"),
+            rslt.getInt("maxCapacity")
+        );
+    }
+
+    rslt.close();
+    prst.close();
+    return buffer;
+}
+
 
     public static ArrayList<Venue> Select_Venue_By_Name(String name) throws Exception {
         ArrayList<Venue> venues = new ArrayList<Venue>();

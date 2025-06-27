@@ -80,6 +80,11 @@ public class Venue {
             this.name = name;
         }
     }
+    //FUNCTION
+    @Override
+    public String toString(){
+        return this.getName();
+    }
 
     public String getAddress() {
         return address;
