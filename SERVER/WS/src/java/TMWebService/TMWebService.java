@@ -357,13 +357,14 @@ public double CalculatePrice(@WebParam(name = "eventId") int eventId,
             int stock = 0;
             int eventClassId = 0;
             for (EventClass ec : ticket.getEvent().getEventClasses()) {
-                if (ec.getName().equals(ticket.getEventClass())) {
+                if (String.valueOf(ec.getId()).equals(ticket.getEventClass())) {
                     eventClassId = ec.getId();
                 }
             }
             if (eventClassId == 0) {
                 return new Ticket();
             }
+
             stock = DAO_EventClass.Select_EventClass_Stock(eventClassId);
             if (stock == 0) {
                 return new Ticket();
@@ -374,7 +375,6 @@ public double CalculatePrice(@WebParam(name = "eventId") int eventId,
                 }
                 ticket.setId(ticket.CreateID(user));
                 num = DAO_Ticket.Insert_Ticket(ticket, user, eventClassId);
-
                 if (num == 0) {
                     num = DAO_EventClass.Update_EventClass_Stock_Add(eventClassId, 1);
                     return new Ticket();
@@ -383,6 +383,7 @@ public double CalculatePrice(@WebParam(name = "eventId") int eventId,
             }
         } catch (Exception ex) {
             System.out.println("ERROR IN WEBSERVICE: " + ex);
+            ex.printStackTrace();
         }
         return result;
     }
@@ -472,6 +473,20 @@ public double CalculatePrice(@WebParam(name = "eventId") int eventId,
         }
         return eventClassId;
     }
+    
+    @WebMethod(operationName = "GetTicketsByUsername")
+    public List<Ticket> GetTicketsByUsername(@WebParam(name = "username") String username) {
+        List<Ticket> tickets = new ArrayList<>();
+        try {
+            this.ConnectToDatabase();
+            tickets = DAO_Ticket.Select_Tickets_By_Username(username);
+        } catch (Exception ex) {
+            System.out.println("ERROR IN WEBSERVICE: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+        return tickets;
+    }
+
     
     @WebMethod(operationName = "hello")
     public String hello(@WebParam(name = "name") String txt) {

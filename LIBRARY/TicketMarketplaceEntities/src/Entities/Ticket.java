@@ -17,14 +17,14 @@ public class Ticket {
     private String id;
     private Event event;
     private String eventClass;
-    private LocalDateTime piadTime;
+    private String piadTime;
     private String status; //ENUM('UNPAID','PAID','REQUEST REFUND','REFUNDED')
     private boolean isClaimed;
     private String username;
     private int paymentMethod;
 
     //CONSTRUCTOR
-    public Ticket(String id, Event event, String eventClass, int paymentMethod, LocalDateTime paidDate, String status, boolean isClaimed) {
+    public Ticket(String id, Event event, String eventClass, int paymentMethod, String paidDate, String status, boolean isClaimed) {
         this.id = id;
         this.event = event;
         this.eventClass = eventClass;
@@ -88,11 +88,11 @@ public class Ticket {
         this.paymentMethod = paymentMethod;
     }
 
-    public LocalDateTime getPaidTime() {
+    public String getPaidTime() {
         return piadTime;
     }
 
-    public void setPaidTime(LocalDateTime paidTime) {
+    public void setPaidTime(String paidTime) {
         this.piadTime = paidTime;
     }
 

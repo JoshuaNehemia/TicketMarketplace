@@ -34,6 +34,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
     public FormListOfTicket1(User currentUser) {
         initComponents();
         this.currentUser = currentUser;
+        System.out.println("Halo :"+currentUser.getUsername());
         int page = Integer.parseInt(jLabel21.getText());
         showIndexFrom = 3 * page - 3;
 
@@ -663,10 +664,10 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
 
     private void btnTiketDibeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTiketDibeliActionPerformed
         // TODO add your handling code here:
-//        FormUserTicket form = new FormUserTicket(this);
-//        form.setVisible(true);
-//        
-//        this.setVisible(false);
+        FormUserTicket form = new FormUserTicket(currentUser, this);
+        form.setVisible(true);
+        
+        this.setVisible(false);
     }//GEN-LAST:event_btnTiketDibeliActionPerformed
 
     private void menuProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuProfileMouseClicked
@@ -706,6 +707,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         detailevent.setVisible(true);
 
         this.setVisible(false);
+
     }//GEN-LAST:event_btnDetailsTicket2ActionPerformed
 
     private void btnDetailsTicket3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailsTicket3ActionPerformed
@@ -715,6 +717,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         detailevent.setVisible(true);
 
         this.setVisible(false);
+
     }//GEN-LAST:event_btnDetailsTicket3ActionPerformed
 
     /**

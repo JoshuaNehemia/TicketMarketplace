@@ -93,7 +93,7 @@ public class DAO_EventClass {
     public static int Select_EventClass_Stock(int id) throws Exception {
         ArrayList<EventClass> events = new ArrayList<>();
 
-        String SQLQuery = "SELECT stockAvailable FROM `eventclassess` WHERE `id` = ?;";
+        String SQLQuery = "SELECT availableStock FROM `eventclasses` WHERE `id` = ?;";
         PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
         prst.setString(1, String.valueOf(id));
 
@@ -101,7 +101,7 @@ public class DAO_EventClass {
 
         int stock = 0;
         if (rslt.next()) {
-            stock = rslt.getInt("stockAvailable");
+            stock = rslt.getInt("availableStock");
         }
 
         prst.close();

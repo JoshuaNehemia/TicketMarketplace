@@ -60,6 +60,10 @@
 
 <xs:element name="GetSellerEventResponse" type="tns:GetSellerEventResponse"/>
 
+<xs:element name="GetTicketsByUsername" type="tns:GetTicketsByUsername"/>
+
+<xs:element name="GetTicketsByUsernameResponse" type="tns:GetTicketsByUsernameResponse"/>
+
 <xs:element name="GetVenueWithCityName" type="tns:GetVenueWithCityName"/>
 
 <xs:element name="GetVenueWithCityNameResponse" type="tns:GetVenueWithCityNameResponse"/>
@@ -228,6 +232,18 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="UserSignUp">
+<xs:sequence>
+<xs:element name="user" type="tns:user" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="UserSignUpResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="SellerLogIn">
 <xs:sequence>
 <xs:element name="username" type="xs:string" minOccurs="0"/>
@@ -238,18 +254,6 @@
 <xs:complexType name="SellerLogInResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:seller" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="UserSignUp">
-<xs:sequence>
-<xs:element name="user" type="tns:user" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="UserSignUpResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -300,14 +304,10 @@
 <xs:element name="eventClass" type="xs:string" minOccurs="0"/>
 <xs:element name="id" type="xs:string" minOccurs="0"/>
 <xs:element name="isClaimed" type="xs:boolean"/>
-<xs:element name="paidTime" type="tns:localDateTime" minOccurs="0"/>
-<xs:element name="paymentMethod" type="tns:paymentMethod" minOccurs="0"/>
+<xs:element name="paidTime" type="xs:string" minOccurs="0"/>
+<xs:element name="paymentMethod" type="xs:int"/>
 <xs:element name="status" type="xs:string" minOccurs="0"/>
 </xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="localDateTime" final="extension restriction">
-<xs:sequence/>
 </xs:complexType>
 
 <xs:complexType name="CancelTicketOrderResponse">
@@ -374,18 +374,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="GetCompanyEvent">
-<xs:sequence>
-<xs:element name="companyName" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="GetCompanyEventResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:event" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="GetVenueWithProvince">
 <xs:sequence>
 <xs:element name="province" type="tns:province" minOccurs="0"/>
@@ -405,6 +393,18 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="GetCompanyEvent">
+<xs:sequence>
+<xs:element name="companyName" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetCompanyEventResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:event" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="PayTicket">
 <xs:sequence>
 <xs:element name="ticket_id" type="xs:string" minOccurs="0"/>
@@ -412,6 +412,18 @@
 </xs:complexType>
 
 <xs:complexType name="PayTicketResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CreateNewVenue">
+<xs:sequence>
+<xs:element name="venue" type="tns:venue" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CreateNewVenueResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:int"/>
 </xs:sequence>
@@ -427,18 +439,6 @@
 <xs:complexType name="CalculatePriceResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:double"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="CreateNewVenue">
-<xs:sequence>
-<xs:element name="venue" type="tns:venue" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="CreateNewVenueResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -467,19 +467,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="UpdateEventData">
-<xs:sequence>
-<xs:element name="event" type="tns:event" minOccurs="0"/>
-<xs:element name="seller_username" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="UpdateEventDataResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="UserLogIn">
 <xs:sequence>
 <xs:element name="username" type="xs:string" minOccurs="0"/>
@@ -490,6 +477,19 @@
 <xs:complexType name="UserLogInResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:user" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="UpdateEventData">
+<xs:sequence>
+<xs:element name="event" type="tns:event" minOccurs="0"/>
+<xs:element name="seller_username" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="UpdateEventDataResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -559,6 +559,18 @@
 <xs:complexType name="GetVenueWithCityNameResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:venue" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetTicketsByUsername">
+<xs:sequence>
+<xs:element name="username" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetTicketsByUsernameResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:ticket" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>

@@ -5,6 +5,9 @@
 package FormUI;
 
 import java.util.ArrayList;
+import java.util.List;
+import tmwebservice.Ticket;
+import tmwebservice.User;
 
 /**
  *
@@ -15,33 +18,15 @@ public class FormUserTicket extends javax.swing.JFrame {
     /**
      * Creates new form FormUserTicket
      */
+    User currentUser;
     FormListOfTicket1 parentForm;
-    public FormUserTicket() {
+    public FormUserTicket(User currentUser, FormListOfTicket1 parentForm) {
         initComponents();
-//        parentForm=pparentForm;
-//        parentForm.service.repo.ListTicket.clear();
-//        parentForm.service.SelectTicket(parentForm.service.getCurrentUser().getUsername());
         txtListTicketDibeli.setText("");
-        System.out.println("SHOWING TICKET");
-//        if (parentForm.service.repo.ListTicket != null && !parentForm.service.repo.ListTicket.isEmpty()) {
-//         StringBuilder sb = new StringBuilder();
-//        for (Ticket ticket : parentForm.service.repo.ListTicket) {
-//             int eventId = ticket.getEvent().getId(); 
-//            int eventClassId = ticket.getSeats().getId(); 
-//
-//            String[] eventClass = parentForm.service.UserEventClassById(eventId, eventClassId);
-//            int iForEventClassName=1;
-//            if(eventClassId>1)iForEventClassName+=7*(eventClassId-1);
-//            System.out.println("classid= "+eventClassId);
-//            String ticketData = "Event name : "+ticket.getEvent().getName() + " | " +
-//                                "Event class : "+eventClass[iForEventClassName] + " | " +
-//                                "Paid date : "+ticket.getPaidDate() + " | " +
-//                                "Price : "+ticket.getPrice();
-//            sb.append(ticketData).append("\n");
-//        }
-//        
-//        txtListTicketDibeli.setText(sb.toString());
-//        }
+        this.currentUser= currentUser;
+        this.parentForm = parentForm;
+        
+        List<Ticket> listOfTickets= getTicketsByUsername(currentUser.getUsername());
     }
 
     /**
@@ -83,7 +68,7 @@ public class FormUserTicket extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(198, Short.MAX_VALUE))
         );
 
         pack();
@@ -153,4 +138,10 @@ public class FormUserTicket extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea txtListTicketDibeli;
     // End of variables declaration//GEN-END:variables
+
+    private static java.util.List<tmwebservice.Ticket> getTicketsByUsername(java.lang.String username) {
+        tmwebservice.TMWebService_Service service = new tmwebservice.TMWebService_Service();
+        tmwebservice.TMWebService port = service.getTMWebServicePort();
+        return port.getTicketsByUsername(username);
+    }
 }

@@ -60,6 +60,8 @@ public class Event {
     {
         this.id = id;
         this.name = name;
+        this.eventClasses = new ArrayList<>();
+
     }
 
     public Event() {
@@ -136,8 +138,13 @@ public class Event {
     }
 
     public void addEventClasses(EventClass eventClass) {
-        this.eventClasses.add(eventClass);
+    if (this.eventClasses == null) {
+        System.out.println("eventClasses masih null!");
+        this.eventClasses = new ArrayList<>();
     }
+    this.eventClasses.add(eventClass);
+}
+
 
     //FUNCTION
     public String[] GetEventData() {

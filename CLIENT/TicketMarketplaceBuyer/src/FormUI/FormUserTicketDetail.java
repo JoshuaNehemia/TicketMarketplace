@@ -24,12 +24,15 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
     FormListOfTicket1 parentForm;
     Event eventSelected;
     User currentUser;
+    
     public FormUserTicketDetail(FormListOfTicket1 parentForm,Event selected, User currentUser) {
         initComponents();
-        eventSelected=selected;
-    currentUser=currentUser;
+        this.parentForm = parentForm;
+        this.eventSelected=selected;
+        this.currentUser=currentUser;
+        System.out.println("username : "+currentUser.getUsername());
         jLabel1.setText(selected.getName());
-        cbClassType.removeAllItems(); // clear dulu kalau perlu
+        cbClassType.removeAllItems(); 
         for (EventClass ec : selected.getEventClasses()) {
             cbClassType.addItem(ec.getName());  
         }
@@ -106,6 +109,11 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -453,9 +461,11 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
     private void btnCheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckoutActionPerformed
         // TODO add your handling code here:
         int selectedIndex = cbClassType.getSelectedIndex();
+        System.out.println("index ec dipilih : "+selectedIndex);
         EventClass selectedEventClass = eventSelected.getEventClasses().get(selectedIndex);
         System.out.println(selectedIndex);
-        FormUserCheckout checkout = new FormUserCheckout(eventSelected, selectedEventClass, currentUser);
+        System.out.println("username tiket detail : "+currentUser.getUsername());
+        FormUserCheckout checkout = new FormUserCheckout(eventSelected, selectedEventClass, currentUser,this);
         checkout.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnCheckoutActionPerformed
@@ -473,6 +483,11 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
     private void cbClassTypePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cbClassTypePropertyChange
       
     }//GEN-LAST:event_cbClassTypePropertyChange
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        parentForm.setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     
     /**
