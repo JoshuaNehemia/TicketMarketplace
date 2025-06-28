@@ -66,6 +66,18 @@ public class TMWebService {
         }
         return pms;
     }
+    
+    @WebMethod(operationName = "getPaymentMethodsById")
+    public PaymentMethod getPaymentMethodsById(int id) {
+        try {
+            return DAO_PaymentMethod.Select_PaymentMethod_By_Id(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    
 
     //USER (BUYER)
     @WebMethod(operationName = "UserLogIn")
@@ -393,7 +405,7 @@ public double CalculatePrice(@WebParam(name = "eventId") int eventId,
         int num = 0;
         try {
             this.ConnectToDatabase();
-            num = DAO_Ticket.Update_Ticket_Paid(ticket_id, LocalDateTime.now());
+            num = DAO_Ticket.Update_Ticket_Paid(ticket_id);
         } catch (Exception ex) {
             System.out.println("ERROR IN WEBSERVICE: " + ex);
         }
@@ -417,6 +429,7 @@ public double CalculatePrice(@WebParam(name = "eventId") int eventId,
         int num = 0;
         try {
             this.ConnectToDatabase();
+            System.out.println("id event batal = " + ticket.getId());
             num = DAO_Ticket.Update_Ticket_Status(ticket.getId(), "CANCELLED");
             num += DAO_EventClass.Update_EventClass_Stock_Add(this.GetEventClassId(ticket), 1);
         } catch (Exception ex) {
@@ -486,6 +499,7 @@ public double CalculatePrice(@WebParam(name = "eventId") int eventId,
         }
         return tickets;
     }
+    
 
     
     @WebMethod(operationName = "hello")

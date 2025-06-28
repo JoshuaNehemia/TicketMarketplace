@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import tmwebservice.Event;
 import tmwebservice.EventClass;
@@ -33,6 +34,8 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
     List<Event> listOfEvent;
     public FormListOfTicket1(User currentUser) {
         initComponents();
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+
         this.currentUser = currentUser;
         System.out.println("Halo :"+currentUser.getUsername());
         int page = Integer.parseInt(jLabel21.getText());
@@ -47,8 +50,35 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         listOfEvent = getAllEvents();
     }
      private void refreshTicketsUI(){
-                // Card 1
-       if (showIndexFrom < listOfEvent.size()) {
+         if(listOfEvent.size()%3==1){
+            jPanel3.setVisible(false);
+            jPanel5.setVisible(false);
+//            jLabel10.setVisible(false);
+//            jLabel16.setVisible(false);
+//            jLabel11.setVisible(false);
+//            jLabel17.setVisible(false);
+//            jLabel13.setVisible(false);
+//            jLabel19.setVisible(false);
+//            jLabel14.setVisible(false);
+//            jLabel20.setVisible(false);
+//            btnDetailsTicket2.setVisible(false);
+//            btnDetailsTicket3.setVisible(false);
+            PanelDetailTicket2.setVisible(false);
+            PanelDetailTicket3.setVisible(false);
+         }else if(listOfEvent.size()%3==2)
+         {
+            jPanel5.setVisible(false);
+            PanelDetailTicket3.setVisible(false);
+         }else if(listOfEvent.size()==0){
+            jPanel3.setVisible(false);
+            jPanel5.setVisible(false);
+            PanelDetailTicket2.setVisible(false);
+            PanelDetailTicket3.setVisible(false);
+            btnDetailsTicket1.setEnabled(false);
+            return;
+         }
+        // Card 1
+        if (showIndexFrom < listOfEvent.size()&&listOfEvent.size()%3>=0&&listOfEvent.size()>0) {
            Event event1 = listOfEvent.get(showIndexFrom);
            jLabel1.setText(event1.getName());
            jLabel2.setText(event1.getStartTime());
@@ -68,7 +98,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
        }
 
        // Card 2
-       if (showIndexFrom + 1 < listOfEvent.size()) {
+       if (showIndexFrom + 1 < listOfEvent.size()&&listOfEvent.size()%3==2||listOfEvent.size()%3==0) {
            Event event2 = listOfEvent.get(showIndexFrom + 1);
            jLabel10.setText(event2.getName());
            jLabel11.setText(event2.getStartTime());
@@ -83,12 +113,13 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                }
                jLabel13.setText("Rp: " + cheapestClass.getPrice());
            } else {
+               System.out.println("kosong");
                jLabel13.setText("Belum ada kelas tiket");
            }
        }
 
        // Card 3
-       if (showIndexFrom + 2 < listOfEvent.size()) {
+       if (showIndexFrom + 2 < listOfEvent.size()&&listOfEvent.size()%3==0) {
            Event event3 = listOfEvent.get(showIndexFrom + 2);
            jLabel16.setText(event3.getName());
            jLabel17.setText(event3.getStartTime());
@@ -103,6 +134,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                }
                jLabel19.setText("Rp: " + cheapestClass.getPrice());
            } else {
+               System.out.println("kosong");
                jLabel19.setText("Belum ada kelas tiket");
            }
        }
@@ -245,18 +277,18 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         PanelDetailTicket1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel1.setText("Judul Event");
+        jLabel1.setText("Tidak ada event");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        jLabel2.setText("11 Agustus 2025");
+        jLabel2.setText("-");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 102, 51));
-        jLabel4.setText("IDR 500.000");
+        jLabel4.setText("-");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(51, 153, 0));
-        jLabel5.setText("Tersedia sekarang");
+        jLabel5.setText("-");
 
         btnDetailsTicket1.setBackground(new java.awt.Color(153, 102, 255));
         btnDetailsTicket1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
@@ -447,7 +479,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                 .addGroup(PanelDetailTicket3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelDetailTicket3Layout.createSequentialGroup()
                         .addComponent(jLabel20)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                         .addComponent(btnDetailsTicket3))
                     .addGroup(PanelDetailTicket3Layout.createSequentialGroup()
                         .addGroup(PanelDetailTicket3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -595,9 +627,9 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                             .addComponent(PanelDetailTicket2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(PanelDetailTicket3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PanelDetailTicket3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(15, Short.MAX_VALUE))
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
