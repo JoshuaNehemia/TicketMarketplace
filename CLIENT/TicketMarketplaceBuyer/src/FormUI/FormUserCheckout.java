@@ -546,14 +546,14 @@ public class FormUserCheckout extends javax.swing.JFrame {
         
 
         Ticket newTicket = new Ticket();
-        newTicket.setUsername(username);
+//        newTicket.set(username);
         newTicket.setEventClass(eventClassId);
         newTicket.setPaymentMethod(paymentMethodId);
         newTicket.setStatus(paymentStatus);
         newTicket.setIsClaimed(isClaimed);
         newTicket.setEvent(selectedEvent);
         System.out.println(currentUser.getUsername());
-        Ticket insert = buyTicket(newTicket, currentUser.getUsername());
+        Ticket insert = buyTicket(newTicket , username);
 
         if (insert.getEvent().getId() == selectedEvent.getId()) {
             JOptionPane.showMessageDialog(null, "Berhasil membeli tiket!", "Sukses", JOptionPane.INFORMATION_MESSAGE);

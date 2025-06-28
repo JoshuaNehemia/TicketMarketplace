@@ -116,6 +116,10 @@
 
 <xs:element name="UserUpdateDataResponse" type="tns:UserUpdateDataResponse"/>
 
+<xs:element name="getPaymentMethodsById" type="tns:getPaymentMethodsById"/>
+
+<xs:element name="getPaymentMethodsByIdResponse" type="tns:getPaymentMethodsByIdResponse"/>
+
 <xs:element name="hello" type="tns:hello"/>
 
 <xs:element name="helloResponse" type="tns:helloResponse"/>
@@ -254,6 +258,18 @@
 <xs:complexType name="SellerLogInResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:seller" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getPaymentMethodsById">
+<xs:sequence>
+<xs:element name="arg0" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getPaymentMethodsByIdResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:paymentMethod" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -417,18 +433,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="CreateNewVenue">
-<xs:sequence>
-<xs:element name="venue" type="tns:venue" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="CreateNewVenueResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="CalculatePrice">
 <xs:sequence>
 <xs:element name="eventId" type="xs:int"/>
@@ -439,6 +443,18 @@
 <xs:complexType name="CalculatePriceResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CreateNewVenue">
+<xs:sequence>
+<xs:element name="venue" type="tns:venue" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CreateNewVenueResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 

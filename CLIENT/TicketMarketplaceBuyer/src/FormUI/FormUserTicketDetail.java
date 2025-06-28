@@ -40,9 +40,9 @@ public class FormUserTicketDetail extends javax.swing.JFrame {
        priceCategory1.setText(String.valueOf(selected.getEventClasses().get(0).getPrice()));
        if (selected.getEventClasses().size() > 1 && selected.getEventClasses().get(1) != null) {
             priceCategory2.setText(String.valueOf(selected.getEventClasses().get(1).getPrice()));
-            lblTicketAmmounLeft2.setText("Jumlah : " + selected.getEventClasses().get(1).getStock());
+            lblTicketAmmounLeft2.setText("Jumlah : " + selected.getEventClasses().get(1).getAvailableStock());
        }
-       lblTicketAmmounLeft1.setText("Jumlah : " + selected.getEventClasses().get(0).getStock());
+       lblTicketAmmounLeft1.setText("Jumlah : " + selected.getEventClasses().get(0).getAvailableStock());
        lblSellerUsername.setText(selected.getSeller().getCompanyName());
        
        String dateStart =selected.getStartTime();

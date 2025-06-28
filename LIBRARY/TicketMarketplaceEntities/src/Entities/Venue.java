@@ -46,6 +46,11 @@ public class Venue {
         this.setCity(city);
         this.setAddress(address);
     }
+    
+    public Venue(int id, String name) throws Exception{
+        this.setId(id);
+        this.setName(name);
+    }
 
     public Venue() {
         this.id = 0;

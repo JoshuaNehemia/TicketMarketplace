@@ -15,6 +15,28 @@ import java.util.ArrayList;
  * @author joshu
  */
 public class DAO_PaymentMethod {
+    
+    public static PaymentMethod Select_PaymentMethod_By_Id(int id) throws Exception {
+    PaymentMethod paymentMethod = null;
+
+    String SQLQuery = "SELECT * FROM paymentmethods WHERE id = ?";
+
+    PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
+    prst.setInt(1, id);
+    ResultSet rslt = prst.executeQuery();
+
+    if (rslt.next()) {
+        paymentMethod = new PaymentMethod(
+            rslt.getInt("id"),
+            rslt.getString("name")
+        );
+    }
+
+    rslt.close();
+    prst.close();
+
+    return paymentMethod;
+}
 
     public static ArrayList<PaymentMethod> Select_PaymentMethods() throws Exception {
         ArrayList<PaymentMethod> paymentMethods = new ArrayList<>();
