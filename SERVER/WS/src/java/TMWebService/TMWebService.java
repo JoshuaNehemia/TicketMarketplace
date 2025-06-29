@@ -285,14 +285,14 @@ public Venue Get1VenueWithName(@WebParam(name = "name") String name) {
     }
     
     @WebMethod(operationName = "GetAllEvents")
-public List<Event> GetAllEvents() {
+    public List<Event> GetAllEvents(@WebParam(name = "filter") String filter){
     List<Event> events = new ArrayList<>();
     try {
         this.ConnectToDatabase();
-        events = DAO_Event.Select_All_Events();
+        events = DAO_Event.Select_All_Events(filter);
     } catch (Exception ex) {
         System.out.println("ERROR IN WEBSERVICE: " + ex);
-        ex.printStackTrace(); // biar stacktrace muncul
+        ex.printStackTrace(); 
     }
     return events;
 }
@@ -417,7 +417,7 @@ public double CalculatePrice(@WebParam(name = "eventId") int eventId,
         int num = 0;
         try {
             this.ConnectToDatabase();
-            num = DAO_Ticket.Update_Ticket_Status(ticket_id, "REFUND");
+            num = DAO_Ticket.Update_Ticket_Status(ticket_id, "REQUEST REFUND");
         } catch (Exception ex) {
             System.out.println("ERROR IN WEBSERVICE: " + ex);
         }
@@ -443,7 +443,7 @@ public double CalculatePrice(@WebParam(name = "eventId") int eventId,
         int num = 0;
         try {
             this.ConnectToDatabase();
-            num = DAO_Ticket.Update_Ticket_Status(ticket.getId(), "REFUND");
+            num = DAO_Ticket.Update_Ticket_Status(ticket.getId(), "REFUNDED");
             num += DAO_EventClass.Update_EventClass_Stock_Add(this.GetEventClassId(ticket), 1);
         } catch (Exception ex) {
             System.out.println("ERROR IN WEBSERVICE: " + ex);
@@ -493,6 +493,19 @@ public double CalculatePrice(@WebParam(name = "eventId") int eventId,
         try {
             this.ConnectToDatabase();
             tickets = DAO_Ticket.Select_Tickets_By_Username(username);
+        } catch (Exception ex) {
+            System.out.println("ERROR IN WEBSERVICE: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+        return tickets;
+    }
+    
+    @WebMethod(operationName = "GetPaidOrRequestRefundAdmin")
+        public List<Ticket> GetPaidOrRequestRefundAdmin() {
+        List<Ticket> tickets = new ArrayList<>();
+        try {
+            this.ConnectToDatabase();
+            tickets = DAO_Ticket.Select_Ticket_Paid_RequestRefund_Admin();
         } catch (Exception ex) {
             System.out.println("ERROR IN WEBSERVICE: " + ex.getMessage());
             ex.printStackTrace();

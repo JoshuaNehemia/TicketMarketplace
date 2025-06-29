@@ -4,6 +4,8 @@
  */
 package ConsoleApp;
 
+import FormUI.FormAdmin;
+
 /**
  *
  * @author joshu
@@ -14,7 +16,9 @@ public class AdminApp {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        java.awt.EventQueue.invokeLater(() -> {
+            new FormAdmin().setVisible(true);
+        });
     }
     
 }
