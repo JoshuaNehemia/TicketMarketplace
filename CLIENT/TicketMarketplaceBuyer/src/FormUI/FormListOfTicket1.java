@@ -4,6 +4,7 @@
  */
 package FormUI;
 
+import java.awt.Color;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -37,32 +38,23 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
         this.currentUser = currentUser;
-        System.out.println("Halo :"+currentUser.getUsername());
         int page = Integer.parseInt(jLabel21.getText());
         showIndexFrom = 3 * page - 3;
 
-        loadEvents();
+        loadEvents("all");
         System.out.println(listOfEvent.size());
         refreshTicketsUI();
+        if(listOfEvent.size()>0)jLabel5.setText("Tersedia");
+        jLabel5.setForeground(Color.GREEN);
     }
     
-     private void loadEvents() {
-        listOfEvent = getAllEvents();
+     private void loadEvents(String filter) {
+        listOfEvent = getAllEvents(filter);
     }
      private void refreshTicketsUI(){
          if(listOfEvent.size()%3==1){
             jPanel3.setVisible(false);
             jPanel5.setVisible(false);
-//            jLabel10.setVisible(false);
-//            jLabel16.setVisible(false);
-//            jLabel11.setVisible(false);
-//            jLabel17.setVisible(false);
-//            jLabel13.setVisible(false);
-//            jLabel19.setVisible(false);
-//            jLabel14.setVisible(false);
-//            jLabel20.setVisible(false);
-//            btnDetailsTicket2.setVisible(false);
-//            btnDetailsTicket3.setVisible(false);
             PanelDetailTicket2.setVisible(false);
             PanelDetailTicket3.setVisible(false);
          }else if(listOfEvent.size()%3==2)
@@ -84,8 +76,25 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
            jLabel2.setText(event1.getStartTime());
 
            List<EventClass> eventClasses1 = event1.getEventClasses();
+           boolean tersedia = false;
            if (eventClasses1 != null && !eventClasses1.isEmpty()) {
-               EventClass cheapestClass = eventClasses1.get(0);
+                EventClass cheapestClass = eventClasses1.get(0);
+                for (EventClass ec : eventClasses1) {
+                     if (ec.getPrice() < cheapestClass.getPrice()) {
+                         cheapestClass = ec;
+                     }
+                     if (ec.getAvailableStock() > 0) {
+                         tersedia = true;
+                     }
+                 }
+                if (tersedia) {
+                    jLabel5.setText("Tersedia");
+                    jLabel5.setForeground(Color.GREEN);
+                } else {
+                    jLabel5.setText("Tidak Tersedia");
+                    jLabel5.setForeground(Color.RED);
+
+                }
                for (EventClass ec : eventClasses1) {
                    if (ec.getPrice() < cheapestClass.getPrice()) {
                        cheapestClass = ec;
@@ -96,49 +105,76 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                jLabel4.setText("Belum ada kelas tiket");
            }
        }
-
        // Card 2
-       if (showIndexFrom + 1 < listOfEvent.size()&&listOfEvent.size()%3==2||listOfEvent.size()%3==0) {
-           Event event2 = listOfEvent.get(showIndexFrom + 1);
+       if (showIndexFrom+1 < listOfEvent.size()&&listOfEvent.size()%3>=0&&listOfEvent.size()>0) {
+           Event event2 = listOfEvent.get(showIndexFrom+1);
            jLabel10.setText(event2.getName());
            jLabel11.setText(event2.getStartTime());
 
-           List<EventClass> eventClasses2 = event2.getEventClasses();
-           if (eventClasses2 != null && !eventClasses2.isEmpty()) {
-               EventClass cheapestClass = eventClasses2.get(0);
-               for (EventClass ec : eventClasses2) {
+           List<EventClass> eventClasses1 = event2.getEventClasses();
+           boolean tersedia = false;
+           if (eventClasses1 != null && !eventClasses1.isEmpty()) {
+                EventClass cheapestClass = eventClasses1.get(0);
+                for (EventClass ec : eventClasses1) {
+                     if (ec.getPrice() < cheapestClass.getPrice()) {
+                         cheapestClass = ec;
+                     }
+                     if (ec.getAvailableStock() > 0) {
+                         tersedia = true;
+                     }
+                 }
+                if (tersedia) {
+                    jLabel14.setText("Tersedia");
+                    jLabel14.setForeground(Color.GREEN);
+                } else {
+                    jLabel14.setText("Tidak Tersedia");
+                    jLabel14.setForeground(Color.RED);
+                }
+               for (EventClass ec : eventClasses1) {
                    if (ec.getPrice() < cheapestClass.getPrice()) {
                        cheapestClass = ec;
                    }
                }
                jLabel13.setText("Rp: " + cheapestClass.getPrice());
            } else {
-               System.out.println("kosong");
                jLabel13.setText("Belum ada kelas tiket");
            }
        }
-
        // Card 3
-       if (showIndexFrom + 2 < listOfEvent.size()&&listOfEvent.size()%3==0) {
-           Event event3 = listOfEvent.get(showIndexFrom + 2);
+        if (showIndexFrom+2 < listOfEvent.size()&&listOfEvent.size()%3>=0&&listOfEvent.size()>0) {
+           Event event3 = listOfEvent.get(showIndexFrom+2);
            jLabel16.setText(event3.getName());
            jLabel17.setText(event3.getStartTime());
 
-           List<EventClass> eventClasses3 = event3.getEventClasses();
-           if (eventClasses3 != null && !eventClasses3.isEmpty()) {
-               EventClass cheapestClass = eventClasses3.get(0);
-               for (EventClass ec : eventClasses3) {
+           List<EventClass> eventClasses1 = event3.getEventClasses();
+           boolean tersedia = false;
+           if (eventClasses1 != null && !eventClasses1.isEmpty()) {
+                EventClass cheapestClass = eventClasses1.get(0);
+                for (EventClass ec : eventClasses1) {
+                     if (ec.getPrice() < cheapestClass.getPrice()) {
+                         cheapestClass = ec;
+                     }
+                     if (ec.getAvailableStock() > 0) {
+                         tersedia = true;
+                     }
+                 }
+                if (tersedia) {
+                    jLabel20.setText("Tersedia");
+                    jLabel20.setForeground(Color.GREEN);
+                } else {
+                    jLabel20.setText("Tidak Tersedia");
+                    jLabel20.setForeground(Color.RED);
+                }
+               for (EventClass ec : eventClasses1) {
                    if (ec.getPrice() < cheapestClass.getPrice()) {
                        cheapestClass = ec;
                    }
                }
                jLabel19.setText("Rp: " + cheapestClass.getPrice());
            } else {
-               System.out.println("kosong");
                jLabel19.setText("Belum ada kelas tiket");
            }
        }
-
      }
 
     /**
@@ -192,8 +228,6 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         btnTerbaru = new javax.swing.JButton();
         btnHargaTerendah = new javax.swing.JButton();
         btnHargaTertinggi = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        cbKategori = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         PanelDetailTicket1 = new javax.swing.JPanel();
@@ -227,28 +261,37 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         btnTiketDibeli = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuHome = new javax.swing.JMenu();
-        menuInventory = new javax.swing.JMenu();
-        menuProfile = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel7.setText("Urutkan :");
 
         btnTerdekat.setText("Terdekat");
+        btnTerdekat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTerdekatActionPerformed(evt);
+            }
+        });
 
         btnTerbaru.setText("Terbaru");
+        btnTerbaru.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTerbaruActionPerformed(evt);
+            }
+        });
 
         btnHargaTerendah.setText("Harga Terendah");
+        btnHargaTerendah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHargaTerendahActionPerformed(evt);
+            }
+        });
 
         btnHargaTertinggi.setText("Harga Tertinggi");
-
-        jLabel8.setText("Kategori");
-
-        cbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Konser", "Olahraga", "Pameran", "Komedi", "Seminar" }));
-        cbKategori.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbKategoriItemStateChanged(evt);
+        btnHargaTertinggi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHargaTertinggiActionPerformed(evt);
             }
         });
 
@@ -308,14 +351,14 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(PanelDetailTicket1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelDetailTicket1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnDetailsTicket1))
                     .addGroup(PanelDetailTicket1Layout.createSequentialGroup()
-                        .addGroup(PanelDetailTicket1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4))
+                        .addGroup(PanelDetailTicket1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -323,15 +366,15 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
             PanelDetailTicket1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelDetailTicket1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
                 .addGroup(PanelDetailTicket1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnDetailsTicket1)
                     .addGroup(PanelDetailTicket1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
                         .addComponent(jLabel5)
                         .addGap(8, 8, 8)))
                 .addContainerGap(12, Short.MAX_VALUE))
@@ -373,7 +416,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(51, 153, 0));
-        jLabel14.setText("Tersedia sekarang");
+        jLabel14.setText("-");
 
         btnDetailsTicket2.setBackground(new java.awt.Color(153, 102, 255));
         btnDetailsTicket2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
@@ -397,10 +440,10 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnDetailsTicket2))
                     .addGroup(PanelDetailTicket2Layout.createSequentialGroup()
-                        .addGroup(PanelDetailTicket2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel13))
+                        .addGroup(PanelDetailTicket2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -408,13 +451,13 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
             PanelDetailTicket2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelDetailTicket2Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelDetailTicket2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(PanelDetailTicket2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnDetailsTicket2)
                         .addComponent(jLabel14))
                     .addGroup(PanelDetailTicket2Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel13)
@@ -458,7 +501,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(51, 153, 0));
-        jLabel20.setText("Tersedia sekarang");
+        jLabel20.setText("-");
 
         btnDetailsTicket3.setBackground(new java.awt.Color(153, 102, 255));
         btnDetailsTicket3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
@@ -479,13 +522,13 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                 .addGroup(PanelDetailTicket3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelDetailTicket3Layout.createSequentialGroup()
                         .addComponent(jLabel20)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnDetailsTicket3))
                     .addGroup(PanelDetailTicket3Layout.createSequentialGroup()
                         .addGroup(PanelDetailTicket3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel16)
-                            .addComponent(jLabel17)
-                            .addComponent(jLabel19))
+                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -493,15 +536,15 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
             PanelDetailTicket3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelDetailTicket3Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelDetailTicket3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(PanelDetailTicket3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnDetailsTicket3)
                         .addComponent(jLabel20))
                     .addGroup(PanelDetailTicket3Layout.createSequentialGroup()
-                        .addComponent(jLabel16)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel19)
                         .addGap(40, 40, 40)))
                 .addContainerGap(12, Short.MAX_VALUE))
@@ -563,27 +606,21 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
 
         jMenuBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        menuHome.setText("Home");
+        menuHome.setText("Refresh");
+        menuHome.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                menuHomeMousePressed(evt);
+            }
+        });
         jMenuBar1.add(menuHome);
 
-        menuInventory.setText("Inventory");
-        jMenuBar1.add(menuInventory);
-
-        menuProfile.setText("Profile");
-        menuProfile.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuProfileMouseClicked(evt);
+        jMenu1.setText("Profile");
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenu1MousePressed(evt);
             }
         });
-        menuProfile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuProfileActionPerformed(evt);
-            }
-        });
-        jMenuBar1.add(menuProfile);
-
-        jMenu4.setText("jMenu4");
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
 
@@ -603,11 +640,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnHargaTerendah)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnHargaTertinggi)
-                        .addGap(62, 62, 62)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnHargaTertinggi))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -643,9 +676,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                     .addComponent(btnTerdekat)
                     .addComponent(btnTerbaru)
                     .addComponent(btnHargaTerendah)
-                    .addComponent(btnHargaTertinggi)
-                    .addComponent(cbKategori, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
+                    .addComponent(btnHargaTertinggi))
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -676,18 +707,10 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cbKategoriItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbKategoriItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbKategoriItemStateChanged
-
-    private void menuProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuProfileActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menuProfileActionPerformed
-
     private void btnDetailsTicket1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailsTicket1ActionPerformed
         // TODO add your handling code here:
         
-         Event selected = listOfEvent.get(showIndexFrom);
+        Event selected = listOfEvent.get(showIndexFrom);
         FormUserTicketDetail detailevent = new FormUserTicketDetail(this, selected,currentUser);
         detailevent.setVisible(true);
 
@@ -702,21 +725,18 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnTiketDibeliActionPerformed
 
-    private void menuProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuProfileMouseClicked
-        // TODO add your handling code here:
-        FormUserProfile userForm = new FormUserProfile(this);
-        userForm.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_menuProfileMouseClicked
-
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-         int currentValue = Integer.parseInt(jLabel21.getText());
-        jLabel21.setText(String.valueOf(currentValue + 1));
+        int currentValue = Integer.parseInt(jLabel21.getText());
         
-        int page = Integer.parseInt(jLabel21.getText());
-        showIndexFrom = 3 * page - 3;
-        
-        refreshTicketsUI();
+        int totalPage = (int) Math.ceil(listOfEvent.size() / 3.0);
+        if (currentValue < totalPage) {
+            jLabel21.setText(String.valueOf(currentValue + 1));
+
+            int page = Integer.parseInt(jLabel21.getText());
+            showIndexFrom = 3 * page - 3;
+
+            refreshTicketsUI();
+        }
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
@@ -726,8 +746,6 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         
         int page = Integer.parseInt(jLabel21.getText());
         showIndexFrom = 3 * page - 3;
-
-//        loadEvents(showIndexFrom);
 
         refreshTicketsUI();
     }//GEN-LAST:event_btnPrevActionPerformed
@@ -751,6 +769,55 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         this.setVisible(false);
 
     }//GEN-LAST:event_btnDetailsTicket3ActionPerformed
+
+    private void menuHomeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuHomeMousePressed
+        int page = Integer.parseInt(jLabel21.getText());
+        showIndexFrom = 3 * page - 3;
+
+        loadEvents("all");
+        refreshTicketsUI();
+        if(listOfEvent.size()>0)jLabel5.setText("Tersedia sekarang");
+    }//GEN-LAST:event_menuHomeMousePressed
+
+    private void jMenu1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MousePressed
+        System.out.println("to profile");
+        FormUserProfile home = new FormUserProfile(currentUser);
+        home.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenu1MousePressed
+
+    private void btnTerdekatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTerdekatActionPerformed
+        System.out.println("terdekat");
+        jLabel21.setText("1");
+        int page = Integer.parseInt(jLabel21.getText());
+        showIndexFrom = 3 * page - 3;
+        loadEvents("terdekat");
+        refreshTicketsUI();
+    }//GEN-LAST:event_btnTerdekatActionPerformed
+
+    private void btnTerbaruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTerbaruActionPerformed
+        jLabel21.setText("1");
+        int page = Integer.parseInt(jLabel21.getText());
+        showIndexFrom = 3 * page - 3;
+        loadEvents("terbaru");
+        refreshTicketsUI();
+    }//GEN-LAST:event_btnTerbaruActionPerformed
+
+    private void btnHargaTerendahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHargaTerendahActionPerformed
+        jLabel21.setText("1");
+        int page = Integer.parseInt(jLabel21.getText());
+        showIndexFrom = 3 * page - 3;
+        loadEvents("harga terdekat");
+        refreshTicketsUI();
+    }//GEN-LAST:event_btnHargaTerendahActionPerformed
+
+    private void btnHargaTertinggiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHargaTertinggiActionPerformed
+        jLabel21.setText("1");
+        int page = Integer.parseInt(jLabel21.getText());
+        showIndexFrom = 3 * page - 3;
+        loadEvents("harga tertinggi");
+        refreshTicketsUI();
+    }//GEN-LAST:event_btnHargaTertinggiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -829,7 +896,6 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
     private javax.swing.JButton btnTerbaru;
     private javax.swing.JButton btnTerdekat;
     private javax.swing.JButton btnTiketDibeli;
-    private javax.swing.JComboBox<String> cbKategori;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -848,22 +914,21 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JMenu menuHome;
-    private javax.swing.JMenu menuInventory;
-    private javax.swing.JMenu menuProfile;
     // End of variables declaration//GEN-END:variables
 
-    private static java.util.List<tmwebservice.Event> getAllEvents() {
+    private static java.util.List<tmwebservice.Event> getAllEvents(java.lang.String filter) {
         tmwebservice.TMWebService_Service service = new tmwebservice.TMWebService_Service();
         tmwebservice.TMWebService port = service.getTMWebServicePort();
-        return port.getAllEvents();
+        return port.getAllEvents(filter);
     }
+
+
 }

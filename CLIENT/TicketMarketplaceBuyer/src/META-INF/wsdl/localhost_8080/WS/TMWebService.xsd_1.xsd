@@ -52,6 +52,10 @@
 
 <xs:element name="GetEventResponse" type="tns:GetEventResponse"/>
 
+<xs:element name="GetPaidOrRequestRefundAdmin" type="tns:GetPaidOrRequestRefundAdmin"/>
+
+<xs:element name="GetPaidOrRequestRefundAdminResponse" type="tns:GetPaidOrRequestRefundAdminResponse"/>
+
 <xs:element name="GetPaymentMethods" type="tns:GetPaymentMethods"/>
 
 <xs:element name="GetPaymentMethodsResponse" type="tns:GetPaymentMethodsResponse"/>
@@ -261,18 +265,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="getPaymentMethodsById">
-<xs:sequence>
-<xs:element name="arg0" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="getPaymentMethodsByIdResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:paymentMethod" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="GetSellerEvent">
 <xs:sequence>
 <xs:element name="seller" type="xs:string" minOccurs="0"/>
@@ -305,6 +297,18 @@
 <xs:element name="name" type="xs:string" minOccurs="0"/>
 <xs:element name="price" type="xs:double"/>
 <xs:element name="stock" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getPaymentMethodsById">
+<xs:sequence>
+<xs:element name="arg0" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getPaymentMethodsByIdResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:paymentMethod" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -390,6 +394,18 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="GetCompanyEvent">
+<xs:sequence>
+<xs:element name="companyName" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetCompanyEventResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:event" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="GetVenueWithProvince">
 <xs:sequence>
 <xs:element name="province" type="tns:province" minOccurs="0"/>
@@ -406,18 +422,6 @@
 <xs:complexType name="GetVenueWithProvinceResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:venue" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="GetCompanyEvent">
-<xs:sequence>
-<xs:element name="companyName" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="GetCompanyEventResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:event" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -455,6 +459,16 @@
 <xs:complexType name="CreateNewVenueResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetPaidOrRequestRefundAdmin">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="GetPaidOrRequestRefundAdminResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:ticket" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -509,6 +523,17 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="CreateNewEvent">
+<xs:sequence>
+<xs:element name="event" type="tns:event" minOccurs="0"/>
+<xs:element name="seller_username" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CreateNewEventResponse">
+<xs:sequence/>
+</xs:complexType>
+
 <xs:complexType name="Get1VenueWithName">
 <xs:sequence>
 <xs:element name="name" type="xs:string" minOccurs="0"/>
@@ -519,17 +544,6 @@
 <xs:sequence>
 <xs:element name="return" type="tns:venue" minOccurs="0"/>
 </xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="CreateNewEvent">
-<xs:sequence>
-<xs:element name="event" type="tns:event" minOccurs="0"/>
-<xs:element name="seller_username" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="CreateNewEventResponse">
-<xs:sequence/>
 </xs:complexType>
 
 <xs:complexType name="hello">
@@ -557,7 +571,9 @@
 </xs:complexType>
 
 <xs:complexType name="GetAllEvents">
-<xs:sequence/>
+<xs:sequence>
+<xs:element name="filter" type="xs:string" minOccurs="0"/>
+</xs:sequence>
 </xs:complexType>
 
 <xs:complexType name="GetAllEventsResponse">

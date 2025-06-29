@@ -27,45 +27,121 @@ import java.util.List;
  */
 public class DAO_Event {
     
-            public static List<Event> Select_All_Events() throws Exception {
-         ArrayList<Event> events = new ArrayList<>();
+        public static List<Event> Select_All_Events(String filter) throws Exception {
+            ArrayList<Event> events = new ArrayList<>();
+            String SQLQuery="";
+            if(filter.equals("terbaru")){
+                SQLQuery = "SELECT e.*, " +
+                  "s.username AS seller_username, s.companyName, " +
+                  "v.id AS venue_id, v.name AS venue_name, v.address AS venue_address, v.area AS venue_area, v.maxCapacity AS venue_maxCapacity, " +
+                  "c.id AS city_id, c.name AS city_name " +
+                  "FROM events e " +
+                  "INNER JOIN sellers s ON e.seller = s.username " +
+                  "INNER JOIN venues v ON e.venue_id = v.id " +
+                  "INNER JOIN cities c ON v.city_id = c.id " +
+                  "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d-%H-%i') > NOW() " +
+                  "ORDER BY e.create_time DESC";
+            }else if(filter.equals("harga terendah")){
+                     SQLQuery = "SELECT e.*, ec_stats.min_price, " +
+                            "s.username AS seller_username, s.companyName, " +
+                            "v.id AS venue_id, v.name AS venue_name, v.address AS venue_address, v.area AS venue_area, v.maxCapacity AS venue_maxCapacity, " +
+                            "c.id AS city_id, c.name AS city_name " +
+                            "FROM events e " +
+                            "INNER JOIN ( " +
+                                "SELECT event_id, MIN(price) AS min_price " +
+                                "FROM eventclasses " +
+                                "GROUP BY event_id " +
+                            ") ec_stats ON e.id = ec_stats.event_id " +
+                            "INNER JOIN sellers s ON e.seller = s.username " +
+                            "INNER JOIN venues v ON e.venue_id = v.id " +
+                            "INNER JOIN cities c ON v.city_id = c.id " +
+                            "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d-%H-%i') > NOW() " +
+                            "ORDER BY ec_stats.min_price ASC";
+                }else if(filter.equals("harga tertinggi")){
+                    SQLQuery = "SELECT e.*, ec_stats.max_price, " +
+                        "s.username AS seller_username, s.companyName, " +
+                        "v.id AS venue_id, v.name AS venue_name, v.address AS venue_address, v.area AS venue_area, v.maxCapacity AS venue_maxCapacity, " +
+                        "c.id AS city_id, c.name AS city_name " +
+                        "FROM events e " +
+                        "INNER JOIN ( " +
+                            "SELECT event_id, MAX(price) AS max_price " +
+                            "FROM eventclasses " +
+                            "GROUP BY event_id " +
+                        ") ec_stats ON e.id = ec_stats.event_id " +
+                        "INNER JOIN sellers s ON e.seller = s.username " +
+                        "INNER JOIN venues v ON e.venue_id = v.id " +
+                        "INNER JOIN cities c ON v.city_id = c.id " +
+                        "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d-%H-%i') > NOW() " +
+                        "ORDER BY ec_stats.max_price DESC";
+                }else if(filter.equals("terdekat")){
+                    SQLQuery = "SELECT e.*, " +
+                      "s.username AS seller_username, s.companyName, " +
+                      "v.id AS venue_id, v.name AS venue_name, v.address AS venue_address, v.area AS venue_area, v.maxCapacity AS venue_maxCapacity, " +
+                      "c.id AS city_id, c.name AS city_name " +
+                      "FROM events e " +
+                      "INNER JOIN sellers s ON e.seller = s.username " +
+                      "INNER JOIN venues v ON e.venue_id = v.id " +
+                      "INNER JOIN cities c ON v.city_id = c.id " +
+                      "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d-%H-%i') > NOW() " +
+                      "ORDER BY STR_TO_DATE(e.startDateTime, '%Y-%m-%d-%H-%i') ASC";
+                }
+                else{
+                SQLQuery = "SELECT e.*, " +
+                    "s.username AS seller_username, s.companyName, " +
+                    "v.id AS venue_id, v.name AS venue_name, v.address AS venue_address, v.area AS venue_area, v.maxCapacity AS venue_maxCapacity, " +
+                    "c.id AS city_id, c.name AS city_name " +
+                    "FROM events e " +
+                    "INNER JOIN sellers s ON e.seller = s.username " +
+                    "INNER JOIN venues v ON e.venue_id = v.id " +
+                    "INNER JOIN cities c ON v.city_id = c.id " +
+                    "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d-%H-%i') > NOW()";
 
-         String SQLQuery = "SELECT e.*, s.username AS seller_username, s.companyName " +
-                           "FROM events e " +
-                           "INNER JOIN sellers s ON e.seller = s.username";
+            }
+            
 
-         PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
-         ResultSet rslt = prst.executeQuery();
+            PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
+            ResultSet rslt = prst.executeQuery();
 
-         while (rslt.next()) {
-             Event e = new Event();
-             e.setId(rslt.getInt("id"));
-             e.setName(rslt.getString("name"));
-             e.setStartTime(rslt.getString("startDateTime"));
+            while (rslt.next()) {
+                Event e = new Event();
+                e.setId(rslt.getInt("id"));
+                e.setName(rslt.getString("name"));
+                e.setStartTime(rslt.getString("startDateTime"));
+                e.setDescription(rslt.getString("description"));
 
-             Venue v = new Venue();
-             v.setId(rslt.getInt("venue_id"));
-             e.setVenue(v);
+                // Venue
+                Venue v = new Venue();
+                v.setId(rslt.getInt("venue_id"));
+                v.setName(rslt.getString("venue_name"));
+                v.setAddress(rslt.getString("venue_address"));
+                v.setArea(rslt.getInt("venue_area"));
+                v.setMaxCapacity(rslt.getInt("venue_maxCapacity"));
 
-             Seller s = new Seller();
-             s.setUsername(rslt.getString("seller_username"));
-             s.setCompanyName(rslt.getString("companyName"));
-             e.setSeller(s);
+                // City
+                City c = new City();
+                c.setId(rslt.getInt("city_id"));
+                c.setName(rslt.getString("city_name"));
+                v.setCity(c); 
 
-             e.setDescription(rslt.getString("description"));
+                e.setVenue(v); 
 
-             // Ambil event class untuk event ini
-             ArrayList<EventClass> classes = Select_EventClass_By_Event_Id(e.getId());
-             e.setEventClasses(classes);
+                // Seller
+                Seller s = new Seller();
+                s.setUsername(rslt.getString("seller_username"));
+                s.setCompanyName(rslt.getString("companyName"));
+                e.setSeller(s);
 
-             events.add(e);
-         }
-         System.out.println("Total events retrieved: " + events.size());
+                // EventClass
+                ArrayList<EventClass> classes = Select_EventClass_By_Event_Id(e.getId());
+                e.setEventClasses(classes);
 
+                events.add(e);
+            }
 
-         prst.close();
-         return events;
-     }
+            prst.close();
+            return events;
+        }
+
 
 
 

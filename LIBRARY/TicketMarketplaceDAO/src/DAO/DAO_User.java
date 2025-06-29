@@ -61,12 +61,12 @@ public class DAO_User extends DatabaseConnection {
        String SQLQuery = "INSERT INTO users (username, password, fullname, phoneNumber, email, birthdate) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
 
-        prst.setString(1, _user.getUsername());    // ✅ username
-        prst.setString(2, _user.getPassword());    // ✅ password
-        prst.setString(3, _user.getFullName());    // ✅ fullname
-        prst.setString(4, _user.getPhoneNumber()); // ✅ phoneNumber
-        prst.setString(5, _user.getEmail());       // ✅ email
-        prst.setString(6, _user.getBirthdate().toString()); // ✅ birthdate
+        prst.setString(1, _user.getUsername());   
+        prst.setString(2, _user.getPassword());  
+        prst.setString(3, _user.getFullName());   
+        prst.setString(4, _user.getPhoneNumber());
+        prst.setString(5, _user.getEmail());   
+        prst.setString(6, _user.getBirthdate()); 
 
         int num = prst.executeUpdate();
 
@@ -77,21 +77,20 @@ public class DAO_User extends DatabaseConnection {
     }
 
     public static int Update_User(User _user) throws Exception {
-        String SQLQuery = "UPDATE FROM users SET password=?,fullname=?,email=?,,phoneNumber=?,birthdate=? WHERE username=?";
-        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
-        prst.setString(6, _user.getUsername());
+        String SQLQuery = "UPDATE users SET password = ?, email = ? WHERE username = ?";
+        PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
+
         prst.setString(1, _user.getPassword());
-        prst.setString(2, _user.getFullName());
-        prst.setString(3, _user.getEmail());
-        prst.setString(4, _user.getPhoneNumber());
-        prst.setString(5, _user.getBirthdate().toString());
+        prst.setString(2, _user.getEmail());
+        prst.setString(3, _user.getUsername()); 
 
         int num = prst.executeUpdate();
-        prst.clearBatch();
         prst.close();
 
         return num;
     }
+
+
 
     public static int Delete_User(String username, String password) throws Exception {
         String SQLQuery = "DELETE FROM users WHERE username=? AND password=?";

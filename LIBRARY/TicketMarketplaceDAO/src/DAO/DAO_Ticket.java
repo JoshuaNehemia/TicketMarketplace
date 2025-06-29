@@ -163,6 +163,78 @@ public class DAO_Ticket {
 
     return tickets;
 }
+    
+    public static List<Ticket> Select_Ticket_Paid_RequestRefund_Admin() throws Exception {
+    List<Ticket> tickets = new ArrayList<>();
+
+    String SQLQuery =
+        "SELECT ti.*, " +
+        "ec.id AS eventclass_id, ec.event_id AS event_id, ec.name AS eventclass_name, " +
+        "ev.name AS event_name, ev.startDateTime AS event_startDateTime, ev.venue_id, " +
+        "v.name AS venue_name, v.address AS venue_address, v.city_id, " +
+        "c.name AS city_name, " +
+        "pm.id AS paymentMethod_id, pm.name AS paymentmethod_name " +
+        "FROM tickets AS ti " +
+        "INNER JOIN eventclasses AS ec ON ti.eventClass_id = ec.id " +
+        "INNER JOIN events AS ev ON ec.event_id = ev.id " +
+        "INNER JOIN venues AS v ON ev.venue_id = v.id " +
+        "INNER JOIN cities AS c ON v.city_id = c.id " +
+        "INNER JOIN paymentmethods AS pm ON ti.paymentMethod_id = pm.id " +
+        "WHERE (ti.paymentStatus = 'PAID' OR ti.paymentStatus = 'REQUEST REFUND')";
+
+    PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
+    ResultSet rslt = prst.executeQuery();
+
+    while (rslt.next()) {
+        // Venue & Kota
+        Venue venue = new Venue(
+            rslt.getInt("venue_id"),
+            rslt.getString("venue_name")
+        );
+        venue.setAddress(rslt.getString("venue_address"));
+
+        City city = new City();
+        city.setName(rslt.getString("city_name"));
+        venue.setCity(city);
+
+        // Event
+        Event event = new Event(
+            rslt.getInt("event_id"),
+            rslt.getString("event_name")
+        );
+        event.setStartTime(rslt.getString("event_startDateTime")); 
+        event.setVenue(venue); 
+        event.addEventClasses(new EventClass(
+            rslt.getInt("eventclass_id"),
+            rslt.getString("eventclass_name")
+        ));
+
+        // Payment Method
+        PaymentMethod pm = new PaymentMethod(
+            rslt.getInt("paymentMethod_id"),
+            rslt.getString("paymentmethod_name")
+        );
+
+        // Ticket
+        Ticket ticket = new Ticket(
+            rslt.getString("id"),
+            event,
+            rslt.getString("eventclass_name"),
+            pm.getId(),
+            rslt.getString("paidTime"),
+            rslt.getString("paymentStatus"),
+            rslt.getBoolean("isClaimed")
+        );
+
+        tickets.add(ticket);
+    }
+
+    rslt.close();
+    prst.close();
+
+    return tickets;
+}
+    
 
 
 
