@@ -13,7 +13,7 @@ import tmwebservice.Event;
 import tmwebservice.EventClass;
 import tmwebservice.Seller;
 import tmwebservice.Venue;
-import tmwebservice.LocalDateTime;
+//import tmwebservice.LocalDateTime;
 
 /**
  *
@@ -478,16 +478,16 @@ public class FormSellerCreateEvent extends javax.swing.JFrame {
         return port.getVenueWithCityName(cityName);
     }
 
-    private static Event createNewEvent(tmwebservice.Event event, java.lang.String sellerUsername) {
-        tmwebservice.TMWebService_Service service = new tmwebservice.TMWebService_Service();
-        tmwebservice.TMWebService port = service.getTMWebServicePort();
-        return port.createNewEvent(event, sellerUsername);
-    }
-
     private static Venue get1VenueWithName(java.lang.String name) {
         tmwebservice.TMWebService_Service service = new tmwebservice.TMWebService_Service();
         tmwebservice.TMWebService port = service.getTMWebServicePort();
         return port.get1VenueWithName(name);
+    }
+
+    private static void createNewEvent(tmwebservice.Event event, java.lang.String sellerUsername) {
+        tmwebservice.TMWebService_Service service = new tmwebservice.TMWebService_Service();
+        tmwebservice.TMWebService port = service.getTMWebServicePort();
+        port.createNewEvent(event, sellerUsername);
     }
 
     

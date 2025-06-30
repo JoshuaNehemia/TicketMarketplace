@@ -573,10 +573,12 @@ public class FormUserCheckout extends javax.swing.JFrame {
         Ticket insert = buyTicket(newTicket , username);
 
         if (insert.getEvent().getId() == selectedEvent.getId()) {
-            JOptionPane.showMessageDialog(null, "Berhasil membeli tiket!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
-            FormListOfTicket1 home = new FormListOfTicket1(currentUser);
-            home.setVisible(true);
+            FormWaitingNotificationMessageUser notif = new FormWaitingNotificationMessageUser(currentUser, insert);
+            notif.setVisible(true);
             this.dispose();
+//            FormListOfTicket1 home = new FormListOfTicket1(currentUser);
+//            home.setVisible(true);
+//            this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Proses gagalt", "Gagal", JOptionPane.ERROR_MESSAGE);
         }
@@ -643,25 +645,25 @@ public class FormUserCheckout extends javax.swing.JFrame {
         jLabel10.setText("Metode Pembayaran : " + metode);
         switch (metode.toLowerCase()) {
         case "bca":
-            paymentMethodIdDipilih = 12;
+            paymentMethodIdDipilih = 1;
             break;
         case "bni":
-            paymentMethodIdDipilih = 13;
+            paymentMethodIdDipilih = 2;
             break;
         case "bri":
-            paymentMethodIdDipilih = 14;
+            paymentMethodIdDipilih = 3;
             break;
         case "cimb":
-            paymentMethodIdDipilih = 15;
+            paymentMethodIdDipilih = 4;
             break;
         case "gopay":
-            paymentMethodIdDipilih = 16;
+            paymentMethodIdDipilih = 5;
             break;
         case "ovo":
-            paymentMethodIdDipilih = 17;
+            paymentMethodIdDipilih = 6;
             break;
         default:
-            paymentMethodIdDipilih = -1; // atau 0 sebagai nilai error
+            paymentMethodIdDipilih = -1; //eror karena belum milih
             break;
     }
     }

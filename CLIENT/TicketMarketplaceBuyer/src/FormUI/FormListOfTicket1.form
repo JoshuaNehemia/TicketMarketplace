@@ -95,7 +95,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="15" max="32767" attributes="0"/>
+              <EmptySpace pref="37" max="32767" attributes="0"/>
           </Group>
           <Component id="jPanel4" alignment="0" max="32767" attributes="0"/>
       </Group>

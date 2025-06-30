@@ -85,3 +85,7 @@ replay_pid*
 /CLIENT/TicketMarketplaceBuyer/dist/
 /CLIENT/TicketMarketplaceAdmin/dist/
 /CLIENT/TicketMarketplaceSeller/dist/
+/LIBRARY/TicketMarketplaceProtocol/build/
+/LIBRARY/TicketMarketplaceProtocol/dist/
+/SERVER/TicketMarketplaceServer/build/
+/SERVER/TicketMarketplaceServer/dist/

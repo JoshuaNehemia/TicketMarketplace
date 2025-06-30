@@ -4,6 +4,9 @@
  */
 package FormUI;
 
+import tmwebservice.Ticket;
+import tmwebservice.User;
+
 /**
  *
  * @author Evan
@@ -13,8 +16,13 @@ public class FormWaitingNotificationMessageUser extends javax.swing.JFrame {
     /**
      * Creates new form FormNotifikasiAdmin
      */
-    public FormWaitingNotificationMessageUser() {
+    Ticket currentTicket;
+    User currentUser;
+    public FormWaitingNotificationMessageUser(User currentUser, Ticket currentTicket) {
         initComponents();
+        this.currentTicket =  currentTicket;
+        this.currentUser = currentUser;
+        jLabel2.setText("Anda berhasil memesan tiket " + currentTicket.getEventClass()+ " "+ currentTicket.getEvent().getName() + "Silahkan menunggu notifikasi selanjutnya untuk informasi lebih lanjut. Terima Kasih.");
     }
 
     /**
@@ -35,7 +43,7 @@ public class FormWaitingNotificationMessageUser extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("NOTIFICATION MESSAGE");
 
-        jLabel2.setText("🎟️ Kamu telah melakukan pembelian, tapi admin belum mengonfirmasi");
+        jLabel2.setText("🎟️ Kamu telah melakukan pembelian, silahkan menunggu notifikasi selanjutnya untuk informasi lebih lanjut");
 
         btnOkeWaitingKonfirmasi.setBackground(new java.awt.Color(51, 255, 51));
         btnOkeWaitingKonfirmasi.setText("OKE");
@@ -45,28 +53,29 @@ public class FormWaitingNotificationMessageUser extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(118, Short.MAX_VALUE)
+                .addContainerGap(255, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(250, 250, 250))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(115, 115, 115))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnOkeWaitingKonfirmasi, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(60, 60, 60))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(90, 90, 90)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabel1)
-                .addGap(49, 49, 49)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
                 .addComponent(btnOkeWaitingKonfirmasi, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(84, 84, 84))
+                .addContainerGap(108, Short.MAX_VALUE))
         );
 
         pack();
@@ -163,11 +172,11 @@ public class FormWaitingNotificationMessageUser extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormWaitingNotificationMessageUser().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FormWaitingNotificationMessageUser().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
