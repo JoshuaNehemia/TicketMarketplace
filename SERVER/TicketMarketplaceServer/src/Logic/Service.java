@@ -5,7 +5,9 @@
 package Logic;
 
 import Multithreading.MultithreadedSocket;
+import Multithreading.SocketHandler;
 import Protocol.Comm.Communication;
+import java.net.Socket;
 
 /**
  *
@@ -15,6 +17,7 @@ public class Service {
     
     //FIELD
     private int serverPort = 1234;
+    MultithreadedSocket socket;
     
     //CONSTRUCTOR
     public Service() throws Exception{
@@ -26,7 +29,7 @@ public class Service {
     
     //MAIN FUNCTION
     public void InitiateServer(int serverPort) throws Exception{
-        MultithreadedSocket socket = new MultithreadedSocket(serverPort);
+        socket = new MultithreadedSocket(serverPort);
         socket.start();
         System.out.println("SERVER STARTED");
     }
@@ -34,6 +37,17 @@ public class Service {
     
     ////LOGIC FUNCTION
     
+    public void SendNotification(String username) throws Exception{
+        this.socket.SelectingClientSocketByUsername(username).SendMessage(new Communication("NEWNOTIFICATION",true,null));
+    }
     
+    public void SendBroadcasts(String broadcastmessage) throws Exception{
+        String[] data = new String[1];
+        data[0] = broadcastmessage;
+        for(SocketHandler client : socket.getClients()){
+                client.SendMessage(new Communication("NEWBROADCAST",true,data));
+        }
+        
+    }
     
 }

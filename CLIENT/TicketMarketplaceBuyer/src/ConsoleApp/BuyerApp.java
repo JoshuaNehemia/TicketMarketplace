@@ -5,17 +5,27 @@
 package ConsoleApp;
 
 import FormUI.FormLogin;
+import Service.TCP;
 
 /**
  *
  * @author joshu
  */
 public class BuyerApp {
-
+    
+    public static TCP tcpservice;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        int serverport = 1234;
+        try {
+            tcpservice = new TCP(serverport);
+            tcpservice.start();
+        } catch (Exception ex) {
+            System.out.println("ERROR: " + ex);
+        }
+        
         java.awt.EventQueue.invokeLater(() -> {
             new FormLogin().setVisible(true);
         });

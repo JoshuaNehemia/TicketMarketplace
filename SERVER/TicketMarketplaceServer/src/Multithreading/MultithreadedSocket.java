@@ -9,6 +9,7 @@ import Protocol.Comm.Communication;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  *
@@ -28,7 +29,9 @@ public class MultithreadedSocket extends Thread {
     }
 
     //GETTER AND SETTER
-    
+    public ArrayList<SocketHandler> getClients(){
+        return this.clients;
+    }
     
     //FUNCTION
     ////MULTITHREAD
@@ -49,15 +52,39 @@ public class MultithreadedSocket extends Thread {
     }
     
     ////SOCKET HANDLER
-    public void BroadcastMessage(String message) throws Exception{
-        for(SocketHandler sh:clients){
-            sh.SendMessage(message);
+    public SocketHandler SelectingClientSocketByUsername(String username){
+        for(SocketHandler client : clients){
+            if(client.getUsername().equals(username)){
+                return client;
+            }
+        }
+        return null;
+    }
+    
+    public void RegisterToServer(SocketHandler socketH, String username){
+        int index = 0;
+        for(SocketHandler cl: clients){
+            index++;
+            if(cl.getClientSocket().toString().equals(socketH.getClientSocket().toString())){
+                clients.remove(cl);
+                socketH.setUsername(username);
+                socketH.start();
+                clients.add(socketH);
+            }
         }
     }
     
     ////TO SERVICE
-    public Communication Runnable(String[] data){
-        
+    public Communication Runnable(Communication comm,SocketHandler client) throws Exception{
+        if(comm.getCommand().equals("REGISTER")){
+            this.RegisterToServer(client,comm.getData()[0]);
+        }
+        else if(comm.getCommand().equals("SENDNOTIFICATION")){
+            parent.SendNotification(comm.getData()[0]);
+        }
+        else if (comm.getCommand().equals("SENDBROADCASTS")){
+            parent.SendBroadcasts(comm.getData()[0]);
+        }
         return new Communication();
     }
 

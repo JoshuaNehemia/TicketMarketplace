@@ -19,6 +19,7 @@ public class SocketHandler extends Thread {
     //FIELDS
     private final MultithreadedSocket parent;
     private final Socket clientSocket;
+    private String username;
     private final BufferedReader incoming;
     private final DataOutputStream sending;
 
@@ -31,15 +32,19 @@ public class SocketHandler extends Thread {
     }
 
     //GETTER AND SETTER
+    public Socket getClientSocket(){
+        return this.clientSocket;
+    }
+    
     //FUNCTION
-    public Communication ReceiveMessage() throws Exception {
+    public void ReceiveMessage() throws Exception {
         String message = this.incoming.readLine();
         System.out.println("RECEIVED FROM " + this.clientSocket + " : \n" + message);
-        return parent.Runnable(new Communication(message).getData());
+        Communication comm = parent.Runnable(new Communication(message),this);
     }
 
-    public void SendMessage(String message) throws Exception {
-        this.sending.writeBytes(message + "\n");
+    public void SendMessage(Communication comm) throws Exception {
+        this.sending.writeBytes(comm.getMessage() + "\n");
     }
 
     ////MULTITHREADING
@@ -48,11 +53,19 @@ public class SocketHandler extends Thread {
         try {
             while (true) {
                 System.out.println("READY TO RECEIVE MESSAGE FROM: " + this.clientSocket);
-                this.SendMessage(this.ReceiveMessage().getMessage());
+                this.ReceiveMessage();
             }
         } catch (Exception ex) {
             System.out.println("ERROR IN SOCKET HANDLER MULTITHREADING: \n" + ex);
         }
+    }
+    
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 }

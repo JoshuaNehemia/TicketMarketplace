@@ -4,6 +4,7 @@
  */
 package FormUI;
 
+import ConsoleApp.BuyerApp;
 import javax.swing.JOptionPane;
 import tmwebservice.Seller;
 import tmwebservice.User;
@@ -116,6 +117,8 @@ public class FormLogin extends javax.swing.JFrame {
             User res = userLogIn(username, password);
             if (res != null && res.getUsername() != null && !res.getUsername().isEmpty()) {
                 System.out.println("Login sebagai: " + res.getUsername());
+                //Buat TCP
+                BuyerApp.tcpservice.RegisteringToServer(res.getUsername());
                 FormListOfTicket1 home = new FormListOfTicket1(res);
                 home.setVisible(true);
                 this.dispose();

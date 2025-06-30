@@ -83,3 +83,5 @@ replay_pid*
 /SERVER/WS/dist/
 /SERVER/WS/build/
 /CLIENT/TicketMarketplaceBuyer/dist/
+/CLIENT/TicketMarketplaceAdmin/dist/
+/CLIENT/TicketMarketplaceSeller/dist/

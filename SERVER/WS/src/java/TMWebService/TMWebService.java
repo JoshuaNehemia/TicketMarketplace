@@ -6,10 +6,12 @@ package TMWebService;
 
 import DAO.Connection.DatabaseConnection;
 import DAO.*;
+import DAO.Message.DAO_Notification;
 import DAO.Values.*;
 import Entities.Account.*;
 import Entities.Event;
 import Entities.EventClass;
+import Entities.Message.Notification;
 import Entities.Ticket;
 import Entities.Values.City;
 import Entities.Values.PaymentMethod;
@@ -32,14 +34,13 @@ public class TMWebService {
     /**
      * This is a sample web service operation
      */
-    
-     DatabaseConnection conn;
+    DatabaseConnection conn;
 
     @WebMethod(operationName = "ConnectionTest")
     public String ConnectionTest() {
         return "CONNECTION SUCCESFULL!";
     }
-    
+
     //VALUES
     ////CITY
     @WebMethod(operationName = "GetCities")
@@ -66,7 +67,7 @@ public class TMWebService {
         }
         return pms;
     }
-    
+
     @WebMethod(operationName = "getPaymentMethodsById")
     public PaymentMethod getPaymentMethodsById(int id) {
         try {
@@ -76,13 +77,11 @@ public class TMWebService {
             return null;
         }
     }
-    
-    
 
     //USER (BUYER)
     @WebMethod(operationName = "UserLogIn")
     public User UserLogIn(@WebParam(name = "username") String username, @WebParam(name = "password") String password) {
-     
+
         try {
             this.ConnectToDatabase();
             User buff = DAO_User.Select_User(username);
@@ -103,7 +102,7 @@ public class TMWebService {
         int num = 0;
         try {
             this.ConnectToDatabase();
-            System.out.println("email user : "+user.getEmail());
+            System.out.println("email user : " + user.getEmail());
             num = DAO_User.Insert_User(user);
         } catch (Exception ex) {
             System.out.println("ERROR IN WEBSERVICE: " + ex);
@@ -138,14 +137,13 @@ public class TMWebService {
             if (buff.getPassword().equals(password)) {
                 return buff;
             } else {
-                return null; 
-            }   
+                return null;
+            }
         } catch (Exception ex) {
             System.out.println("ERROR IN WEBSERVICE: " + ex);
             return null;
         }
     }
-
 
     @WebMethod(operationName = "SellerSignUp")
     public int SellerSignUp(@WebParam(name = "user") Seller user) {
@@ -183,9 +181,6 @@ public class TMWebService {
 //        }
 //        return venues;
 //    }
-    
-    
-
     @WebMethod(operationName = "GetVenueWithProvince")
     public ArrayList<Venue> GetVenueWithProvince(@WebParam(name = "province") Province province) {
         ArrayList<Venue> venues = new ArrayList<>();
@@ -197,31 +192,29 @@ public class TMWebService {
         }
         return venues;
     }
-    
+
     @WebMethod(operationName = "GetVenueWithCityName")
     public ArrayList<Venue> GetVenueWithCityName(@WebParam(name = "cityName") String cityName) {
-    ArrayList<Venue> venues = new ArrayList<>();
-    try {
-        this.ConnectToDatabase();
-        venues = DAO_Venue.Select_Venue_By_City_Name(cityName); 
-    } catch (Exception ex) {
-        System.out.println("ERROR IN WEBSERVICE: " + ex);
+        ArrayList<Venue> venues = new ArrayList<>();
+        try {
+            this.ConnectToDatabase();
+            venues = DAO_Venue.Select_Venue_By_City_Name(cityName);
+        } catch (Exception ex) {
+            System.out.println("ERROR IN WEBSERVICE: " + ex);
+        }
+        return venues;
     }
-    return venues;
-}
-    
+
     @WebMethod(operationName = "Get1VenueWithName")
-public Venue Get1VenueWithName(@WebParam(name = "name") String name) {
-    try {
-        this.ConnectToDatabase();
-        return DAO_Venue.SelectSingleVenueByName(name);
-    } catch (Exception ex) {
-        System.out.println("ERROR IN WEBSERVICE: " + ex);
-        return null;
+    public Venue Get1VenueWithName(@WebParam(name = "name") String name) {
+        try {
+            this.ConnectToDatabase();
+            return DAO_Venue.SelectSingleVenueByName(name);
+        } catch (Exception ex) {
+            System.out.println("ERROR IN WEBSERVICE: " + ex);
+            return null;
+        }
     }
-}
-
-
 
     @WebMethod(operationName = "GetVenueWithName")
     public ArrayList<Venue> GetVenueWithName(@WebParam(name = "name") String name) {
@@ -283,35 +276,33 @@ public Venue Get1VenueWithName(@WebParam(name = "name") String name) {
         }
         return events;
     }
-    
+
     @WebMethod(operationName = "GetAllEvents")
-    public List<Event> GetAllEvents(@WebParam(name = "filter") String filter){
-    List<Event> events = new ArrayList<>();
-    try {
-        this.ConnectToDatabase();
-        events = DAO_Event.Select_All_Events(filter);
-    } catch (Exception ex) {
-        System.out.println("ERROR IN WEBSERVICE: " + ex);
-        ex.printStackTrace(); 
+    public List<Event> GetAllEvents(@WebParam(name = "filter") String filter) {
+        List<Event> events = new ArrayList<>();
+        try {
+            this.ConnectToDatabase();
+            events = DAO_Event.Select_All_Events(filter);
+        } catch (Exception ex) {
+            System.out.println("ERROR IN WEBSERVICE: " + ex);
+            ex.printStackTrace();
+        }
+        return events;
     }
-    return events;
-}
 
-@WebMethod(operationName = "CalculatePrice")
-public double CalculatePrice(@WebParam(name = "eventId") int eventId,
-                             @WebParam(name = "eventClassId") int eventClassId) {
-    double totalPrice = 0;
-    try {
-        this.ConnectToDatabase();
-        totalPrice = DAO_EventClass.CalculatePrice(eventId, eventClassId);
-    } catch (Exception ex) {
-        System.out.println("ERROR IN CalculatePrice WS: " + ex.getMessage());
-        ex.printStackTrace();
+    @WebMethod(operationName = "CalculatePrice")
+    public double CalculatePrice(@WebParam(name = "eventId") int eventId,
+            @WebParam(name = "eventClassId") int eventClassId) {
+        double totalPrice = 0;
+        try {
+            this.ConnectToDatabase();
+            totalPrice = DAO_EventClass.CalculatePrice(eventId, eventClassId);
+        } catch (Exception ex) {
+            System.out.println("ERROR IN CalculatePrice WS: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+        return totalPrice;
     }
-    return totalPrice;
-}
-
-
 
     @WebMethod(operationName = "GetEvent")
     public ArrayList<Event> GetEvent(@WebParam(name = "eventName") String eventName) {
@@ -338,6 +329,20 @@ public double CalculatePrice(@WebParam(name = "eventId") int eventId,
                 num += DAO_EventClass.Insert_EventClass(event.getId(), ec);
 
             }
+//            return DAO_Event.Select_SingleEvent_By_Name(event.getName(), seller_username);
+        } catch (Exception ex) {
+            System.out.println("ERROR IN WEBSERVICE1: " + ex);
+//            return new Event();
+        }
+    }
+
+    //Biar function nya masuk, ini jangan dipanggil
+    @WebMethod(operationName = "InsertEventClasses")
+    public void InsertEventClasses(@WebParam(name = "event") Event event, @WebParam(name = "event_class") ArrayList<EventClass> eventclass) {
+        int num = 0;
+        try {
+            this.ConnectToDatabase();
+            event.setEventClasses(eventclass);
 //            return DAO_Event.Select_SingleEvent_By_Name(event.getName(), seller_username);
         } catch (Exception ex) {
             System.out.println("ERROR IN WEBSERVICE1: " + ex);
@@ -486,7 +491,7 @@ public double CalculatePrice(@WebParam(name = "eventId") int eventId,
         }
         return eventClassId;
     }
-    
+
     @WebMethod(operationName = "GetTicketsByUsername")
     public List<Ticket> GetTicketsByUsername(@WebParam(name = "username") String username) {
         List<Ticket> tickets = new ArrayList<>();
@@ -499,9 +504,9 @@ public double CalculatePrice(@WebParam(name = "eventId") int eventId,
         }
         return tickets;
     }
-    
+
     @WebMethod(operationName = "GetPaidOrRequestRefundAdmin")
-        public List<Ticket> GetPaidOrRequestRefundAdmin() {
+    public List<Ticket> GetPaidOrRequestRefundAdmin() {
         List<Ticket> tickets = new ArrayList<>();
         try {
             this.ConnectToDatabase();
@@ -512,9 +517,43 @@ public double CalculatePrice(@WebParam(name = "eventId") int eventId,
         }
         return tickets;
     }
-    
 
+    @WebMethod(operationName = "GetUserNotifications")
+    public ArrayList<Notification> GetUserNotifications(@WebParam(name = "user") String user) {
+        ArrayList<Notification> notifications = new ArrayList<>();
+        try {
+            this.ConnectToDatabase();
+            notifications = DAO_Notification.Select_User_Notifications(user);
+        } catch (Exception ex) {
+            System.out.println("ERROR IN WEBSERVICE: " + ex);
+        }
+        return notifications;
+    }    
     
+    @WebMethod(operationName = "GetNotification")
+    public Notification GetNotification(@WebParam(name = "id") int id) {
+        Notification notif = new Notification();
+        try {
+            this.ConnectToDatabase();
+            notif = DAO_Notification.Select_Notification_By_Id(id);
+        } catch (Exception ex) {
+            System.out.println("ERROR IN WEBSERVICE: " + ex);
+        }
+        return notif;
+    }
+
+    @WebMethod(operationName = "CreateNotification")
+    public int CreateNotification(@WebParam(name = "notif") String notif_mess,String username,String ticket_id) {
+        int num = 0;
+        try {
+            this.ConnectToDatabase();
+            num = DAO_Notification.Insert_Notification(notif_mess, username, ticket_id);
+        } catch (Exception ex) {
+            System.out.println("ERROR IN WEBSERVICE: " + ex);
+        }
+        return num;
+    }
+
     @WebMethod(operationName = "hello")
     public String hello(@WebParam(name = "name") String txt) {
         return "Hello " + txt + " !";
