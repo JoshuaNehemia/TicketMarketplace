@@ -82,7 +82,7 @@ public class MultithreadedSocket extends Thread {
             } else if (comm.getCommand().equals("REQUESTREFUND")) {
                 System.out.println("REQUEST REFUND");
                 parent.RequestRefund(comm.getData()[0]);
-            } else if (comm.getCommand().equals("RESPONSEREFUND")) {
+            } else if (comm.getCommand().equals("REFUNDRESPONSE")) {
                 System.out.println("RESPONSE REFUND");
                 parent.ResponseRefund(comm.getStatus(), comm.getData()[0]);
             }

@@ -46,10 +46,12 @@ public class TCP extends Thread {
 
     private Communication ReceivingMessage() throws Exception {
         String message = incoming.readLine();
+        System.out.println("RECEIVED: " + message);
         return new Communication(message);
     }
 
     private void SendingMessage(Communication comms) throws Exception {
+        System.out.println("SENDING MESSAGE:\n" +comms.getMessage());
         this.sending.writeBytes(comms.getMessage() + "\n");
     }
 
@@ -77,6 +79,7 @@ public class TCP extends Thread {
     private void HandlingRefund(String ticket_id) {
         System.out.println("HANDLING REFUND IN PROGRESS");
         Ticket tiket = getTicketById(ticket_id);
+        System.out.println("TICKET RETRIEVED: " + tiket.getId());
         boolean dialogResult = false;
         String message = "Do you want to approve the refund of this ticket,\n"
                 + "Id: " + tiket.getId() + "\n"

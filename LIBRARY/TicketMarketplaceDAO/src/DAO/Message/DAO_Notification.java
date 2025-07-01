@@ -57,7 +57,7 @@ public class DAO_Notification {
                 + "INNER JOIN\n"
                 + "    paymentmethods AS pm ON ti.paymentMethod_id = pm.id\n"
                 + "WHERE\n"
-                + "    nf.user_username=?;";
+                + "    nf.username=?;";
         PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
         prst.setString(1, username);
 
@@ -260,7 +260,7 @@ public class DAO_Notification {
     }
 
     public static int Insert_Notification(String message, String username, String ticket_id) throws Exception {
-        String SQLQuery = "INSERT INTO notifications (message, user_username, ticket_id) VALUES (?, ?, ?);";
+        String SQLQuery = "INSERT INTO notifications (message, username, ticket_id) VALUES (?, ?, ?);";
         PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
         prst.setString(1, message);
         prst.setString(2, username);

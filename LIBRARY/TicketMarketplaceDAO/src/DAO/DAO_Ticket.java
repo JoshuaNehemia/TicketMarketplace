@@ -24,221 +24,213 @@ import java.util.List;
  * @author joshu
  */
 public class DAO_Ticket {
-    
-   
 
-    
     public static Ticket Select_Ticket_By_Id(String id) throws Exception {
         Ticket selectedTicket = new Ticket();
 
-        String SQLQuery = 
-        "SELECT\n" +
-        "  ti.*, \n" +
-        "  ec.id AS eventclass_id, \n" +
-        "  ev.id AS event_id, \n" +        
-        "  ec.name AS eventclass_name, \n" +
-        "  ev.name AS event_name, \n" +
-        "  ev.startDateTime AS event_startDateTime, \n" +
-        "  ev.venue_id, \n" +
-        "  pm.id AS paymentMethod_id, \n" +
-        "  pm.name AS paymentmethod_name \n" +
-        "FROM\n" +
-        "  tickets AS ti \n" +
-        "INNER JOIN\n" +
-        "  eventclasses AS ec ON ti.eventClass_id = ec.id \n" +
-        "INNER JOIN\n" +
-        "  events AS ev ON ec.event_id = ev.id \n" +
-        "INNER JOIN\n" +
-        "  paymentmethods AS pm ON ti.paymentMethod_id = pm.id \n" +
-        "WHERE\n" +
-        "  ti.id = ?;";
+        String SQLQuery
+                = "SELECT\n"
+                + "  ti.*, \n"
+                + "  ec.id AS eventclass_id, \n"
+                + "  ev.id AS event_id, \n"
+                + "  ec.name AS eventclass_name, \n"
+                + "  ev.name AS event_name, \n"
+                + "  ev.startDateTime AS event_startDateTime, \n"
+                + "  ev.venue_id, \n"
+                + "  pm.id AS paymentMethod_id, \n"
+                + "  pm.name AS paymentmethod_name \n"
+                + "FROM\n"
+                + "  tickets AS ti \n"
+                + "INNER JOIN\n"
+                + "  eventclasses AS ec ON ti.eventClass_id = ec.id \n"
+                + "INNER JOIN\n"
+                + "  events AS ev ON ec.event_id = ev.id \n"
+                + "INNER JOIN\n"
+                + "  paymentmethods AS pm ON ti.paymentMethod_id = pm.id \n"
+                + "WHERE\n"
+                + "  ti.id = ?;";
 
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(1, id);
 
-            PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
-            prst.setString(1, id);
+        ResultSet rslt = prst.executeQuery();
 
-            ResultSet rslt = prst.executeQuery();
+        if (rslt.next()) {
+            Event buff = new Event(
+                    rslt.getInt("event_id"),
+                    rslt.getString("event_name")
+            );
+            buff.setStartTime(rslt.getString("event_startDateTime"));
+            buff.addEventClasses(new EventClass(
+                    rslt.getInt("eventclass_id"),
+                    rslt.getString("eventclass_name")
+            ));
 
-           if (rslt.next()) {
-        Event buff = new Event(
-            rslt.getInt("event_id"),
-            rslt.getString("event_name")
-        );
-        buff.setStartTime(rslt.getString("event_startDateTime"));
-        buff.addEventClasses(new EventClass(
-            rslt.getInt("eventclass_id"),
-            rslt.getString("eventclass_name")
-        ));
+            PaymentMethod pm = new PaymentMethod(
+                    rslt.getInt("paymentMethod_id"),
+                    rslt.getString("paymentmethod_name")
+            );
 
-        PaymentMethod pm = new PaymentMethod(
-            rslt.getInt("paymentMethod_id"),
-            rslt.getString("paymentmethod_name")
-        );
+            selectedTicket = new Ticket(
+                    rslt.getString("id"),
+                    buff,
+                    rslt.getString("eventclass_name"),
+                    pm.getId(),
+                    rslt.getString("paidTime"),
+                    rslt.getString("paymentStatus"),
+                    rslt.getBoolean("isClaimed")
+            );
+        }
 
-        selectedTicket = new Ticket(
-            rslt.getString("id"),
-            buff,
-            rslt.getString("eventclass_name"),
-            pm.getId(),
-            rslt.getString("paidTime"),
-            rslt.getString("paymentStatus"),
-            rslt.getBoolean("isClaimed")
-        );
-    }
-
-
+        System.out.println("DAO TICKET: ");
+        System.out.println(selectedTicket.getId());
         prst.close();
 
         return selectedTicket;
     }
-    
+
     public static List<Ticket> Select_Tickets_By_Username(String username) throws Exception {
-    List<Ticket> tickets = new ArrayList<>();
+        List<Ticket> tickets = new ArrayList<>();
 
-    String SQLQuery =
-        "SELECT ti.*, " +
-        "ec.id AS eventclass_id, ec.event_id AS event_id, ec.name AS eventclass_name, " +
-        "ev.name AS event_name, ev.startDateTime AS event_startDateTime, ev.venue_id, " +
-        "v.name AS venue_name, v.address AS venue_address, v.city_id, " +
-        "c.name AS city_name, " +
-        "pm.id AS paymentMethod_id, pm.name AS paymentmethod_name " +
-        "FROM tickets AS ti " +
-        "INNER JOIN eventclasses AS ec ON ti.eventClass_id = ec.id " +
-        "INNER JOIN events AS ev ON ec.event_id = ev.id " +
-        "INNER JOIN venues AS v ON ev.venue_id = v.id " +
-        "INNER JOIN cities AS c ON v.city_id = c.id " +
-        "INNER JOIN paymentmethods AS pm ON ti.paymentMethod_id = pm.id " +
-        "WHERE ti.user = ?";
+        String SQLQuery
+                = "SELECT ti.*, "
+                + "ec.id AS eventclass_id, ec.event_id AS event_id, ec.name AS eventclass_name, "
+                + "ev.name AS event_name, ev.startDateTime AS event_startDateTime, ev.venue_id, "
+                + "v.name AS venue_name, v.address AS venue_address, v.city_id, "
+                + "c.name AS city_name, "
+                + "pm.id AS paymentMethod_id, pm.name AS paymentmethod_name "
+                + "FROM tickets AS ti "
+                + "INNER JOIN eventclasses AS ec ON ti.eventClass_id = ec.id "
+                + "INNER JOIN events AS ev ON ec.event_id = ev.id "
+                + "INNER JOIN venues AS v ON ev.venue_id = v.id "
+                + "INNER JOIN cities AS c ON v.city_id = c.id "
+                + "INNER JOIN paymentmethods AS pm ON ti.paymentMethod_id = pm.id "
+                + "WHERE ti.user = ?";
 
-    PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
-    prst.setString(1, username);
-    ResultSet rslt = prst.executeQuery();
+        PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
+        prst.setString(1, username);
+        ResultSet rslt = prst.executeQuery();
 
-    while (rslt.next()) {
-        // Venue & Kota
-        Venue venue = new Venue(
-            rslt.getInt("venue_id"),
-            rslt.getString("venue_name")
-        );
-        venue.setAddress(rslt.getString("venue_address"));
+        while (rslt.next()) {
+            // Venue & Kota
+            Venue venue = new Venue(
+                    rslt.getInt("venue_id"),
+                    rslt.getString("venue_name")
+            );
+            venue.setAddress(rslt.getString("venue_address"));
 
-        City city = new City();
-        city.setName(rslt.getString("city_name"));
-        venue.setCity(city);
+            City city = new City();
+            city.setName(rslt.getString("city_name"));
+            venue.setCity(city);
 
-        // Event
-        Event event = new Event(
-            rslt.getInt("event_id"),
-            rslt.getString("event_name")
-        );
-        event.setStartTime(rslt.getString("event_startDateTime")); 
-        event.setVenue(venue); 
-        event.addEventClasses(new EventClass(
-            rslt.getInt("eventclass_id"),
-            rslt.getString("eventclass_name")
-        ));
+            // Event
+            Event event = new Event(
+                    rslt.getInt("event_id"),
+                    rslt.getString("event_name")
+            );
+            event.setStartTime(rslt.getString("event_startDateTime"));
+            event.setVenue(venue);
+            event.addEventClasses(new EventClass(
+                    rslt.getInt("eventclass_id"),
+                    rslt.getString("eventclass_name")
+            ));
 
-        // Payment Method
-        PaymentMethod pm = new PaymentMethod(
-            rslt.getInt("paymentMethod_id"),
-            rslt.getString("paymentmethod_name")
-        );
+            // Payment Method
+            PaymentMethod pm = new PaymentMethod(
+                    rslt.getInt("paymentMethod_id"),
+                    rslt.getString("paymentmethod_name")
+            );
 
-        // Ticket
-        Ticket ticket = new Ticket(
-            rslt.getString("id"),
-            event,
-            rslt.getString("eventclass_name"),
-            pm.getId(),
-            rslt.getString("paidTime"),
-            rslt.getString("paymentStatus"),
-            rslt.getBoolean("isClaimed")
-        );
+            // Ticket
+            Ticket ticket = new Ticket(
+                    rslt.getString("id"),
+                    event,
+                    rslt.getString("eventclass_name"),
+                    pm.getId(),
+                    rslt.getString("paidTime"),
+                    rslt.getString("paymentStatus"),
+                    rslt.getBoolean("isClaimed")
+            );
 
-        tickets.add(ticket);
+            tickets.add(ticket);
+        }
+
+        rslt.close();
+        prst.close();
+
+        return tickets;
     }
 
-    rslt.close();
-    prst.close();
-
-    return tickets;
-}
-    
     public static List<Ticket> Select_Ticket_Paid_RequestRefund_Admin() throws Exception {
-    List<Ticket> tickets = new ArrayList<>();
+        List<Ticket> tickets = new ArrayList<>();
 
-    String SQLQuery =
-        "SELECT ti.*, " +
-        "ec.id AS eventclass_id, ec.event_id AS event_id, ec.name AS eventclass_name, " +
-        "ev.name AS event_name, ev.startDateTime AS event_startDateTime, ev.venue_id, " +
-        "v.name AS venue_name, v.address AS venue_address, v.city_id, " +
-        "c.name AS city_name, " +
-        "pm.id AS paymentMethod_id, pm.name AS paymentmethod_name " +
-        "FROM tickets AS ti " +
-        "INNER JOIN eventclasses AS ec ON ti.eventClass_id = ec.id " +
-        "INNER JOIN events AS ev ON ec.event_id = ev.id " +
-        "INNER JOIN venues AS v ON ev.venue_id = v.id " +
-        "INNER JOIN cities AS c ON v.city_id = c.id " +
-        "INNER JOIN paymentmethods AS pm ON ti.paymentMethod_id = pm.id " +
-        "WHERE (ti.paymentStatus = 'PAID' OR ti.paymentStatus = 'REQUEST REFUND')";
+        String SQLQuery
+                = "SELECT ti.*, "
+                + "ec.id AS eventclass_id, ec.event_id AS event_id, ec.name AS eventclass_name, "
+                + "ev.name AS event_name, ev.startDateTime AS event_startDateTime, ev.venue_id, "
+                + "v.name AS venue_name, v.address AS venue_address, v.city_id, "
+                + "c.name AS city_name, "
+                + "pm.id AS paymentMethod_id, pm.name AS paymentmethod_name "
+                + "FROM tickets AS ti "
+                + "INNER JOIN eventclasses AS ec ON ti.eventClass_id = ec.id "
+                + "INNER JOIN events AS ev ON ec.event_id = ev.id "
+                + "INNER JOIN venues AS v ON ev.venue_id = v.id "
+                + "INNER JOIN cities AS c ON v.city_id = c.id "
+                + "INNER JOIN paymentmethods AS pm ON ti.paymentMethod_id = pm.id "
+                + "WHERE (ti.paymentStatus = 'PAID' OR ti.paymentStatus = 'REQUEST REFUND')";
 
-    PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
-    ResultSet rslt = prst.executeQuery();
+        PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
+        ResultSet rslt = prst.executeQuery();
 
-    while (rslt.next()) {
-        // Venue & Kota
-        Venue venue = new Venue(
-            rslt.getInt("venue_id"),
-            rslt.getString("venue_name")
-        );
-        venue.setAddress(rslt.getString("venue_address"));
+        while (rslt.next()) {
+            // Venue & Kota
+            Venue venue = new Venue(
+                    rslt.getInt("venue_id"),
+                    rslt.getString("venue_name")
+            );
+            venue.setAddress(rslt.getString("venue_address"));
 
-        City city = new City();
-        city.setName(rslt.getString("city_name"));
-        venue.setCity(city);
+            City city = new City();
+            city.setName(rslt.getString("city_name"));
+            venue.setCity(city);
 
-        // Event
-        Event event = new Event(
-            rslt.getInt("event_id"),
-            rslt.getString("event_name")
-        );
-        event.setStartTime(rslt.getString("event_startDateTime")); 
-        event.setVenue(venue); 
-        event.addEventClasses(new EventClass(
-            rslt.getInt("eventclass_id"),
-            rslt.getString("eventclass_name")
-        ));
+            // Event
+            Event event = new Event(
+                    rslt.getInt("event_id"),
+                    rslt.getString("event_name")
+            );
+            event.setStartTime(rslt.getString("event_startDateTime"));
+            event.setVenue(venue);
+            event.addEventClasses(new EventClass(
+                    rslt.getInt("eventclass_id"),
+                    rslt.getString("eventclass_name")
+            ));
 
-        // Payment Method
-        PaymentMethod pm = new PaymentMethod(
-            rslt.getInt("paymentMethod_id"),
-            rslt.getString("paymentmethod_name")
-        );
+            // Payment Method
+            PaymentMethod pm = new PaymentMethod(
+                    rslt.getInt("paymentMethod_id"),
+                    rslt.getString("paymentmethod_name")
+            );
 
-        // Ticket
-        Ticket ticket = new Ticket(
-            rslt.getString("id"),
-            event,
-            rslt.getString("eventclass_name"),
-            pm.getId(),
-            rslt.getString("paidTime"),
-            rslt.getString("paymentStatus"),
-            rslt.getBoolean("isClaimed")
-        );
+            // Ticket
+            Ticket ticket = new Ticket(
+                    rslt.getString("id"),
+                    event,
+                    rslt.getString("eventclass_name"),
+                    pm.getId(),
+                    rslt.getString("paidTime"),
+                    rslt.getString("paymentStatus"),
+                    rslt.getBoolean("isClaimed")
+            );
 
-        tickets.add(ticket);
+            tickets.add(ticket);
+        }
+
+        rslt.close();
+        prst.close();
+
+        return tickets;
     }
-
-    rslt.close();
-    prst.close();
-
-    return tickets;
-}
-    
-
-
-
-
 
     public static Ticket Select_Ticket_By_User(String user) throws Exception {
         Ticket selectedTicket = new Ticket();
@@ -269,39 +261,37 @@ public class DAO_Ticket {
         return selectedTicket;
     }
 
-   public static int Insert_Ticket(Ticket ticket, String buyer_username, int eventclass_id) throws Exception {
-    String SQLQuery = "INSERT INTO `ticketmarketplace`.`tickets` " +
-                      "(`id`, `user`, `eventClass_id`,`price`, `paymentMethod_id`, `paymentStatus`, `isClaimed`) " +
-                      "VALUES (?, ?, ?,0, ?, ?, ?)";
+    public static int Insert_Ticket(Ticket ticket, String buyer_username, int eventclass_id) throws Exception {
+        String SQLQuery = "INSERT INTO `ticketmarketplace`.`tickets` "
+                + "(`id`, `user`, `eventClass_id`,`price`, `paymentMethod_id`, `paymentStatus`, `isClaimed`) "
+                + "VALUES (?, ?, ?,0, ?, ?, ?)";
 
-    PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
-    prst.setString(1, ticket.getId());
-    prst.setString(2, buyer_username);
-    prst.setInt(3, eventclass_id); 
-    prst.setInt(4, ticket.getPaymentMethod());
-    prst.setString(5, "UNPAID");
-    prst.setBoolean(6, ticket.isIsClaimed());
-
-    int num = prst.executeUpdate();
-    prst.close();
-
-    return num;
-}
-
-    
-    public static int Update_Ticket_Status(String ticket_id,String status) throws Exception {
-        String SQLQuery = "UPDATE `ticketmarketplace`.`tickets` SET `paymentStatus` = ? WHERE id = ?;";
-        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
-        prst.setString(1, status);
-        prst.setString(2, ticket_id);
-        
+        PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
+        prst.setString(1, ticket.getId());
+        prst.setString(2, buyer_username);
+        prst.setInt(3, eventclass_id);
+        prst.setInt(4, ticket.getPaymentMethod());
+        prst.setString(5, "UNPAID");
+        prst.setBoolean(6, ticket.isIsClaimed());
 
         int num = prst.executeUpdate();
         prst.close();
 
         return num;
     }
-    
+
+    public static int Update_Ticket_Status(String ticket_id, String status) throws Exception {
+        String SQLQuery = "UPDATE `ticketmarketplace`.`tickets` SET `paymentStatus` = ? WHERE id = ?;";
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(1, status);
+        prst.setString(2, ticket_id);
+
+        int num = prst.executeUpdate();
+        prst.close();
+
+        return num;
+    }
+
     public static int Update_Ticket_Paid(String ticket_id) throws Exception {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm");
         String formattedDate = LocalDateTime.now().format(formatter);
@@ -316,8 +306,7 @@ public class DAO_Ticket {
 
         return num;
     }
-    
-    
+
     public static int Update_Ticket_isClaimed(String ticket_id) throws Exception {
         String SQLQuery = "UPDATE `ticketmarketplace`.`tickets` SET `isClaimed` = 1 WHERE `id`= ?;";
         PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));

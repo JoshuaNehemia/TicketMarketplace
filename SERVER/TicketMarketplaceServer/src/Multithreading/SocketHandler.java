@@ -65,6 +65,7 @@ public class SocketHandler extends Thread {
     }
 
     public void SendMessage(Communication comm) throws Exception {
+        System.out.println("SENDING: "+ comm.getMessage());
         this.sending.writeBytes(comm.getMessage() + "\n");
     }
 

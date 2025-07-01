@@ -418,6 +418,7 @@ public class TMWebService {
         try {
             this.ConnectToDatabase();
             res = DAO_Ticket.Select_Ticket_By_Id(ticket_id);
+            System.out.println(ticket_id + "TICKET GET: " + res.getId());
         } catch (Exception ex) {
             System.out.println("ERROR IN WEBSERVICE: " + ex);
         }
@@ -467,7 +468,7 @@ public class TMWebService {
         int num = 0;
         try {
             this.ConnectToDatabase();
-            num = DAO_Ticket.Update_Ticket_Status(ticket.getId(), "REFUNDED");
+            num = DAO_Ticket.Update_Ticket_Status(ticket.getId(), "REFUND");
             num += DAO_EventClass.Update_EventClass_Stock_Add(this.GetEventClassId(ticket), 1);
         } catch (Exception ex) {
             System.out.println("ERROR IN WEBSERVICE: " + ex);

@@ -353,7 +353,7 @@ public class FormUserTicket extends javax.swing.JFrame {
             try{
                 BuyerApp.tcpservice.SendingMessage(new Communication("REQUESTREFUND",true,data));
             javax.swing.JOptionPane.showMessageDialog(this,
-                "Berhasil refund tiket",
+                "Request refund tiket sedang diproses",
                 "Sukses",
                 javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }
