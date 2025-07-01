@@ -79,11 +79,11 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `events` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
-  `image` VARCHAR(255) DEFAULT NULL,
   `description` TEXT DEFAULT NULL,
   `startDateTime` VARCHAR(255) NOT NULL,
   `seller` VARCHAR(45) NOT NULL,
   `venue_id` INT NOT NULL,
+  `photoPath` VARCHAR(255) DEFAULT NULL,  -- Kolom baru ditambahkan di sini
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -98,8 +98,10 @@ CREATE TABLE IF NOT EXISTS `events` (
     FOREIGN KEY (`venue_id`)
     REFERENCES `venues` (`id`)
     ON DELETE RESTRICT
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE
+)
 ENGINE = InnoDB;
+
 
 -- Table structure for table `eventClasses`
 CREATE TABLE IF NOT EXISTS `eventClasses` (
