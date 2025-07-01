@@ -261,18 +261,69 @@ public class DAO_Ticket {
         return selectedTicket;
     }
 
+    public static Ticket Select_Ticket_By_Seller(String seller) throws Exception {
+        Ticket selectedTicket = new Ticket();
+
+        String SQLQuery = "SELECT \n"
+                + "ti.*,\n"
+                + "ec.`name` AS 'eventclass_name',\n"
+                + "ev.`id` AS 'event_id',\n"
+                + "ev.`name` AS 'event_name',\n"
+                + "pm.`name` AS 'paymentmethod_name'\n"
+                + "FROM \n"
+                + "`tickets` AS ti\n"
+                + "INNER JOIN \n"
+                + "`eventclasses` AS ec\n"
+                + "ON \n"
+                + "ti.`eventClass_id` = ec.`id`\n"
+                + "INNER JOIN\n"
+                + "`events` AS ev\n"
+                + "ON\n"
+                + "ev.`id` = ec.`event_id`\n"
+                + "INNER JOIN\n"
+                + "`paymentmethods` AS pm\n"
+                + "ON\n"
+                + "ti.`paymentMethod_id` = pm.id\n"
+                + "WHERE \n"
+                + "ev.`seller` = ?;";
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(1, seller);
+
+        ResultSet rslt = prst.executeQuery();
+
+        if (rslt.next()) {
+
+            Event buff = new Event(rslt.getInt("event_id"), rslt.getString("event_name"));
+            buff.addEventClasses(new EventClass(rslt.getInt("eventclass_id"), rslt.getString("eventclass_name")));
+            selectedTicket = new Ticket(
+                    rslt.getString("id"),
+                    buff,
+                    rslt.getString("eventclass_name"),
+                    rslt.getInt("paymentmethod_id"),
+                    rslt.getString("paidTime"),
+                    rslt.getString("status"),
+                    rslt.getBoolean("isClaimed")
+            );
+        }
+
+        prst.close();
+
+        return selectedTicket;
+    }
+
     public static int Insert_Ticket(Ticket ticket, String buyer_username, int eventclass_id) throws Exception {
         String SQLQuery = "INSERT INTO `ticketmarketplace`.`tickets` "
                 + "(`id`, `user`, `eventClass_id`,`price`, `paymentMethod_id`, `paymentStatus`, `isClaimed`) "
-                + "VALUES (?, ?, ?,0, ?, ?, ?)";
+                + "VALUES (?, ?, ?,?, ?, ?, ?)";
 
         PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
         prst.setString(1, ticket.getId());
         prst.setString(2, buyer_username);
         prst.setInt(3, eventclass_id);
-        prst.setInt(4, ticket.getPaymentMethod());
-        prst.setString(5, "UNPAID");
-        prst.setBoolean(6, ticket.isIsClaimed());
+        prst.setDouble(4, ticket.getPrice());
+        prst.setInt(5, ticket.getPaymentMethod());
+        prst.setString(6, "UNPAID");
+        prst.setBoolean(7, ticket.isIsClaimed());
 
         int num = prst.executeUpdate();
         prst.close();

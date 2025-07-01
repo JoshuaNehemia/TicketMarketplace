@@ -501,6 +501,7 @@ public class FormUserCheckout extends javax.swing.JFrame {
         newTicket.setStatus(paymentStatus);
         newTicket.setIsClaimed(isClaimed);
         newTicket.setEvent(selectedEvent);
+        newTicket.setPrice(selectedEventClass.getPrice()); //Nanti update di WS dulu
         System.out.println(currentUser.getUsername());
         Ticket insert = buyTicket(newTicket, username);
 

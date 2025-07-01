@@ -17,6 +17,7 @@ public class Ticket {
     private String id;
     private Event event;
     private String eventClass;
+    private double price;
     private String piadTime;
     private String status; //ENUM('UNPAID','PAID','REQUEST REFUND','REFUNDED')
     private boolean isClaimed;
@@ -33,11 +34,34 @@ public class Ticket {
         this.status = status;
         this.isClaimed = isClaimed;
     }
+    
+    public Ticket(String id, Event event, String eventClass, double price, int paymentMethod, String paidDate, String status, boolean isClaimed) {
+        this.id = id;
+        this.event = event;
+        this.eventClass = eventClass;
+        this.price = price;
+        this.paymentMethod = paymentMethod;
+        this.piadTime = paidDate;
+        this.status = status;
+        this.isClaimed = isClaimed;
+    }
 
     public Ticket(String username, Event event, String eventClass, int paymentMethod, String status, boolean isClaimed) {
         this.id = "";
         this.event = event;
         this.eventClass = eventClass;
+        this.paymentMethod = paymentMethod;
+        this.piadTime = null;
+        this.status = status;
+        this.isClaimed = isClaimed;
+        this.username = "";
+    }
+
+    public Ticket(String username, Event event, String eventClass, double price,int paymentMethod, String status, boolean isClaimed) {
+        this.id = "";
+        this.event = event;
+        this.eventClass = eventClass;
+        this.price = price;
         this.paymentMethod = paymentMethod;
         this.piadTime = null;
         this.status = status;
@@ -112,8 +136,20 @@ public class Ticket {
         this.isClaimed = isClaimed;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     //FUNCTION
     public String CreateID(String username) {
-        return "" + this.getEvent().getName() + "+" + this.getEventClass() + "+" + username + "+" + LocalDateTime.now().toString();
+        return "" + this.getEvent().getName() + "+" + this.getEventClass() + "+" + username + "+" + 1 + "+" + LocalDateTime.now().toString();
+    }
+
+    public String CreateID(String username, int iteration) {
+        return "" + this.getEvent().getName() + "+" + this.getEventClass() + "+" + username + "+" + iteration + "+" + LocalDateTime.now().toString();
     }
 }
