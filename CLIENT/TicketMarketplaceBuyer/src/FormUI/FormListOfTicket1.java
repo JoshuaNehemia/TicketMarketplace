@@ -5,13 +5,21 @@
 package FormUI;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 import tmwebservice.Event;
 import tmwebservice.EventClass;
 import tmwebservice.User;
@@ -46,6 +54,8 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         refreshTicketsUI();
         if(listOfEvent.size()>0)jLabel5.setText("Tersedia");
         jLabel5.setForeground(Color.GREEN);
+        
+      
     }
     
      private void loadEvents(String filter) {
@@ -54,17 +64,51 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
      private void refreshTicketsUI(){
          int sisaEvent = listOfEvent.size() - showIndexFrom;
 
-        jPanel3.setVisible(sisaEvent >= 2);
-        jPanel5.setVisible(sisaEvent >= 3);
+        imagePreviewLabel2.setVisible(sisaEvent >= 2);
+        imagePreviewLabel3.setVisible(sisaEvent >= 3);
         PanelDetailTicket2.setVisible(sisaEvent >= 2);
         PanelDetailTicket3.setVisible(sisaEvent >= 3);
 
         // Card 1
         if (showIndexFrom < listOfEvent.size()&&listOfEvent.size()%3>=0&&listOfEvent.size()>0) {
            Event event1 = listOfEvent.get(showIndexFrom);
+            String path = event1.getPhotoPath();
+
+            if (path != null && !path.isEmpty()) {
+                try {
+                    BufferedImage originalImage = ImageIO.read(new File(path));
+                    int cropWidth, cropHeight;
+                    int x, y;
+
+                    double targetRatio = 189.0 / 279.0;
+                    double originalRatio = (double) originalImage.getWidth() / originalImage.getHeight();
+
+                    if (originalRatio > targetRatio) {
+                        cropHeight = originalImage.getHeight();
+                        cropWidth = (int) (cropHeight * targetRatio);
+                        x = (originalImage.getWidth() - cropWidth) / 2;
+                        y = 0;
+                    } else {
+                        cropWidth = originalImage.getWidth();
+                        cropHeight = (int) (cropWidth / targetRatio);
+                        x = 0;
+                        y = (originalImage.getHeight() - cropHeight) / 2;
+                    }
+
+                    BufferedImage croppedImage = originalImage.getSubimage(x, y, cropWidth, cropHeight);
+                    Image scaledImage = croppedImage.getScaledInstance(189, 279, Image.SCALE_SMOOTH);
+
+                    imagePreviewLabel1.setIcon(new ImageIcon(scaledImage));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    imagePreviewLabel1.setText("Gambar gagal dimuat");
+                }
+            } else {
+                imagePreviewLabel1.setText("Tidak ada gambar");
+            }
+
            jLabel1.setText(event1.getName());
            jLabel2.setText(event1.getStartTime());
-
            List<EventClass> eventClasses1 = event1.getEventClasses();
            boolean tersedia = false;
            if (eventClasses1 != null && !eventClasses1.isEmpty()) {
@@ -98,6 +142,41 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
        // Card 2
        if (showIndexFrom+1 < listOfEvent.size()&&listOfEvent.size()%3>=0&&listOfEvent.size()>0) {
            Event event2 = listOfEvent.get(showIndexFrom+1);
+           String path = event2.getPhotoPath();
+
+            if (path != null && !path.isEmpty()) {
+                try {
+                    BufferedImage originalImage = ImageIO.read(new File(path));
+                    int cropWidth, cropHeight;
+                    int x, y;
+
+                    double targetRatio = 189.0 / 279.0;
+                    double originalRatio = (double) originalImage.getWidth() / originalImage.getHeight();
+
+                    if (originalRatio > targetRatio) {
+                        cropHeight = originalImage.getHeight();
+                        cropWidth = (int) (cropHeight * targetRatio);
+                        x = (originalImage.getWidth() - cropWidth) / 2;
+                        y = 0;
+                    } else {
+                        cropWidth = originalImage.getWidth();
+                        cropHeight = (int) (cropWidth / targetRatio);
+                        x = 0;
+                        y = (originalImage.getHeight() - cropHeight) / 2;
+                    }
+
+                    BufferedImage croppedImage = originalImage.getSubimage(x, y, cropWidth, cropHeight);
+                    Image scaledImage = croppedImage.getScaledInstance(189, 279, Image.SCALE_SMOOTH);
+
+                    imagePreviewLabel2.setIcon(new ImageIcon(scaledImage));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    imagePreviewLabel2.setText("Gambar gagal dimuat");
+                }
+            } else {
+                imagePreviewLabel2.setText("Tidak ada gambar");
+            }
+           
            jLabel10.setText(event2.getName());
            jLabel11.setText(event2.getStartTime());
 
@@ -133,6 +212,41 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
        // Card 3
         if (showIndexFrom+2 < listOfEvent.size()&&listOfEvent.size()%3>=0&&listOfEvent.size()>0) {
            Event event3 = listOfEvent.get(showIndexFrom+2);
+           String path = event3.getPhotoPath();
+
+            if (path != null && !path.isEmpty()) {
+                try {
+                    BufferedImage originalImage = ImageIO.read(new File(path));
+                    int cropWidth, cropHeight;
+                    int x, y;
+
+                    double targetRatio = 189.0 / 279.0;
+                    double originalRatio = (double) originalImage.getWidth() / originalImage.getHeight();
+
+                    if (originalRatio > targetRatio) {
+                        cropHeight = originalImage.getHeight();
+                        cropWidth = (int) (cropHeight * targetRatio);
+                        x = (originalImage.getWidth() - cropWidth) / 2;
+                        y = 0;
+                    } else {
+                        cropWidth = originalImage.getWidth();
+                        cropHeight = (int) (cropWidth / targetRatio);
+                        x = 0;
+                        y = (originalImage.getHeight() - cropHeight) / 2;
+                    }
+
+                    BufferedImage croppedImage = originalImage.getSubimage(x, y, cropWidth, cropHeight);
+                    Image scaledImage = croppedImage.getScaledInstance(189, 279, Image.SCALE_SMOOTH);
+
+                    imagePreviewLabel3.setIcon(new ImageIcon(scaledImage));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    imagePreviewLabel3.setText("Gambar gagal dimuat");
+                }
+            } else {
+                imagePreviewLabel3.setText("Tidak ada gambar");
+            }
+           
            jLabel16.setText(event3.getName());
            jLabel17.setText(event3.getStartTime());
 
@@ -218,24 +332,18 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         btnTerbaru = new javax.swing.JButton();
         btnHargaTerendah = new javax.swing.JButton();
         btnHargaTertinggi = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
         PanelDetailTicket1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         btnDetailsTicket1 = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
         PanelDetailTicket2 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         btnDetailsTicket2 = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
         PanelDetailTicket3 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -249,6 +357,9 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         btnTiketDibeli = new javax.swing.JButton();
+        imagePreviewLabel3 = new javax.swing.JLabel();
+        imagePreviewLabel1 = new javax.swing.JLabel();
+        imagePreviewLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuHome = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
@@ -285,27 +396,6 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-
-        jLabel6.setText("GAMBAR");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addComponent(jLabel6)
-                .addContainerGap(98, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(jLabel6)
-                .addContainerGap(60, Short.MAX_VALUE))
-        );
-
         PanelDetailTicket1.setBackground(new java.awt.Color(255, 255, 255));
         PanelDetailTicket1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -341,7 +431,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(PanelDetailTicket1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelDetailTicket1Layout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(btnDetailsTicket1))
                     .addGroup(PanelDetailTicket1Layout.createSequentialGroup()
@@ -368,27 +458,6 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addGap(8, 8, 8)))
                 .addContainerGap(12, Short.MAX_VALUE))
-        );
-
-        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
-
-        jLabel9.setText("GAMBAR");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addComponent(jLabel9)
-                .addContainerGap(98, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(jLabel9)
-                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         PanelDetailTicket2.setBackground(new java.awt.Color(255, 255, 255));
@@ -434,7 +503,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                             .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 24, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         PanelDetailTicket2Layout.setVerticalGroup(
@@ -452,28 +521,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel13)
                         .addGap(40, 40, 40)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel5.setBackground(new java.awt.Color(204, 204, 204));
-
-        jLabel15.setText("GAMBAR");
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addComponent(jLabel15)
-                .addContainerGap(98, Short.MAX_VALUE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(jLabel15)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         PanelDetailTicket3.setBackground(new java.awt.Color(255, 255, 255));
@@ -537,7 +585,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                     .addGroup(PanelDetailTicket3Layout.createSequentialGroup()
                         .addComponent(jLabel19)
                         .addGap(40, 40, 40)))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         btnPrev.setText("Prev");
@@ -594,6 +642,12 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
             }
         });
 
+        imagePreviewLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+
+        imagePreviewLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+
+        imagePreviewLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+
         jMenuBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         menuHome.setText("Refresh");
@@ -618,6 +672,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -632,29 +687,37 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnHargaTertinggi))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(PanelDetailTicket1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(btnTiketDibeli)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37)
-                                .addComponent(jLabel21)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(PanelDetailTicket2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(PanelDetailTicket3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(37, Short.MAX_VALUE))
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnTiketDibeli)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 2, Short.MAX_VALUE)
+                                .addComponent(PanelDetailTicket1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(imagePreviewLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(imagePreviewLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(50, 50, 50)
+                                .addComponent(imagePreviewLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(25, 25, 25))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(37, 37, 37)
+                                        .addComponent(jLabel21)
+                                        .addGap(37, 37, 37)
+                                        .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(PanelDetailTicket2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(PanelDetailTicket3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(14, Short.MAX_VALUE))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -667,31 +730,30 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                     .addComponent(btnTerbaru)
                     .addComponent(btnHargaTerendah)
                     .addComponent(btnHargaTertinggi))
-                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(24, 24, 24)
+                        .addComponent(imagePreviewLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(PanelDetailTicket1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(PanelDetailTicket2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(PanelDetailTicket3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(imagePreviewLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(PanelDetailTicket3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(imagePreviewLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(PanelDetailTicket2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnNext, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel21)
-                            .addComponent(btnPrev, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(14, 14, 14))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnTiketDibeli)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNext, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel21)
+                    .addComponent(btnPrev, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnTiketDibeli))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         pack();
@@ -886,12 +948,14 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
     private javax.swing.JButton btnTerbaru;
     private javax.swing.JButton btnTerdekat;
     private javax.swing.JButton btnTiketDibeli;
+    private javax.swing.JLabel imagePreviewLabel1;
+    private javax.swing.JLabel imagePreviewLabel2;
+    private javax.swing.JLabel imagePreviewLabel3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel19;
@@ -902,15 +966,10 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JMenu menuHome;
     // End of variables declaration//GEN-END:variables
 

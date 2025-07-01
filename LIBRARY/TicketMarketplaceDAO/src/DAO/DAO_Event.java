@@ -40,7 +40,7 @@ public class DAO_Event {
                   "INNER JOIN sellers s ON e.seller = s.username " +
                   "INNER JOIN venues v ON e.venue_id = v.id " +
                   "INNER JOIN cities c ON v.city_id = c.id " +
-                  "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d %H:%i:%s') > NOW() " +
+                  "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d-%H-%i') >= NOW() " +
                   "ORDER BY e.create_time DESC";
             }else if(filter.equals("harga terendah")){
                      SQLQuery = "SELECT e.*, ec_stats.min_price, " +
@@ -56,7 +56,7 @@ public class DAO_Event {
                             "INNER JOIN sellers s ON e.seller = s.username " +
                             "INNER JOIN venues v ON e.venue_id = v.id " +
                             "INNER JOIN cities c ON v.city_id = c.id " +
-                            "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d %H:%i:%s') > NOW() " +
+                            "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d-%H-%i') >= NOW() " +
                             "ORDER BY ec_stats.min_price ASC";
                 }else if(filter.equals("harga tertinggi")){
                     SQLQuery = "SELECT e.*, ec_stats.max_price, " +
@@ -72,7 +72,7 @@ public class DAO_Event {
                         "INNER JOIN sellers s ON e.seller = s.username " +
                         "INNER JOIN venues v ON e.venue_id = v.id " +
                         "INNER JOIN cities c ON v.city_id = c.id " +
-                        "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d %H:%i:%s') > NOW() " +
+                        "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d-%H-%i') >= NOW() " +
                         "ORDER BY ec_stats.max_price DESC";
                 }else if(filter.equals("terdekat")){
                     SQLQuery = "SELECT e.*, " +
@@ -83,7 +83,7 @@ public class DAO_Event {
                       "INNER JOIN sellers s ON e.seller = s.username " +
                       "INNER JOIN venues v ON e.venue_id = v.id " +
                       "INNER JOIN cities c ON v.city_id = c.id " +
-                      "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d %H:%i:%s') > NOW() " +
+                      "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d-%H-%i') >= NOW() " +
                       "ORDER BY STR_TO_DATE(e.startDateTime, '%Y-%m-%d %H:%i:%s') ASC";
                 }
                 else{
@@ -95,7 +95,7 @@ public class DAO_Event {
                     "INNER JOIN sellers s ON e.seller = s.username " +
                     "INNER JOIN venues v ON e.venue_id = v.id " +
                     "INNER JOIN cities c ON v.city_id = c.id " +
-                    "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d-%H-%i')";
+                    "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d-%H-%i') >= NOW()";
             }
 
             PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
@@ -107,6 +107,7 @@ public class DAO_Event {
                 e.setName(rslt.getString("name"));
                 e.setStartTime(rslt.getString("startDateTime"));
                 e.setDescription(rslt.getString("description"));
+                e.setPhotoPath(rslt.getString("photoPath"));
 
                 // Venue
                 Venue v = new Venue();
@@ -136,7 +137,6 @@ public class DAO_Event {
 
                 events.add(e);
             }
-
             prst.close();
             return events;
         }
@@ -146,125 +146,199 @@ public class DAO_Event {
 
 
     public static ArrayList<Event> Select_Event_By_Seller(String seller_username) throws Exception {
-        ArrayList<Event> events = new ArrayList<Event>();
-        Event buffer;
-        
-        String SQLQuery = "SELECT\n" + "  eve.*,\n" + "  ven.`name` AS 'venue_name',\n" + "  cit.`name` AS 'city_name',\n" + "  ven.`address` AS 'venue_address',\n" + "  sel.`companyName` AS 'seller_companyName',\n" + "  sel.`email` AS 'seller_email',\n" + "  sel.`phoneNumber` AS 'seller_phoneNumber'\n" + "FROM\n" + "  `events` AS eve\n" + "INNER JOIN\n" + "  `venues` AS ven\n" + "ON\n" + "  eve.`venue_id` = ven.`id`\n" + "INNER JOIN\n" + "  `sellers` AS sel\n" + "ON\n" + "  eve.`seller` = sel.`username`\n" + "INNER JOIN\n" + "  `cities` AS cit\n" + "ON\n" + "  ven.`city_id` = cit.`id`\n" + "WHERE\n" + "sel.`seller_usename` = ?;\n";
-        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+    ArrayList<Event> events = new ArrayList<>();
+    Event buffer;
+
+    String SQLQuery = "SELECT\n" +
+        "  eve.*,\n" +
+        "  ven.id AS venue_id,\n" +
+        "  ven.`name` AS venue_name,\n" +
+        "  cit.id AS city_id,\n" +
+        "  cit.`name` AS city_name,\n" +
+        "  ven.`address` AS venue_address,\n" +
+        "  sel.username AS seller_username,\n" +
+        "  sel.`companyName` AS seller_companyName,\n" +
+        "  sel.`email` AS seller_email,\n" +
+        "  sel.`phoneNumber` AS seller_phoneNumber\n" +
+        "FROM `events` AS eve\n" +
+        "INNER JOIN `venues` AS ven ON eve.`venue_id` = ven.`id`\n" +
+        "INNER JOIN `sellers` AS sel ON eve.`seller` = sel.`username`\n" +
+        "INNER JOIN `cities` AS cit ON ven.`city_id` = cit.`id`\n" +
+        "WHERE sel.`username` = ?;"; 
+    
+        PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
         prst.setString(1, seller_username);
 
         ResultSet rslt = prst.executeQuery();
 
         while (rslt.next()) {
             buffer = new Event(
-                    rslt.getInt("id"),
-                    rslt.getString("name"),
-                    rslt.getString("description"),
-                    rslt.getString("startDateTime"),
-                    new Venue(
-                            rslt.getInt("id"),
-                            rslt.getString("venue_name"),
-                            new City(
-                                    rslt.getInt("city_id"),
-                                    rslt.getString("city_name")
-                            ),
-                            rslt.getString("venue_address")
+                rslt.getInt("id"),
+                rslt.getString("name"),
+                rslt.getString("description"),
+                rslt.getString("startDateTime"),
+                new Venue(
+                    rslt.getInt("venue_id"),
+                    rslt.getString("venue_name"),
+                    new City(
+                        rslt.getInt("city_id"),
+                        rslt.getString("city_name")
                     ),
-                    new Seller(
-                            rslt.getString("seller_username"),
-                            rslt.getString("seller_companyName"),
-                            rslt.getString("seller_email"),
-                            rslt.getString("seller_phoneNumber")
-                    )
-            );
-            events.add(buffer);
-        }
-        return events;
-    }
-
-    public static ArrayList<Event> Select_Event_By_Name(String name) throws Exception {
-        ArrayList<Event> events = new ArrayList<Event>();
-
-        String SQLQuery = "SELECT\n" + "  eve.*,\n" + "  ven.`name` AS 'venue_name',\n" + "  cit.`name` AS 'city_name',\n" + "  ven.`address` AS 'venue_address',\n" + "  sel.`companyName` AS 'seller_companyName',\n" + "  sel.`email` AS 'seller_email',\n" + "  sel.`phoneNumber` AS 'seller_phoneNumber'\n" + "FROM\n" + "  `events` AS eve\n" + "INNER JOIN\n" + "  `venues` AS ven\n" + "ON\n" + "  eve.`venue_id` = ven.`id`\n" + "INNER JOIN\n" + "  `sellers` AS sel\n" + "ON\n" + "  eve.`seller` = sel.`username`\n" + "INNER JOIN\n" + "  `cities` AS cit\n" + "ON\n" + "  ven.`city_id` = cit.`id`\n" + "WHERE\n" + "eve.`name` LIKE ?;\n";
-        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
-        prst.setString(1, "%" + name + "%");
-
-        ResultSet rslt = prst.executeQuery();
-
-        Event buffer;
-        while (rslt.next()) {
-            buffer = new Event(
-                    rslt.getInt("id"),
-                    rslt.getString("name"),
-                    rslt.getString("description"),
-                    rslt.getString("startDateTime"),
-                    new Venue(
-                            rslt.getInt("id"),
-                            rslt.getString("venue_name"),
-                            new City(
-                                    rslt.getInt("city_id"),
-                                    rslt.getString("city_name")
-                            ),
-                            rslt.getString("venue_address")
-                    ),
-                    new Seller(
-                            rslt.getString("seller_username"),
-                            rslt.getString("seller_companyName"),
-                            rslt.getString("seller_email"),
-                            rslt.getString("seller_phoneNumber")
-                    )
+                    rslt.getString("venue_address")
+                ),
+                new Seller(
+                    rslt.getString("seller_username"),
+                    rslt.getString("seller_companyName"),
+                    rslt.getString("seller_email"),
+                    rslt.getString("seller_phoneNumber")
+                ),
+                rslt.getString("photoPath") 
             );
             events.add(buffer);
         }
 
+        rslt.close();
         prst.close();
 
         return events;
     }
 
-    public static Event Select_SingleEvent_By_Name(String name, String seller_username) throws Exception {
+    public static ArrayList<Event> Select_Event_By_Name(String name) throws Exception {
+    ArrayList<Event> events = new ArrayList<>();
 
-        String SQLQuery = "SELECT\n" + "  eve.*,\n" + "  ven.`name` AS 'venue_name',\n" + "  cit.`name` AS 'city_name',\n" + "  ven.`address` AS 'venue_address',\n" + "  sel.`companyName` AS 'seller_companyName',\n" + "  sel.`email` AS 'seller_email',\n" + "  sel.`phoneNumber` AS 'seller_phoneNumber'\n" + "FROM\n" + "  `events` AS eve\n" + "INNER JOIN\n" + "  `venues` AS ven\n" + "ON\n" + "  eve.`venue_id` = ven.`id`\n" + "INNER JOIN\n" + "  `sellers` AS sel\n" + "ON\n" + "  eve.`seller` = sel.`username`\n" + "INNER JOIN\n" + "  `cities` AS cit\n" + "ON\n" + "  ven.`city_id` = cit.`id`\n" + "WHERE\n" + "eve.`name` = ? AND eve.`seller` = ?;\n";
-        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+    String SQLQuery = "SELECT\n" +
+        "  eve.*,\n" +
+        "  ven.id AS venue_id,\n" +
+        "  ven.`name` AS venue_name,\n" +
+        "  cit.id AS city_id,\n" +
+        "  cit.`name` AS city_name,\n" +
+        "  ven.`address` AS venue_address,\n" +
+        "  sel.username AS seller_username,\n" +
+        "  sel.`companyName` AS seller_companyName,\n" +
+        "  sel.`email` AS seller_email,\n" +
+        "  sel.`phoneNumber` AS seller_phoneNumber\n" +
+        "FROM `events` AS eve\n" +
+        "INNER JOIN `venues` AS ven ON eve.`venue_id` = ven.`id`\n" +
+        "INNER JOIN `sellers` AS sel ON eve.`seller` = sel.`username`\n" +
+        "INNER JOIN `cities` AS cit ON ven.`city_id` = cit.`id`\n" +
+        "WHERE eve.`name` LIKE ?;";
+
+        PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
+        prst.setString(1, "%" + name + "%");
+
+        ResultSet rslt = prst.executeQuery();
+
+        while (rslt.next()) {
+            Event buffer = new Event(
+                rslt.getInt("id"),
+                rslt.getString("name"),
+                rslt.getString("description"),
+                rslt.getString("startDateTime"),
+                new Venue(
+                    rslt.getInt("venue_id"), 
+                    rslt.getString("venue_name"),
+                    new City(
+                        rslt.getInt("city_id"),
+                        rslt.getString("city_name")
+                    ),
+                    rslt.getString("venue_address")
+                ),
+                new Seller(
+                    rslt.getString("seller_username"),
+                    rslt.getString("seller_companyName"),
+                    rslt.getString("seller_email"),
+                    rslt.getString("seller_phoneNumber")
+                ),
+                rslt.getString("photoPath") 
+            );
+            events.add(buffer);
+        }
+
+        rslt.close();
+        prst.close();
+
+        return events;
+    }
+
+
+    public static Event Select_SingleEvent_By_Name(String name, String seller_username) throws Exception {
+    String SQLQuery = "SELECT\n" +
+        "  eve.*,\n" +
+        "  ven.id AS venue_id,\n" +
+        "  ven.`name` AS venue_name,\n" +
+        "  cit.id AS city_id,\n" +
+        "  cit.`name` AS city_name,\n" +
+        "  ven.`address` AS venue_address,\n" +
+        "  sel.username AS seller_username,\n" +
+        "  sel.`companyName` AS seller_companyName,\n" +
+        "  sel.`email` AS seller_email,\n" +
+        "  sel.`phoneNumber` AS seller_phoneNumber\n" +
+        "FROM `events` AS eve\n" +
+        "INNER JOIN `venues` AS ven ON eve.`venue_id` = ven.`id`\n" +
+        "INNER JOIN `sellers` AS sel ON eve.`seller` = sel.`username`\n" +
+        "INNER JOIN `cities` AS cit ON ven.`city_id` = cit.`id`\n" +
+        "WHERE eve.`name` = ? AND eve.`seller` = ?;";
+
+        PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
         prst.setString(1, name);
         prst.setString(2, seller_username);
 
         ResultSet rslt = prst.executeQuery();
 
-        Event buffer = new Event();
+        Event buffer = null;
         if (rslt.next()) {
             buffer = new Event(
-                    rslt.getInt("id"),
-                    rslt.getString("name"),
-                    rslt.getString("description"),
-                    rslt.getString("startDateTime"),
-                    new Venue(
-                            rslt.getInt("id"),
-                            rslt.getString("venue_name"),
-                            new City(
-                                    rslt.getInt("city_id"),
-                                    rslt.getString("city_name")
-                            ),
-                            rslt.getString("venue_address")
+                rslt.getInt("id"),
+                rslt.getString("name"),
+                rslt.getString("description"),
+                rslt.getString("startDateTime"),
+                new Venue(
+                    rslt.getInt("venue_id"),
+                    rslt.getString("venue_name"),
+                    new City(
+                        rslt.getInt("city_id"),
+                        rslt.getString("city_name")
                     ),
-                    new Seller(
-                            rslt.getString("seller_username"),
-                            rslt.getString("seller_companyName"),
-                            rslt.getString("seller_email"),
-                            rslt.getString("seller_phoneNumber")
-                    )
+                    rslt.getString("venue_address")
+                ),
+                new Seller(
+                    rslt.getString("seller_username"),
+                    rslt.getString("seller_companyName"),
+                    rslt.getString("seller_email"),
+                    rslt.getString("seller_phoneNumber")
+                ),
+                rslt.getString("photoPath") 
             );
         }
 
+        rslt.close();
         prst.close();
 
         return buffer;
     }
 
+
     public static ArrayList<Event> Select_Event_By_CompanyName(String name) throws Exception {
         ArrayList<Event> events = new ArrayList<Event>();
 
-        String SQLQuery = "SELECT\n" + "  eve.*,\n" + "  ven.`name` AS 'venue_name',\n" + "  cit.`name` AS 'city_name',\n" + "  ven.`address` AS 'venue_address',\n" + "  sel.`companyName` AS 'seller_companyName',\n" + "  sel.`email` AS 'seller_email',\n" + "  sel.`phoneNumber` AS 'seller_phoneNumber'\n" + "FROM\n" + "  `events` AS eve\n" + "INNER JOIN\n" + "  `venues` AS ven\n" + "ON\n" + "  eve.`venue_id` = ven.`id`\n" + "INNER JOIN\n" + "  `sellers` AS sel\n" + "ON\n" + "  eve.`seller` = sel.`username`\n" + "INNER JOIN\n" + "  `cities` AS cit\n" + "ON\n" + "  ven.`city_id` = cit.`id`\n" + "WHERE\n" + "sel.`companyName` LIKE ?;\n";
+        String SQLQuery = "SELECT\n" +
+            "  eve.*,\n" +
+            "  ven.id AS venue_id,\n" +  
+            "  ven.`name` AS 'venue_name',\n" +
+            "  cit.`id` AS city_id,\n" +  
+            "  cit.`name` AS 'city_name',\n" +
+            "  ven.`address` AS 'venue_address',\n" +
+            "  sel.`username` AS seller_username,\n" +  
+            "  sel.`companyName` AS 'seller_companyName',\n" +
+            "  sel.`email` AS 'seller_email',\n" +
+            "  sel.`phoneNumber` AS 'seller_phoneNumber'\n" +
+            "FROM `events` AS eve\n" +
+            "INNER JOIN `venues` AS ven ON eve.`venue_id` = ven.`id`\n" +
+            "INNER JOIN `sellers` AS sel ON eve.`seller` = sel.`username`\n" +
+            "INNER JOIN `cities` AS cit ON ven.`city_id` = cit.`id`\n" +
+            "WHERE sel.`companyName` LIKE ?;";
+
+
         PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
         prst.setString(1, "%" + name + "%");
 
@@ -278,7 +352,7 @@ public class DAO_Event {
                     rslt.getString("description"),
                     rslt.getString("startDateTime"),
                     new Venue(
-                            rslt.getInt("id"),
+                            rslt.getInt("venue_id"),
                             rslt.getString("venue_name"),
                             new City(
                                     rslt.getInt("city_id"),
@@ -291,7 +365,9 @@ public class DAO_Event {
                             rslt.getString("seller_companyName"),
                             rslt.getString("seller_email"),
                             rslt.getString("seller_phoneNumber")
-                    )
+                    ), 
+                    rslt.getString("photoPath")
+                    
             );
             events.add(buffer);
         }
@@ -304,31 +380,39 @@ public class DAO_Event {
     }
 
     public static int Insert_Event(Event _event) throws Exception {
-    String SQLQuery = "INSERT INTO Events (name, description, startDateTime, venue_id, seller) VALUES (?, ?, ?, ?, ?);";
+        String SQLQuery = "INSERT INTO Events (name, description, startDateTime, venue_id, seller, photoPath) " +
+                          "VALUES (?, ?, ?, ?, ?, ?);";
 
-    PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery, Statement.RETURN_GENERATED_KEYS);
-    
-    prst.setString(1, _event.getName());
-    prst.setString(2, _event.getDescription());
-    prst.setString(3, _event.getStartTime());
-    prst.setInt(4, _event.getVenue().getId());
-    prst.setString(5, _event.getSeller().getUsername());
+        PreparedStatement prst = DatabaseConnection.getConnection()
+            .prepareStatement(SQLQuery, Statement.RETURN_GENERATED_KEYS);
 
-    int affectedRows = prst.executeUpdate();
+        prst.setString(1, _event.getName());
+        prst.setString(2, _event.getDescription());
+        prst.setString(3, _event.getStartTime());
+        prst.setInt(4, _event.getVenue().getId());
+        prst.setString(5, _event.getSeller().getUsername());
 
-    // Ambil ID yang baru dibuat dan set ke objek event
-    try (ResultSet generatedKeys = prst.getGeneratedKeys()) {
-        if (generatedKeys.next()) {
-            int newId = generatedKeys.getInt(1);
-            _event.setId(newId);  // supaya bisa dipakai waktu insert eventClass
+        if (_event.getPhotoPath() != null && !_event.getPhotoPath().trim().isEmpty()) {
+            prst.setString(6, _event.getPhotoPath());
         } else {
-            throw new SQLException("Creating event failed, no ID obtained.");
+            prst.setNull(6, java.sql.Types.VARCHAR);
         }
+
+        int affectedRows = prst.executeUpdate();
+
+        try (ResultSet generatedKeys = prst.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                int newId = generatedKeys.getInt(1);
+                _event.setId(newId);
+            } else {
+                throw new SQLException("Creating event failed, no ID obtained.");
+            }
+        }
+
+        prst.close();
+        return affectedRows;
     }
 
-    prst.close();
-    return affectedRows;
-}
 
 
     public static int Update_Event(Event _event) throws Exception {

@@ -498,18 +498,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="CreateNewVenue">
-<xs:sequence>
-<xs:element name="venue" type="tns:venue" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="CreateNewVenueResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="CalculatePrice">
 <xs:sequence>
 <xs:element name="eventId" type="xs:int"/>
@@ -520,6 +508,18 @@
 <xs:complexType name="CalculatePriceResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CreateNewVenue">
+<xs:sequence>
+<xs:element name="venue" type="tns:venue" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CreateNewVenueResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -558,16 +558,16 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="UserLogIn">
+<xs:complexType name="UpdateEventData">
 <xs:sequence>
-<xs:element name="username" type="xs:string" minOccurs="0"/>
-<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="event" type="tns:event" minOccurs="0"/>
+<xs:element name="seller_username" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="UserLogInResponse">
+<xs:complexType name="UpdateEventDataResponse">
 <xs:sequence>
-<xs:element name="return" type="tns:user" minOccurs="0"/>
+<xs:element name="return" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -583,16 +583,16 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="UpdateEventData">
+<xs:complexType name="UserLogIn">
 <xs:sequence>
-<xs:element name="event" type="tns:event" minOccurs="0"/>
-<xs:element name="seller_username" type="xs:string" minOccurs="0"/>
+<xs:element name="username" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="UpdateEventDataResponse">
+<xs:complexType name="UserLogInResponse">
 <xs:sequence>
-<xs:element name="return" type="xs:int"/>
+<xs:element name="return" type="tns:user" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 

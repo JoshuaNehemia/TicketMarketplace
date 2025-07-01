@@ -135,6 +135,9 @@ public class FormSellerPublishTicket extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuProfileMouseClicked(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                menuProfileMousePressed(evt);
+            }
         });
         menuProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -210,6 +213,10 @@ public class FormSellerPublishTicket extends javax.swing.JFrame {
         FormSellerCreateEvent createEvent = new FormSellerCreateEvent(currentUser);
         createEvent.setVisible(true);
     }//GEN-LAST:event_btnPublishTicketActionPerformed
+
+    private void menuProfileMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuProfileMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuProfileMousePressed
 
     /**
      * @param args the command line arguments
