@@ -482,7 +482,7 @@ public class FormUserCheckout extends javax.swing.JFrame {
 //            home.setVisible(true);
 //            this.dispose();
         } else {
-            JOptionPane.showMessageDialog(null, "Proses gagalt", "Gagal", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Proses gagal", "Gagal", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_btnKonfirmasiPembayaranActionPerformed
