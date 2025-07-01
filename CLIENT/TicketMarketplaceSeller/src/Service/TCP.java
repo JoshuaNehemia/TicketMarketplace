@@ -9,8 +9,11 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import javax.swing.JOptionPane;
+import tmwebservice.Ticket;
 
 /**
+ * SELLER TCP
  *
  * @author joshu
  */
@@ -29,13 +32,15 @@ public class TCP extends Thread {
     //TCP MULTITHREAD
     @Override
     public void run() {
+        System.out.println("THREAD STARTED");
         try {
             while (true) {
+                System.out.println("READY TO RECEIVE MESSAGE");
                 Communication received = this.ReceivingMessage();
                 this.Runnable(received.getCommand(), received.getData());
             }
         } catch (Exception ex) {
-            System.out.println("ERROR: " + ex);
+            System.out.println("ERROR IN TCP MULTITHREAD: " + ex);
         }
     }
 
@@ -51,10 +56,8 @@ public class TCP extends Thread {
 
     //RUNNABLE
     private void Runnable(String command, String[] data) {
-        if(command.equals("NEWNOTIFICATION")){
-            //AMBIL WS
-            
-            //Throw Java Messagebox
+        if (command.equals("NEWNOTIFICATION")) {
+            this.HandlingRefund(data[0]);
         }
     }
 
@@ -65,11 +68,64 @@ public class TCP extends Thread {
         this.SendingMessage(new Communication("REGISTER", true, data));
     }
 
-    public void SendingNotification(String username) throws Exception{
+    public void SendingNotification(String username) throws Exception {
         //SEND PAKAI TCP
         String[] data = new String[1];
         data[0] = username;
         this.SendingMessage(new Communication("SENDNOTIFICATION", true, data));
+    }
+
+    private void HandlingRefund(String ticket_id) {
+        System.out.println("HANDLING REFUND IN PROGRESS");
+        Ticket tiket = getTicketById(ticket_id);
+        boolean dialogResult = false;
+        String message = "Do you want to approve the refund of this ticket,\n"
+                + "Id: " + tiket.getId() + "\n"
+                + "Event : " + tiket.getEvent().getName() + "\n"
+                + "Event Class: " + tiket.getEventClass() + "\n"
+                + "Paid Time : " + tiket.getPaidTime();
+        System.out.println("MESSAGE: " + message);
+        //SHOW DIALOG BOX
+        int response = JOptionPane.showConfirmDialog(
+                null,
+                message,
+                "Refund Confirmation",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        dialogResult = (response == JOptionPane.YES_OPTION);
+        String[] data = new String[1];
+        data[0] = tiket.getId();
+        try {
+            if (dialogResult) {
+                approveRefundTicket(tiket);
+                this.SendingMessage(new Communication("REFUNDRESPONSE", true, data));
+            } else {
+                notRefundTicket(tiket);
+                this.SendingMessage(new Communication("REFUNDRESPONSE", false, data));
+            }
+        } catch (Exception ex) {
+            System.out.println("ERROR: " + ex);
+        }
+
+    }
+
+    private static Ticket getTicketById(java.lang.String ticketId) {
+        tmwebservice.TMWebService_Service service = new tmwebservice.TMWebService_Service();
+        tmwebservice.TMWebService port = service.getTMWebServicePort();
+        return port.getTicketById(ticketId);
+    }
+
+    private static int approveRefundTicket(tmwebservice.Ticket ticket) {
+        tmwebservice.TMWebService_Service service = new tmwebservice.TMWebService_Service();
+        tmwebservice.TMWebService port = service.getTMWebServicePort();
+        return port.approveRefundTicket(ticket);
+    }
+
+    private static int notRefundTicket(tmwebservice.Ticket ticket) {
+        tmwebservice.TMWebService_Service service = new tmwebservice.TMWebService_Service();
+        tmwebservice.TMWebService port = service.getTMWebServicePort();
+        return port.notRefundTicket(ticket);
     }
 
 }

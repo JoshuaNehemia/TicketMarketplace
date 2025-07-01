@@ -13,7 +13,7 @@ public class SellerApp {
         int serverport = 1234;
         try {
             tcpservice = new TCP(serverport);
-            //tcpservice.start();
+            tcpservice.start();
         } catch (Exception ex) {
             System.out.println("ERROR: " + ex);
         }

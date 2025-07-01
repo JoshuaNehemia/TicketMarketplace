@@ -21,6 +21,12 @@ public class Notification {
         this.message = message;
         this.ticket = ticket;
     }
+   
+    public Notification(String message, Ticket ticket) {
+        this.id = 0;
+        this.message = message;
+        this.ticket = ticket;
+    }
     
     public Notification() {
         this.id = 0;

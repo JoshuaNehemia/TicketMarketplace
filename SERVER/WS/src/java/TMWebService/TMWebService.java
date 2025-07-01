@@ -411,6 +411,19 @@ public class TMWebService {
         return result;
     }
 
+
+    @WebMethod(operationName = "GetTicketById")
+    public Ticket GetTicketById(@WebParam(name = "ticket_id") String ticket_id) {
+        Ticket res = new Ticket();
+        try {
+            this.ConnectToDatabase();
+            res = DAO_Ticket.Select_Ticket_By_Id(ticket_id);
+        } catch (Exception ex) {
+            System.out.println("ERROR IN WEBSERVICE: " + ex);
+        }
+        return res;
+    }
+    
     @WebMethod(operationName = "PayTicket")
     public int PayTicket(@WebParam(name = "ticket_id") String ticket_id) {
         int num = 0;
@@ -455,6 +468,19 @@ public class TMWebService {
         try {
             this.ConnectToDatabase();
             num = DAO_Ticket.Update_Ticket_Status(ticket.getId(), "REFUNDED");
+            num += DAO_EventClass.Update_EventClass_Stock_Add(this.GetEventClassId(ticket), 1);
+        } catch (Exception ex) {
+            System.out.println("ERROR IN WEBSERVICE: " + ex);
+        }
+        return num;
+    }
+
+    @WebMethod(operationName = "NotRefundTicket")
+    public int NotRefund(@WebParam(name = "ticket") Ticket ticket) {
+        int num = 0;
+        try {
+            this.ConnectToDatabase();
+            num = DAO_Ticket.Update_Ticket_Status(ticket.getId(), "PAID");
             num += DAO_EventClass.Update_EventClass_Stock_Add(this.GetEventClassId(ticket), 1);
         } catch (Exception ex) {
             System.out.println("ERROR IN WEBSERVICE: " + ex);

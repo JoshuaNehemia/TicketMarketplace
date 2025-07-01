@@ -23,70 +23,72 @@ public class MultithreadedSocket extends Thread {
     private ArrayList<SocketHandler> clients;
 
     //CONSTRUCTOR
-    public MultithreadedSocket(int serverPort) throws Exception {
+    public MultithreadedSocket(Service par, int serverPort) throws Exception {
+        this.parent = par;
         this.serverSocket = new ServerSocket(serverPort);
         clients = new ArrayList<>();
     }
 
     //GETTER AND SETTER
-    public ArrayList<SocketHandler> getClients(){
+    public ArrayList<SocketHandler> getClients() {
         return this.clients;
     }
-    
+
     //FUNCTION
     ////MULTITHREAD
     @Override
     public void run() {
         try {
-            while(true){
+            while (true) {
                 Socket incomingClient = this.serverSocket.accept();
                 System.out.println("INCOMING CLIENT: \n" + incomingClient);
-                SocketHandler client = new SocketHandler(incomingClient,this);
+                SocketHandler client = new SocketHandler(incomingClient, this);
                 client.start();
-                clients.add(client);
-                System.out.println("CLIENT ADDED");
             }
         } catch (Exception ex) {
             System.out.println("ERROR IN SERVER SOCKET MULTITHREAD: \n" + ex);
         }
     }
-    
+
     ////SOCKET HANDLER
-    public SocketHandler SelectingClientSocketByUsername(String username){
-        for(SocketHandler client : clients){
-            if(client.getUsername().equals(username)){
+    public SocketHandler SelectingClientSocketByUsername(String username) throws Exception {
+        System.out.println("SELECTING CLIENT");
+        for (SocketHandler client : clients) {
+            if (client.getUsername().equals(username)) {
+                System.out.println("CLIENT SELECTED: " + client.getUsername());
                 return client;
             }
         }
+        System.out.println("NO CLIENT SELECTED");
         return null;
     }
-    
-    public void RegisterToServer(SocketHandler socketH, String username){
-        for(SocketHandler cl: clients){
-            if(cl.getClientSocket().toString().equals(socketH.getClientSocket().toString())){
-                clients.remove(cl);
-                socketH.setUsername(username);
-                clients.add(socketH);
-                System.out.println("REGISTER SUCCESFUL");
-            }
-        }
+
+    public void AddingClient(SocketHandler sh) {
+        clients.add(sh);
+        System.out.println("CLIENT ADDED");
     }
-    
+
     ////TO SERVICE
-    public Communication Runnable(Communication comm,SocketHandler client) throws Exception{
-        if(comm.getCommand().equals("REGISTER")){
-            this.RegisterToServer(client,comm.getData()[0]);
+    public void Runnable(Communication comm, SocketHandler client) {
+        System.out.println("RUNNABLE: " + client.getClientSocket());
+        System.out.println("COMM DATA: ");
+        for (String s : comm.getData()) {
+            System.out.println(s);
         }
-        else if(comm.getCommand().equals("SENDNOTIFICATION")){
-            parent.SendNotification(comm.getData()[0]);
+        try {
+            if (comm.getCommand().equals("SENDBROADCASTS")) {
+                System.out.println("SEND BROADCAST");
+                parent.SendBroadcasts(comm.getData()[0]);
+            } else if (comm.getCommand().equals("REQUESTREFUND")) {
+                System.out.println("REQUEST REFUND");
+                parent.RequestRefund(comm.getData()[0]);
+            } else if (comm.getCommand().equals("RESPONSEREFUND")) {
+                System.out.println("RESPONSE REFUND");
+                parent.ResponseRefund(comm.getStatus(), comm.getData()[0]);
+            }
+        } catch (Exception ex) {
+            System.out.println("ERROR IN RUNNABLE: " + ex);
         }
-        else if (comm.getCommand().equals("SENDBROADCASTS")){
-            parent.SendBroadcasts(comm.getData()[0]);
-        }
-        else if (comm.getCommand().equals("REQUESTREFUND")){
-            parent.SendBroadcasts(comm.getData()[0]);
-        }
-        return new Communication();
     }
 
 }

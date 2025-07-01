@@ -25,11 +25,22 @@ public class SocketHandler extends Thread {
 
     //CONSTRUCTOR
     public SocketHandler(Socket client, MultithreadedSocket parent) throws Exception {
+        this.username = "nousernamethatwillequalltothisbecausethisisdefaultvalue";
         this.clientSocket = client;
         this.parent = parent;
         this.incoming = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
         this.sending = new DataOutputStream(this.clientSocket.getOutputStream());
     }
+    
+    
+    public SocketHandler() throws Exception {
+        this.username = "null";
+        this.clientSocket = null;
+        this.parent = null;
+        this.incoming = null;
+        this.sending = null;
+    }
+
 
     //GETTER AND SETTER
     public Socket getClientSocket(){
@@ -40,7 +51,17 @@ public class SocketHandler extends Thread {
     public void ReceiveMessage() throws Exception {
         String message = this.incoming.readLine();
         System.out.println("RECEIVED FROM " + this.clientSocket + " : \n" + message);
-        Communication comm = parent.Runnable(new Communication(message),this);
+        Communication comm = new Communication(message);
+        if(comm.getCommand().equals("REGISTER")){
+            System.out.println("REGISTER SUCCESFULL");
+            this.username = comm.getData()[0];
+            parent.AddingClient(this);
+        }
+        System.out.println("DATA RECEIVED: ");
+        for(String s : comm.getData()){
+            System.out.println(s);
+        }
+        parent.Runnable(comm,this);
     }
 
     public void SendMessage(Communication comm) throws Exception {
@@ -56,7 +77,7 @@ public class SocketHandler extends Thread {
                 this.ReceiveMessage();
             }
         } catch (Exception ex) {
-            System.out.println("ERROR IN SOCKET HANDLER MULTITHREADING: \n" + ex);
+            System.out.println("ERROR IN SOCKET HANDLER MULTITHREADING:\n" + ex);
         }
     }
     

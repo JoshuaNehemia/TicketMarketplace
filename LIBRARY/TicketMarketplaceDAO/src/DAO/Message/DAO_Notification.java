@@ -243,6 +243,22 @@ public class DAO_Notification {
         return username;
     }
 
+    public static String Select_User_to_Notify(String ticket_id) throws Exception {
+        String SQLQuery = "SELECT user FROM tickets WHERE id = ?;";
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(1, ticket_id);
+
+        ResultSet rslt = prst.executeQuery();
+        String username = "";
+        if (rslt.next()) {
+            username = rslt.getString("user");
+        }
+
+        prst.close();
+
+        return username;
+    }
+
     public static int Insert_Notification(String message, String username, String ticket_id) throws Exception {
         String SQLQuery = "INSERT INTO notifications (message, user_username, ticket_id) VALUES (?, ?, ?);";
         PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
