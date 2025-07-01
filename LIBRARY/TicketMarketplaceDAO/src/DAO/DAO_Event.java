@@ -95,8 +95,7 @@ public class DAO_Event {
                     "INNER JOIN sellers s ON e.seller = s.username " +
                     "INNER JOIN venues v ON e.venue_id = v.id " +
                     "INNER JOIN cities c ON v.city_id = c.id " +
-                    "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d %H:%i:%s') > NOW()";
-
+                    "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d-%H-%i')";
             }
 
             PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
