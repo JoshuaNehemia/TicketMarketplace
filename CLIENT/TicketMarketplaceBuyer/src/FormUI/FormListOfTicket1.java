@@ -242,7 +242,6 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         btnDetailsTicket3 = new javax.swing.JButton();
-        btnPrev = new javax.swing.JButton();
         btnNext = new javax.swing.JButton();
         jLabel21 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -540,14 +539,6 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        btnPrev.setText("Prev");
-        btnPrev.setPreferredSize(new java.awt.Dimension(70, 35));
-        btnPrev.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPrevActionPerformed(evt);
-            }
-        });
-
         btnNext.setText("Next");
         btnNext.setPreferredSize(new java.awt.Dimension(70, 35));
         btnNext.addActionListener(new java.awt.event.ActionListener() {
@@ -642,8 +633,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37)
+                                .addGap(107, 107, 107)
                                 .addComponent(jLabel21)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -686,8 +676,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnNext, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel21)
-                            .addComponent(btnPrev, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel21))
                         .addGap(14, 14, 14))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnTiketDibeli)
@@ -728,17 +717,6 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
             refreshTicketsUI();
         }
     }//GEN-LAST:event_btnNextActionPerformed
-
-    private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
-        int currentValue = Integer.parseInt(jLabel21.getText());
-        if(currentValue==1) return;
-        jLabel21.setText(String.valueOf(currentValue - 1));
-        
-        int page = Integer.parseInt(jLabel21.getText());
-        showIndexFrom = 3 * page - 3;
-
-        refreshTicketsUI();
-    }//GEN-LAST:event_btnPrevActionPerformed
 
     private void btnDetailsTicket2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailsTicket2ActionPerformed
 //        
@@ -882,7 +860,6 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
     private javax.swing.JButton btnHargaTerendah;
     private javax.swing.JButton btnHargaTertinggi;
     private javax.swing.JButton btnNext;
-    private javax.swing.JButton btnPrev;
     private javax.swing.JButton btnTerbaru;
     private javax.swing.JButton btnTerdekat;
     private javax.swing.JButton btnTiketDibeli;
