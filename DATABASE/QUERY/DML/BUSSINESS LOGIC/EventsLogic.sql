@@ -1,4 +1,3 @@
-
 SELECT * FROM `ticketmarketplace`.`events`;
 
 -- User looking for events
