@@ -23,10 +23,11 @@ public class Event {
     private Venue venue;
     private Seller seller;
     private ArrayList<EventClass> eventClasses;
+    private String photoPath;
 
     //CONSTRUCTOR
     //This constructor likely no use
-    public Event(int id, String name, String description, String startDateTime, Venue venue, Seller seller, ArrayList<EventClass> eventClasses) {
+    public Event(int id, String name, String description, String startDateTime, Venue venue, Seller seller, ArrayList<EventClass> eventClasses, String photoPath) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -34,9 +35,10 @@ public class Event {
         this.venue = venue;
         this.seller = seller;
         this.eventClasses = eventClasses;
+        this.photoPath = photoPath;
     }
 
-    public Event(String name, String description, String startDateTime, Venue venue, Seller seller) {
+    public Event(String name, String description, String startDateTime, Venue venue, Seller seller, String photoPath) {
         this.id = 0;
         this.name = name;
         this.description = description;
@@ -44,9 +46,10 @@ public class Event {
         this.venue = venue;
         this.seller = seller;
         this.eventClasses = new ArrayList<>();
+        this.photoPath = photoPath;
     }
 
-    public Event(int id, String name, String description, String startDateTime, Venue venue, Seller seller) throws Exception{
+    public Event(int id, String name, String description, String startDateTime, Venue venue, Seller seller, String photoPath) throws Exception{
         this.id = id;
         this.name = name;
         this.description = description;
@@ -54,6 +57,7 @@ public class Event {
         this.venue = venue;
         this.seller = seller;
         this.eventClasses = new ArrayList<>();
+        this.photoPath = photoPath;
     }
     ////FOR DISPLAY
     public Event(int id,String name)
@@ -166,5 +170,13 @@ public class Event {
         String[] array = data.toArray(new String[0]);
 
         return array;
+    }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
     }
 }

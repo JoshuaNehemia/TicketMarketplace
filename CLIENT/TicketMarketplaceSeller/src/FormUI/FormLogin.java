@@ -4,7 +4,6 @@
  */
 package FormUI;
 
-import ConsoleApp.SellerApp;
 import javax.swing.JOptionPane;
 import tmwebservice.Seller;
 import tmwebservice.User;
@@ -129,7 +128,6 @@ public class FormLogin extends javax.swing.JFrame {
 
             Seller res = sellerLogIn(username, password);
             if (res != null && res.getUsername() != null && !res.getUsername().isEmpty()) {
-                SellerApp.tcpservice.RegisteringToServer(username);
                 System.out.println("Login sebagai: " + res.getUsername());
                 FormSellerPublishTicket home = new FormSellerPublishTicket(res);
                 home.setVisible(true);

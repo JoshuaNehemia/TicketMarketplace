@@ -46,7 +46,6 @@ public class TCP extends Thread {
 
     private Communication ReceivingMessage() throws Exception {
         String message = incoming.readLine();
-        System.out.println("NEW MESSAGE: " + message);
         return new Communication(message);
     }
 
