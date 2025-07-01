@@ -4,6 +4,8 @@
  */
 package FormUI;
 
+import ConsoleApp.BuyerApp;
+import Protocol.Comm.Communication;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -346,10 +348,21 @@ public class FormUserTicket extends javax.swing.JFrame {
          //Kuganti biar send notif ke 
         if (result > 0) {
             refreshTables();
+            String[] data = new String[1];
+            data[0] = tiketDipilih.getId();
+            try{
+                BuyerApp.tcpservice.SendingMessage(new Communication("REQUESTREFUND",true,data));
             javax.swing.JOptionPane.showMessageDialog(this,
                 "Berhasil refund tiket",
                 "Sukses",
                 javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+            catch(Exception ex){
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "Gagal refund tiket " + ex,
+                "Gagal",
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
         } else {
             javax.swing.JOptionPane.showMessageDialog(this,
                 "Gagal refund tiket",

@@ -62,9 +62,7 @@ public class MultithreadedSocket extends Thread {
     }
     
     public void RegisterToServer(SocketHandler socketH, String username){
-        int index = 0;
         for(SocketHandler cl: clients){
-            index++;
             if(cl.getClientSocket().toString().equals(socketH.getClientSocket().toString())){
                 clients.remove(cl);
                 socketH.setUsername(username);
@@ -83,6 +81,9 @@ public class MultithreadedSocket extends Thread {
             parent.SendNotification(comm.getData()[0]);
         }
         else if (comm.getCommand().equals("SENDBROADCASTS")){
+            parent.SendBroadcasts(comm.getData()[0]);
+        }
+        else if (comm.getCommand().equals("REQUESTREFUND")){
             parent.SendBroadcasts(comm.getData()[0]);
         }
         return new Communication();

@@ -41,6 +41,7 @@ public class TCP extends Thread {
 
     private Communication ReceivingMessage() throws Exception {
         String message = incoming.readLine();
+        System.out.println("NEW MESSAGE: " + message);
         return new Communication(message);
     }
 
@@ -50,7 +51,11 @@ public class TCP extends Thread {
 
     //RUNNABLE
     private void Runnable(String command, String[] data) {
-
+        if(command.equals("NEWNOTIFICATION")){
+            //AMBIL WS
+            
+            //Throw Java Messagebox
+        }
     }
 
     //FUNCTION

@@ -4,6 +4,7 @@
  */
 package Logic;
 
+import DAO.Message.DAO_Notification;
 import Multithreading.MultithreadedSocket;
 import Multithreading.SocketHandler;
 import Protocol.Comm.Communication;
@@ -50,6 +51,11 @@ public class Service {
                 client.SendMessage(new Communication("NEWBROADCAST",true,data));
         }
         
+    }
+    
+    public void RequestRefund(String ticket_id) throws Exception{
+        String seller_username = DAO_Notification.Select_Seller_to_Notify(ticket_id);
+        this.SendNotification(seller_username);
     }
     
 }
