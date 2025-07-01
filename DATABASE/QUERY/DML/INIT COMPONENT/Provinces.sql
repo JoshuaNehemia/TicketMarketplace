@@ -1,7 +1,7 @@
 -- SQL query to insert all provinces of Indonesia into the 'provinces' table.
 -- The list includes all 38 official provinces as of the latest administrative divisions.
 
-INSERT INTO `ticket`.`provinces` (`name`) VALUES
+INSERT INTO `ticketmarketplace`.`provinces` (`name`) VALUES
 ('Aceh'),
 ('Bali'),
 ('Bangka Belitung Islands'),
