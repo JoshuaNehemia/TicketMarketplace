@@ -132,21 +132,21 @@ ENGINE = InnoDB;
 -- Table structure for table `tickets`
 CREATE TABLE IF NOT EXISTS `tickets` (
   `id` VARCHAR(300) NOT NULL,
-  `user_username` VARCHAR(45) NOT NULL,
+  `user` VARCHAR(45) NOT NULL,
   `eventClass_id` INT NOT NULL,
   `paymentMethod_id` INT,
   `price` DOUBLE NOT NULL,
-  `paymentStatus` ENUM('PENDING', 'PAID', 'CANCELLED', 'EXPIRED') NOT NULL,
+  `paymentStatus` ENUM('UNPAID', 'PAID', 'CANCELLED', 'REQUEST REFUND', 'REFUND') NOT NULL,
   `isClaimed` TINYINT(1) DEFAULT 0,
   `paidTime` VARCHAR(255) DEFAULT NULL,
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  INDEX `fk_tickets_users_idx` (`user_username` ASC),
+  INDEX `fk_tickets_users_idx` (`user` ASC),
   INDEX `fk_tickets_eventClasses_idx` (`eventClass_id` ASC),
   INDEX `fk_tickets_paymentMethods_idx` (`paymentMethod_id` ASC),
   CONSTRAINT `fk_tickets_users`
-    FOREIGN KEY (`user_username`)
+    FOREIGN KEY (`user`)
     REFERENCES `users` (`username`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
@@ -439,6 +439,27 @@ INSERT INTO `ticketmarketplace`.`cities` (`name`, `province_id`) VALUES
 -- Special Region of Yogyakarta
 ('Yogyakarta', (SELECT id FROM `ticketmarketplace`.`provinces` WHERE `name` = 'Special Region of Yogyakarta'));
 
+
+-- -------------------------------------------------------------------------------------------------------
+-- PAYMENT METHODS
+-- -------------------------------------------------------------------------------------------------------
+
+INSERT INTO `ticketmarketplace`.`paymentMethods` (`name`) VALUES
+('BCA Virtual Account'),
+('Mandiri Virtual Account'),
+('BNI Virtual Account'),
+('BRI Virtual Account'),
+('Permata Virtual Account'),
+('CIMB Niaga Virtual Account'),
+('Credit Card (Visa/Mastercard/JCB/Amex)'),
+('QRIS (All e-wallets & mobile banking)'),
+('GoPay'),
+('OVO'),
+('DANA'),
+('ShopeePay'),
+('LinkAja'),
+('Indomaret'),
+('Alfamart');
 -- -------------------------------------------------------------------------------------------------------
 -- SELLER
 -- -------------------------------------------------------------------------------------------------------
@@ -452,11 +473,11 @@ INSERT INTO `ticketmarketplace`.`sellers` (`username`, `password`, `companyName`
 -- USER (BUYER)
 -- -------------------------------------------------------------------------------------------------------
 INSERT INTO `ticketmarketplace`.`users` (`username`, `password`, `fullname`, `email`, `phoneNumber`, `birthdate`) VALUES
-('johndoe', 'hashed_password_1', 'John Doe', 'john.doe@email.com', '081234567890', '1990-05-15'),
-('janesmith', 'hashed_password_2', 'Jane Smith', 'jane.smith@email.com', '081345678901', '1992-08-22'),
-('alexjones', 'hashed_password_3', 'Alex Jones', 'alex.j@email.com', '081456789012', '1988-11-30'),
-('emilywhite', 'hashed_password_4', 'Emily White', 'emily.w@email.com', '081567890123', '1995-02-10'),
-('michaels', 'hashed_password_5', 'Michael Suryo', 'michael.suryo@email.com', '081678901234', '1998-07-19');
+('johndoe', '12345678', 'John Doe', 'john.doe@email.com', '081234567890', '1990-05-15'),
+('janesmith', '12345678', 'Jane Smith', 'jane.smith@email.com', '081345678901', '1992-08-22'),
+('alexjones', '12345678', 'Alex Jones', 'alex.j@email.com', '081456789012', '1988-11-30'),
+('emilywhite', '12345678', 'Emily White', 'emily.w@email.com', '081567890123', '1995-02-10'),
+('michaels', '12345678users', 'Michael Suryo', 'michael.suryo@email.com', '081678901234', '1998-07-19');
 
 -- -------------------------------------------------------------------------------------------------------
 -- VENUES
@@ -506,12 +527,12 @@ INSERT INTO `ticketmarketplace`.`venues` (`name`, `address`, `maxCapacity`, `are
 -- -------------------------------------------------------------------------------------------------------
 -- EVENTS
 -- -------------------------------------------------------------------------------------------------------
-INSERT INTO `ticketmarketplace`.`events` (`name`, `startDateTime`, `venue_id`, `seller`) VALUES
-('Surabaya International Jazz Festival', '2025-08-22 19:00:00', 6, 'milesdavis'),
-('Eminem: Live in Surabaya 2025', '2025-09-15 20:00:00', 5, 'eminem'),
-('Head In The Clouds Surabaya', '2025-11-29 16:00:00', 5, '88rising'),
-('JYP NATION: ONE MIC in Surabaya', '2025-10-05 18:30:00',6, 'jypent'),
-('SMTOWN LIVE 2025: SMCU PALACE @ SURABAYA', '2025-12-20 18:00:00', 7, 'sment');
+INSERT INTO `ticketmarketplace`.`events` (`name`,`description`, `startDateTime`, `venue_id`, `seller`) VALUES
+('Surabaya International Jazz Festival','Do you like jazz?', '2025-08-22 19:00:00', 6, 'milesdavis'),
+('Eminem: Live in Surabaya 2025','Do you like eminem?', '2025-09-15 20:00:00', 5, 'eminem'),
+('Head In The Clouds Surabaya','Do you like 88Rising?', '2025-11-29 16:00:00', 5, '88rising'),
+('JYP NATION: ONE MIC in Surabaya','Do you like KPOP?', '2025-10-05 18:30:00',6, 'jypent'),
+('SMTOWN LIVE 2025: SMCU PALACE @ SURABAYA','Do you like KPOP?', '2025-12-20 18:00:00', 7, 'sment');
 
 -- -------------------------------------------------------------------------------------------------------
 -- EVENTCLASS

@@ -38,10 +38,12 @@ public class Service {
     ////LOGIC FUNCTION
     
     public void SendNotification(String username) throws Exception{
+        System.out.println("SEND NOTIFICATION");
         this.socket.SelectingClientSocketByUsername(username).SendMessage(new Communication("NEWNOTIFICATION",true,null));
     }
     
     public void SendBroadcasts(String broadcastmessage) throws Exception{
+        System.out.println("SEND BROADCASTS");
         String[] data = new String[1];
         data[0] = broadcastmessage;
         for(SocketHandler client : socket.getClients()){

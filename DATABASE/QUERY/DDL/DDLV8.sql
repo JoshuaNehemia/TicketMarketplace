@@ -9,6 +9,7 @@ USE `ticketmarketplace`;
 CREATE TABLE IF NOT EXISTS `sellers` (
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
+  `fullname` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `companyName` VARCHAR(255) DEFAULT NULL,
   `phoneNumber` VARCHAR(13) NOT NULL,
@@ -131,21 +132,21 @@ ENGINE = InnoDB;
 -- Table structure for table `tickets`
 CREATE TABLE IF NOT EXISTS `tickets` (
   `id` VARCHAR(300) NOT NULL,
-  `user_username` VARCHAR(45) NOT NULL,
+  `user` VARCHAR(45) NOT NULL,
   `eventClass_id` INT NOT NULL,
   `paymentMethod_id` INT,
   `price` DOUBLE NOT NULL,
-  `paymentStatus` ENUM('PENDING', 'PAID', 'CANCELLED', 'EXPIRED') NOT NULL,
+  `paymentStatus` ENUM('UNPAID', 'PAID', 'CANCELLED', 'REQUEST REFUND', 'REFUND') NOT NULL,
   `isClaimed` TINYINT(1) DEFAULT 0,
   `paidTime` VARCHAR(255) DEFAULT NULL,
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  INDEX `fk_tickets_users_idx` (`user_username` ASC),
+  INDEX `fk_tickets_users_idx` (`user` ASC),
   INDEX `fk_tickets_eventClasses_idx` (`eventClass_id` ASC),
   INDEX `fk_tickets_paymentMethods_idx` (`paymentMethod_id` ASC),
   CONSTRAINT `fk_tickets_users`
-    FOREIGN KEY (`user_username`)
+    FOREIGN KEY (`user`)
     REFERENCES `users` (`username`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
@@ -212,4 +213,3 @@ CREATE TABLE IF NOT EXISTS `notifications` (
     ON DELETE SET NULL
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
-

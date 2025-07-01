@@ -271,8 +271,8 @@ public class DAO_Ticket {
 
    public static int Insert_Ticket(Ticket ticket, String buyer_username, int eventclass_id) throws Exception {
     String SQLQuery = "INSERT INTO `ticketmarketplace`.`tickets` " +
-                      "(`id`, `user`, `eventClass_id`, `paymentMethod_id`, `paymentStatus`, `isClaimed`) " +
-                      "VALUES (?, ?, ?, ?, ?, ?)";
+                      "(`id`, `user`, `eventClass_id`,`price`, `paymentMethod_id`, `paymentStatus`, `isClaimed`) " +
+                      "VALUES (?, ?, ?,0, ?, ?, ?)";
 
     PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
     prst.setString(1, ticket.getId());

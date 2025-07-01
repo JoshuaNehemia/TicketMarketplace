@@ -276,13 +276,17 @@ public class TMWebService {
         }
         return events;
     }
+    
+    
 
     @WebMethod(operationName = "GetAllEvents")
     public List<Event> GetAllEvents(@WebParam(name = "filter") String filter) {
         List<Event> events = new ArrayList<>();
         try {
             this.ConnectToDatabase();
+            System.out.println("GETALLEVENT");
             events = DAO_Event.Select_All_Events(filter);
+            System.out.println(events.size());
         } catch (Exception ex) {
             System.out.println("ERROR IN WEBSERVICE: " + ex);
             ex.printStackTrace();
@@ -371,6 +375,7 @@ public class TMWebService {
         Ticket result = new Ticket();
         try {
             this.ConnectToDatabase();
+            System.out.println("BUY TICKET");
             int stock = 0;
             int eventClassId = 0;
             for (EventClass ec : ticket.getEvent().getEventClasses()) {
@@ -397,6 +402,7 @@ public class TMWebService {
                     return new Ticket();
                 }
                 result = DAO_Ticket.Select_Ticket_By_Id(ticket.getId());
+                System.out.println("SUCCESS");
             }
         } catch (Exception ex) {
             System.out.println("ERROR IN WEBSERVICE: " + ex);

@@ -216,7 +216,34 @@ public class DAO_Notification {
         return notif;
     }
 
-    public static int Insert_Notification(String message, String username,String ticket_id) throws Exception {
+    public static String Select_Seller_to_Notify(String ticket_id) throws Exception {
+        String SQLQuery = "SELECT eve.`seller`\n"
+                + "FROM\n"
+                + "	`tickets` AS ti\n"
+                + "INNER JOIN\n"
+                + "	`eventclasses` AS ecl\n"
+                + "ON \n"
+                + "	ecl.`id` = ti.`eventclass_id`\n"
+                + "INNER JOIN\n"
+                + "	`events` AS eve\n"
+                + "ON \n"
+                + "ecl.`event_id` = eve.`id`\n"
+                + "WHERE ti.`id` = ?;";
+        PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
+        prst.setString(1, ticket_id);
+
+        ResultSet rslt = prst.executeQuery();
+        String username = "";
+        if (rslt.next()) {
+            username = rslt.getString("seller");
+        }
+
+        prst.close();
+
+        return username;
+    }
+
+    public static int Insert_Notification(String message, String username, String ticket_id) throws Exception {
         String SQLQuery = "INSERT INTO notifications (message, user_username, ticket_id) VALUES (?, ?, ?);";
         PreparedStatement prst = (DatabaseConnection.getConnection().prepareStatement(SQLQuery));
         prst.setString(1, message);

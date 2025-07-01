@@ -29,20 +29,26 @@ public class FormUserCheckout extends javax.swing.JFrame {
     EventClass selectedEventClass;
     User currentUser;
     FormUserTicketDetail parentForm;
-    int paymentMethodIdDipilih=0;
-    public FormUserCheckout(Event selectedEvent, EventClass selectedEventClass, User currentUser,FormUserTicketDetail parentForm) {
+    int paymentMethodIdDipilih = 0;
+
+    public FormUserCheckout(Event selectedEvent, EventClass selectedEventClass, User currentUser, FormUserTicketDetail parentForm) {
         initComponents();
-        this.currentUser=currentUser;
-        this.selectedEvent=selectedEvent;
-        this.selectedEventClass=selectedEventClass;
+        this.currentUser = currentUser;
+        this.selectedEvent = selectedEvent;
+        this.selectedEventClass = selectedEventClass;
         this.parentForm = parentForm;
         System.out.println(selectedEventClass.getPrice());
-        double finalPrice =calculatePrice(selectedEvent.getId(),selectedEventClass.getId());
+        double finalPrice = calculatePrice(selectedEvent.getId(), selectedEventClass.getId());
         jLabel11.setText(String.valueOf(finalPrice));
         jLabel1.setText(selectedEvent.getName());
         jLabel2.setText(selectedEventClass.getName());
         String date = selectedEvent.getStartTime();
         jLabel6.setText(date);
+        
+        for(PaymentMethod pm : getPaymentMethods()){
+            cbPaymentMethod.addItem(pm.getName());
+        }
+        
     }
 
     /**
@@ -79,16 +85,10 @@ public class FormUserCheckout extends javax.swing.JFrame {
         txtEmail = new java.awt.TextField();
         txtNoKTP = new java.awt.TextField();
         jLabel13 = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
-        btnKonfirmasiPembayaran2 = new javax.swing.JButton();
-        btnKonfirmasiPembayaran4 = new javax.swing.JButton();
-        btnKonfirmasiPembayaran5 = new javax.swing.JButton();
-        btnKonfirmasiPembayaran3 = new javax.swing.JButton();
-        btnKonfirmasiPembayaran1 = new javax.swing.JButton();
-        btnKonfirmasiPembayaran6 = new javax.swing.JButton();
         btnKonfirmasiPembayaran = new javax.swing.JButton();
         jLabel22 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
+        cbPaymentMethod = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
 
@@ -332,107 +332,6 @@ public class FormUserCheckout extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel13.setText("Metode Pembayaran");
 
-        jPanel9.setBackground(new java.awt.Color(204, 204, 204));
-
-        btnKonfirmasiPembayaran2.setBackground(new java.awt.Color(51, 153, 255));
-        btnKonfirmasiPembayaran2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnKonfirmasiPembayaran2.setForeground(new java.awt.Color(255, 255, 255));
-        btnKonfirmasiPembayaran2.setText("BNI");
-        btnKonfirmasiPembayaran2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKonfirmasiPembayaran2ActionPerformed(evt);
-            }
-        });
-
-        btnKonfirmasiPembayaran4.setBackground(new java.awt.Color(51, 153, 255));
-        btnKonfirmasiPembayaran4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnKonfirmasiPembayaran4.setForeground(new java.awt.Color(255, 255, 255));
-        btnKonfirmasiPembayaran4.setText("GoPay");
-        btnKonfirmasiPembayaran4.setIconTextGap(0);
-        btnKonfirmasiPembayaran4.setInheritsPopupMenu(true);
-        btnKonfirmasiPembayaran4.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        btnKonfirmasiPembayaran4.setMaximumSize(new java.awt.Dimension(72, 27));
-        btnKonfirmasiPembayaran4.setPreferredSize(new java.awt.Dimension(72, 27));
-        btnKonfirmasiPembayaran4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKonfirmasiPembayaran4ActionPerformed(evt);
-            }
-        });
-
-        btnKonfirmasiPembayaran5.setBackground(new java.awt.Color(51, 153, 255));
-        btnKonfirmasiPembayaran5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnKonfirmasiPembayaran5.setForeground(new java.awt.Color(255, 255, 255));
-        btnKonfirmasiPembayaran5.setText("OVO");
-        btnKonfirmasiPembayaran5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKonfirmasiPembayaran5ActionPerformed(evt);
-            }
-        });
-
-        btnKonfirmasiPembayaran3.setBackground(new java.awt.Color(51, 153, 255));
-        btnKonfirmasiPembayaran3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnKonfirmasiPembayaran3.setForeground(new java.awt.Color(255, 255, 255));
-        btnKonfirmasiPembayaran3.setText("BRI");
-        btnKonfirmasiPembayaran3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKonfirmasiPembayaran3ActionPerformed(evt);
-            }
-        });
-
-        btnKonfirmasiPembayaran1.setBackground(new java.awt.Color(51, 153, 255));
-        btnKonfirmasiPembayaran1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnKonfirmasiPembayaran1.setForeground(new java.awt.Color(255, 255, 255));
-        btnKonfirmasiPembayaran1.setText("BCA");
-        btnKonfirmasiPembayaran1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKonfirmasiPembayaran1ActionPerformed(evt);
-            }
-        });
-
-        btnKonfirmasiPembayaran6.setBackground(new java.awt.Color(51, 153, 255));
-        btnKonfirmasiPembayaran6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnKonfirmasiPembayaran6.setForeground(new java.awt.Color(255, 255, 255));
-        btnKonfirmasiPembayaran6.setText("CIMB");
-        btnKonfirmasiPembayaran6.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        btnKonfirmasiPembayaran6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKonfirmasiPembayaran6ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnKonfirmasiPembayaran1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnKonfirmasiPembayaran3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnKonfirmasiPembayaran2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnKonfirmasiPembayaran6, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnKonfirmasiPembayaran4, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnKonfirmasiPembayaran5, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addContainerGap(10, Short.MAX_VALUE)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnKonfirmasiPembayaran2)
-                    .addComponent(btnKonfirmasiPembayaran4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnKonfirmasiPembayaran5)
-                    .addComponent(btnKonfirmasiPembayaran3)
-                    .addComponent(btnKonfirmasiPembayaran1)
-                    .addComponent(btnKonfirmasiPembayaran6))
-                .addContainerGap())
-        );
-
         btnKonfirmasiPembayaran.setBackground(new java.awt.Color(51, 153, 255));
         btnKonfirmasiPembayaran.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnKonfirmasiPembayaran.setForeground(new java.awt.Color(255, 255, 255));
@@ -448,6 +347,12 @@ public class FormUserCheckout extends javax.swing.JFrame {
         jLabel22.setText("NO VA / E-Wallet");
 
         jLabel14.setText("Total Pembayaran: ");
+
+        cbPaymentMethod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbPaymentMethodActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Home");
         jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -478,8 +383,8 @@ public class FormUserCheckout extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 19, Short.MAX_VALUE)))
+                            .addComponent(cbPaymentMethod, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 123, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -506,12 +411,11 @@ public class FormUserCheckout extends javax.swing.JFrame {
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(2, 2, 2)
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbPaymentMethod, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnKonfirmasiPembayaran))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -542,17 +446,16 @@ public class FormUserCheckout extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEmailActionPerformed
 
     private void btnKonfirmasiPembayaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKonfirmasiPembayaranActionPerformed
-        if(paymentMethodIdDipilih==0){
+        if (paymentMethodIdDipilih == 0) {
             JOptionPane.showMessageDialog(this,
-                "Silakan pilih metode pembayaran terlebih dahulu.",
-                "Metode Pembayaran Belum Dipilih",
-                JOptionPane.WARNING_MESSAGE);
+                    "Silakan pilih metode pembayaran terlebih dahulu.",
+                    "Metode Pembayaran Belum Dipilih",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
         System.out.println("currentUser: " + currentUser);
         System.out.println("selectedEventClass: " + selectedEventClass);
 
-        
         String username = currentUser.getUsername();
         String eventClassId = String.valueOf(selectedEventClass.getId());
         String paymentStatus = "UNPAID";
@@ -560,7 +463,6 @@ public class FormUserCheckout extends javax.swing.JFrame {
 //        String email = txtEmail.getText(); 
 //        String noKTP = txtNoKTP.getText();
 //        String phoneNumber = txtPhoneNumber.getText();
-        
 
         Ticket newTicket = new Ticket();
 //        newTicket.set(username);
@@ -570,10 +472,10 @@ public class FormUserCheckout extends javax.swing.JFrame {
         newTicket.setIsClaimed(isClaimed);
         newTicket.setEvent(selectedEvent);
         System.out.println(currentUser.getUsername());
-        Ticket insert = buyTicket(newTicket , username);
+        Ticket insert = buyTicket(newTicket, username);
 
         if (insert.getEvent().getId() == selectedEvent.getId()) {
-            FormWaitingNotificationMessageUser notif = new FormWaitingNotificationMessageUser(currentUser, insert);
+            FormPayment notif = new FormPayment(currentUser, insert);
             notif.setVisible(true);
             this.dispose();
 //            FormListOfTicket1 home = new FormListOfTicket1(currentUser);
@@ -594,34 +496,6 @@ public class FormUserCheckout extends javax.swing.JFrame {
         parentForm.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
-    private void btnKonfirmasiPembayaran1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKonfirmasiPembayaran1ActionPerformed
-        aturTombolPembayaran(btnKonfirmasiPembayaran1, "BCA");
-    }//GEN-LAST:event_btnKonfirmasiPembayaran1ActionPerformed
-
-    private void btnKonfirmasiPembayaran3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKonfirmasiPembayaran3ActionPerformed
-        aturTombolPembayaran(btnKonfirmasiPembayaran3, "BRI");
-
-    }//GEN-LAST:event_btnKonfirmasiPembayaran3ActionPerformed
-
-    private void btnKonfirmasiPembayaran5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKonfirmasiPembayaran5ActionPerformed
-        aturTombolPembayaran(btnKonfirmasiPembayaran5, "OVO");
-
-    }//GEN-LAST:event_btnKonfirmasiPembayaran5ActionPerformed
-
-    private void btnKonfirmasiPembayaran4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKonfirmasiPembayaran4ActionPerformed
-        aturTombolPembayaran(btnKonfirmasiPembayaran4, "GoPay");
-
-    }//GEN-LAST:event_btnKonfirmasiPembayaran4ActionPerformed
-
-    private void btnKonfirmasiPembayaran2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKonfirmasiPembayaran2ActionPerformed
-        aturTombolPembayaran(btnKonfirmasiPembayaran2, "BNI");
-
-    }//GEN-LAST:event_btnKonfirmasiPembayaran2ActionPerformed
-
-    private void btnKonfirmasiPembayaran6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKonfirmasiPembayaran6ActionPerformed
-        aturTombolPembayaran(btnKonfirmasiPembayaran6, "CIMB");
-    }//GEN-LAST:event_btnKonfirmasiPembayaran6ActionPerformed
-
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
 
     }//GEN-LAST:event_jMenu1ActionPerformed
@@ -633,14 +507,20 @@ public class FormUserCheckout extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jMenu1MousePressed
 
-    private void aturTombolPembayaran(javax.swing.JButton tombolDipilih, String metode) {
-        btnKonfirmasiPembayaran1.setEnabled(true);
-        btnKonfirmasiPembayaran2.setEnabled(true);
-        btnKonfirmasiPembayaran3.setEnabled(true);
-        btnKonfirmasiPembayaran4.setEnabled(true);
-        btnKonfirmasiPembayaran5.setEnabled(true);
-        btnKonfirmasiPembayaran6.setEnabled(true);
+    private void cbPaymentMethodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPaymentMethodActionPerformed
+        // TODO add your handling code here:
+        String selectedPayment = (String)cbPaymentMethod.getSelectedItem();
+        
+        
+        for(PaymentMethod pm : getPaymentMethods()){
+            if(pm.getName().equals(selectedPayment)){
+                paymentMethodIdDipilih = pm.getId();
+            }
+        }
+    }//GEN-LAST:event_cbPaymentMethodActionPerformed
 
+    private void aturTombolPembayaran(javax.swing.JButton tombolDipilih, String metode) {
+        /*
         tombolDipilih.setEnabled(false);
         jLabel10.setText("Metode Pembayaran : " + metode);
         switch (metode.toLowerCase()) {
@@ -664,8 +544,10 @@ public class FormUserCheckout extends javax.swing.JFrame {
             break;
         default:
             paymentMethodIdDipilih = -1; //eror karena belum milih
-            break;
-    }
+            break;*/
+        
+        
+        
     }
 
     /**
@@ -741,12 +623,7 @@ public class FormUserCheckout extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnKonfirmasiPembayaran;
-    private javax.swing.JButton btnKonfirmasiPembayaran1;
-    private javax.swing.JButton btnKonfirmasiPembayaran2;
-    private javax.swing.JButton btnKonfirmasiPembayaran3;
-    private javax.swing.JButton btnKonfirmasiPembayaran4;
-    private javax.swing.JButton btnKonfirmasiPembayaran5;
-    private javax.swing.JButton btnKonfirmasiPembayaran6;
+    private javax.swing.JComboBox<String> cbPaymentMethod;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -769,7 +646,6 @@ public class FormUserCheckout extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JRadioButton rbAnak;
     private javax.swing.JRadioButton rbNyonya;
     private javax.swing.JRadioButton rbTuan;
@@ -791,5 +667,10 @@ public class FormUserCheckout extends javax.swing.JFrame {
         return port.buyTicket(ticket, arg1);
     }
 
- 
+    private static java.util.List<tmwebservice.PaymentMethod> getPaymentMethods() {
+        tmwebservice.TMWebService_Service service = new tmwebservice.TMWebService_Service();
+        tmwebservice.TMWebService port = service.getTMWebServicePort();
+        return port.getPaymentMethods();
+    }
+
 }

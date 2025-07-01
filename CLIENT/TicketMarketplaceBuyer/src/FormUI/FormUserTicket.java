@@ -342,7 +342,8 @@ public class FormUserTicket extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
          int result = refundTicket(tiketDipilih.getId());
-
+         
+         //Kuganti biar send notif ke 
         if (result > 0) {
             refreshTables();
             javax.swing.JOptionPane.showMessageDialog(this,

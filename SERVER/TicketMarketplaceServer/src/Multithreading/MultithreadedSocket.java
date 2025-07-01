@@ -68,8 +68,8 @@ public class MultithreadedSocket extends Thread {
             if(cl.getClientSocket().toString().equals(socketH.getClientSocket().toString())){
                 clients.remove(cl);
                 socketH.setUsername(username);
-                socketH.start();
                 clients.add(socketH);
+                System.out.println("REGISTER SUCCESFUL");
             }
         }
     }

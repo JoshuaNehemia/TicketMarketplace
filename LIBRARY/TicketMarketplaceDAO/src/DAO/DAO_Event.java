@@ -27,7 +27,8 @@ import java.util.List;
  */
 public class DAO_Event {
     
-        public static List<Event> Select_All_Events(String filter) throws Exception {
+
+            public static List<Event> Select_All_Events(String filter) throws Exception {
             ArrayList<Event> events = new ArrayList<>();
             String SQLQuery="";
             if(filter.equals("terbaru")){
@@ -39,7 +40,7 @@ public class DAO_Event {
                   "INNER JOIN sellers s ON e.seller = s.username " +
                   "INNER JOIN venues v ON e.venue_id = v.id " +
                   "INNER JOIN cities c ON v.city_id = c.id " +
-                  "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d-%H-%i') > NOW() " +
+                  "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d %H:%i:%s') > NOW() " +
                   "ORDER BY e.create_time DESC";
             }else if(filter.equals("harga terendah")){
                      SQLQuery = "SELECT e.*, ec_stats.min_price, " +
@@ -55,7 +56,7 @@ public class DAO_Event {
                             "INNER JOIN sellers s ON e.seller = s.username " +
                             "INNER JOIN venues v ON e.venue_id = v.id " +
                             "INNER JOIN cities c ON v.city_id = c.id " +
-                            "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d-%H-%i') > NOW() " +
+                            "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d %H:%i:%s') > NOW() " +
                             "ORDER BY ec_stats.min_price ASC";
                 }else if(filter.equals("harga tertinggi")){
                     SQLQuery = "SELECT e.*, ec_stats.max_price, " +
@@ -71,7 +72,7 @@ public class DAO_Event {
                         "INNER JOIN sellers s ON e.seller = s.username " +
                         "INNER JOIN venues v ON e.venue_id = v.id " +
                         "INNER JOIN cities c ON v.city_id = c.id " +
-                        "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d-%H-%i') > NOW() " +
+                        "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d %H:%i:%s') > NOW() " +
                         "ORDER BY ec_stats.max_price DESC";
                 }else if(filter.equals("terdekat")){
                     SQLQuery = "SELECT e.*, " +
@@ -82,8 +83,8 @@ public class DAO_Event {
                       "INNER JOIN sellers s ON e.seller = s.username " +
                       "INNER JOIN venues v ON e.venue_id = v.id " +
                       "INNER JOIN cities c ON v.city_id = c.id " +
-                      "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d-%H-%i') > NOW() " +
-                      "ORDER BY STR_TO_DATE(e.startDateTime, '%Y-%m-%d-%H-%i') ASC";
+                      "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d %H:%i:%s') > NOW() " +
+                      "ORDER BY STR_TO_DATE(e.startDateTime, '%Y-%m-%d %H:%i:%s') ASC";
                 }
                 else{
                 SQLQuery = "SELECT e.*, " +
@@ -94,10 +95,9 @@ public class DAO_Event {
                     "INNER JOIN sellers s ON e.seller = s.username " +
                     "INNER JOIN venues v ON e.venue_id = v.id " +
                     "INNER JOIN cities c ON v.city_id = c.id " +
-                    "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d-%H-%i') > NOW()";
+                    "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d %H:%i:%s') > NOW()";
 
             }
-            
 
             PreparedStatement prst = DatabaseConnection.getConnection().prepareStatement(SQLQuery);
             ResultSet rslt = prst.executeQuery();

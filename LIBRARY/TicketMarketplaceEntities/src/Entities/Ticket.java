@@ -114,6 +114,6 @@ public class Ticket {
 
     //FUNCTION
     public String CreateID(String username) {
-        return "" + this.getEvent().getName() + "-" + this.getEventClass() + "-" + username + "-" + LocalDateTime.now().toString();
+        return "" + this.getEvent().getName() + "+" + this.getEventClass() + "+" + username + "+" + LocalDateTime.now().toString();
     }
 }

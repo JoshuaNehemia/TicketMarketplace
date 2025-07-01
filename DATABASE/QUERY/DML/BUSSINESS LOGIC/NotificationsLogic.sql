@@ -32,3 +32,16 @@ WHERE
     nf.user_username;
     
 INSERT INTO notifications (message, user_username, ticket_id) VALUES (?, ?, ?);
+
+SELECT eve.`seller`
+FROM
+	`tickets` AS ti
+INNER JOIN
+	`eventclasses` AS ecl
+ON 
+	ecl.`id` = ti.`eventclass_id`
+INNER JOIN
+	`events` AS eve
+ON 
+ecl.`event_id` = eve.`id`
+WHERE ti.`id` = ?;
