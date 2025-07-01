@@ -52,23 +52,13 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
         listOfEvent = getAllEvents(filter);
     }
      private void refreshTicketsUI(){
-         if(listOfEvent.size()%3==1){
-            jPanel3.setVisible(false);
-            jPanel5.setVisible(false);
-            PanelDetailTicket2.setVisible(false);
-            PanelDetailTicket3.setVisible(false);
-         }else if(listOfEvent.size()%3==2)
-         {
-            jPanel5.setVisible(false);
-            PanelDetailTicket3.setVisible(false);
-         }else if(listOfEvent.size()==0){
-            jPanel3.setVisible(false);
-            jPanel5.setVisible(false);
-            PanelDetailTicket2.setVisible(false);
-            PanelDetailTicket3.setVisible(false);
-            btnDetailsTicket1.setEnabled(false);
-            return;
-         }
+         int sisaEvent = listOfEvent.size() - showIndexFrom;
+
+        jPanel3.setVisible(sisaEvent >= 2);
+        jPanel5.setVisible(sisaEvent >= 3);
+        PanelDetailTicket2.setVisible(sisaEvent >= 2);
+        PanelDetailTicket3.setVisible(sisaEvent >= 3);
+
         // Card 1
         if (showIndexFrom < listOfEvent.size()&&listOfEvent.size()%3>=0&&listOfEvent.size()>0) {
            Event event1 = listOfEvent.get(showIndexFrom);
@@ -663,7 +653,7 @@ public class FormListOfTicket1 extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(PanelDetailTicket3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(

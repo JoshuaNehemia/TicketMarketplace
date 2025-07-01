@@ -20,7 +20,7 @@ public class DatabaseConnection {
     //// DATABASE DATA
     private final String URL = "jdbc:mysql://localhost:3306/TicketMarketplace?useSSL=false&allowPublicKeyRetrieval=true";
     private final String USER = "root";
-    private final String PASSWORD = "";
+    private final String PASSWORD = "ganairsm";
     //// DATABASE CONNECTION
     private static Connection conn;
 

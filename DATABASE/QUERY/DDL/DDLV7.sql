@@ -11,13 +11,16 @@ CREATE TABLE IF NOT EXISTS `sellers` (
   `password` VARCHAR(255) NOT NULL,
   `fullname` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
+  `companyName` VARCHAR(255) DEFAULT NULL,
   `phoneNumber` VARCHAR(13) NOT NULL,
   `companyAddress` VARCHAR(100) DEFAULT NULL,
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`username`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC))
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC)
+)
 ENGINE = InnoDB;
+
 
 -- Table structure for table `users`
 CREATE TABLE IF NOT EXISTS `users` (
@@ -85,10 +88,10 @@ CREATE TABLE IF NOT EXISTS `events` (
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  INDEX `fk_events_sellers_idx` (`seller_username` ASC),
+  INDEX `fk_events_sellers_idx` (`seller` ASC),
   INDEX `fk_events_venues_idx` (`venue_id` ASC),
   CONSTRAINT `fk_events_sellers`
-    FOREIGN KEY (`seller_username`)
+    FOREIGN KEY (`seller`)
     REFERENCES `sellers` (`username`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
