@@ -123,6 +123,11 @@ public class FormSellerPublishTicket extends javax.swing.JFrame {
         jMenuBar1.add(menuPublishTicket);
 
         jMenu4.setText("List of Ticket");
+        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenu4MousePressed(evt);
+            }
+        });
         jMenu4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenu4ActionPerformed(evt);
@@ -217,6 +222,12 @@ public class FormSellerPublishTicket extends javax.swing.JFrame {
     private void menuProfileMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuProfileMousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_menuProfileMousePressed
+
+    private void jMenu4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MousePressed
+        FormSellerListTicket formTicket = new FormSellerListTicket(currentUser);
+        formTicket.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenu4MousePressed
 
     /**
      * @param args the command line arguments

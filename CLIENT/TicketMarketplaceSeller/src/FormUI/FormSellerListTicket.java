@@ -5,7 +5,12 @@
 package FormUI;
 
 import java.awt.Image;
+import java.util.List;
 import javax.swing.ImageIcon;
+import tmwebservice.Event;
+import tmwebservice.EventClass;
+import tmwebservice.Seller;
+import tmwebservice.User;
 
 /**
  *
@@ -15,9 +20,49 @@ public class FormSellerListTicket extends javax.swing.JFrame {
 
     ImageIcon icon = new ImageIcon("Background Profile.png");
     Image image = icon.getImage();
-
-    public FormSellerListTicket() {
+    Seller currentUser;
+    List<Event> listOfEvent;
+    Event eventSelected;
+    public FormSellerListTicket(Seller currentUser) {
         initComponents();
+        this.currentUser = currentUser;
+        this.listOfEvent = getSellerEvent(currentUser.getUsername());
+        System.out.println("event diambil : " + listOfEvent.size());
+        this.eventSelected=listOfEvent.get(0);
+        System.out.println("EVENT SELECTED: " + this.eventSelected.getName());
+        jLabel5.setText(eventSelected.getName());
+        jTextArea1.setText(eventSelected.getDescription());
+        jLabel8.setText(eventSelected.getStartTime());
+        System.out.println("ev diambil : " + eventSelected.getEventClasses().size());
+//        jComboBox1.removeAllItems(); 
+        for (EventClass ec : eventSelected.getEventClasses()) {
+            jComboBox1.addItem(ec.getName());  
+        }
+    }
+    
+    public void refreshUI(int page){
+        Event event = listOfEvent.get(page);
+        jLabel5.setText(event.getName());
+        jTextArea1.setText(event.getDescription());
+        jLabel8.setText(event.getStartTime());
+        
+        jComboBox1.removeAllItems(); 
+        for (EventClass ec : event.getEventClasses()) {
+            jComboBox1.addItem(ec.getName());  
+        }
+        
+        int selectedIndex = jComboBox1.getSelectedIndex();
+        int eventclass_id = eventSelected.getEventClasses().get(selectedIndex).getId();
+        double flashsale_price = checkFlashSales(eventclass_id);
+        if(flashsale_price>0){
+            hargaFlashsale.setText(String.valueOf(flashsale_price));
+            statusFlashsale.setText("Sedang Flashsale");
+        }
+        else{
+            statusFlashsale.setText("");
+            hargaFlashsale.setText("");
+        }
+        lblTicketAmmounLeft1.setText("Kursi Tersedia : " + eventSelected.getEventClasses().get(selectedIndex).getAvailableStock());
     }
 
     /**
@@ -45,19 +90,17 @@ public class FormSellerListTicket extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         priceCategory1 = new javax.swing.JLabel();
-        priceCategory2 = new javax.swing.JLabel();
-        priceCategory3 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         lblTicketAmmounLeft1 = new javax.swing.JLabel();
-        lblTicketAmmounLeft2 = new javax.swing.JLabel();
-        lblTicketAmmounLeft3 = new javax.swing.JLabel();
         btnEdit = new javax.swing.JButton();
         btnRemove = new javax.swing.JButton();
         btnPrev = new javax.swing.JButton();
+        btnEdit1 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        statusFlashsale = new javax.swing.JLabel();
+        hargaFlashsale = new javax.swing.JLabel();
+        btnEdit2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuHome = new javax.swing.JMenu();
         menuPublishTicket = new javax.swing.JMenu();
@@ -73,8 +116,6 @@ public class FormSellerListTicket extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Kopi Jawa");
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -104,6 +145,11 @@ public class FormSellerListTicket extends javax.swing.JFrame {
         btnNext.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         btnNext.setText("Next");
         btnNext.setPreferredSize(new java.awt.Dimension(70, 35));
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
         jLabel3.setText("Your Event");
@@ -131,26 +177,12 @@ public class FormSellerListTicket extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel12.setText("Class Type");
 
-        jLabel13.setText("Category 1 : Rp.");
-
-        jLabel14.setText("Category 1 : Rp.");
-
-        jLabel15.setText("Category 1 : Rp.");
-
         priceCategory1.setText("Harga");
-
-        priceCategory2.setText("Harga");
-
-        priceCategory3.setText("Harga");
 
         jLabel16.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel16.setText("Ticket Ammount :");
 
         lblTicketAmmounLeft1.setText("Jumlah");
-
-        lblTicketAmmounLeft2.setText("Jumlah");
-
-        lblTicketAmmounLeft3.setText("Jumlah");
 
         btnEdit.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         btnEdit.setText("EDIT");
@@ -160,6 +192,37 @@ public class FormSellerListTicket extends javax.swing.JFrame {
         btnPrev.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         btnPrev.setText("Prev");
         btnPrev.setPreferredSize(new java.awt.Dimension(70, 35));
+        btnPrev.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrevActionPerformed(evt);
+            }
+        });
+
+        btnEdit1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnEdit1.setText("FLASHSALE");
+        btnEdit1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEdit1ActionPerformed(evt);
+            }
+        });
+
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        statusFlashsale.setText("statusFlashsale");
+
+        hargaFlashsale.setText("Harga");
+
+        btnEdit2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnEdit2.setText("RECAP");
+        btnEdit2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEdit2ActionPerformed(evt);
+            }
+        });
 
         jMenuBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -195,7 +258,6 @@ public class FormSellerListTicket extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(79, 79, 79)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -209,29 +271,45 @@ public class FormSellerListTicket extends javax.swing.JFrame {
                                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel6))
-                        .addGap(83, 83, 83)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(priceCategory2)
-                                    .addComponent(priceCategory3)
-                                    .addComponent(priceCategory1))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lblTicketAmmounLeft1)
-                        .addComponent(jLabel16)
-                        .addComponent(lblTicketAmmounLeft2)
-                        .addComponent(lblTicketAmmounLeft3))
-                    .addComponent(btnRemove, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnEdit, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(66, 66, 66))
+                                .addGap(83, 83, 83)
+                                .addComponent(jLabel12))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(75, 75, 75)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(90, 90, 90)
+                                        .addComponent(btnEdit))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                                        .addComponent(btnEdit2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnEdit1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(58, 58, 58))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(55, 55, 55)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(statusFlashsale)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(hargaFlashsale))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(priceCategory1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblTicketAmmounLeft1))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel16)
+                                            .addComponent(btnRemove))))
+                                .addGap(66, 66, 66))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jLabel3)
@@ -260,42 +338,42 @@ public class FormSellerListTicket extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(jLabel12)
                     .addComponent(jLabel16))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel13)
-                            .addComponent(priceCategory1)
-                            .addComponent(lblTicketAmmounLeft1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel14)
-                            .addComponent(priceCategory2)
-                            .addComponent(lblTicketAmmounLeft2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel15)
-                            .addComponent(priceCategory3)
-                            .addComponent(lblTicketAmmounLeft3))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel9)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(priceCategory1)
+                                    .addComponent(lblTicketAmmounLeft1)
+                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(statusFlashsale)
+                                    .addComponent(hargaFlashsale))))
+                        .addGap(62, 62, 62)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(page)
                             .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(16, Short.MAX_VALUE))
+                            .addComponent(btnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEdit1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEdit2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(117, 117, 117)
+                                .addComponent(jLabel8))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnEdit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel9))))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -312,6 +390,60 @@ public class FormSellerListTicket extends javax.swing.JFrame {
 //        login.setVisible(true);
 //        this.setVisible(false);
     }//GEN-LAST:event_menuPublishTicketMouseClicked
+
+    private void btnEdit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEdit1ActionPerformed
+        FormSellerSetUpFlashSle form = new FormSellerSetUpFlashSle();
+        form.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnEdit1ActionPerformed
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        // TODO add your handling code here:
+        try {
+            int currentPage = Integer.parseInt(page.getText());
+            page.setText(String.valueOf(currentPage + 1));
+            refreshUI(currentPage+1);
+        } catch (NumberFormatException e) {
+            page.setText("1"); 
+            refreshUI(1);
+        }
+    }//GEN-LAST:event_btnNextActionPerformed
+
+    private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
+        // TODO add your handling code here:
+         try {
+            int currentPage = Integer.parseInt(page.getText());
+            if (currentPage > 1) {
+                page.setText(String.valueOf(currentPage - 1));
+                refreshUI(currentPage-1);
+            }
+        } catch (NumberFormatException e) {
+            page.setText("1");
+            refreshUI(1);
+        }
+    }//GEN-LAST:event_btnPrevActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+            int selectedIndex = jComboBox1.getSelectedIndex();
+            int eventclass_id = eventSelected.getEventClasses().get(selectedIndex).getId();
+            double flashsale_price = checkFlashSales(eventclass_id);
+            if(flashsale_price>0){
+                hargaFlashsale.setText(String.valueOf(flashsale_price));
+                statusFlashsale.setText("Sedang Flashsale");
+            }
+            else{
+                statusFlashsale.setText("");
+                hargaFlashsale.setText("");
+            }
+            lblTicketAmmounLeft1.setText("Kursi Tersedia : " + eventSelected.getEventClasses().get(selectedIndex).getAvailableStock());
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void btnEdit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEdit2ActionPerformed
+        // TODO add your handling code here:
+        FormRecapPenjualan form = new FormRecapPenjualan(eventSelected, currentUser);
+        form.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnEdit2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -356,25 +488,26 @@ public class FormSellerListTicket extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormSellerListTicket().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FormSellerListTicket().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnEdit1;
+    private javax.swing.JButton btnEdit2;
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnPrev;
     private javax.swing.JButton btnRemove;
+    private javax.swing.JLabel hargaFlashsale;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -389,14 +522,23 @@ public class FormSellerListTicket extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblTicketAmmounLeft1;
-    private javax.swing.JLabel lblTicketAmmounLeft2;
-    private javax.swing.JLabel lblTicketAmmounLeft3;
     private javax.swing.JMenu menuHome;
     private javax.swing.JMenu menuProfile;
     private javax.swing.JMenu menuPublishTicket;
     private javax.swing.JLabel page;
     private javax.swing.JLabel priceCategory1;
-    private javax.swing.JLabel priceCategory2;
-    private javax.swing.JLabel priceCategory3;
+    private javax.swing.JLabel statusFlashsale;
     // End of variables declaration//GEN-END:variables
+
+    private static java.util.List<tmwebservice.Event> getSellerEvent(java.lang.String seller) {
+        tmwebservice.TMWebService_Service service = new tmwebservice.TMWebService_Service();
+        tmwebservice.TMWebService port = service.getTMWebServicePort();
+        return port.getSellerEvent(seller);
+    }
+
+    private static double checkFlashSales(int eventclassId) {
+        tmwebservice.TMWebService_Service service = new tmwebservice.TMWebService_Service();
+        tmwebservice.TMWebService port = service.getTMWebServicePort();
+        return port.checkFlashSales(eventclassId);
+    }
 }
