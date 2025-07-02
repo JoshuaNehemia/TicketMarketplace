@@ -84,7 +84,7 @@ public class DAO_Event {
                       "INNER JOIN venues v ON e.venue_id = v.id " +
                       "INNER JOIN cities c ON v.city_id = c.id " +
                       "WHERE STR_TO_DATE(e.startDateTime, '%Y-%m-%d-%H-%i') >= NOW() " +
-                      "ORDER BY STR_TO_DATE(e.startDateTime, '%Y-%m-%d %H:%i:%s') ASC";
+                      "ORDER BY STR_TO_DATE(e.startDateTime, '%Y-%m-%d-%H-%i') ASC";
                 }
                 else{
                 SQLQuery = "SELECT e.*, " +

@@ -6,6 +6,7 @@ package TMWebService;
 
 import DAO.Connection.DatabaseConnection;
 import DAO.*;
+import DAO.Flash.DAO_Flashsale;
 import DAO.Message.DAO_Notification;
 import DAO.Values.*;
 import Entities.Account.*;
@@ -581,6 +582,18 @@ public class TMWebService {
         try {
             this.ConnectToDatabase();
             num = DAO_Notification.Insert_Notification(notif_mess, username, ticket_id);
+        } catch (Exception ex) {
+            System.out.println("ERROR IN WEBSERVICE: " + ex);
+        }
+        return num;
+    }
+
+    @WebMethod(operationName = "CheckFlashSales")
+    public double CheckFlashSales(@WebParam(name = "eventclass_id") int eventclass_id) {
+        double num = 0;
+        try {
+            this.ConnectToDatabase();
+            num = DAO_Flashsale.Select_FlashSale_Price_By_EventClass_Id(eventclass_id);
         } catch (Exception ex) {
             System.out.println("ERROR IN WEBSERVICE: " + ex);
         }

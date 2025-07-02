@@ -4,11 +4,167 @@
 <xsd:import namespace="http://TMWebService/" schemaLocation="http://localhost:8080/WS/TMWebService?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="Get1VenueWithName">
-<part name="parameters" element="tns:Get1VenueWithName"/>
+<message name="CalculatePrice">
+<part name="parameters" element="tns:CalculatePrice"/>
 </message>
-<message name="Get1VenueWithNameResponse">
-<part name="parameters" element="tns:Get1VenueWithNameResponse"/>
+<message name="CalculatePriceResponse">
+<part name="parameters" element="tns:CalculatePriceResponse"/>
+</message>
+<message name="CheckFlashSales">
+<part name="parameters" element="tns:CheckFlashSales"/>
+</message>
+<message name="CheckFlashSalesResponse">
+<part name="parameters" element="tns:CheckFlashSalesResponse"/>
+</message>
+<message name="ConnectionTest">
+<part name="parameters" element="tns:ConnectionTest"/>
+</message>
+<message name="ConnectionTestResponse">
+<part name="parameters" element="tns:ConnectionTestResponse"/>
+</message>
+<message name="GetEvent">
+<part name="parameters" element="tns:GetEvent"/>
+</message>
+<message name="GetEventResponse">
+<part name="parameters" element="tns:GetEventResponse"/>
+</message>
+<message name="ClaimTicket">
+<part name="parameters" element="tns:ClaimTicket"/>
+</message>
+<message name="ClaimTicketResponse">
+<part name="parameters" element="tns:ClaimTicketResponse"/>
+</message>
+<message name="hello">
+<part name="parameters" element="tns:hello"/>
+</message>
+<message name="helloResponse">
+<part name="parameters" element="tns:helloResponse"/>
+</message>
+<message name="CreateNewVenue">
+<part name="parameters" element="tns:CreateNewVenue"/>
+</message>
+<message name="CreateNewVenueResponse">
+<part name="parameters" element="tns:CreateNewVenueResponse"/>
+</message>
+<message name="UpdateVenueData">
+<part name="parameters" element="tns:UpdateVenueData"/>
+</message>
+<message name="UpdateVenueDataResponse">
+<part name="parameters" element="tns:UpdateVenueDataResponse"/>
+</message>
+<message name="SellerUpdateData">
+<part name="parameters" element="tns:SellerUpdateData"/>
+</message>
+<message name="SellerUpdateDataResponse">
+<part name="parameters" element="tns:SellerUpdateDataResponse"/>
+</message>
+<message name="UserSignUp">
+<part name="parameters" element="tns:UserSignUp"/>
+</message>
+<message name="UserSignUpResponse">
+<part name="parameters" element="tns:UserSignUpResponse"/>
+</message>
+<message name="SellerSignUp">
+<part name="parameters" element="tns:SellerSignUp"/>
+</message>
+<message name="SellerSignUpResponse">
+<part name="parameters" element="tns:SellerSignUpResponse"/>
+</message>
+<message name="UserLogIn">
+<part name="parameters" element="tns:UserLogIn"/>
+</message>
+<message name="UserLogInResponse">
+<part name="parameters" element="tns:UserLogInResponse"/>
+</message>
+<message name="GetCities">
+<part name="parameters" element="tns:GetCities"/>
+</message>
+<message name="GetCitiesResponse">
+<part name="parameters" element="tns:GetCitiesResponse"/>
+</message>
+<message name="CreateNewEvent">
+<part name="parameters" element="tns:CreateNewEvent"/>
+</message>
+<message name="CreateNewEventResponse">
+<part name="parameters" element="tns:CreateNewEventResponse"/>
+</message>
+<message name="PayTicket">
+<part name="parameters" element="tns:PayTicket"/>
+</message>
+<message name="PayTicketResponse">
+<part name="parameters" element="tns:PayTicketResponse"/>
+</message>
+<message name="GetNotification">
+<part name="parameters" element="tns:GetNotification"/>
+</message>
+<message name="GetNotificationResponse">
+<part name="parameters" element="tns:GetNotificationResponse"/>
+</message>
+<message name="GetAllEvents">
+<part name="parameters" element="tns:GetAllEvents"/>
+</message>
+<message name="GetAllEventsResponse">
+<part name="parameters" element="tns:GetAllEventsResponse"/>
+</message>
+<message name="UserUpdateData">
+<part name="parameters" element="tns:UserUpdateData"/>
+</message>
+<message name="UserUpdateDataResponse">
+<part name="parameters" element="tns:UserUpdateDataResponse"/>
+</message>
+<message name="RefundTicket">
+<part name="parameters" element="tns:RefundTicket"/>
+</message>
+<message name="RefundTicketResponse">
+<part name="parameters" element="tns:RefundTicketResponse"/>
+</message>
+<message name="GetVenueWithName">
+<part name="parameters" element="tns:GetVenueWithName"/>
+</message>
+<message name="GetVenueWithNameResponse">
+<part name="parameters" element="tns:GetVenueWithNameResponse"/>
+</message>
+<message name="GetSellerEvent">
+<part name="parameters" element="tns:GetSellerEvent"/>
+</message>
+<message name="GetSellerEventResponse">
+<part name="parameters" element="tns:GetSellerEventResponse"/>
+</message>
+<message name="GetTicketById">
+<part name="parameters" element="tns:GetTicketById"/>
+</message>
+<message name="GetTicketByIdResponse">
+<part name="parameters" element="tns:GetTicketByIdResponse"/>
+</message>
+<message name="GetCompanyEvent">
+<part name="parameters" element="tns:GetCompanyEvent"/>
+</message>
+<message name="GetCompanyEventResponse">
+<part name="parameters" element="tns:GetCompanyEventResponse"/>
+</message>
+<message name="UpdateEventData">
+<part name="parameters" element="tns:UpdateEventData"/>
+</message>
+<message name="UpdateEventDataResponse">
+<part name="parameters" element="tns:UpdateEventDataResponse"/>
+</message>
+<message name="SellerLogIn">
+<part name="parameters" element="tns:SellerLogIn"/>
+</message>
+<message name="SellerLogInResponse">
+<part name="parameters" element="tns:SellerLogInResponse"/>
+</message>
+<message name="BuyTicket">
+<part name="parameters" element="tns:BuyTicket"/>
+</message>
+<message name="BuyTicketResponse">
+<part name="parameters" element="tns:BuyTicketResponse"/>
+</message>
+<message name="NotRefundTicket">
+<part name="parameters" element="tns:NotRefundTicket"/>
+</message>
+<message name="NotRefundTicketResponse">
+<part name="parameters" element="tns:NotRefundTicketResponse"/>
 </message>
 <message name="GetVenueWithProvince">
 <part name="parameters" element="tns:GetVenueWithProvince"/>
@@ -16,11 +172,47 @@
 <message name="GetVenueWithProvinceResponse">
 <part name="parameters" element="tns:GetVenueWithProvinceResponse"/>
 </message>
+<message name="InsertEventClasses">
+<part name="parameters" element="tns:InsertEventClasses"/>
+</message>
+<message name="InsertEventClassesResponse">
+<part name="parameters" element="tns:InsertEventClassesResponse"/>
+</message>
+<message name="CancelTicketOrder">
+<part name="parameters" element="tns:CancelTicketOrder"/>
+</message>
+<message name="CancelTicketOrderResponse">
+<part name="parameters" element="tns:CancelTicketOrderResponse"/>
+</message>
+<message name="GetTicketsByUsername">
+<part name="parameters" element="tns:GetTicketsByUsername"/>
+</message>
+<message name="GetTicketsByUsernameResponse">
+<part name="parameters" element="tns:GetTicketsByUsernameResponse"/>
+</message>
+<message name="GetUserNotifications">
+<part name="parameters" element="tns:GetUserNotifications"/>
+</message>
+<message name="GetUserNotificationsResponse">
+<part name="parameters" element="tns:GetUserNotificationsResponse"/>
+</message>
+<message name="GetPaidOrRequestRefundAdmin">
+<part name="parameters" element="tns:GetPaidOrRequestRefundAdmin"/>
+</message>
+<message name="GetPaidOrRequestRefundAdminResponse">
+<part name="parameters" element="tns:GetPaidOrRequestRefundAdminResponse"/>
+</message>
 <message name="CreateNotification">
 <part name="parameters" element="tns:CreateNotification"/>
 </message>
 <message name="CreateNotificationResponse">
 <part name="parameters" element="tns:CreateNotificationResponse"/>
+</message>
+<message name="GetVenueWithCityName">
+<part name="parameters" element="tns:GetVenueWithCityName"/>
+</message>
+<message name="GetVenueWithCityNameResponse">
+<part name="parameters" element="tns:GetVenueWithCityNameResponse"/>
 </message>
 <message name="GetPaymentMethods">
 <part name="parameters" element="tns:GetPaymentMethods"/>
@@ -28,17 +220,11 @@
 <message name="GetPaymentMethodsResponse">
 <part name="parameters" element="tns:GetPaymentMethodsResponse"/>
 </message>
-<message name="InsertEventClasses">
-<part name="parameters" element="tns:InsertEventClasses"/>
+<message name="Get1VenueWithName">
+<part name="parameters" element="tns:Get1VenueWithName"/>
 </message>
-<message name="InsertEventClassesResponse">
-<part name="parameters" element="tns:InsertEventClassesResponse"/>
-</message>
-<message name="GetTicketsByUsername">
-<part name="parameters" element="tns:GetTicketsByUsername"/>
-</message>
-<message name="GetTicketsByUsernameResponse">
-<part name="parameters" element="tns:GetTicketsByUsernameResponse"/>
+<message name="Get1VenueWithNameResponse">
+<part name="parameters" element="tns:Get1VenueWithNameResponse"/>
 </message>
 <message name="ApproveRefundTicket">
 <part name="parameters" element="tns:ApproveRefundTicket"/>
@@ -52,210 +238,154 @@
 <message name="getPaymentMethodsByIdResponse">
 <part name="parameters" element="tns:getPaymentMethodsByIdResponse"/>
 </message>
-<message name="CancelTicketOrder">
-<part name="parameters" element="tns:CancelTicketOrder"/>
-</message>
-<message name="CancelTicketOrderResponse">
-<part name="parameters" element="tns:CancelTicketOrderResponse"/>
-</message>
-<message name="GetVenueWithCityName">
-<part name="parameters" element="tns:GetVenueWithCityName"/>
-</message>
-<message name="GetVenueWithCityNameResponse">
-<part name="parameters" element="tns:GetVenueWithCityNameResponse"/>
-</message>
-<message name="GetPaidOrRequestRefundAdmin">
-<part name="parameters" element="tns:GetPaidOrRequestRefundAdmin"/>
-</message>
-<message name="GetPaidOrRequestRefundAdminResponse">
-<part name="parameters" element="tns:GetPaidOrRequestRefundAdminResponse"/>
-</message>
-<message name="GetUserNotifications">
-<part name="parameters" element="tns:GetUserNotifications"/>
-</message>
-<message name="GetUserNotificationsResponse">
-<part name="parameters" element="tns:GetUserNotificationsResponse"/>
-</message>
-<message name="ConnectionTest">
-<part name="parameters" element="tns:ConnectionTest"/>
-</message>
-<message name="ConnectionTestResponse">
-<part name="parameters" element="tns:ConnectionTestResponse"/>
-</message>
-<message name="CalculatePrice">
-<part name="parameters" element="tns:CalculatePrice"/>
-</message>
-<message name="CalculatePriceResponse">
-<part name="parameters" element="tns:CalculatePriceResponse"/>
-</message>
-<message name="BuyTicket">
-<part name="parameters" element="tns:BuyTicket"/>
-</message>
-<message name="BuyTicketResponse">
-<part name="parameters" element="tns:BuyTicketResponse"/>
-</message>
-<message name="GetTicketById">
-<part name="parameters" element="tns:GetTicketById"/>
-</message>
-<message name="GetTicketByIdResponse">
-<part name="parameters" element="tns:GetTicketByIdResponse"/>
-</message>
-<message name="UpdateEventData">
-<part name="parameters" element="tns:UpdateEventData"/>
-</message>
-<message name="UpdateEventDataResponse">
-<part name="parameters" element="tns:UpdateEventDataResponse"/>
-</message>
-<message name="GetEvent">
-<part name="parameters" element="tns:GetEvent"/>
-</message>
-<message name="GetEventResponse">
-<part name="parameters" element="tns:GetEventResponse"/>
-</message>
-<message name="PayTicket">
-<part name="parameters" element="tns:PayTicket"/>
-</message>
-<message name="PayTicketResponse">
-<part name="parameters" element="tns:PayTicketResponse"/>
-</message>
-<message name="GetAllEvents">
-<part name="parameters" element="tns:GetAllEvents"/>
-</message>
-<message name="GetAllEventsResponse">
-<part name="parameters" element="tns:GetAllEventsResponse"/>
-</message>
-<message name="UserSignUp">
-<part name="parameters" element="tns:UserSignUp"/>
-</message>
-<message name="UserSignUpResponse">
-<part name="parameters" element="tns:UserSignUpResponse"/>
-</message>
-<message name="UserLogIn">
-<part name="parameters" element="tns:UserLogIn"/>
-</message>
-<message name="UserLogInResponse">
-<part name="parameters" element="tns:UserLogInResponse"/>
-</message>
-<message name="UserUpdateData">
-<part name="parameters" element="tns:UserUpdateData"/>
-</message>
-<message name="UserUpdateDataResponse">
-<part name="parameters" element="tns:UserUpdateDataResponse"/>
-</message>
-<message name="SellerLogIn">
-<part name="parameters" element="tns:SellerLogIn"/>
-</message>
-<message name="SellerLogInResponse">
-<part name="parameters" element="tns:SellerLogInResponse"/>
-</message>
-<message name="SellerUpdateData">
-<part name="parameters" element="tns:SellerUpdateData"/>
-</message>
-<message name="SellerUpdateDataResponse">
-<part name="parameters" element="tns:SellerUpdateDataResponse"/>
-</message>
-<message name="SellerSignUp">
-<part name="parameters" element="tns:SellerSignUp"/>
-</message>
-<message name="SellerSignUpResponse">
-<part name="parameters" element="tns:SellerSignUpResponse"/>
-</message>
-<message name="ClaimTicket">
-<part name="parameters" element="tns:ClaimTicket"/>
-</message>
-<message name="ClaimTicketResponse">
-<part name="parameters" element="tns:ClaimTicketResponse"/>
-</message>
-<message name="GetCompanyEvent">
-<part name="parameters" element="tns:GetCompanyEvent"/>
-</message>
-<message name="GetCompanyEventResponse">
-<part name="parameters" element="tns:GetCompanyEventResponse"/>
-</message>
-<message name="UpdateVenueData">
-<part name="parameters" element="tns:UpdateVenueData"/>
-</message>
-<message name="UpdateVenueDataResponse">
-<part name="parameters" element="tns:UpdateVenueDataResponse"/>
-</message>
-<message name="CreateNewVenue">
-<part name="parameters" element="tns:CreateNewVenue"/>
-</message>
-<message name="CreateNewVenueResponse">
-<part name="parameters" element="tns:CreateNewVenueResponse"/>
-</message>
-<message name="hello">
-<part name="parameters" element="tns:hello"/>
-</message>
-<message name="helloResponse">
-<part name="parameters" element="tns:helloResponse"/>
-</message>
-<message name="GetCities">
-<part name="parameters" element="tns:GetCities"/>
-</message>
-<message name="GetCitiesResponse">
-<part name="parameters" element="tns:GetCitiesResponse"/>
-</message>
-<message name="NotRefundTicket">
-<part name="parameters" element="tns:NotRefundTicket"/>
-</message>
-<message name="NotRefundTicketResponse">
-<part name="parameters" element="tns:NotRefundTicketResponse"/>
-</message>
-<message name="GetNotification">
-<part name="parameters" element="tns:GetNotification"/>
-</message>
-<message name="GetNotificationResponse">
-<part name="parameters" element="tns:GetNotificationResponse"/>
-</message>
-<message name="CreateNewEvent">
-<part name="parameters" element="tns:CreateNewEvent"/>
-</message>
-<message name="CreateNewEventResponse">
-<part name="parameters" element="tns:CreateNewEventResponse"/>
-</message>
-<message name="RefundTicket">
-<part name="parameters" element="tns:RefundTicket"/>
-</message>
-<message name="RefundTicketResponse">
-<part name="parameters" element="tns:RefundTicketResponse"/>
-</message>
-<message name="GetSellerEvent">
-<part name="parameters" element="tns:GetSellerEvent"/>
-</message>
-<message name="GetSellerEventResponse">
-<part name="parameters" element="tns:GetSellerEventResponse"/>
-</message>
-<message name="GetVenueWithName">
-<part name="parameters" element="tns:GetVenueWithName"/>
-</message>
-<message name="GetVenueWithNameResponse">
-<part name="parameters" element="tns:GetVenueWithNameResponse"/>
-</message>
 <portType name="TMWebService">
-<operation name="Get1VenueWithName">
-<input wsam:Action="http://TMWebService/TMWebService/Get1VenueWithNameRequest" message="tns:Get1VenueWithName"/>
-<output wsam:Action="http://TMWebService/TMWebService/Get1VenueWithNameResponse" message="tns:Get1VenueWithNameResponse"/>
+<operation name="CalculatePrice">
+<input wsam:Action="http://TMWebService/TMWebService/CalculatePriceRequest" message="tns:CalculatePrice"/>
+<output wsam:Action="http://TMWebService/TMWebService/CalculatePriceResponse" message="tns:CalculatePriceResponse"/>
+</operation>
+<operation name="CheckFlashSales">
+<input wsam:Action="http://TMWebService/TMWebService/CheckFlashSalesRequest" message="tns:CheckFlashSales"/>
+<output wsam:Action="http://TMWebService/TMWebService/CheckFlashSalesResponse" message="tns:CheckFlashSalesResponse"/>
+</operation>
+<operation name="ConnectionTest">
+<input wsam:Action="http://TMWebService/TMWebService/ConnectionTestRequest" message="tns:ConnectionTest"/>
+<output wsam:Action="http://TMWebService/TMWebService/ConnectionTestResponse" message="tns:ConnectionTestResponse"/>
+</operation>
+<operation name="GetEvent">
+<input wsam:Action="http://TMWebService/TMWebService/GetEventRequest" message="tns:GetEvent"/>
+<output wsam:Action="http://TMWebService/TMWebService/GetEventResponse" message="tns:GetEventResponse"/>
+</operation>
+<operation name="ClaimTicket">
+<input wsam:Action="http://TMWebService/TMWebService/ClaimTicketRequest" message="tns:ClaimTicket"/>
+<output wsam:Action="http://TMWebService/TMWebService/ClaimTicketResponse" message="tns:ClaimTicketResponse"/>
+</operation>
+<operation name="hello">
+<input wsam:Action="http://TMWebService/TMWebService/helloRequest" message="tns:hello"/>
+<output wsam:Action="http://TMWebService/TMWebService/helloResponse" message="tns:helloResponse"/>
+</operation>
+<operation name="CreateNewVenue">
+<input wsam:Action="http://TMWebService/TMWebService/CreateNewVenueRequest" message="tns:CreateNewVenue"/>
+<output wsam:Action="http://TMWebService/TMWebService/CreateNewVenueResponse" message="tns:CreateNewVenueResponse"/>
+</operation>
+<operation name="UpdateVenueData">
+<input wsam:Action="http://TMWebService/TMWebService/UpdateVenueDataRequest" message="tns:UpdateVenueData"/>
+<output wsam:Action="http://TMWebService/TMWebService/UpdateVenueDataResponse" message="tns:UpdateVenueDataResponse"/>
+</operation>
+<operation name="SellerUpdateData">
+<input wsam:Action="http://TMWebService/TMWebService/SellerUpdateDataRequest" message="tns:SellerUpdateData"/>
+<output wsam:Action="http://TMWebService/TMWebService/SellerUpdateDataResponse" message="tns:SellerUpdateDataResponse"/>
+</operation>
+<operation name="UserSignUp">
+<input wsam:Action="http://TMWebService/TMWebService/UserSignUpRequest" message="tns:UserSignUp"/>
+<output wsam:Action="http://TMWebService/TMWebService/UserSignUpResponse" message="tns:UserSignUpResponse"/>
+</operation>
+<operation name="SellerSignUp">
+<input wsam:Action="http://TMWebService/TMWebService/SellerSignUpRequest" message="tns:SellerSignUp"/>
+<output wsam:Action="http://TMWebService/TMWebService/SellerSignUpResponse" message="tns:SellerSignUpResponse"/>
+</operation>
+<operation name="UserLogIn">
+<input wsam:Action="http://TMWebService/TMWebService/UserLogInRequest" message="tns:UserLogIn"/>
+<output wsam:Action="http://TMWebService/TMWebService/UserLogInResponse" message="tns:UserLogInResponse"/>
+</operation>
+<operation name="GetCities">
+<input wsam:Action="http://TMWebService/TMWebService/GetCitiesRequest" message="tns:GetCities"/>
+<output wsam:Action="http://TMWebService/TMWebService/GetCitiesResponse" message="tns:GetCitiesResponse"/>
+</operation>
+<operation name="CreateNewEvent">
+<input wsam:Action="http://TMWebService/TMWebService/CreateNewEventRequest" message="tns:CreateNewEvent"/>
+<output wsam:Action="http://TMWebService/TMWebService/CreateNewEventResponse" message="tns:CreateNewEventResponse"/>
+</operation>
+<operation name="PayTicket">
+<input wsam:Action="http://TMWebService/TMWebService/PayTicketRequest" message="tns:PayTicket"/>
+<output wsam:Action="http://TMWebService/TMWebService/PayTicketResponse" message="tns:PayTicketResponse"/>
+</operation>
+<operation name="GetNotification">
+<input wsam:Action="http://TMWebService/TMWebService/GetNotificationRequest" message="tns:GetNotification"/>
+<output wsam:Action="http://TMWebService/TMWebService/GetNotificationResponse" message="tns:GetNotificationResponse"/>
+</operation>
+<operation name="GetAllEvents">
+<input wsam:Action="http://TMWebService/TMWebService/GetAllEventsRequest" message="tns:GetAllEvents"/>
+<output wsam:Action="http://TMWebService/TMWebService/GetAllEventsResponse" message="tns:GetAllEventsResponse"/>
+</operation>
+<operation name="UserUpdateData">
+<input wsam:Action="http://TMWebService/TMWebService/UserUpdateDataRequest" message="tns:UserUpdateData"/>
+<output wsam:Action="http://TMWebService/TMWebService/UserUpdateDataResponse" message="tns:UserUpdateDataResponse"/>
+</operation>
+<operation name="RefundTicket">
+<input wsam:Action="http://TMWebService/TMWebService/RefundTicketRequest" message="tns:RefundTicket"/>
+<output wsam:Action="http://TMWebService/TMWebService/RefundTicketResponse" message="tns:RefundTicketResponse"/>
+</operation>
+<operation name="GetVenueWithName">
+<input wsam:Action="http://TMWebService/TMWebService/GetVenueWithNameRequest" message="tns:GetVenueWithName"/>
+<output wsam:Action="http://TMWebService/TMWebService/GetVenueWithNameResponse" message="tns:GetVenueWithNameResponse"/>
+</operation>
+<operation name="GetSellerEvent">
+<input wsam:Action="http://TMWebService/TMWebService/GetSellerEventRequest" message="tns:GetSellerEvent"/>
+<output wsam:Action="http://TMWebService/TMWebService/GetSellerEventResponse" message="tns:GetSellerEventResponse"/>
+</operation>
+<operation name="GetTicketById">
+<input wsam:Action="http://TMWebService/TMWebService/GetTicketByIdRequest" message="tns:GetTicketById"/>
+<output wsam:Action="http://TMWebService/TMWebService/GetTicketByIdResponse" message="tns:GetTicketByIdResponse"/>
+</operation>
+<operation name="GetCompanyEvent">
+<input wsam:Action="http://TMWebService/TMWebService/GetCompanyEventRequest" message="tns:GetCompanyEvent"/>
+<output wsam:Action="http://TMWebService/TMWebService/GetCompanyEventResponse" message="tns:GetCompanyEventResponse"/>
+</operation>
+<operation name="UpdateEventData">
+<input wsam:Action="http://TMWebService/TMWebService/UpdateEventDataRequest" message="tns:UpdateEventData"/>
+<output wsam:Action="http://TMWebService/TMWebService/UpdateEventDataResponse" message="tns:UpdateEventDataResponse"/>
+</operation>
+<operation name="SellerLogIn">
+<input wsam:Action="http://TMWebService/TMWebService/SellerLogInRequest" message="tns:SellerLogIn"/>
+<output wsam:Action="http://TMWebService/TMWebService/SellerLogInResponse" message="tns:SellerLogInResponse"/>
+</operation>
+<operation name="BuyTicket">
+<input wsam:Action="http://TMWebService/TMWebService/BuyTicketRequest" message="tns:BuyTicket"/>
+<output wsam:Action="http://TMWebService/TMWebService/BuyTicketResponse" message="tns:BuyTicketResponse"/>
+</operation>
+<operation name="NotRefundTicket">
+<input wsam:Action="http://TMWebService/TMWebService/NotRefundTicketRequest" message="tns:NotRefundTicket"/>
+<output wsam:Action="http://TMWebService/TMWebService/NotRefundTicketResponse" message="tns:NotRefundTicketResponse"/>
 </operation>
 <operation name="GetVenueWithProvince">
 <input wsam:Action="http://TMWebService/TMWebService/GetVenueWithProvinceRequest" message="tns:GetVenueWithProvince"/>
 <output wsam:Action="http://TMWebService/TMWebService/GetVenueWithProvinceResponse" message="tns:GetVenueWithProvinceResponse"/>
 </operation>
+<operation name="InsertEventClasses">
+<input wsam:Action="http://TMWebService/TMWebService/InsertEventClassesRequest" message="tns:InsertEventClasses"/>
+<output wsam:Action="http://TMWebService/TMWebService/InsertEventClassesResponse" message="tns:InsertEventClassesResponse"/>
+</operation>
+<operation name="CancelTicketOrder">
+<input wsam:Action="http://TMWebService/TMWebService/CancelTicketOrderRequest" message="tns:CancelTicketOrder"/>
+<output wsam:Action="http://TMWebService/TMWebService/CancelTicketOrderResponse" message="tns:CancelTicketOrderResponse"/>
+</operation>
+<operation name="GetTicketsByUsername">
+<input wsam:Action="http://TMWebService/TMWebService/GetTicketsByUsernameRequest" message="tns:GetTicketsByUsername"/>
+<output wsam:Action="http://TMWebService/TMWebService/GetTicketsByUsernameResponse" message="tns:GetTicketsByUsernameResponse"/>
+</operation>
+<operation name="GetUserNotifications">
+<input wsam:Action="http://TMWebService/TMWebService/GetUserNotificationsRequest" message="tns:GetUserNotifications"/>
+<output wsam:Action="http://TMWebService/TMWebService/GetUserNotificationsResponse" message="tns:GetUserNotificationsResponse"/>
+</operation>
+<operation name="GetPaidOrRequestRefundAdmin">
+<input wsam:Action="http://TMWebService/TMWebService/GetPaidOrRequestRefundAdminRequest" message="tns:GetPaidOrRequestRefundAdmin"/>
+<output wsam:Action="http://TMWebService/TMWebService/GetPaidOrRequestRefundAdminResponse" message="tns:GetPaidOrRequestRefundAdminResponse"/>
+</operation>
 <operation name="CreateNotification">
 <input wsam:Action="http://TMWebService/TMWebService/CreateNotificationRequest" message="tns:CreateNotification"/>
 <output wsam:Action="http://TMWebService/TMWebService/CreateNotificationResponse" message="tns:CreateNotificationResponse"/>
+</operation>
+<operation name="GetVenueWithCityName">
+<input wsam:Action="http://TMWebService/TMWebService/GetVenueWithCityNameRequest" message="tns:GetVenueWithCityName"/>
+<output wsam:Action="http://TMWebService/TMWebService/GetVenueWithCityNameResponse" message="tns:GetVenueWithCityNameResponse"/>
 </operation>
 <operation name="GetPaymentMethods">
 <input wsam:Action="http://TMWebService/TMWebService/GetPaymentMethodsRequest" message="tns:GetPaymentMethods"/>
 <output wsam:Action="http://TMWebService/TMWebService/GetPaymentMethodsResponse" message="tns:GetPaymentMethodsResponse"/>
 </operation>
-<operation name="InsertEventClasses">
-<input wsam:Action="http://TMWebService/TMWebService/InsertEventClassesRequest" message="tns:InsertEventClasses"/>
-<output wsam:Action="http://TMWebService/TMWebService/InsertEventClassesResponse" message="tns:InsertEventClassesResponse"/>
-</operation>
-<operation name="GetTicketsByUsername">
-<input wsam:Action="http://TMWebService/TMWebService/GetTicketsByUsernameRequest" message="tns:GetTicketsByUsername"/>
-<output wsam:Action="http://TMWebService/TMWebService/GetTicketsByUsernameResponse" message="tns:GetTicketsByUsernameResponse"/>
+<operation name="Get1VenueWithName">
+<input wsam:Action="http://TMWebService/TMWebService/Get1VenueWithNameRequest" message="tns:Get1VenueWithName"/>
+<output wsam:Action="http://TMWebService/TMWebService/Get1VenueWithNameResponse" message="tns:Get1VenueWithNameResponse"/>
 </operation>
 <operation name="ApproveRefundTicket">
 <input wsam:Action="http://TMWebService/TMWebService/ApproveRefundTicketRequest" message="tns:ApproveRefundTicket"/>
@@ -265,130 +395,244 @@
 <input wsam:Action="http://TMWebService/TMWebService/getPaymentMethodsByIdRequest" message="tns:getPaymentMethodsById"/>
 <output wsam:Action="http://TMWebService/TMWebService/getPaymentMethodsByIdResponse" message="tns:getPaymentMethodsByIdResponse"/>
 </operation>
-<operation name="CancelTicketOrder">
-<input wsam:Action="http://TMWebService/TMWebService/CancelTicketOrderRequest" message="tns:CancelTicketOrder"/>
-<output wsam:Action="http://TMWebService/TMWebService/CancelTicketOrderResponse" message="tns:CancelTicketOrderResponse"/>
-</operation>
-<operation name="GetVenueWithCityName">
-<input wsam:Action="http://TMWebService/TMWebService/GetVenueWithCityNameRequest" message="tns:GetVenueWithCityName"/>
-<output wsam:Action="http://TMWebService/TMWebService/GetVenueWithCityNameResponse" message="tns:GetVenueWithCityNameResponse"/>
-</operation>
-<operation name="GetPaidOrRequestRefundAdmin">
-<input wsam:Action="http://TMWebService/TMWebService/GetPaidOrRequestRefundAdminRequest" message="tns:GetPaidOrRequestRefundAdmin"/>
-<output wsam:Action="http://TMWebService/TMWebService/GetPaidOrRequestRefundAdminResponse" message="tns:GetPaidOrRequestRefundAdminResponse"/>
-</operation>
-<operation name="GetUserNotifications">
-<input wsam:Action="http://TMWebService/TMWebService/GetUserNotificationsRequest" message="tns:GetUserNotifications"/>
-<output wsam:Action="http://TMWebService/TMWebService/GetUserNotificationsResponse" message="tns:GetUserNotificationsResponse"/>
-</operation>
-<operation name="ConnectionTest">
-<input wsam:Action="http://TMWebService/TMWebService/ConnectionTestRequest" message="tns:ConnectionTest"/>
-<output wsam:Action="http://TMWebService/TMWebService/ConnectionTestResponse" message="tns:ConnectionTestResponse"/>
-</operation>
-<operation name="CalculatePrice">
-<input wsam:Action="http://TMWebService/TMWebService/CalculatePriceRequest" message="tns:CalculatePrice"/>
-<output wsam:Action="http://TMWebService/TMWebService/CalculatePriceResponse" message="tns:CalculatePriceResponse"/>
-</operation>
-<operation name="BuyTicket">
-<input wsam:Action="http://TMWebService/TMWebService/BuyTicketRequest" message="tns:BuyTicket"/>
-<output wsam:Action="http://TMWebService/TMWebService/BuyTicketResponse" message="tns:BuyTicketResponse"/>
-</operation>
-<operation name="GetTicketById">
-<input wsam:Action="http://TMWebService/TMWebService/GetTicketByIdRequest" message="tns:GetTicketById"/>
-<output wsam:Action="http://TMWebService/TMWebService/GetTicketByIdResponse" message="tns:GetTicketByIdResponse"/>
-</operation>
-<operation name="UpdateEventData">
-<input wsam:Action="http://TMWebService/TMWebService/UpdateEventDataRequest" message="tns:UpdateEventData"/>
-<output wsam:Action="http://TMWebService/TMWebService/UpdateEventDataResponse" message="tns:UpdateEventDataResponse"/>
-</operation>
-<operation name="GetEvent">
-<input wsam:Action="http://TMWebService/TMWebService/GetEventRequest" message="tns:GetEvent"/>
-<output wsam:Action="http://TMWebService/TMWebService/GetEventResponse" message="tns:GetEventResponse"/>
-</operation>
-<operation name="PayTicket">
-<input wsam:Action="http://TMWebService/TMWebService/PayTicketRequest" message="tns:PayTicket"/>
-<output wsam:Action="http://TMWebService/TMWebService/PayTicketResponse" message="tns:PayTicketResponse"/>
-</operation>
-<operation name="GetAllEvents">
-<input wsam:Action="http://TMWebService/TMWebService/GetAllEventsRequest" message="tns:GetAllEvents"/>
-<output wsam:Action="http://TMWebService/TMWebService/GetAllEventsResponse" message="tns:GetAllEventsResponse"/>
-</operation>
-<operation name="UserSignUp">
-<input wsam:Action="http://TMWebService/TMWebService/UserSignUpRequest" message="tns:UserSignUp"/>
-<output wsam:Action="http://TMWebService/TMWebService/UserSignUpResponse" message="tns:UserSignUpResponse"/>
-</operation>
-<operation name="UserLogIn">
-<input wsam:Action="http://TMWebService/TMWebService/UserLogInRequest" message="tns:UserLogIn"/>
-<output wsam:Action="http://TMWebService/TMWebService/UserLogInResponse" message="tns:UserLogInResponse"/>
-</operation>
-<operation name="UserUpdateData">
-<input wsam:Action="http://TMWebService/TMWebService/UserUpdateDataRequest" message="tns:UserUpdateData"/>
-<output wsam:Action="http://TMWebService/TMWebService/UserUpdateDataResponse" message="tns:UserUpdateDataResponse"/>
-</operation>
-<operation name="SellerLogIn">
-<input wsam:Action="http://TMWebService/TMWebService/SellerLogInRequest" message="tns:SellerLogIn"/>
-<output wsam:Action="http://TMWebService/TMWebService/SellerLogInResponse" message="tns:SellerLogInResponse"/>
-</operation>
-<operation name="SellerUpdateData">
-<input wsam:Action="http://TMWebService/TMWebService/SellerUpdateDataRequest" message="tns:SellerUpdateData"/>
-<output wsam:Action="http://TMWebService/TMWebService/SellerUpdateDataResponse" message="tns:SellerUpdateDataResponse"/>
-</operation>
-<operation name="SellerSignUp">
-<input wsam:Action="http://TMWebService/TMWebService/SellerSignUpRequest" message="tns:SellerSignUp"/>
-<output wsam:Action="http://TMWebService/TMWebService/SellerSignUpResponse" message="tns:SellerSignUpResponse"/>
-</operation>
-<operation name="ClaimTicket">
-<input wsam:Action="http://TMWebService/TMWebService/ClaimTicketRequest" message="tns:ClaimTicket"/>
-<output wsam:Action="http://TMWebService/TMWebService/ClaimTicketResponse" message="tns:ClaimTicketResponse"/>
-</operation>
-<operation name="GetCompanyEvent">
-<input wsam:Action="http://TMWebService/TMWebService/GetCompanyEventRequest" message="tns:GetCompanyEvent"/>
-<output wsam:Action="http://TMWebService/TMWebService/GetCompanyEventResponse" message="tns:GetCompanyEventResponse"/>
-</operation>
-<operation name="UpdateVenueData">
-<input wsam:Action="http://TMWebService/TMWebService/UpdateVenueDataRequest" message="tns:UpdateVenueData"/>
-<output wsam:Action="http://TMWebService/TMWebService/UpdateVenueDataResponse" message="tns:UpdateVenueDataResponse"/>
-</operation>
-<operation name="CreateNewVenue">
-<input wsam:Action="http://TMWebService/TMWebService/CreateNewVenueRequest" message="tns:CreateNewVenue"/>
-<output wsam:Action="http://TMWebService/TMWebService/CreateNewVenueResponse" message="tns:CreateNewVenueResponse"/>
-</operation>
-<operation name="hello">
-<input wsam:Action="http://TMWebService/TMWebService/helloRequest" message="tns:hello"/>
-<output wsam:Action="http://TMWebService/TMWebService/helloResponse" message="tns:helloResponse"/>
-</operation>
-<operation name="GetCities">
-<input wsam:Action="http://TMWebService/TMWebService/GetCitiesRequest" message="tns:GetCities"/>
-<output wsam:Action="http://TMWebService/TMWebService/GetCitiesResponse" message="tns:GetCitiesResponse"/>
-</operation>
-<operation name="NotRefundTicket">
-<input wsam:Action="http://TMWebService/TMWebService/NotRefundTicketRequest" message="tns:NotRefundTicket"/>
-<output wsam:Action="http://TMWebService/TMWebService/NotRefundTicketResponse" message="tns:NotRefundTicketResponse"/>
-</operation>
-<operation name="GetNotification">
-<input wsam:Action="http://TMWebService/TMWebService/GetNotificationRequest" message="tns:GetNotification"/>
-<output wsam:Action="http://TMWebService/TMWebService/GetNotificationResponse" message="tns:GetNotificationResponse"/>
-</operation>
-<operation name="CreateNewEvent">
-<input wsam:Action="http://TMWebService/TMWebService/CreateNewEventRequest" message="tns:CreateNewEvent"/>
-<output wsam:Action="http://TMWebService/TMWebService/CreateNewEventResponse" message="tns:CreateNewEventResponse"/>
-</operation>
-<operation name="RefundTicket">
-<input wsam:Action="http://TMWebService/TMWebService/RefundTicketRequest" message="tns:RefundTicket"/>
-<output wsam:Action="http://TMWebService/TMWebService/RefundTicketResponse" message="tns:RefundTicketResponse"/>
-</operation>
-<operation name="GetSellerEvent">
-<input wsam:Action="http://TMWebService/TMWebService/GetSellerEventRequest" message="tns:GetSellerEvent"/>
-<output wsam:Action="http://TMWebService/TMWebService/GetSellerEventResponse" message="tns:GetSellerEventResponse"/>
-</operation>
-<operation name="GetVenueWithName">
-<input wsam:Action="http://TMWebService/TMWebService/GetVenueWithNameRequest" message="tns:GetVenueWithName"/>
-<output wsam:Action="http://TMWebService/TMWebService/GetVenueWithNameResponse" message="tns:GetVenueWithNameResponse"/>
-</operation>
 </portType>
 <binding name="TMWebServicePortBinding" type="tns:TMWebService">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="Get1VenueWithName">
+<operation name="CalculatePrice">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="CheckFlashSales">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="ConnectionTest">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="GetEvent">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="ClaimTicket">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="hello">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="CreateNewVenue">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="UpdateVenueData">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="SellerUpdateData">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="UserSignUp">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="SellerSignUp">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="UserLogIn">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="GetCities">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="CreateNewEvent">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="PayTicket">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="GetNotification">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="GetAllEvents">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="UserUpdateData">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="RefundTicket">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="GetVenueWithName">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="GetSellerEvent">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="GetTicketById">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="GetCompanyEvent">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="UpdateEventData">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="SellerLogIn">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="BuyTicket">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="NotRefundTicket">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -406,7 +650,61 @@
 <soap:body use="literal"/>
 </output>
 </operation>
+<operation name="InsertEventClasses">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="CancelTicketOrder">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="GetTicketsByUsername">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="GetUserNotifications">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="GetPaidOrRequestRefundAdmin">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
 <operation name="CreateNotification">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="GetVenueWithCityName">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -424,16 +722,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="InsertEventClasses">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="GetTicketsByUsername">
+<operation name="Get1VenueWithName">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -452,276 +741,6 @@
 </output>
 </operation>
 <operation name="getPaymentMethodsById">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="CancelTicketOrder">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="GetVenueWithCityName">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="GetPaidOrRequestRefundAdmin">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="GetUserNotifications">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="ConnectionTest">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="CalculatePrice">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="BuyTicket">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="GetTicketById">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="UpdateEventData">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="GetEvent">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="PayTicket">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="GetAllEvents">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="UserSignUp">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="UserLogIn">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="UserUpdateData">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="SellerLogIn">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="SellerUpdateData">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="SellerSignUp">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="ClaimTicket">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="GetCompanyEvent">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="UpdateVenueData">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="CreateNewVenue">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="hello">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="GetCities">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="NotRefundTicket">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="GetNotification">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="CreateNewEvent">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="RefundTicket">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="GetSellerEvent">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="GetVenueWithName">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

@@ -529,11 +529,11 @@ INSERT INTO `ticketmarketplace`.`venues` (`name`, `address`, `maxCapacity`, `are
 -- EVENTS
 -- -------------------------------------------------------------------------------------------------------
 INSERT INTO `ticketmarketplace`.`events` (`name`,`description`, `startDateTime`, `venue_id`, `seller`) VALUES
-('Surabaya International Jazz Festival','Do you like jazz?', '2025-08-22 19:00:00', 6, 'milesdavis'),
-('Eminem: Live in Surabaya 2025','Do you like eminem?', '2025-09-15 20:00:00', 5, 'eminem'),
-('Head In The Clouds Surabaya','Do you like 88Rising?', '2025-11-29 16:00:00', 5, '88rising'),
-('JYP NATION: ONE MIC in Surabaya','Do you like KPOP?', '2025-10-05 18:30:00',6, 'jypent'),
-('SMTOWN LIVE 2025: SMCU PALACE @ SURABAYA','Do you like KPOP?', '2025-12-20 18:00:00', 7, 'sment');
+('Surabaya International Jazz Festival','Do you like jazz?', '2025-08-22-19-00', 6, 'milesdavis'),
+('Eminem: Live in Surabaya 2025','Do you like eminem?', '2025-09-15-20-00', 5, 'eminem'),
+('Head In The Clouds Surabaya','Do you like 88Rising?', '2025-11-29-16-00', 5, '88rising'),
+('JYP NATION: ONE MIC in Surabaya','Do you like KPOP?', '2025-10-05-18-30',6, 'jypent'),
+('SMTOWN LIVE 2025: SMCU PALACE @ SURABAYA','Do you like KPOP?', '2025-12-20-18-00', 7, 'sment');
 
 -- -------------------------------------------------------------------------------------------------------
 -- EVENTCLASS
