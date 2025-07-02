@@ -50,46 +50,46 @@ public class FormUserCheckout extends javax.swing.JFrame {
         jLabel2.setText(selectedEventClass.getName());
         String date = selectedEvent.getStartTime();
         jLabel6.setText(date);
-        
-        for(PaymentMethod pm : getPaymentMethods()){
+
+        for (PaymentMethod pm : getPaymentMethods()) {
             cbPaymentMethod.addItem(pm.getName());
         }
-        
+
         String path = selectedEvent.getPhotoPath();
 
-            if (path != null && !path.isEmpty()) {
-                try {
-                    BufferedImage originalImage = ImageIO.read(new File(path));
-                    int cropWidth, cropHeight;
-                    int x, y;
+        if (path != null && !path.isEmpty()) {
+            try {
+                BufferedImage originalImage = ImageIO.read(new File(path));
+                int cropWidth, cropHeight;
+                int x, y;
 
-                    double targetRatio = 90.0 / 135.0;
-                    double originalRatio = (double) originalImage.getWidth() / originalImage.getHeight();
+                double targetRatio = 90.0 / 135.0;
+                double originalRatio = (double) originalImage.getWidth() / originalImage.getHeight();
 
-                    if (originalRatio > targetRatio) {
-                        cropHeight = originalImage.getHeight();
-                        cropWidth = (int) (cropHeight * targetRatio);
-                        x = (originalImage.getWidth() - cropWidth) / 2;
-                        y = 0;
-                    } else {
-                        cropWidth = originalImage.getWidth();
-                        cropHeight = (int) (cropWidth / targetRatio);
-                        x = 0;
-                        y = (originalImage.getHeight() - cropHeight) / 2;
-                    }
-
-                    BufferedImage croppedImage = originalImage.getSubimage(x, y, cropWidth, cropHeight);
-                    Image scaledImage = croppedImage.getScaledInstance(90, 135, Image.SCALE_SMOOTH);
-
-                    imagePreviewLabel1.setIcon(new ImageIcon(scaledImage));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    imagePreviewLabel1.setText("Gambar gagal dimuat");
+                if (originalRatio > targetRatio) {
+                    cropHeight = originalImage.getHeight();
+                    cropWidth = (int) (cropHeight * targetRatio);
+                    x = (originalImage.getWidth() - cropWidth) / 2;
+                    y = 0;
+                } else {
+                    cropWidth = originalImage.getWidth();
+                    cropHeight = (int) (cropWidth / targetRatio);
+                    x = 0;
+                    y = (originalImage.getHeight() - cropHeight) / 2;
                 }
-            } else {
-                imagePreviewLabel1.setText("Tidak ada gambar");
+
+                BufferedImage croppedImage = originalImage.getSubimage(x, y, cropWidth, cropHeight);
+                Image scaledImage = croppedImage.getScaledInstance(90, 135, Image.SCALE_SMOOTH);
+
+                imagePreviewLabel1.setIcon(new ImageIcon(scaledImage));
+            } catch (IOException e) {
+                e.printStackTrace();
+                imagePreviewLabel1.setText("Gambar gagal dimuat");
             }
-        
+        } else {
+            imagePreviewLabel1.setText("Tidak ada gambar");
+        }
+
     }
 
     /**
@@ -130,6 +130,7 @@ public class FormUserCheckout extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         cbPaymentMethod = new javax.swing.JComboBox<>();
+        textQty = new java.awt.TextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
 
@@ -241,14 +242,13 @@ public class FormUserCheckout extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(imagePreviewLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(imagePreviewLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(0, 9, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -385,6 +385,13 @@ public class FormUserCheckout extends javax.swing.JFrame {
             }
         });
 
+        textQty.setText("1");
+        textQty.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textQtyActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("Home");
         jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -410,19 +417,19 @@ public class FormUserCheckout extends javax.swing.JFrame {
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnKonfirmasiPembayaran, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbPaymentMethod, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 63, Short.MAX_VALUE)))
+                        .addComponent(cbPaymentMethod, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textQty, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(154, 154, 154)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)))
+                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
@@ -442,19 +449,24 @@ public class FormUserCheckout extends javax.swing.JFrame {
                         .addGap(2, 2, 2)
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbPaymentMethod, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cbPaymentMethod, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(textQty, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(33, 33, 33)))
                         .addComponent(btnKonfirmasiPembayaran))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel11)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28)))))
+                                .addGap(28, 28, 28))
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel22)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -501,20 +513,67 @@ public class FormUserCheckout extends javax.swing.JFrame {
         newTicket.setStatus(paymentStatus);
         newTicket.setIsClaimed(isClaimed);
         newTicket.setEvent(selectedEvent);
-        newTicket.setPrice(selectedEventClass.getPrice()); //Nanti update di WS dulu
-        System.out.println(currentUser.getUsername());
-        Ticket insert = buyTicket(newTicket, username);
 
-        if (insert.getEvent().getId() == selectedEvent.getId()) {
-            FormPayment notif = new FormPayment(currentUser, insert);
-            notif.setVisible(true);
-            this.dispose();
-//            FormListOfTicket1 home = new FormListOfTicket1(currentUser);
-//            home.setVisible(true);
-//            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Proses gagal", "Gagal", JOptionPane.ERROR_MESSAGE);
+        try {
+            if (Integer.parseInt(textQty.getText()) > 1) {
+                double finalPrice = 0;
+                if (Integer.parseInt(textQty.getText()) >= 3) {
+
+                    finalPrice = Integer.parseInt(textQty.getText())*selectedEventClass.getPrice();
+                    finalPrice = finalPrice - (finalPrice*0.05*(Integer.parseInt(textQty.getText())/3));
+                }
+                selectedEventClass.setPrice(finalPrice/Integer.parseInt(textQty.getText()));
+                for(int i=0;i<Integer.parseInt(textQty.getText());i++){
+
+                newTicket.setPrice(selectedEventClass.getPrice()); //Nanti update di WS dulu
+                System.out.println(currentUser.getUsername());
+                Ticket insert = buyTicket(newTicket, username);
+
+                if (insert.getEvent().getId() == selectedEvent.getId()) {
+                    FormPayment notif = new FormPayment(currentUser, insert);
+                    notif.setVisible(true);
+                    this.dispose();
+                    //            FormListOfTicket1 home = new FormListOfTicket1(currentUser);
+                    //            home.setVisible(true);
+                    //            this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Proses gagal", "Gagal", JOptionPane.ERROR_MESSAGE);
+                }
+                }
+            } else {
+                newTicket.setPrice(selectedEventClass.getPrice()); //Nanti update di WS dulu
+                System.out.println(currentUser.getUsername());
+                Ticket insert = buyTicket(newTicket, username);
+
+                if (insert.getEvent().getId() == selectedEvent.getId()) {
+                    FormPayment notif = new FormPayment(currentUser, insert);
+                    notif.setVisible(true);
+                    this.dispose();
+                    //            FormListOfTicket1 home = new FormListOfTicket1(currentUser);
+                    //            home.setVisible(true);
+                    //            this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Proses gagal", "Gagal", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (Exception ex) {
+
         }
+//        
+//        newTicket.setPrice(selectedEventClass.getPrice()); //Nanti update di WS dulu
+//        System.out.println(currentUser.getUsername());
+//        Ticket insert = buyTicket(newTicket, username);
+//
+//        if (insert.getEvent().getId() == selectedEvent.getId()) {
+//            FormPayment notif = new FormPayment(currentUser, insert);
+//            notif.setVisible(true);
+//            this.dispose();
+    ////            FormListOfTicket1 home = new FormListOfTicket1(currentUser);
+////            home.setVisible(true);
+////            this.dispose();
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Proses gagal", "Gagal", JOptionPane.ERROR_MESSAGE);
+//        }
 
     }//GEN-LAST:event_btnKonfirmasiPembayaranActionPerformed
 
@@ -540,15 +599,28 @@ public class FormUserCheckout extends javax.swing.JFrame {
 
     private void cbPaymentMethodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPaymentMethodActionPerformed
         // TODO add your handling code here:
-        String selectedPayment = (String)cbPaymentMethod.getSelectedItem();
-        
-        
-        for(PaymentMethod pm : getPaymentMethods()){
-            if(pm.getName().equals(selectedPayment)){
+        String selectedPayment = (String) cbPaymentMethod.getSelectedItem();
+
+        for (PaymentMethod pm : getPaymentMethods()) {
+            if (pm.getName().equals(selectedPayment)) {
                 paymentMethodIdDipilih = pm.getId();
             }
         }
     }//GEN-LAST:event_cbPaymentMethodActionPerformed
+
+    private void textQtyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textQtyActionPerformed
+        // TODO add your handling code here:
+         double finalPrice = 0;
+         if(Integer.parseInt(textQty.getText()) <3){
+                finalPrice = selectedEventClass.getPrice() * Integer.parseInt(textQty.getText());
+                if (Integer.parseInt(textQty.getText()) >= 3) {
+
+                    finalPrice = Integer.parseInt(textQty.getText())*selectedEventClass.getPrice();
+                    finalPrice = finalPrice - (finalPrice*0.05*(Integer.parseInt(textQty.getText())/3));
+                }
+         }       
+         jLabel1.setText(String.valueOf(finalPrice));
+    }//GEN-LAST:event_textQtyActionPerformed
 
     private void aturTombolPembayaran(javax.swing.JButton tombolDipilih, String metode) {
         /*
@@ -576,9 +648,7 @@ public class FormUserCheckout extends javax.swing.JFrame {
         default:
             paymentMethodIdDipilih = -1; //eror karena belum milih
             break;*/
-        
-        
-        
+
     }
 
     /**
@@ -680,6 +750,7 @@ public class FormUserCheckout extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbAnak;
     private javax.swing.JRadioButton rbNyonya;
     private javax.swing.JRadioButton rbTuan;
+    private java.awt.TextField textQty;
     private java.awt.TextField txtEmail;
     private java.awt.TextField txtNama;
     private java.awt.TextField txtNoKTP;

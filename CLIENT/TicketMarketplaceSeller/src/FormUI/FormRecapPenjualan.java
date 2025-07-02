@@ -4,6 +4,15 @@
  */
 package FormUI;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Locale;
+import javax.swing.table.DefaultTableModel;
+import tmwebservice.Event;
+import tmwebservice.Seller;
+import tmwebservice.Ticket;
+
 /**
  *
  * @author joshu
@@ -13,8 +22,52 @@ public class FormRecapPenjualan extends javax.swing.JFrame {
     /**
      * Creates new form FormRecapPenjualan
      */
-    public FormRecapPenjualan() {
+    Event eventSelected;
+    List<Ticket> listOfTicket;
+    Seller curentUser;
+    public FormRecapPenjualan(Event eventSelected, Seller currentUser) {
         initComponents();
+        this.eventSelected = eventSelected;
+        this.curentUser= currentUser;
+        System.out.println(currentUser.getUsername());
+        this.listOfTicket= getSellerTicket(currentUser.getUsername());
+        System.out.println("jml tiket : "+listOfTicket.size());
+                System.out.println("id tiket : "+listOfTicket.get(0).getId());
+
+        DefaultTableModel model = (DefaultTableModel) jTableTicket.getModel();
+        model.setRowCount(0);
+
+        for (Ticket t : listOfTicket) {
+            t = getTicketById(t.getId());
+            System.out.println("tanggal eventnya == " +t.getEvent().getStartTime());
+            String startTimeFormatted = formatTanggal(t.getEvent().getStartTime());
+            System.out.println("Ticket ID to table: "+ t.getId());
+            System.out.println("Ticket event to table: "+ t.getEvent().getName());
+            System.out.println("Ticket EventClass to table: "+ t.getEventClass());
+            System.out.println("Ticket ID to table: "+ t.getEvent().getStartTime());
+            System.out.println("Ticket ID to table: "+ t.isIsClaimed());
+            Object[] row = new Object[] {
+                t.getEvent().getName(),
+                t.getEventClass(),
+                startTimeFormatted,
+                t.getStatus(),
+                t.isIsClaimed() ? "Sudah" : "Belum",
+                t.getPrice()
+            };
+            model.addRow(row);
+        }
+    }
+    
+    private String formatTanggal(String rawDateTime) {
+        try {
+            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm");
+            LocalDateTime dateTime = LocalDateTime.parse(rawDateTime, inputFormatter);
+
+            DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("EEEE, dd MMMM yyyy - HH:mm", new Locale("id", "ID"));
+            return dateTime.format(outputFormatter);
+        } catch (Exception e) {
+            return rawDateTime; 
+        }
     }
 
     /**
@@ -26,8 +79,8 @@ public class FormRecapPenjualan extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableTicket = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuHome = new javax.swing.JMenu();
         menuPublishTicket = new javax.swing.JMenu();
@@ -36,18 +89,26 @@ public class FormRecapPenjualan extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableTicket.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Event", "Kelas", "Tanggal Event", "Status Pembayaran", "Klaim", "Price"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTableTicket);
 
         jMenuBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -97,17 +158,17 @@ public class FormRecapPenjualan extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(212, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                .addGap(81, 81, 81))
         );
 
         pack();
@@ -166,20 +227,32 @@ public class FormRecapPenjualan extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormRecapPenjualan().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FormRecapPenjualan().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableTicket;
     private javax.swing.JMenu menuHome;
     private javax.swing.JMenu menuProfile;
     private javax.swing.JMenu menuPublishTicket;
     // End of variables declaration//GEN-END:variables
+
+    private static java.util.List<tmwebservice.Ticket> getSellerTicket(java.lang.String seller) {
+        tmwebservice.TMWebService_Service service = new tmwebservice.TMWebService_Service();
+        tmwebservice.TMWebService port = service.getTMWebServicePort();
+        return port.getSellerTicket(seller);
+    }
+
+    private static Ticket getTicketById(java.lang.String ticketId) {
+        tmwebservice.TMWebService_Service service = new tmwebservice.TMWebService_Service();
+        tmwebservice.TMWebService port = service.getTMWebServicePort();
+        return port.getTicketById(ticketId);
+    }
 }

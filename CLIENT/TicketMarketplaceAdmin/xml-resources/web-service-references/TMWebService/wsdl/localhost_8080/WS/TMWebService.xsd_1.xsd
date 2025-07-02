@@ -16,6 +16,10 @@
 
 <xs:element name="CancelTicketOrderResponse" type="tns:CancelTicketOrderResponse"/>
 
+<xs:element name="CheckFlashSales" type="tns:CheckFlashSales"/>
+
+<xs:element name="CheckFlashSalesResponse" type="tns:CheckFlashSalesResponse"/>
+
 <xs:element name="ClaimTicket" type="tns:ClaimTicket"/>
 
 <xs:element name="ClaimTicketResponse" type="tns:ClaimTicketResponse"/>
@@ -72,6 +76,10 @@
 
 <xs:element name="GetSellerEventResponse" type="tns:GetSellerEventResponse"/>
 
+<xs:element name="GetTicketById" type="tns:GetTicketById"/>
+
+<xs:element name="GetTicketByIdResponse" type="tns:GetTicketByIdResponse"/>
+
 <xs:element name="GetTicketsByUsername" type="tns:GetTicketsByUsername"/>
 
 <xs:element name="GetTicketsByUsernameResponse" type="tns:GetTicketsByUsernameResponse"/>
@@ -95,6 +103,10 @@
 <xs:element name="InsertEventClasses" type="tns:InsertEventClasses"/>
 
 <xs:element name="InsertEventClassesResponse" type="tns:InsertEventClassesResponse"/>
+
+<xs:element name="NotRefundTicket" type="tns:NotRefundTicket"/>
+
+<xs:element name="NotRefundTicketResponse" type="tns:NotRefundTicketResponse"/>
 
 <xs:element name="PayTicket" type="tns:PayTicket"/>
 
@@ -199,6 +211,7 @@
 <xs:element name="eventClasses" type="tns:eventClass" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
 <xs:element name="id" type="xs:int"/>
 <xs:element name="name" type="xs:string" minOccurs="0"/>
+<xs:element name="photoPath" type="xs:string" minOccurs="0"/>
 <xs:element name="seller" type="tns:seller" minOccurs="0"/>
 <xs:element name="startTime" type="xs:string" minOccurs="0"/>
 <xs:element name="venue" type="tns:venue" minOccurs="0"/>
@@ -367,6 +380,7 @@
 <xs:element name="isClaimed" type="xs:boolean"/>
 <xs:element name="paidTime" type="xs:string" minOccurs="0"/>
 <xs:element name="paymentMethod" type="xs:int"/>
+<xs:element name="price" type="xs:double"/>
 <xs:element name="status" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
@@ -410,6 +424,18 @@
 <xs:complexType name="RefundTicketResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CheckFlashSales">
+<xs:sequence>
+<xs:element name="eventclass_id" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CheckFlashSalesResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:double"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -643,6 +669,18 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="GetTicketById">
+<xs:sequence>
+<xs:element name="ticket_id" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetTicketByIdResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:ticket" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="GetAllEvents">
 <xs:sequence>
 <xs:element name="filter" type="xs:string" minOccurs="0"/>
@@ -655,15 +693,15 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="GetVenueWithCityName">
+<xs:complexType name="NotRefundTicket">
 <xs:sequence>
-<xs:element name="cityName" type="xs:string" minOccurs="0"/>
+<xs:element name="ticket" type="tns:ticket" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="GetVenueWithCityNameResponse">
+<xs:complexType name="NotRefundTicketResponse">
 <xs:sequence>
-<xs:element name="return" type="tns:venue" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="return" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -676,6 +714,18 @@
 <xs:complexType name="GetTicketsByUsernameResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:ticket" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetVenueWithCityName">
+<xs:sequence>
+<xs:element name="cityName" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetVenueWithCityNameResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:venue" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>
