@@ -391,6 +391,11 @@ public class FormUserCheckout extends javax.swing.JFrame {
                 textQtyActionPerformed(evt);
             }
         });
+        textQty.addTextListener(new java.awt.event.TextListener() {
+            public void textValueChanged(java.awt.event.TextEvent evt) {
+                textQtyTextValueChanged(evt);
+            }
+        });
 
         jMenu1.setText("Home");
         jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -449,13 +454,10 @@ public class FormUserCheckout extends javax.swing.JFrame {
                         .addGap(2, 2, 2)
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cbPaymentMethod, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(textQty, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(33, 33, 33)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textQty, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbPaymentMethod, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addComponent(btnKonfirmasiPembayaran))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -519,26 +521,26 @@ public class FormUserCheckout extends javax.swing.JFrame {
                 double finalPrice = 0;
                 if (Integer.parseInt(textQty.getText()) >= 3) {
 
-                    finalPrice = Integer.parseInt(textQty.getText())*selectedEventClass.getPrice();
-                    finalPrice = finalPrice - (finalPrice*0.05*(Integer.parseInt(textQty.getText())/3));
+                    finalPrice = Integer.parseInt(textQty.getText()) * selectedEventClass.getPrice();
+                    finalPrice = finalPrice - (finalPrice * 0.05 * (Integer.parseInt(textQty.getText()) / 3));
                 }
-                selectedEventClass.setPrice(finalPrice/Integer.parseInt(textQty.getText()));
-                for(int i=0;i<Integer.parseInt(textQty.getText());i++){
+                selectedEventClass.setPrice(finalPrice / Integer.parseInt(textQty.getText()));
+                for (int i = 0; i < Integer.parseInt(textQty.getText()); i++) {
 
-                newTicket.setPrice(selectedEventClass.getPrice()); //Nanti update di WS dulu
-                System.out.println(currentUser.getUsername());
-                Ticket insert = buyTicket(newTicket, username);
+                    newTicket.setPrice(selectedEventClass.getPrice()); //Nanti update di WS dulu
+                    System.out.println(currentUser.getUsername());
+                    Ticket insert = buyTicket(newTicket, username);
 
-                if (insert.getEvent().getId() == selectedEvent.getId()) {
-                    FormPayment notif = new FormPayment(currentUser, insert);
-                    notif.setVisible(true);
-                    this.dispose();
-                    //            FormListOfTicket1 home = new FormListOfTicket1(currentUser);
-                    //            home.setVisible(true);
-                    //            this.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Proses gagal", "Gagal", JOptionPane.ERROR_MESSAGE);
-                }
+                    if (insert.getEvent().getId() == selectedEvent.getId()) {
+                        FormPayment notif = new FormPayment(currentUser, insert);
+                        notif.setVisible(true);
+                        this.dispose();
+                        //            FormListOfTicket1 home = new FormListOfTicket1(currentUser);
+                        //            home.setVisible(true);
+                        //            this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Proses gagal", "Gagal", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             } else {
                 newTicket.setPrice(selectedEventClass.getPrice()); //Nanti update di WS dulu
@@ -559,6 +561,10 @@ public class FormUserCheckout extends javax.swing.JFrame {
         } catch (Exception ex) {
 
         }
+        
+        FormListOfTicket1 home = new FormListOfTicket1(currentUser);
+        home.setVisible(true);
+        this.dispose();
 //        
 //        newTicket.setPrice(selectedEventClass.getPrice()); //Nanti update di WS dulu
 //        System.out.println(currentUser.getUsername());
@@ -610,17 +616,25 @@ public class FormUserCheckout extends javax.swing.JFrame {
 
     private void textQtyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textQtyActionPerformed
         // TODO add your handling code here:
-         double finalPrice = 0;
-         if(Integer.parseInt(textQty.getText()) <3){
+    }//GEN-LAST:event_textQtyActionPerformed
+
+    private void textQtyTextValueChanged(java.awt.event.TextEvent evt) {//GEN-FIRST:event_textQtyTextValueChanged
+        // TODO add your handling code here:
+        double finalPrice = 0;
+        if (textQty.getText().equals("")) {
+            textQty.setText("1");
+        } else {
+            if (Integer.parseInt(textQty.getText()) < 3) {
                 finalPrice = selectedEventClass.getPrice() * Integer.parseInt(textQty.getText());
                 if (Integer.parseInt(textQty.getText()) >= 3) {
 
-                    finalPrice = Integer.parseInt(textQty.getText())*selectedEventClass.getPrice();
-                    finalPrice = finalPrice - (finalPrice*0.05*(Integer.parseInt(textQty.getText())/3));
+                    finalPrice = Integer.parseInt(textQty.getText()) * selectedEventClass.getPrice();
+                    finalPrice = finalPrice - (finalPrice * 0.05 * (Integer.parseInt(textQty.getText()) / 3));
                 }
-         }       
-         jLabel1.setText(String.valueOf(finalPrice));
-    }//GEN-LAST:event_textQtyActionPerformed
+            }
+        }
+        jLabel11.setText(String.valueOf(finalPrice));
+    }//GEN-LAST:event_textQtyTextValueChanged
 
     private void aturTombolPembayaran(javax.swing.JButton tombolDipilih, String metode) {
         /*

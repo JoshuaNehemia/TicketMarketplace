@@ -111,17 +111,11 @@ public class FormPayment extends javax.swing.JFrame {
     private void btnBayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBayarActionPerformed
         // TODO add your handling code here:
         payTicket(this.currentTicket.getId());
-        FormListOfTicket1 home = new FormListOfTicket1(currentUser);
-        home.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_btnBayarActionPerformed
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
         // TODO add your handling code here:
         cancelTicketOrder(this.currentTicket);
-        FormListOfTicket1 home = new FormListOfTicket1(currentUser);
-        home.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_btnBatalActionPerformed
 
     /**
